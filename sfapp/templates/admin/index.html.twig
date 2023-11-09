@@ -1,6 +1,5 @@
-<header>
-    {% include 'partial/header.html.twig'%}
-</header>
+{% include 'partial/header.html.twig'%}
+
 <section class='planExperimentation'>
     <div class="planExperimentation-div">
         <div class='planExperimentation-div-title'>
@@ -18,20 +17,18 @@
                 <div class="planExperimentation-div-div"><p>{{ room.name }}</p></div>
                 <div class="planExperimentation-div-div"><p>{{ room.floor }}</p></div>
                 <div class="planExperimentation-div-div"><p>{{ room.nbWindows }}</p></div>
-                <div  class="planExperimentation-div-modifier"><button  class="planExperimentation-div-button-modifier">Modifier</button></div>
+                <button class="planExperimentation-div-modifier">Modifier</button>
             </div>
 
         {% endfor %}
         <div class='planExperimentation-div-array'>
-            <div class="planExperimentation-div-button-add"><p>Ajouter une salle</p></div>
-            <div class="planExperimentation-div-button-add"><p>Ajouter un S.A</p></div>
+            <button class="planExperimentation-div-button-add">Ajouter une salle</button>
+            <button class="planExperimentation-div-button-add">Ajouter un S.A</button>
         </div>
 
     </div>
 </section>
-<footer>
     {% include 'partial/footer.html.twig'%}
-</footer>
 <style>
 
     body {
@@ -111,19 +108,25 @@
         height: 1.7vw;
     }
 
-    .planExperimentation-div-button-modifier
+    .planExperimentation-div-modifier, .planExperimentation-div-button-add {
+        font-size: 1.3vh;
+    }
+
+    .planExperimentation-div-modifier
     {
         border: 0;
         background-color: #A8EEA2;
     }
 
-    .planExperimentation-div-button-modifier:hover
-    {   
-        color: yellow;;
+    .planExperimentation-div-modifier:hover
+    {
+        cursor: pointer;
+        background-color: #c2f6be;
     }
 
     .planExperimentation-div-button-add
     {
+        border: 0;
         background-color: #A2E0EE;
         margin: 0.8vw 1vw 1vw 1vw;
         height: 1.8vw;
@@ -131,6 +134,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .planExperimentation-div-button-add:hover {
+        cursor: pointer;
+        background-color: #b9ebf6;
     }
 </style>
 
