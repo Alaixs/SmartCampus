@@ -1,0 +1,95 @@
+<session class="popUpAddRoom">
+
+    <div class="addRoom">
+        <div class="title">
+            <p>
+                Ajouter une salle
+            </p>
+        </div>
+        <div>
+            {{ form(addRoomForm) }}
+        </div>
+    </div>
+    <p class="middleLine"></p>
+    <div class="nonAttributedSA">
+        <div class="title">
+            <p>
+                Systèmes d'acquisition non attribués
+            </p>
+        </div>
+        <div>
+            <p>
+                Boucle FOR de tous les SA non attribués
+            </p>
+        </div>
+    </div>
+
+</session>
+
+<style>
+
+    p, label {
+        font-family: "Arial";
+    }
+
+    .popUpAddRoom {
+        margin: auto;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 60%;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25)
+    }
+
+    .popUpAddRoom > div {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .title {
+        margin-bottom: 7vh;
+        background-color: #F9F9F9;
+        width: 100%;
+        height: 8vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #add_room_form {
+        height: 65%;
+        overflow: scroll;
+        padding-right: 8vw;
+    }
+
+    #add_room_form::-webkit-scrollbar {
+        width: 6px; /* For Chrome, Safari, and Opera */
+    }
+
+    #add_room_form > div {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        margin-bottom: 3vh;
+    }
+
+    #add_room_form > div > input[type=text] {
+        height: 4vh;
+        width: 6vw;
+    }
+
+    #add_room_form > div > input[type=number] {
+        height: 4vh;
+        width: 3vw;
+    }
+
+    #add_room_form > div:nth-child(4) {
+        flex-direction: row;
+    }
+    
+    #add_room_form_hasComputers {
+        margin-left: 2vw;
+    }
+</style>
