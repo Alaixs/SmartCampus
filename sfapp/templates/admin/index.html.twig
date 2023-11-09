@@ -1,3 +1,90 @@
 {% include 'partial/header.html.twig'%}
 
-<p>Coucou</p>
+<section class='planExperimentation'>
+    <div class="planExperimentation-div">
+        <div class='planExperimentation-div-title'>
+            <p class="planExperimentation-p-title">Plan d'expérimentation</p>
+        </div>
+        <div class='planExperimentation-div-array'>
+            <div class="planExperimentation-div-div"><p>SALLES</p></div>
+            <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
+            <div class="planExperimentation-div-div"><p>ETAT SA</p></div>
+        </div>
+        <div class='planExperimentation-div-array'>
+            <div class="planExperimentation-div-div"><p>D201</p></div>
+            <div class="planExperimentation-div-div"><p>7243</p></div>
+            <div class="planExperimentation-div-div"><p>En attente</p></div>
+            <div class="planExperimentation-div-button-modifier"><p>modifier</p></div>
+        </div>
+
+    </div>
+</section>
+
+{% include 'partial/footer.html.twig'%}
+
+<style>
+
+.planExperimentation p
+{
+    font-size: 1.7vh;
+    font-family: "Arial";
+    letter-spacing: 0.1vw;
+}
+
+
+.planExperimentation-div-title
+{
+    background-color: #F9F9F9;
+    height: 4vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.planExperimentation-div-title > p
+{
+
+    margin: 0;
+    padding: 0 0 0 2vw;
+}
+
+.planExperimentation-div-array
+{
+    display: flex;
+}
+
+.planExperimentation-div-div
+{
+    background-color: #F9F9F9;
+    margin: 0.5vw 1vw 0 1vw;
+    width: 16vw;
+    text-align: center;
+
+}
+
+
+.planExperimentation-div-button-modifier
+{
+    background-color: #A8EEA2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5vw;
+    xor
+}
+
+.planExperimentation
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.planExperimentation-div
+{
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.255) ;
+}
+
+</style>
+
