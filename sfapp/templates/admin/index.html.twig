@@ -6,10 +6,10 @@
         <div class='planExperimentation-div-title'>
             <p class="planExperimentation-p-title">Plan d'expérimentation</p>
         </div>
-        <div class='planExperimentation-div-array'>
+        <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
             <div class="planExperimentation-div-div"><p>SALLES</p></div>
             <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
-            <div class="planExperimentation-div-div"><p>ETAT SA</p></div>
+            <div class="planExperimentation-div-div"><p>ETAT S.A</p></div>
         </div>
         {% for room in listRooms %}
 
@@ -24,7 +24,7 @@
         {% endfor %}
         <div class='planExperimentation-div-array'>
             <div class="planExperimentation-div-button-add"><p>Ajouter une salle</p></div>
-            <div class="planExperimentation-div-button-add"><p>Ajouter un SA</p></div>
+            <div class="planExperimentation-div-button-add"><p>Ajouter un S.A</p></div>
         </div>
 
     </div>
@@ -60,6 +60,10 @@
         letter-spacing: 0.1vw;
     }
 
+    .planExperimentation-div-array-columnName
+    {
+        margin-bottom: 0.5em;
+    }
 
     .planExperimentation-div-title
     {
@@ -69,7 +73,7 @@
         padding: 0;
         display: flex;
         align-items: center;
-        margin-bottom:  0.7vw
+        margin-bottom:  1vw
     }
 
     .planExperimentation-div-title > p
@@ -88,7 +92,7 @@
     .planExperimentation-div-div
     {
         background-color: #F9F9F9;
-        margin: 0.8vw 1vw 0 1vw;
+        margin: 0.3vw 1vw 0 1vw;
         width: 16vw;
         text-align: center;
 
