@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Doctrine\Persistence\ManagerRegistry;
 
 class AdminController extends AbstractController
 {
@@ -13,13 +13,11 @@ class AdminController extends AbstractController
     public function index(?int $id, ManagerRegistry $doctrine, ManagerRegistry $room): Response
     {
         $entityManager = $doctrine->getManager();
-        $repository = $entityManager->getRepository('App\Entity\Admin');
-        $room = $repository->find($id);
-        $roomName=$room->getSessions();
+        $repository = $entityManager->getRepository('App\Entity\Room');
+        $room = $repository->findAll();
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'IndexController',
-            'givenRoom' => $room,
-            'roomName' => $roomName,
+            'listRooms' => $room,
             'id' => $id,
         ]);
     }

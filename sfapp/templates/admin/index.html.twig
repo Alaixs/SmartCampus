@@ -11,12 +11,17 @@
             <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
             <div class="planExperimentation-div-div"><p>ETAT SA</p></div>
         </div>
-        <div class='planExperimentation-div-array'>
-            <div class="planExperimentation-div-div"><p>D201</p></div>
-            <div class="planExperimentation-div-div"><p>7243</p></div>
-            <div class="planExperimentation-div-div"><p>En attente</p></div>
-            <div  class="planExperimentation-div-modifier"><button  class="planExperimentation-div-button-modifier">Modifier</button></div>
-        </div>
+        {% for room in listRooms %}
+
+
+            <div class='planExperimentation-div-array'>
+                <div class="planExperimentation-div-div"><p>{{ room.name }}</p></div>
+                <div class="planExperimentation-div-div"><p>{{ room.floor }}</p></div>
+                <div class="planExperimentation-div-div"><p>{{ room.nbWindows }}</p></div>
+                <div  class="planExperimentation-div-modifier"><button  class="planExperimentation-div-button-modifier">Modifier</button></div>
+            </div>
+
+        {% endfor %}
         <div class='planExperimentation-div-array'>
             <div class="planExperimentation-div-button-add"><p>Ajouter une salle</p></div>
             <div class="planExperimentation-div-button-add"><p>Ajouter un SA</p></div>
