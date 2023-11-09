@@ -15,7 +15,11 @@
             <div class="planExperimentation-div-div"><p>D201</p></div>
             <div class="planExperimentation-div-div"><p>7243</p></div>
             <div class="planExperimentation-div-div"><p>En attente</p></div>
-            <button class="planExperimentation-div-button-modifier">modifier</button>
+            <div  class="planExperimentation-div-modifier"><button  class="planExperimentation-div-button-modifier">Modifier</button></div>
+        </div>
+        <div class='planExperimentation-div-array'>
+            <div class="planExperimentation-div-button-add"><p>Ajouter une salle</p></div>
+            <div class="planExperimentation-div-button-add"><p>Ajouter un SA</p></div>
         </div>
 
     </div>
@@ -39,6 +43,11 @@
         align-items: center;
     }
 
+    .planExperimentation-div
+    {
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.255) ;
+    }
+
     .planExperimentation p
     {
         font-size: 1.7vh;
@@ -50,11 +59,12 @@
     .planExperimentation-div-title
     {
         background-color: #F9F9F9;
-        height: 4vh;
+        height: 8vh;
         margin: 0;
         padding: 0;
         display: flex;
         align-items: center;
+        margin-bottom:  0.7vw
     }
 
     .planExperimentation-div-title > p
@@ -67,25 +77,29 @@
     .planExperimentation-div-array
     {
         display: flex;
+        align-items: center;
     }
 
     .planExperimentation-div-div
     {
         background-color: #F9F9F9;
-        margin: 0.5vw 1vw 0 1vw;
+        margin: 0.8vw 1vw 0 1vw;
         width: 16vw;
         text-align: center;
 
     }
 
 
-    .planExperimentation-div-button-modifier
+    .planExperimentation-div-modifier
     {
+        margin-top: 1vw;
+        margin-right: 1vw;
         background-color: #A8EEA2;
         display: flex;
         justify-content: center;
         align-items: center;
         width: 5vw;
+        height: 1.7vw;
     }
 
     .planExperimentation-div-button-modifier
@@ -95,14 +109,19 @@
     }
 
     .planExperimentation-div-button-modifier:hover
-    {
+    {   
         color: yellow;;
     }
 
-    .planExperimentation-div
+    .planExperimentation-div-button-add
     {
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.255) ;
+        background-color: #A2E0EE;
+        margin: 0.8vw 1vw 1vw 1vw;
+        height: 1.8vw;
+        width: 16vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-
 </style>
 
