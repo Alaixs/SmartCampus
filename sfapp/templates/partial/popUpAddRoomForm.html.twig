@@ -1,30 +1,24 @@
-<session class="popUpAddRoom">
-
+<section class="popUpAddRoom">
     <div class="addRoom">
         <div class="title">
             <p>
                 Ajouter une salle
             </p>
         </div>
-        <div>
-            {{ form(addRoomForm) }}
+        <div class="formRoom">
+            {{ form_start(addRoomForm) }}
+            <div id="add_room_form">
+                {{ form_rest(addRoomForm) }}
+            </div>
+            <div class="divSubmitButton">
+                <button type="submit" class="submitButtonFormRoom">Envoyer</button>
+                <p>* Obligatoire</p>
+            </div>
+            {{ form_end(addRoomForm) }}
         </div>
     </div>
+</section>
 
-    <div class="listOfSA">
-        <div class="title">
-            <p>
-                Systèmes d'acquisition non attribués
-            </p>
-        </div>
-        <div>
-            <p>
-                Boucle FOR de tous les SA non attribués
-            </p>
-        </div>
-    </div>
-
-</session>
 
 <style>
 
@@ -33,21 +27,35 @@
     }
 
     .popUpAddRoom {
+        background-color: #ffff;
         margin: auto;
         display: flex;
         justify-content: space-around;
         align-items: center;
-        width: 60%;
+        width: 30vw;
         box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
     }
 
     .popUpAddRoom > div {
-        width: 50%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-    
+
+    .formRoom
+    {
+        width: 90%;
+        display: flex;
+    }
+
+    .formRoom > form
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
     .middleLine {
         border: solid black 1px;
         width: 70%;
@@ -55,7 +63,7 @@
     }
 
     .title {
-        margin-bottom: 7vh;
+        margin-bottom: 5vh;
         background-color: #F9F9F9;
         width: 100%;
         height: 8vh;
@@ -66,6 +74,7 @@
 
     #add_room_form {
         height: 80%;
+        width: 19vw;
         overflow: scroll;
         padding-right: 8vw;
     }
@@ -83,18 +92,16 @@
 
     #add_room_form > div > input[type=text] {
         height: 4vh;
-        width: 6vw;
     }
 
     #add_room_form > div > input[type=number] {
         height: 4vh;
-        width: 3vw;
     }
 
     #add_room_form > div:nth-child(4) {
         flex-direction: row;
     }
-    
+
     #add_room_form_hasComputers {
         margin-left: 2vw;
     }
@@ -103,5 +110,24 @@
         height: 80%;
         border-left: solid 1px black;
         width: 100%;
+    }
+
+    .submitButtonFormRoom
+    {
+        border: 0;
+        align-self: center;
+        width: 17vw;
+        height: 2vw;
+        background-color: #A2E0EE;
+    }
+
+    .submitButtonFormRoom:hover {
+        cursor: pointer;
+        background-color: #b9ebf6;
+    }
+
+    .divSubmitButton
+    {
+        display: flex;
     }
 </style>

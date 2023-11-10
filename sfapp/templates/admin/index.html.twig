@@ -1,10 +1,14 @@
 {% include 'partial/header.html.twig'%}
 
+<div id="popup" hidden>
+    {% include 'partial/popUpAddRoomForm.html.twig' %}
+</div>
 <section class='planExperimentation'>
     <div class="planExperimentation-div">
         <div class='planExperimentation-div-title'>
             <p class="planExperimentation-p-title">Plan d'expérimentation</p>
         </div>
+
         <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
             <div class="planExperimentation-div-div"><p>SALLES</p></div>
             <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
@@ -22,13 +26,26 @@
 
         {% endfor %}
         <div class='planExperimentation-div-array'>
-            <button class="planExperimentation-div-button-add">Ajouter une salle</button>
+            <button class="planExperimentation-div-button-add" onclick="togglePopup()">Ajouter une salle</button>
             <button class="planExperimentation-div-button-add">Ajouter un S.A</button>
         </div>
 
     </div>
 </section>
+
     {% include 'partial/footer.html.twig'%}
+
+
+
+<script>
+    function togglePopup() {
+        var popup = document.getElementById('popup');
+        popup.hidden = !popup.hidden;
+    }
+</script>
+
+
+
 <style>
 
     body {
@@ -36,13 +53,19 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        z-index: 1;
+        position: relative;
     }
 
     .planExperimentation
     {
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
+        z-index: 2;
+
+
     }
 
     .planExperimentation-div
@@ -139,6 +162,15 @@
     .planExperimentation-div-button-add:hover {
         cursor: pointer;
         background-color: #b9ebf6;
+    }
+
+    #popup {
+        position: fixed;
+        margin: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000; /* Assurez-vous que la popup est au-dessus de tous les autres éléments */
     }
 </style>
 
