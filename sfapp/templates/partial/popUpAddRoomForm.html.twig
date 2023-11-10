@@ -25,19 +25,16 @@
 <script>
     function quitPopup()
     {
-        var popup = document.getElementById('popup');
+        let popup = document.getElementById('popup');
         popup.hidden = !popup.hidden;
         let buttons = document.getElementsByClassName("button");
-        for (var i = 0; i < buttons.length; i++) {
+        for (let i = 0; i < buttons.length; i++) {
             buttons[i].disabled = false;
             buttons[i].classList.remove('stopHoverButton');
         }
         document.getElementsByClassName('planExperimentation')[0].style.removeProperty('filter');
         document.querySelector('header').style.removeProperty('filter');
         document.querySelector('footer').style.removeProperty('filter');
-
-
-
     }
 
 </script>

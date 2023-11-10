@@ -28,7 +28,6 @@ class AdminController extends AbstractController
             $entityManager->persist($room);
             $entityManager->flush();
             return $this->redirectToRoute('app_admin');
-
         }
 
         return $this->render('admin/index.html.twig', [
@@ -36,7 +35,6 @@ class AdminController extends AbstractController
             'listRooms' => $rooms,
             'id' => $id,
             'addRoomForm' => $form
-
         ]);
     }
 

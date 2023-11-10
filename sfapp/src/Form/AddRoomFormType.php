@@ -22,13 +22,13 @@ class AddRoomFormType extends AbstractType
                 'label' => 'Capacité maximale*'
             ])
             ->add('hasComputers', null, [
-                'label' => 'Comporte des ordinateurs*'
+                'label' => 'Comporte des ordinateurs'
             ])
             ->add('area', null, [
                 'label' => 'Surface*'
             ])
             ->add('exposure', null, [
-                'label' => 'Exposition (nord, sud, est, ouest)*'
+                'label' => 'Exposition*'
             ])
             ->add('nbWindows', null, [
                 'label' => 'Nombre de fenêtres*'

@@ -1,6 +1,7 @@
 {% include 'partial/header.html.twig'%}
 
 {% include 'partial/popUpAddRoomForm.html.twig' %}
+
 <section class='planExperimentation'>
     <div class="planExperimentation-div">
         <div class='planExperimentation-div-title'>
@@ -11,6 +12,12 @@
             <div class="planExperimentation-div-div"><p>SALLES</p></div>
             <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
             <div class="planExperimentation-div-div"><p>ETAT S.A</p></div>
+        </div>
+
+        <div class="noRoom">
+            {% if listRooms is empty %}
+                <p> Aucune salle n'a été ajouté pour le moment </p>
+            {% endif %}
         </div>
         {% for room in listRooms %}
 
@@ -31,7 +38,7 @@
     </div>
 </section>
 
-    {% include 'partial/footer.html.twig'%}
+{% include 'partial/footer.html.twig'%}
 
 
 
@@ -77,16 +84,17 @@
         justify-content: center;
         align-items: center;
         z-index: 2;
-
-
+        height: 80vh;
     }
 
     .planExperimentation-div
     {
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.255) ;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.255);
+        overflow: scroll;
+        height: 100%;
     }
 
-    .planExperimentation p
+    .planExperimentation > p
     {
         font-size: 1.7vh;
         font-family: "Arial";
@@ -96,6 +104,8 @@
     .planExperimentation-div-array-columnName
     {
         margin-bottom: 0.5em;
+        max-height: 70vh;
+
     }
 
     .planExperimentation-div-title
@@ -106,12 +116,11 @@
         padding: 0;
         display: flex;
         align-items: center;
-        margin-bottom:  1vw
+        margin-bottom: 1vw;
     }
 
     .planExperimentation-div-title > p
     {
-
         margin: 0;
         padding: 0 0 0 2vw;
     }
@@ -182,5 +191,12 @@
         background-color: #A2E0EE ;
         cursor: default;
     }
+
+    .noRoom {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
 </style>
 
