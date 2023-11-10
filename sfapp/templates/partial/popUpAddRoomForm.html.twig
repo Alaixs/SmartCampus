@@ -1,26 +1,60 @@
-<section class="popUpAddRoom">
-    <div class="addRoom">
-        <div class="title">
-            <p>
-                Ajouter une salle
-            </p>
-        </div>
-        <div class="formRoom">
-            {{ form_start(addRoomForm) }}
-            <div id="add_room_form">
-                {{ form_rest(addRoomForm) }}
+<section id="popup" hidden>
+    <div class="popUpAddRoom">
+            <button class='cancelButton' onclick='quitPopup()'>+</button>
+        <div class="addRoom">
+            <div class="title">
+                <p>
+                    Ajouter une salle
+                </p>
             </div>
-            <div class="divSubmitButton">
-                <button type="submit" class="submitButtonFormRoom">Envoyer</button>
-                <p>* Obligatoire</p>
+            <div class="formRoom">
+                {{ form_start(addRoomForm) }}
+                <div id="add_room_form">
+                    {{ form_rest(addRoomForm) }}
+                </div>
+                <div class="divSubmitButton">
+                    <button type="submit" class="submitButtonFormRoom">Envoyer</button>
+                    <p>* Obligatoire</p>
+                </div>
+                {{ form_end(addRoomForm) }}
             </div>
-            {{ form_end(addRoomForm) }}
         </div>
     </div>
 </section>
 
+<script>
+    function quitPopup()
+    {
+        var popup = document.getElementById('popup');
+        popup.hidden = !popup.hidden;
+        let buttons = document.getElementsByClassName("button");
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].disabled = false;
+            buttons[i].classList.remove('stopHoverButton');
+        }
+        document.getElementsByClassName('planExperimentation')[0].style.removeProperty('filter');
+        document.querySelector('header').style.removeProperty('filter');
+        document.querySelector('footer').style.removeProperty('filter');
+
+
+
+    }
+
+</script>
 
 <style>
+
+    .cancelButton {
+        position: absolute;
+        top: -1%;
+        right: 0;
+        cursor: pointer;
+        background: none;
+        border: none;
+        font-size: 1.5vw;
+        transform: rotate(45deg);
+        color: #333;
+    }
 
     p, label {
         font-family: "Arial";
@@ -130,4 +164,15 @@
     {
         display: flex;
     }
+
+    #popup {
+        position: fixed;
+        margin: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000; /* Assurez-vous que la popup est au-dessus de tous les autres éléments */
+    }
+
+
 </style>

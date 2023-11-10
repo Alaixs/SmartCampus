@@ -1,8 +1,6 @@
 {% include 'partial/header.html.twig'%}
 
-<div id="popup" hidden>
-    {% include 'partial/popUpAddRoomForm.html.twig' %}
-</div>
+{% include 'partial/popUpAddRoomForm.html.twig' %}
 <section class='planExperimentation'>
     <div class="planExperimentation-div">
         <div class='planExperimentation-div-title'>
@@ -21,13 +19,13 @@
                 <div class="planExperimentation-div-div"><p>{{ room.name }}</p></div>
                 <div class="planExperimentation-div-div"><p>{{ room.floor }}</p></div>
                 <div class="planExperimentation-div-div"><p>{{ room.nbWindows }}</p></div>
-                <button class="planExperimentation-div-modifier">Modifier</button>
+                <button class="planExperimentation-div-modifier button">Modifier</button>
             </div>
 
         {% endfor %}
         <div class='planExperimentation-div-array'>
-            <button class="planExperimentation-div-button-add" onclick="togglePopup()">Ajouter une salle</button>
-            <button class="planExperimentation-div-button-add">Ajouter un S.A</button>
+            <button class="planExperimentation-div-button-add button" onclick="togglePopup()">Ajouter une salle</button>
+            <button class="planExperimentation-div-button-add button">Ajouter un S.A</button>
         </div>
 
     </div>
@@ -39,9 +37,24 @@
 
 <script>
     function togglePopup() {
+        disabledButton();
+        document.getElementsByClassName('planExperimentation')[0].style.filter = 'blur(5px)';
+        document.querySelector('header').style.filter = 'blur(5px)';
+        document.querySelector('footer').style.filter = 'blur(5px)';
+
         var popup = document.getElementById('popup');
         popup.hidden = !popup.hidden;
     }
+
+    function disabledButton()
+    {
+        let buttons = document.getElementsByClassName("button");
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].disabled = true;
+            buttons[i].classList.add('stopHoverButton')
+        }
+    }
+
 </script>
 
 
@@ -164,13 +177,9 @@
         background-color: #b9ebf6;
     }
 
-    #popup {
-        position: fixed;
-        margin: auto;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1000; /* Assurez-vous que la popup est au-dessus de tous les autres éléments */
+    .stopHoverButton:hover
+    {
+        background-color: #A2E0EE ;
     }
 </style>
 

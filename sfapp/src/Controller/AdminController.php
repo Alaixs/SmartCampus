@@ -27,6 +27,7 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($room);
             $entityManager->flush();
+            return $this->redirectToRoute('app_admin');
 
         }
 
