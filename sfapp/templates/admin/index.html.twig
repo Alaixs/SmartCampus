@@ -19,17 +19,19 @@
                 <p> Aucune salle n'a été ajouté pour le moment </p>
             {% endif %}
         </div>
-        {% for room in listRooms %}
+        <div class="planExperimentation-div-allRoom">
+            {% for room in listRooms %}
 
 
-            <div class='planExperimentation-div-array'>
-                <div class="planExperimentation-div-div"><p>{{ room.name }}</p></div>
-                <div class="planExperimentation-div-div"><p>N/A</p></div>
-                <div class="planExperimentation-div-div"><p> - </p></div>
-                <button class="planExperimentation-div-modifier button">Attribuer</button>
-            </div>
+                <div class='planExperimentation-div-array'>
+                    <div class="planExperimentation-div-div"><p>{{ room.name }}</p></div>
+                    <div class="planExperimentation-div-div"><p>N/A</p></div>
+                    <div class="planExperimentation-div-div"><p> - </p></div>
+                    <button class="planExperimentation-div-modifier button">Attribuer</button>
+                </div>
 
-        {% endfor %}
+            {% endfor %}
+        </div>
         <div class='planExperimentation-div-array'>
             <button class="planExperimentation-div-button-add button" onclick="togglePopup()">Ajouter une salle</button>
             <button class="planExperimentation-div-button-add button">Ajouter un S.A</button>
@@ -58,7 +60,16 @@
         let buttons = document.getElementsByClassName("button");
         for (var i = 0; i < buttons.length; i++) {
             buttons[i].disabled = true;
-            buttons[i].classList.add('stopHoverButton')
+            if(buttons[i].classList[0] == 'planExperimentation-div-button-add')
+            {
+                buttons[i].classList.add('stopHoverButtonAdd');
+            }
+            else
+            {
+                buttons[i].classList.add('stopHoverButtonModify');
+
+            }
+
         }
     }
 
@@ -90,8 +101,13 @@
     .planExperimentation-div
     {
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.255);
-        overflow: scroll;
         height: 100%;
+    }
+
+    .planExperimentation-div-allRoom
+    {
+        overflow: scroll;
+        height: 72%;
     }
 
     .planExperimentation > p
@@ -186,9 +202,15 @@
         background-color: #b9ebf6;
     }
 
-    .stopHoverButton:hover
+    .stopHoverButtonAdd:hover
     {
         background-color: #A2E0EE ;
+        cursor: default;
+    }
+
+    .stopHoverButtonModify:hover
+    {
+        background-color: #A8EEA2 ;
         cursor: default;
     }
 
