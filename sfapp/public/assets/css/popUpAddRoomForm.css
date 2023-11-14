@@ -66,6 +66,7 @@ p, label {
     width: 6px; /* For Chrome, Safari, and Opera */
 }
 
+
 #add_room_form > div {
     display: flex;
     flex-direction: column;
