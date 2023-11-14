@@ -20,3 +20,5 @@ function quitPopup()
     document.querySelector('header').style.removeProperty('filter');
     document.querySelector('footer').style.removeProperty('filter');
 }
+
+

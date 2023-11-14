@@ -117,6 +117,7 @@ p, label {
 .divSubmitButton
 {
     display: flex;
+    flex-direction: column;
 }
 
 #popup {
