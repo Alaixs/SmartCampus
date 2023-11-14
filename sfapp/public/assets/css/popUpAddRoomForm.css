@@ -44,11 +44,6 @@ p, label {
     justify-content: space-around;
     align-items: center;
 }
-.middleLine {
-    border: solid black 1px;
-    width: 70%;
-    transform: rotate(90deg);
-}
 
 .title {
     margin-bottom: 5vh;
@@ -94,12 +89,6 @@ p, label {
     margin-left: 2vw;
 }
 
-.listOfSA > div:nth-child(2) {
-    height: 80%;
-    border-left: solid 1px black;
-    width: 100%;
-}
-
 .submitButtonFormRoom
 {
     border: 0;
@@ -128,3 +117,11 @@ p, label {
     transform: translate(-50%, -50%);
     z-index: 1000; /* Assurez-vous que la popup est au-dessus de tous les autres éléments */
 }
+
+#add_room_form_exposure {
+    background-color: white;
+    height: 4vh;
+    border: solid black 1px;
+}
+
+

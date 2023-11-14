@@ -1,5 +1,10 @@
 function quitPopup()
 {
+    if(document.getElementById('popup').hidden)
+    {
+        return;
+    }
+
     let popup = document.getElementById('popup');
     popup.hidden = !popup.hidden;
     let buttons = document.getElementsByClassName("button");
@@ -19,6 +24,6 @@ function quitPopup()
     document.getElementsByClassName('planExperimentation')[0].style.removeProperty('filter');
     document.querySelector('header').style.removeProperty('filter');
     document.querySelector('footer').style.removeProperty('filter');
-}
 
+}
 

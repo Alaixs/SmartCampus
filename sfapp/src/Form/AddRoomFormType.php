@@ -3,9 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Room;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class AddRoomFormType extends AbstractType
 {
@@ -27,7 +29,14 @@ class AddRoomFormType extends AbstractType
             ->add('area', null, [
                 'label' => 'Surface*'
             ])
-            ->add('exposure', null, [
+            ->add('exposure', ChoiceType::class, [
+                'choices' => [
+                    'Nord' => 'north',
+                    'Sud' => 'south',
+                    'Est' => 'east',
+                    'Ouest' => 'west'
+                ],
+
                 'label' => 'Exposition*'
             ])
             ->add('nbWindows', null, [
