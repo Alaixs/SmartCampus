@@ -10,33 +10,54 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AdminController extends AbstractController
 {
     #[Route('/', name: 'app_admin')]
-    public function index(?int $id, ManagerRegistry $doctrine, ManagerRegistry $room, Request $request): Response
+    public function index(?int $id, ManagerRegistry $doctrine, Request $request, ValidatorInterface $validator): Response
     {
         $entityManager = $doctrine->getManager();
         $repository = $entityManager->getRepository('App\Entity\Room');
         $rooms = $repository->findAll();
         $room = new Room();
-
+    
         $form = $this->createForm(AddRoomFormType::class, $room);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($room);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_admin');
+    
+        if ($form->isSubmitted()) {
+            $errors = $validator->validate($room);
+    
+            if (count($errors) > 0) {
+                $response = $this->render('admin/index.html.twig', [
+                    'controller_name' => 'IndexController',
+                    'listRooms' => $rooms,
+                    'id' => $id,
+                    'addRoomForm' => $form,
+                    'errors' => $errors,
+                ]);
+    
+                $response->setContent($response->getContent() . "<script>togglePopup();</script>");
+    
+                return $response;
+            }
+    
+            if ($form->isValid()) {
+                $entityManager->persist($room);
+                $entityManager->flush();
+    
+                return $this->redirectToRoute('app_admin');
+            }
         }
-
+    
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'IndexController',
             'listRooms' => $rooms,
             'id' => $id,
-            'addRoomForm' => $form
+            'addRoomForm' => $form,
         ]);
     }
+    
 
     #[Route('/addRoom', name: 'addRoom')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
