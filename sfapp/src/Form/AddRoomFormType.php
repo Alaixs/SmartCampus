@@ -28,6 +28,7 @@ class AddRoomFormType extends AbstractType
                     'Deuxième étage' => 2,
                     'Troisième étage' => 3
                 ],
+                'label' => 'Etage',
 
                 
             ])
@@ -41,7 +42,7 @@ class AddRoomFormType extends AbstractType
             ])
             ->add('area', null, [
                 'required' => true,
-                'label' => 'Surface'
+                'label' => 'Surface (en m²)'
             ])
             ->add('exposure', ChoiceType::class, [
                 'required' => true,
