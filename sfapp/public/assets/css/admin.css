@@ -103,6 +103,25 @@ body {
 
 }
 
+.planExperimentation-div-roomName
+{
+    display: flex;
+    align-items: center;
+}
+
+.planExperimentation-div-roomName > div
+{
+    width: 50%;
+    display: flex;
+    justify-content: end;
+}
+
+.planExperimentation-div-roomName > div >  a > img
+{
+    width: 1.3vw;
+    height: 1.3vw;
+    padding-right: 1vw;
+}
 
 .planExperimentation-div-modifier
 {

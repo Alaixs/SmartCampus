@@ -49,4 +49,26 @@ class AdminController extends AbstractController
             'addRoomForm' => $form
         ]);
     }
+
+    #[Route('/modifRoom/{roomName}', name: 'addRoom')]
+    public function modifiRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
+        $form = $this->createForm(AddRoomFormType::class, $room);
+
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager->persist($room);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_admin');
+        }
+
+        return $this->render('admin/modifRoom.html.twig', [
+            'room' => $room,
+            'addRoomForm' => $form
+        ]);
+    }
 }

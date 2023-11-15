@@ -39,7 +39,17 @@
 
 
                     <div class='planExperimentation-div-array'>
-                        <div class="planExperimentation-div-div"><p>{{ room.name }}</p></div>
+                        <div class="planExperimentation-div-div planExperimentation-div-roomName">
+                            <div>
+                                <p>{{ room.name }}</p>
+                            </div>
+                            <div>
+                                <a href="/modifRoom/{{ room.name }}">
+                                    <img alt='modifier' src={{asset('assets/img/modiferSalle.png') }}>
+                                </a>
+                            </div>
+
+                        </div>
                         <div class="planExperimentation-div-div"><p>N/A</p></div>
                         <div class="planExperimentation-div-div"><p> - </p></div>
                         <button class="planExperimentation-div-modifier button">Attribuer</button>
