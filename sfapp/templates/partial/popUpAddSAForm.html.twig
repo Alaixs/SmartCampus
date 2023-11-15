@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="{{ asset('assets/css/popUpAddSAForm.css') }}">
+
+<div class="popUpAddSA">
+    <button class='cancelButton' onclick='quitPopup()'>+</button>
+    <div class="addSA">
+        <div class="title">
+            <p>
+                Ajouter un SA
+            </p>
+        </div>
+        <div class="formSA">
+            {{ form_start(addSAForm) }}
+            <div id="add_sa_form">
+                {{ form_rest(addSAForm) }}
+            </div>
+            <div class="divSubmitButton">
+                <p>* Obligatoire</p>
+                <button type="submit" class="submitButtonFormSA">Envoyer</button>
+
+            </div>
+            {{ form_end(addSAForm) }}
+        </div>
+    </div>
+</div>
+
+
