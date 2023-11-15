@@ -12,10 +12,6 @@
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
                 <p class="planExperimentation-p-title">Plan d'expérimentation</p>
-                <div class="add-or-del-div">
-                    <button class="planExperimentation-div-button-add button add-del-button">Ajouter un S.A</button>
-                    <button class="planExperimentation-div-button-add button add-del-button">Supprimer un S.A</button>
-                </div>
             </div>
 
             <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
@@ -57,6 +53,10 @@
 
     {% include 'partial/footer.html.twig'%}
 
+
+    <script src="{{ asset('assets/js/admin.js') }}"></script>
+    <script src="{{ asset('assets/js/quitPopup.js') }}"></script>
+    <script src="{{ asset('assets/js/keyEventEscapeQuitPopup.js') }}"></script>
 
 </body>
 </html>
