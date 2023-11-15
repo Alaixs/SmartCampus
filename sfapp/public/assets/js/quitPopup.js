@@ -1,12 +1,6 @@
 function quitPopup()
 {
-    if(document.getElementById('popup').hidden)
-    {
-        return;
-    }
-
-    let popup = document.getElementById('popup');
-    popup.hidden = !popup.hidden;
+    document.getElementById('popup').remove();
     let buttons = document.getElementsByClassName("button");
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].disabled = false;

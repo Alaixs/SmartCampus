@@ -54,7 +54,7 @@ class AdminController extends AbstractController
             'controller_name' => 'IndexController',
             'listRooms' => $rooms,
             'id' => $id,
-            'addRoomForm' => $form,
+//            'addRoomForm' => $form,
         ]);
     }
     
