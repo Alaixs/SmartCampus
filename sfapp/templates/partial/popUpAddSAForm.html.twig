@@ -5,7 +5,7 @@
     <div class="addSA">
         <div class="title">
             <p>
-                Ajouter un SA
+                Ajouter un système d'acquisition
             </p>
         </div>
         <div class="formSA">
@@ -19,6 +19,14 @@
 
             </div>
             {{ form_end(addSAForm) }}
+        </div>
+        <div class="listeAllSA">
+            <p>Systèmes acquisition déjà enregistrés</p>
+            <ul>
+                {% for sa in listeSa %}
+                    <li>{{ sa.number }}</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </div>

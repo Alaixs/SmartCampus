@@ -82,13 +82,17 @@ class AdminController extends AbstractController
     }
 
     #[Route('/addSA', name: 'addSA')]
-    public function newSA(Request $request, EntityManagerInterface $entityManager): Response
+    public function newSA(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
         $sa = new AcquisitionUnit();
         $sa->setState("En attente");
 
         $form = $this->createForm(AddSaFormType::class, $sa);
         $form->handleRequest($request);
+
+        $SaManager = $doctrine->getManager();
+        $repository = $SaManager->getRepository('App\Entity\AcquisitionUnit');
+        $listeSa = $repository->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($sa);
@@ -97,7 +101,8 @@ class AdminController extends AbstractController
         }
 
         return $this->render('partial/popUpAddSAForm.html.twig', [
-            'addSAForm' => $form
+            'addSAForm' => $form,
+            'listeSa' => $listeSa,
         ]);
     }
 }
