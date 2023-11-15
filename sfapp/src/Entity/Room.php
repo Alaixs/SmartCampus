@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\RoomRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RoomRepository::class)]
 class Room
@@ -14,24 +15,33 @@ class Room
     private ?int $id = null;
 
     #[ORM\Column(length: 4)]
+    #[Assert\NotBlank(message: 'Le nom de la salle ne peut pas être vide')]
+    #[Assert\Length(
+        max: 4,
+        maxMessage: 'Le nom de la salle ne peut pas contenir plus de 4 caractères'
+    )]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Le numéro d\'étage ne peut pas être vide')]
     private ?int $floor = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'La capacité ne peut pas être vide')]
     private ?int $capacity = null;
 
     #[ORM\Column]
     private ?bool $hasComputers = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'La surface ne peut pas être vide')]
     private ?int $area = null;
 
     #[ORM\Column(length: 25)]
     private ?string $exposure = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Le nombre de fenêtres ne peut pas être vide')]
     private ?int $nbWindows = null;
 
     public function getId(): ?int

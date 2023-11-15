@@ -1,144 +1,64 @@
-{% include 'partial/header.html.twig'%}
-
-<section class='planExperimentation'>
-    <div class="planExperimentation-div">
-        <div class='planExperimentation-div-title'>
-            <p class="planExperimentation-p-title">Plan d'expérimentation</p>
-        </div>
-        <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
-            <div class="planExperimentation-div-div"><p>SALLES</p></div>
-            <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
-            <div class="planExperimentation-div-div"><p>ETAT S.A</p></div>
-        </div>
-        {% for room in listRooms %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>SmartCampus</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
+</head>
+<body>
+    {% include 'partial/header.html.twig'%}
 
 
-            <div class='planExperimentation-div-array'>
-                <div class="planExperimentation-div-div"><p>{{ room.name }}</p></div>
-                <div class="planExperimentation-div-div"><p>{{ room.floor }}</p></div>
-                <div class="planExperimentation-div-div"><p>{{ room.nbWindows }}</p></div>
-                <button class="planExperimentation-div-modifier">Modifier</button>
+    <section class='planExperimentation'>
+        <div class="planExperimentation-div">
+            <div class='planExperimentation-div-title'>
+                <p class="planExperimentation-p-title">Plan d'expérimentation</p>
+                <div class="add-or-del-div">
+                    <button class="planExperimentation-div-button-add button add-del-button">Ajouter un S.A</button>
+                    <button class="planExperimentation-div-button-add button add-del-button">Supprimer un S.A</button>
+                </div>
             </div>
 
-        {% endfor %}
-        <div class='planExperimentation-div-array'>
-            <button class="planExperimentation-div-button-add">Ajouter une salle</button>
-            <button class="planExperimentation-div-button-add">Ajouter un S.A</button>
+            <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
+                <div class="planExperimentation-div-div"><p>SALLES</p></div>
+                <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
+                <div class="planExperimentation-div-div"><p>ETAT S.A</p></div>
+            </div>
+            {% if listRooms is empty %}
+            <div class="noRoom">
+
+                    <p> Aucune salle n'a été ajouté pour le moment </p>
+
+            </div>
+
+
+
+            {% else %}
+
+            <div class="planExperimentation-div-allRoom">
+                {% for room in listRooms %}
+
+
+                    <div class='planExperimentation-div-array'>
+                        <div class="planExperimentation-div-div"><p>{{ room.name }}</p></div>
+                        <div class="planExperimentation-div-div"><p>N/A</p></div>
+                        <div class="planExperimentation-div-div"><p> - </p></div>
+                        <button class="planExperimentation-div-modifier button">Attribuer</button>
+                    </div>
+
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class='planExperimentation-div-array'>
+                <a href="/addRoom" class="planExperimentation-div-button-add button" onclick="togglePopup('/addRoom')">Ajouter une salle</a>
+            </div>
         </div>
+    </section>
 
-    </div>
-</section>
     {% include 'partial/footer.html.twig'%}
-<style>
-
-    body {
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .planExperimentation
-    {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .planExperimentation-div
-    {
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.255) ;
-    }
-
-    .planExperimentation p
-    {
-        font-size: 1.7vh;
-        font-family: "Arial";
-        letter-spacing: 0.1vw;
-    }
-
-    .planExperimentation-div-array-columnName
-    {
-        margin-bottom: 0.5em;
-    }
-
-    .planExperimentation-div-title
-    {
-        background-color: #F9F9F9;
-        height: 8vh;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        margin-bottom:  1vw
-    }
-
-    .planExperimentation-div-title > p
-    {
-
-        margin: 0;
-        padding: 0 0 0 2vw;
-    }
-
-    .planExperimentation-div-array
-    {
-        display: flex;
-        align-items: center;
-    }
-
-    .planExperimentation-div-div
-    {
-        background-color: #F9F9F9;
-        margin: 0.3vw 1vw 0 1vw;
-        width: 16vw;
-        text-align: center;
-
-    }
 
 
-    .planExperimentation-div-modifier
-    {
-        margin-top: 1vw;
-        margin-right: 1vw;
-        background-color: #A8EEA2;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 5vw;
-        height: 1.7vw;
-    }
+</body>
+</html>
 
-    .planExperimentation-div-modifier, .planExperimentation-div-button-add {
-        font-size: 1.3vh;
-    }
 
-    .planExperimentation-div-modifier
-    {
-        border: 0;
-        background-color: #A8EEA2;
-    }
-
-    .planExperimentation-div-modifier:hover
-    {
-        cursor: pointer;
-        background-color: #c2f6be;
-    }
-
-    .planExperimentation-div-button-add
-    {
-        border: 0;
-        background-color: #A2E0EE;
-        margin: 0.8vw 1vw 1vw 1vw;
-        height: 1.8vw;
-        width: 16vw;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .planExperimentation-div-button-add:hover {
-        cursor: pointer;
-        background-color: #b9ebf6;
-    }
-</style>
 
