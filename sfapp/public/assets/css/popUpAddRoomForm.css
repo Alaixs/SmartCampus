@@ -119,7 +119,7 @@ p, label {
     z-index: 1000; /* Assurez-vous que la popup est au-dessus de tous les autres éléments */
 }
 
-#add_room_form_exposure {
+#add_room_form_exposure, #add_room_form_floor {
     background-color: white;
     height: 4vh;
     border: solid black 1px;
