@@ -9,17 +9,16 @@
                 </p>
             </div>
             <div class="formRoom">
-                {{ form_start(addRoomForm, {'attr': {'method': 'POST', 'action': path('addRoom')}}) }}
+                {{ form_start(addRoomForm) }}
                 <div id="add_room_form">
                     {{ form_rest(addRoomForm) }}
                 </div>
                 <div class="divSubmitButton">
                     <p>* Obligatoire</p>
                     <button type="submit" class="submitButtonFormRoom">Envoyer</button>
+
                 </div>
                 {{ form_end(addRoomForm) }}
             </div>
         </div>
     </div>
-
-
