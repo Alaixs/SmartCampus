@@ -20,41 +20,11 @@ class AdminController extends AbstractController
         $entityManager = $doctrine->getManager();
         $repository = $entityManager->getRepository('App\Entity\Room');
         $rooms = $repository->findAll();
-        $room = new Room();
-    
-        $form = $this->createForm(AddRoomFormType::class, $room);
-        $form->handleRequest($request);
-    
-        if ($form->isSubmitted()) {
-            $errors = $validator->validate($room);
-    
-            if (count($errors) > 0) {
-                $response = $this->render('admin/index.html.twig', [
-                    'controller_name' => 'IndexController',
-                    'listRooms' => $rooms,
-                    'id' => $id,
-                    'addRoomForm' => $form,
-                    'errors' => $errors,
-                ]);
-    
-                $response->setContent($response->getContent() . "<script>togglePopup();</script>");
-    
-                return $response;
-            }
-    
-            if ($form->isValid()) {
-                $entityManager->persist($room);
-                $entityManager->flush();
-    
-                return $this->redirectToRoute('app_admin');
-            }
-        }
-    
+
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'IndexController',
             'listRooms' => $rooms,
             'id' => $id,
-//            'addRoomForm' => $form,
         ]);
     }
     
@@ -62,17 +32,19 @@ class AdminController extends AbstractController
     #[Route('/addRoom', name: 'addRoom')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+
         $room = new Room();
 
         $form = $this->createForm(AddRoomFormType::class, $room);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager->persist($room);
             $entityManager->flush();
-
+            return $this->redirectToRoute('app_admin');
         }
-
         return $this->render('partial/popUpAddRoomForm.html.twig', [
             'addRoomForm' => $form
         ]);
