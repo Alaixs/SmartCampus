@@ -12,6 +12,10 @@
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
                 <p class="planExperimentation-p-title">Plan d'expérimentation</p>
+                <div class="add-or-del-div">
+                    <button class="planExperimentation-div-button-add button add-del-button">Ajouter un S.A</button>
+                    <button class="planExperimentation-div-button-add button add-del-button">Supprimer un S.A</button>
+                </div>
             </div>
 
             <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
@@ -45,8 +49,7 @@
             </div>
             {% endif %}
             <div class='planExperimentation-div-array'>
-                <button class="planExperimentation-div-button-add button" onclick="togglePopup('/addRoom')">Ajouter une salle</button>
-                <button class="planExperimentation-div-button-add button">Ajouter un S.A</button>
+                <a href="/addRoom" class="planExperimentation-div-button-add button" onclick="togglePopup('/addRoom')">Ajouter une salle</a>
             </div>
         </div>
     </section>
