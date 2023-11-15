@@ -1,9 +1,4 @@
- body{
-overflow: hidden;
-} 
-
-
-.returnButton {
+.cancelButton {
     position: absolute;
     top: -1%;
     right: 0;
@@ -11,6 +6,7 @@ overflow: hidden;
     background: none;
     border: none;
     font-size: 1.5vw;
+    transform: rotate(45deg);
     color: #333;
 }
 
@@ -20,7 +16,7 @@ p, label {
 
 .popUpAddRoom {
     background-color: #ffff;
-    margin: 2vh auto;
+    margin: auto;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -134,11 +130,4 @@ p, label {
     content: ' *';
 
 }
-
-
-.error {
-    border-color: red; /* Ajoutez la couleur de votre choix pour les champs en erreur */
-    color : red;
-}
-
 

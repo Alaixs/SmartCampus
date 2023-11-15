@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <title>SmartCampus - Ajouter une salle</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/popUpAddRoomForm.css') }}">
-    {% include 'partial/header.html.twig'%}
-</head>
-<body>
+<link rel="stylesheet" href="{{ asset('assets/css/popUpAddRoomForm.css') }}">
+
     <div class="popUpAddRoom">
+            <button class='cancelButton' onclick='quitPopup()'>+</button>
         <div class="addRoom">
             <div class="title">
                 <p>
@@ -21,12 +16,11 @@
                 <div class="divSubmitButton">
                     <p>* Obligatoire</p>
                     <button type="submit" class="submitButtonFormRoom">Envoyer</button>
+
                 </div>
                 {{ form_end(addRoomForm) }}
             </div>
         </div>
     </div>
 
-    {% include 'partial/footer.html.twig'%}
-</body>
-</html>
+
