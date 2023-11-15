@@ -4,7 +4,11 @@
 Contenu : 
 - [Prérequis](#prérequis)
   - [1. Extensions Visual Studio Code](#1-extensions-visual-studio-code)
-- [Démarrage](#démarrage)
+- [Démarrage Automatique](#démarrage-automatique)
+  - [1. Cloner la stack du projet](#1-cloner-la-stack-du-projet)
+  - [2. Exécuter le script](#2-exécuter-le-script)
+  - [3. Accéder au site en local](#3-accéder-au-site-en-local)
+- [Démarrage Manuel](#démarrage-manuel)
   - [1. Cloner la stack du projet](#1-cloner-la-stack-du-projet)
   - [2. Démarrer la stack du projet](#2-démarrer-la-stack-du-projet)
   - [3. Les commandes utiles](#3-les-commandes-utiles)
@@ -13,7 +17,9 @@ Contenu :
     - [Sous Mac OS](#sous-mac-os)
   - [5. Récupération des tables de la base de données](#5-récupération-des-tables-de-la-base-de-données)
   - [6. Accéder au site en local](#6-accéder-au-site-en-local)
-- [Partager le projet](#partager-le-projet)
+- [Connexion à la base de données sur votre IDE](#connexion-à-la-base-de-données-sur-votre-ide)
+  - [1. Ajouter une instance de base de données](#1-ajouter-une-instance-de-base-de-données)
+  - [2. Saisir les identifiants](#2-saisir-les-identifiants)
 
 --- 
 
@@ -36,7 +42,29 @@ De manière optionnelle, mais fortement recommandée :
 - MySQL de Weijan Chen
 - Symfony code snippets
 
-## Démarrage
+## Démarrage Automatique
+
+### 1. Cloner la stack du projet
+
+Cloner le projet git :
+```
+git clone 'lien SSH'
+```
+
+### 2. Exécuter le script
+
+Dans un terminal positionné dans le dossier de la stack du projet :
+```
+./start.sh
+```
+
+### 3. Accéder au site en local
+
+Ouvrir un navigateur web quelconque et rechercher `localhost:8000` dans la barre de recherche.
+
+---
+
+## Démarrage Manuel
 
 ### 1. Cloner la stack du projet 
 
@@ -45,7 +73,7 @@ Cloner le projet git :
 git clone 'lien SSH'
 ```
 
-### 2. Démarrer la stack du projet 
+### 2. Démarrer la stack du projet
 
 Dans un terminal positionné dans le dossier de la stack du projet : 
 
@@ -63,7 +91,6 @@ docker compose ps
 
 Dans un terminal positionné dans le dossier de la stack :
 
-j'ai touché ton readme je t'attends daddy 🫦
 
 - se positionner dans le conteneur `sfapp` :
 ```
@@ -111,3 +138,19 @@ php bin/console doctrine:migrations:migrate
 ### 6. Accéder au site en local
 
 Ouvrir un navigateur web quelconque et rechercher `localhost:8000` dans la barre de recherche.
+
+---
+
+## Connexion à la base de données sur votre IDE
+
+### 1. Ajouter une instance de base de données
+
+Sélectionnez `MariaDB` comme SGBD.
+
+### 2. Saisir les identifiants
+
+Complétez la page avec les informations suivantes : 
+- User : `udbsfapp`
+- Password : `pdbsfapp`
+- Database : `dbsfapp`
+- Port : `3306`
