@@ -21,6 +21,7 @@ class AddRoomFormType extends AbstractType
 
             ->add('floor', ChoiceType::class, [
                 'required' => true,
+                'label' => 'Étage',
                 'row_attr' => ['class' => 'rolling_menu'],
                 'choices' => [
                     'Rez de chaussée' => 0,

@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Form\AddRoomFormType;
+use App\Form\AddSaFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,10 +32,11 @@ class AdminController extends AbstractController
     
 
     #[Route('/addRoom', name: 'addRoom')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function newRoom(Request $request, EntityManagerInterface $entityManager): Response
     {
 
         $room = new Room();
+
 
         $form = $this->createForm(AddRoomFormType::class, $room);
         $form->handleRequest($request);
@@ -49,4 +52,30 @@ class AdminController extends AbstractController
             'addRoomForm' => $form
         ]);
     }
+
+    #[Route('/addSA', name: 'addSA')]
+    public function newSA(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
+    {
+        $sa = new AcquisitionUnit();
+        $sa->setState("En attente");
+
+        $form = $this->createForm(AddSaFormType::class, $sa);
+        $form->handleRequest($request);
+
+        $SaManager = $doctrine->getManager();
+        $repository = $SaManager->getRepository('App\Entity\AcquisitionUnit');
+        $listeSa = $repository->findAll();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($sa);
+            $entityManager->flush();
+
+        }
+
+        return $this->render('partial/popUpAddSAForm.html.twig', [
+            'addSAForm' => $form,
+            'listeSa' => $listeSa,
+        ]);
+    }
 }
+
