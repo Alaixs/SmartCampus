@@ -9,8 +9,6 @@ body {
 
 .planExperimentation
 {
-    font-size: 1.7vh;
-    font-family: "Arial";
     position: relative;
     display: flex;
     justify-content: center;
@@ -30,13 +28,14 @@ body {
 .planExperimentation-div-allRoom
 {
     overflow: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
     height: 50vh;
 }
 
 .planExperimentation > p
 {
-    font-size: 2vh;
+    font-size: 1.7vh;
+    font-family: "Arial";
     letter-spacing: 0.1vw;
 }
 
@@ -56,36 +55,12 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 1vw;
-    justify-content: space-between;
-}
-
-.planExperimentation > div
-{
-    display: flex;
 }
 
 .planExperimentation-div-title > p
 {
     margin: 0;
     padding: 0 0 0 2vw;
-}
-
-.add-or-del-div {
-    display: flex;
-    flex-direction: row;
-    width: 25vw;
-}
-
-.add-or-del-div > button:nth-child(2) {
-    background-color: #EEA2A2;
-}
-
-.add-or-del-div > button:nth-child(2):hover {
-    background-color: #f5b5b5;
-}
-
-.add-del-button {
-    height: 10vh;
 }
 
 .planExperimentation-div-array
@@ -136,8 +111,6 @@ body {
 
 .planExperimentation-div-modifier, .planExperimentation-div-button-add {
     font-size: 1.3vh;
-    text-decoration: none;
-    color: black;
 }
 
 .planExperimentation-div-modifier
