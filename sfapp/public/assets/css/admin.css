@@ -30,14 +30,13 @@ body {
 .planExperimentation-div-allRoom
 {
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 50vh;
 }
 
 .planExperimentation > p
 {
     font-size: 2vh;
-    font-family: "Arial";
     letter-spacing: 0.1vw;
 }
 
@@ -120,7 +119,6 @@ body {
     font-size: 1.3vh;
     text-decoration: none;
     color: black;
-    font-family: Arial;
 }
 
 .planExperimentation-div-modifier
