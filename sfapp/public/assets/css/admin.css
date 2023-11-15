@@ -9,6 +9,8 @@ body {
 
 .planExperimentation
 {
+    font-size: 1.7vh;
+    font-family: "Arial";
     position: relative;
     display: flex;
     justify-content: center;
@@ -28,14 +30,13 @@ body {
 .planExperimentation-div-allRoom
 {
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 50vh;
 }
 
 .planExperimentation > p
 {
-    font-size: 1.7vh;
-    font-family: "Arial";
+    font-size: 2vh;
     letter-spacing: 0.1vw;
 }
 
@@ -55,12 +56,33 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 1vw;
+    justify-content: space-between;
+}
+
+.planExperimentation > div
+{
+    display: flex;
 }
 
 .planExperimentation-div-title > p
 {
     margin: 0;
     padding: 0 0 0 2vw;
+}
+
+.add-or-del-div {
+    display: flex;
+    flex-direction: row;
+    width: 25vw;
+}
+
+.add-or-del-div > :nth-child(2) {
+    background-color: #EEA2A2;
+}
+
+
+.add-del-button {
+    height: 10vh;
 }
 
 .planExperimentation-div-array
@@ -78,25 +100,6 @@ body {
 
 }
 
-.planExperimentation-div-roomName
-{
-    display: flex;
-    align-items: center;
-}
-
-.planExperimentation-div-roomName > div
-{
-    width: 50%;
-    display: flex;
-    justify-content: end;
-}
-
-.planExperimentation-div-roomName > div >  a > img
-{
-    width: 1.3vw;
-    height: 1.3vw;
-    padding-right: 1vw;
-}
 
 .planExperimentation-div-modifier
 {
@@ -111,6 +114,8 @@ body {
 
 .planExperimentation-div-modifier, .planExperimentation-div-button-add {
     font-size: 1.3vh;
+    text-decoration: none;
+    color: black;
 }
 
 .planExperimentation-div-modifier

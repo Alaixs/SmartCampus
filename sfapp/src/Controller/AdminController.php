@@ -22,67 +22,38 @@ class AdminController extends AbstractController
         $entityManager = $doctrine->getManager();
         $repository = $entityManager->getRepository('App\Entity\Room');
         $rooms = $repository->findAll();
-        $room = new Room();
-    
-        $form = $this->createForm(AddRoomFormType::class, $room);
-        $form->handleRequest($request);
-    
-        if ($form->isSubmitted()) {
-            $errors = $validator->validate($room);
-    
-            if (count($errors) > 0) {
-                $response = $this->render('admin/index.html.twig', [
-                    'controller_name' => 'IndexController',
-                    'listRooms' => $rooms,
-                    'id' => $id,
-                    'addRoomForm' => $form,
-                    'errors' => $errors,
-                ]);
-    
-                $response->setContent($response->getContent() . "<script>togglePopup();</script>");
-    
-                return $response;
-            }
-    
-            if ($form->isValid()) {
-                $entityManager->persist($room);
-                $entityManager->flush();
-    
-                return $this->redirectToRoute('app_admin');
-            }
-        }
-    
+
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'IndexController',
             'listRooms' => $rooms,
             'id' => $id,
-//            'addRoomForm' => $form,
         ]);
     }
     
 
     #[Route('/addRoom', name: 'addRoom')]
-    public function newRoom(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $room = new Room();
 
+        $room = new Room();
 
         $form = $this->createForm(AddRoomFormType::class, $room);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager->persist($room);
             $entityManager->flush();
-
+            return $this->redirectToRoute('app_admin');
         }
-
-        return $this->render('partial/popUpAddRoomForm.html.twig', [
+        return $this->render('partial/addRoomForm.html.twig', [
             'addRoomForm' => $form
         ]);
     }
 
 
-    #[Route('/modifRoom/{roomName}', name: 'addRoom')]
+    #[Route('/editRoom/{roomName}', name: 'editRoom')]
     public function modifiRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
     {
         $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
@@ -98,9 +69,11 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_admin');
         }
 
-        return $this->render('admin/modifRoom.html.twig', [
+        return $this->render('admin/editRoom.html.twig', [
             'room' => $room,
             'addRoomForm' => $form
+        ]);
+    }
 
 
     #[Route('/addSA', name: 'addSA')]
@@ -122,7 +95,7 @@ class AdminController extends AbstractController
 
         }
 
-        return $this->render('partial/popUpAddSAForm.html.twig', [
+        return $this->render('partial/addSAForm.html.twig', [
             'addSAForm' => $form,
             'listeSa' => $listeSa,
         ]);

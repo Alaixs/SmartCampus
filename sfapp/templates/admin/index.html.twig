@@ -12,6 +12,11 @@
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
                 <p class="planExperimentation-p-title">Plan d'expérimentation</p>
+                <div class="add-or-del-div">
+                <a href="/addSA" class="planExperimentation-div-button-add button add-del-button">Ajouter un système d'acquisition</a>
+                <a href="/deleteSa" class="planExperimentation-div-button-add button add-del-button add-or-del-div ">Supprimer un S.A</a>
+                    
+                </div>
             </div>
 
             <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
@@ -33,7 +38,6 @@
             <div class="planExperimentation-div-allRoom">
                 {% for room in listRooms %}
 
-
                     <div class='planExperimentation-div-array'>
                         <div class="planExperimentation-div-div planExperimentation-div-roomName">
                             <div>
@@ -44,7 +48,6 @@
                                     <img alt='modifier' src={{asset('assets/img/modiferSalle.png') }}>
                                 </a>
                             </div>
-
                         </div>
                         <div class="planExperimentation-div-div"><p>N/A</p></div>
                         <div class="planExperimentation-div-div"><p> - </p></div>
@@ -55,21 +58,14 @@
             </div>
             {% endif %}
             <div class='planExperimentation-div-array'>
-                <button class="planExperimentation-div-button-add button" onclick="togglePopup('/addRoom')">Ajouter une salle</button>
-                <button class="planExperimentation-div-button-add button" onclick="togglePopup('/addSA')"> Ajouter un S.A</button>
-            </div>
+                <a href="/addRoom" class="planExperimentation-div-button-add button">Ajouter une salle</a>
         </div>
     </section>
 
     {% include 'partial/footer.html.twig'%}
 
 
-    <script src="{{ asset('assets/js/admin.js') }}"></script>
-    <script src="{{ asset('assets/js/quitPopup.js') }}"></script>
-    <script src="{{ asset('assets/js/keyEventEscapeQuitPopup.js') }}"></script>
-
 </body>
 </html>
-
 
 
