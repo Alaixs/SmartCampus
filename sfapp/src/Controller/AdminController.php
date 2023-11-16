@@ -32,7 +32,7 @@ class AdminController extends AbstractController
     
 
     #[Route('/addRoom', name: 'addRoom')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function addRoom(Request $request, EntityManagerInterface $entityManager): Response
     {
 
         $room = new Room();
@@ -54,7 +54,7 @@ class AdminController extends AbstractController
 
 
     #[Route('/editRoom/{roomName}', name: 'editRoom')]
-    public function modifiRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
+    public function editRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
     {
         $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
         $form = $this->createForm(AddRoomFormType::class, $room);
@@ -77,7 +77,7 @@ class AdminController extends AbstractController
 
 
     #[Route('/addSA', name: 'addSA')]
-    public function newSA(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
+    public function addSA(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
         $sa = new AcquisitionUnit();
         $sa->setState("En attente");
