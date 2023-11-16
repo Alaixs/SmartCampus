@@ -18,8 +18,14 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AdminController extends AbstractController
 {
-    #[Route('/', name: 'app_admin')]
-    public function index(?int $id, ManagerRegistry $doctrine, Request $request, ValidatorInterface $validator): Response
+    #[Route('/', name: 'app')]
+    public function index(): Response
+    {
+
+        return $this->render('index.html.twig', []);
+    }
+        #[Route('/admin', name: 'app_admin')]
+    public function admin(?int $id, ManagerRegistry $doctrine, Request $request, ValidatorInterface $validator): Response
     {
         $entityManager = $doctrine->getManager();
         $repository = $entityManager->getRepository('App\Entity\Room');
@@ -67,19 +73,23 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
 
-        if($form->get('Supprimer')->isSubmitted())
-        {
-            $entityManager->remove($room);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_admin');
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if($form->get('Supprimer')->isClicked())
+            {
+                $entityManager->remove($room);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_admin');
+            }
+            else
+            {
+                $entityManager->persist($room);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_admin');
+            }
         }
 
-        else if ($form->isSubmitted() && $form->isValid()) {
-
-            $entityManager->persist($room);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_admin');
-        }
 
         return $this->render('admin/editRoom.html.twig', [
             'room' => $room,

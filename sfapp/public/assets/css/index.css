@@ -1,0 +1,43 @@
+.connexion
+{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.connexion > div
+{
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.255);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    width: 50vw;
+    height: 30vw;
+
+}
+
+.connexion > div >  h1
+{
+    font-size: 3vw;
+}
+
+
+.connexion > div >  a
+{
+    font-size: 2vh;
+    text-decoration: none;
+    color: black;
+    background-color: #ACEEA2;
+    height: 3vw;
+    width: 30vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.connexion > div >  a:hover
+{
+    cursor: pointer;
+    background-color: #a2ec97;
+}

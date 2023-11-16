@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>SmartCampus</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/index.css') }}">
+</head>
+<body>
+    {% include 'partial/header.html.twig'%}
+
+    <section class="connexion">
+        <div>
+            <h1>SMART CAMPUS</h1>
+            <a href="/admin">J'accède au site en tant que référent</a>
+            <a href="/technicien">J'accède au site en tant que technicicen</a>
+        </div>
+    </section>
+
+    {% include 'partial/footer.html.twig'%}
+
+</body>
+</html>
