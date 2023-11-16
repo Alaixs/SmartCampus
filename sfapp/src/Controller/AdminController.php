@@ -102,5 +102,12 @@ class AdminController extends AbstractController
             'listeSa' => $listeSa,
         ]);
     }
+
+    #[Route('/assignSA', name: 'assignSA')]
+    public function assignSAtoRoom(): Response
+    {
+        return $this->render('admin/assignSAForm.html.twig', [
+        ]);
+    }
 }
 
