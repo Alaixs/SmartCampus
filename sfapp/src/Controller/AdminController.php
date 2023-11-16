@@ -61,7 +61,7 @@ class AdminController extends AbstractController
         $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
         $form = $this->createForm(AddRoomFormType::class, $room)
             ->add('Supprimer', SubmitType::class, [
-                'attr' => ['class' => 'cancelRedButton']
+                'attr' => ['class' => 'deleteButton']
             ]);
 
         $form->handleRequest($request);

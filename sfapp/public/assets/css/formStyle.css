@@ -187,4 +187,45 @@ input[type="number"] {
     align-items: center;
 }
 
+/*
+--------------------------------------------------------
+    SPECIFIQUE AU FORMULAIRE DE MODIFICATION DE SALLE
+--------------------------------------------------------
+*/
 
+.buttonsAndRefresh {
+    display: flex;
+    width: 13vw;
+    justify-content: space-between;
+}
+
+.img
+{
+    width: 1vw;
+}
+
+.refresh
+{
+    border:none;
+    background-color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.refresh:hover
+{
+    transform: rotate(90deg);
+}
+
+.deleteButton {
+    width: 5vw;
+    border: 0;
+    border-radius: 0;
+    height: 4vh;
+    background-color: #eea2a2;
+}
+
+.deleteButton:hover {
+    cursor: pointer;
+    background-color: #ee8f8f;
+}
