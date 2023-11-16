@@ -8,6 +8,8 @@ use App\Form\AddRoomFormType;
 use App\Form\AddSaFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
@@ -57,12 +59,22 @@ class AdminController extends AbstractController
     public function editRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
     {
         $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
-        $form = $this->createForm(AddRoomFormType::class, $room);
+        $form = $this->createForm(AddRoomFormType::class, $room)
+            ->add('Supprimer', SubmitType::class, [
+                'attr' => ['class' => 'cancelRedButton']
+            ]);
 
         $form->handleRequest($request);
 
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if($form->get('Supprimer')->isSubmitted())
+        {
+            $entityManager->remove($room);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_admin');
+        }
+
+        else if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager->persist($room);
             $entityManager->flush();
