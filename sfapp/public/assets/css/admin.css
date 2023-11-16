@@ -164,3 +164,23 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.planExperimentation-div-roomName
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.planExperimentation-div-roomName > div
+{
+    display: flex;
+}
+
+
+.planExperimentation-div-roomName-div
+{
+    width: 55%;
+    justify-content: end;
+    margin-right: 2vw;
+}
