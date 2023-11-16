@@ -47,7 +47,7 @@ class AdminController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('app_admin');
         }
-        return $this->render('partial/addRoomForm.html.twig', [
+        return $this->render('admin/addRoomForm.html.twig', [
             'addRoomForm' => $form
         ]);
     }
@@ -93,9 +93,11 @@ class AdminController extends AbstractController
             $entityManager->persist($sa);
             $entityManager->flush();
 
+            return $this->redirectToRoute('addSA');
+
         }
 
-        return $this->render('partial/addSAForm.html.twig', [
+        return $this->render('admin/addSAForm.html.twig', [
             'addSAForm' => $form,
             'listeSa' => $listeSa,
         ]);
