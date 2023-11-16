@@ -138,7 +138,7 @@ class Room
 
     public function getIdSA(): ?int
     {
-        return $this->idSA;
+        return ($this->idSA instanceof AcquisitionUnit) ? $this->idSA->getId() : null;
     }
 
     public function setIdSA(int $idSA): static

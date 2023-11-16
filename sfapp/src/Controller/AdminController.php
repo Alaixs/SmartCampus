@@ -6,6 +6,7 @@ use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Form\AddRoomFormType;
 use App\Form\AddSaFormType;
+use App\Form\AssignSAFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -104,9 +105,22 @@ class AdminController extends AbstractController
     }
 
     #[Route('/assignSA/{roomName}', name: 'assignSA')]
-    public function assignSAtoRoom(): Response
+    public function assignSAtoRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
     {
+        $room = new Room();
+
+        $form = $this->createForm(assignSAFormType::class, $room);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager->persist($room);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_admin');
+        }
+
         return $this->render('admin/assignSAForm.html.twig', [
+            'assignSAForm' => $form,
         ]);
     }
 }

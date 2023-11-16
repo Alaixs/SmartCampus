@@ -5,33 +5,30 @@
         <link rel="stylesheet" href="{{ asset('assets/css/popUpAddSAForm.css') }}">
     </head>
     <body>
-    {% include 'partial/header.html.twig'%}
+        {% include 'partial/header.html.twig'%}
 
-
-    <div class="popUpAddSA">
-        <div class="addSA">
-            <div class="title">
-                <p>Attribuer un système d'acquisition</p>
-            </div>
-            <div class="formSA">
-                {{ form_start(addSAForm) }}
-                <div class="bodyFormSA">
-                    <div id="add_sa_form">
-                        {{ form_rest(addSAForm) }}
-                        <div class="divSubmitButton">
-                            <p>* Obligatoire</p>
-                            <button type="submit" class="submitButtonFormSA">Envoyer</button>
-
+        <div class="popUpAddSA">
+            <div class="addSA">
+                <div class="title">
+                    <p>Ajouter un système d'acquisition</p>
+                </div>
+                    <div class="formSA">
+                        {{ form_start(assignSAForm) }}
+                        <div class="bodyFormSA">
+                            <div id="add_sa_form">
+                                {{ form_rest(assignSAForm) }}
+                                <div class="divSubmitButton">
+                                    <p>* Obligatoire</p>
+                                    <button type="submit" class="submitButtonFormSA">Envoyer</button>
+                                </div>
                         </div>
+                        {{ form_end(assignSAForm) }}
                     </div>
                 </div>
-
-                {{ form_end(addSAForm) }}
             </div>
         </div>
-    </div>
 
-    {% include 'partial/footer.html.twig'%}
+        {% include 'partial/footer.html.twig'%}
 
     </body>
 </html>
