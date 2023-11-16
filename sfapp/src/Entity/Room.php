@@ -44,6 +44,9 @@ class Room
     #[Assert\NotBlank(message: 'Le nombre de fenêtres ne peut pas être vide')]
     private ?int $nbWindows = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?AcquisitionUnit $idSA = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -129,6 +132,18 @@ class Room
     public function setNbWindows(int $nbWindows): static
     {
         $this->nbWindows = $nbWindows;
+
+        return $this;
+    }
+
+    public function getIdSA(): ?int
+    {
+        return $this->idSA;
+    }
+
+    public function setIdSA(int $idSA): static
+    {
+        $this->idSA = $idSA;
 
         return $this;
     }

@@ -57,4 +57,26 @@ class AcquisitionUnit
             'message' => 'Ce SA existe déjà.',
         ]));
     }
+
+    public function getRoom(): ?Room
+    {
+        return $this->room;
+    }
+
+    public function setRoom(?Room $room): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($room === null && $this->room !== null) {
+            $this->room->setIdSA(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($room !== null && $room->getIdSA() !== $this) {
+            $room->setIdSA($this);
+        }
+
+        $this->room = $room;
+
+        return $this;
+    }
 }
