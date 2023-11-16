@@ -2,47 +2,47 @@
 <html lang="fr" xmlns="http://www.w3.org/1999/html">
     <head>
         <title>SmartCampus</title>
-        <link rel="stylesheet" href="{{ asset('assets/css/popUpAddSAForm.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/formStyle.css') }}">
     </head>
     <body>
     {% include 'partial/header.html.twig'%}
 
+        <section>
+            <div class="form">
+                <div class="title">
+                    <p>Ajouter un système d'acquisition</p>
+                    <p>Systèmes acquisition déjà enregistrés</p>
+                </div>
+                <div class="formInputs">
+                    {{ form_start(addSAForm) }}
+                    <div class="sectionsOfWindow">
+                        <div class="formAndFooter">
+                            <div class="formRest">
+                                {{ form_rest(addSAForm) }}
+                            </div>
+                            <div class="formFooter">
+                                <p>* Obligatoire</p>
+                                <div class="buttons">
+                                    <button type="submit" class="endButton">Envoyer</button>
+                                    <button type="submit" class="endButton">Annuler</button>
+                                </div>
+                            </div>
+                        </div>
+                        <section class = "line"></section>
 
-    <div class="popUpAddSA">
-        <div class="addSA">
-            <div class="title">
-                <p>Ajouter un système d'acquisition</p>
-                <p>Systèmes acquisition déjà enregistrés</p>
-            </div>
-            <div class="formSA">
-                {{ form_start(addSAForm) }}
-                <div class="bodyFormSA">
-                    <div id="add_sa_form">
-                        {{ form_rest(addSAForm) }}
-                        <div class="divSubmitButton">
-                            <p>* Obligatoire</p>
-                            <button type="submit" class="submitButtonFormSA">Envoyer</button>
-
+                        <div class="listAll">
+                            <ul>
+                                {% for sa in listeSa %}
+                                    <li>{{ sa.number }}</li>
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
 
-                    <section class = "line">
-
-                    </section>
-
-                    <div class="listeAllSA">
-                        <ul>
-                            {% for sa in listeSa %}
-                                <li>{{ sa.number }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                    {{ form_end(addSAForm) }}
                 </div>
-
-                {{ form_end(addSAForm) }}
             </div>
-        </div>
-    </div>
+        </section>
 
     {% include 'partial/footer.html.twig'%}
 
