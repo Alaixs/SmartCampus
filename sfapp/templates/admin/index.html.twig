@@ -49,8 +49,17 @@
                                 </a>
                             </div>
                         </div>
+                        {% if room.sa is empty %}
                         <div class="planExperimentation-div-div"><p>N/A</p></div>
+                        {% else %}
+                        <div class="planExperimentation-div-div"><p>{{ room.sa }}</p></div>
+                        {% endif %}
+                        {% if room.sa.state is empty %}
                         <div class="planExperimentation-div-div"><p> - </p></div>
+                        {% else %}
+                        <div class="planExperimentation-div-div"><p>{{ room.sa.state }}</p></div>
+                        {% endif %}
+                        
                         <a href="/assignSA/{{ room.name }}" class="planExperimentation-div-modifier button">Attribuer</a>
                     </div>
 
