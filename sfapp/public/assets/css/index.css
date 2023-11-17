@@ -28,7 +28,6 @@
     font-size: 2vh;
     text-decoration: none;
     color: black;
-    background-color: #ACEEA2;
     height: 3vw;
     width: 30vw;
     display: flex;
@@ -36,8 +35,24 @@
     align-items: center;
 }
 
-.connexion > div >  a:hover
+#adminButton
 {
-    cursor: pointer;
     background-color: #a2ec97;
+}
+
+#adminButton:hover
+{
+    background-color: #ACEEA2;
+    cursor: pointer;
+}
+
+#techButton
+{
+    background-color: #A2E0EE;
+}
+
+#techButton:hover
+{
+    background-color: #b9ebf6;
+    cursor: pointer;
 }
