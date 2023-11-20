@@ -47,9 +47,9 @@
                                 <p>{{ room.name }}</p>
                             </div>
                             {% if user == 'admin' %}
-                            <div>
+                            <div class="div-img-modif">
                                 <a href="/editRoom/{{ room.name }}">
-                                    <img alt='modifier' src={{asset('assets/img/editRoomIcon.png') }}>
+                                    <img class="img-modif" alt='modifier' src={{asset('assets/img/editRoomIcon.png') }}>
                                 </a>
                             </div>
                             {% endif %}

@@ -148,6 +148,10 @@ body {
     background-color: #b9ebf6;
 }
 
+.add-or-del-div > :nth-child(2):hover {
+    background-color: #ea9393;
+}
+
 .stopHoverButtonAdd:hover
 {
     background-color: #A2E0EE ;
@@ -181,7 +185,19 @@ body {
 
 .planExperimentation-div-roomName-div
 {
-    width: 55%;
+    width: 100%;
     justify-content: end;
-    margin-right: 2vw;
+}
+
+.img-modif
+{
+    padding-right: 1vw;
+    width: 1.2vw;
+}
+
+.div-img-modif
+{
+    width: inherit;
+    display: flex;
+    justify-content: end;
 }
