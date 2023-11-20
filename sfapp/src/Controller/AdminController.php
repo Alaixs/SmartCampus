@@ -7,6 +7,7 @@ use App\Entity\Room;
 use App\Form\AddRoomFormType;
 use App\Form\AddSaFormType;
 use App\Form\AssignFormType;
+use App\Form\RemoveSAFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
