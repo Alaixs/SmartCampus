@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>SmartCampus</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/formStyle.css') }}">
+</head>
+<body>
+{% include 'partial/header.html.twig'%}
+
+<section>
+    <div class="form">
+        <div class="title">
+            <p>Ajouter un système d'acquisition</p>
+        </div>
+        <div class="formInputs">
+            {{ form_start(removeSAForm) }}
+            <div class="sectionsOfWindow">
+                <div class="formAndFooter">
+                    <div class="formRest">
+                        {{ form_rest(removeSAForm) }}
+                    </div>
+                    <div class="formFooter">
+                        <p>* Obligatoire</p>
+                        <div class="buttons">
+                            <button type="submit" class="endButton">Supprimer</button>
+                            <a href="/admin" type="submit" class="endButton">Annuler</a>
+                        </div>
+                    </div>
+                </div>
+
+            {{ form_end(removeSAForm) }}
+        </div>
+    </div>
+</section>
+
+{% include 'partial/footer.html.twig'%}
+
+</body>
+</html>

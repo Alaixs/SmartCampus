@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\AcquisitionUnit;
 use App\Form\AddSaFormType;
+use App\Form\RemoveSAFormType;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,6 +39,35 @@ class AcquisitionUnitController extends AbstractController
         return $this->render('acquisition_unit/addSAForm.html.twig', [
             'addSAForm' => $form,
             'listeSa' => $listeSa,
+        ]);
+    }
+
+    #[Route('/removeSA', name: 'removeSA')]
+    public function removeSA(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
+    {
+        $sa = new AcquisitionUnit();
+
+        $form = $this->createForm(RemoveSAFormType::class, $sa);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted()) {
+            $saId = $form->get('number')->getData();
+
+            $sa = $entityManager->getRepository(AcquisitionUnit::class)->find($saId);
+
+            if (!$sa) {
+                throw $this->createNotFoundException('L\'entité AcquisitionUnit avec l\'ID ' . $saId . ' n\'existe pas.');
+            }
+
+            $entityManager->remove($sa);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('removeSA');
+        }
+
+        return $this->render('acquisition_unit/removeSAForm.html.twig', [
+            'removeSAForm' => $form,
         ]);
     }
 
