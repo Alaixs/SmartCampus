@@ -19,6 +19,12 @@
                     <div class="formRest">
                         {{ form_rest(removeSAForm) }}
                     </div>
+
+                    {% for flashMessage in app.flashes('error') %}
+                        <div class="flash-error">
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
                     <div class="formFooter">
                         <p>* Obligatoire</p>
                         <div class="buttons">

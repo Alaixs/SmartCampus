@@ -60,6 +60,18 @@ class AcquisitionUnitController extends AbstractController
                 throw $this->createNotFoundException('L\'entité AcquisitionUnit avec l\'ID ' . $saId . ' n\'existe pas.');
             }
 
+            $query = $entityManager->createQuery(
+                'SELECT r
+                FROM App\Entity\Room r
+                WHERE r.SA = :saId'
+            )->setParameter('saId', $saId);
+    
+
+            if ($query->getResult()) {
+                $this->addFlash('error', 'Impossible de supprimer le SA ' . $saId . ' car il est assigné à une salle.');
+                return $this->redirectToRoute('removeSA');
+            }
+            
             $entityManager->remove($sa);
             $entityManager->flush();
 

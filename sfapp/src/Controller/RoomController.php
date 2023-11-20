@@ -94,7 +94,7 @@ class RoomController extends AbstractController
                 $entityManager->persist($oldSA);
             }
 
-            $newSA->setState('SA attribué');
+            $newSA->setState('En attente d\'installation');
             $entityManager->persist($newSA);
 
             $entityManager->persist($room);
