@@ -57,4 +57,9 @@ class AcquisitionUnit
             'message' => 'Ce SA existe déjà.',
         ]));
     }
+
+    public function __toString(): string
+    {
+        return $this->number;
+    }
 }

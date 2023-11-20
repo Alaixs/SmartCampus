@@ -48,6 +48,9 @@ class Room
     #[Assert\PositiveOrZero(message: 'Le nombre de fenêtre ne peut pas être négative')]
     private ?int $nbWindows = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?AcquisitionUnit $SA = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -133,6 +136,18 @@ class Room
     public function setNbWindows(int $nbWindows): static
     {
         $this->nbWindows = $nbWindows;
+
+        return $this;
+    }
+
+    public function getSA(): ?AcquisitionUnit
+    {
+        return $this->SA;
+    }
+
+    public function setSA(?AcquisitionUnit $SA): static
+    {
+        $this->SA = $SA;
 
         return $this;
     }

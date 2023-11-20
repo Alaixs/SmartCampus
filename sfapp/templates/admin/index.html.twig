@@ -55,8 +55,16 @@
                             {% endif %}
 
                         </div>
-                        <div class="planExperimentation-div-div"><p>N/A</p></div>
-                        <div class="planExperimentation-div-div"><p> - </p></div>
+
+                        {% if room.sa is empty %}
+                            <div class="planExperimentation-div-div"><p>N/A</p></div>
+                            <div class="planExperimentation-div-div"><p> - </p></div>
+                            <a href="/assignSA/{{ room.name }}" class="planExperimentation-div-modifier button">Attribuer</a>
+                        {% else %}
+                            <div class="planExperimentation-div-div"><p>{{ room.sa }}</p></div>
+                            <div class="planExperimentation-div-div"><p>{{ room.sa.state }}</p></div>
+                            <a href="/assignSA/{{ room.name }}" class="planExperimentation-div-modifier button">Modifier</a>
+
                         {% if user == 'admin' %}
                         <button class="planExperimentation-div-modifier button">Attribuer</button>
                         {% endif %}
@@ -69,6 +77,9 @@
             {% if user == 'admin' %}
             <div class='planExperimentation-div-array'>
                 <a href="/addRoom" class="planExperimentation-div-button-add button">Ajouter une salle</a>
+
+        </div>
+        </div>
             </div>
             {% endif %}
 

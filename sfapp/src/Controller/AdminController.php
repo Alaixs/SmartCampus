@@ -6,6 +6,7 @@ use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Form\AddRoomFormType;
 use App\Form\AddSaFormType;
+use App\Form\AssignFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -141,6 +142,39 @@ class AdminController extends AbstractController
         return $this->render('admin/addSAForm.html.twig', [
             'addSAForm' => $form,
             'listeSa' => $listeSa,
+        ]);
+    }
+
+    #[Route('/assignSA/{roomName}', name: 'assignSA')]
+    public function assignSAtoRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
+        $form = $this->createForm(AssignFormType::class, $room);
+
+        $oldSA = $room->getSA();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $newSA = $room->getSA();
+
+            if ($oldSA) {
+                $oldSA->setState('En attente');
+                $entityManager->persist($oldSA);
+            }
+
+            $newSA->setState('SA attribuée');
+            $entityManager->persist($newSA);
+
+            $entityManager->persist($room);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_admin');
+        }
+
+        return $this->render('admin/assignSAForm.html.twig', [
+            'room' => $room,
+            'assignSAForm' => $form,
         ]);
     }
 }
