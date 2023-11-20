@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\AcquisitionUnit;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,6 +15,9 @@ class AddSaFormType extends AbstractType
             ->add('number', null, [
                 'required' => true,
                 'label' => 'Numéro du SA',
+                'attr' => array(
+                    'placeholder' => 'Exemple : 9834'
+                )
             ])
         ;
     }

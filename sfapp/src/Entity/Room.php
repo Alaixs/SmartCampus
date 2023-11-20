@@ -14,6 +14,7 @@ class Room
     #[ORM\Column]
     private ?int $id = null;
 
+
     #[ORM\Column(length: 4)]
     #[Assert\NotBlank(message: 'Le nom de la salle ne peut pas être vide')]
     #[Assert\Length(
@@ -27,6 +28,7 @@ class Room
     private ?int $floor = null;
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero(message: 'La capacité ne peut pas être négative')]
     #[Assert\NotBlank(message: 'La capacité ne peut pas être vide')]
     private ?int $capacity = null;
 
@@ -35,6 +37,7 @@ class Room
 
     #[ORM\Column]
     #[Assert\NotBlank(message: 'La surface ne peut pas être vide')]
+    #[Assert\Positive(message: 'La surface ne peut pas être négative ou null')]
     private ?int $area = null;
 
     #[ORM\Column(length: 25)]
@@ -42,6 +45,7 @@ class Room
 
     #[ORM\Column]
     #[Assert\NotBlank(message: 'Le nombre de fenêtres ne peut pas être vide')]
+    #[Assert\PositiveOrZero(message: 'Le nombre de fenêtre ne peut pas être négative')]
     private ?int $nbWindows = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

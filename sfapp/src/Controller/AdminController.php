@@ -9,6 +9,8 @@ use App\Form\AddSaFormType;
 use App\Form\AssignFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,14 +19,39 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AdminController extends AbstractController
 {
-    #[Route('/', name: 'app_admin')]
-    public function index(?int $id, ManagerRegistry $doctrine, Request $request, ValidatorInterface $validator): Response
+    #[Route('/', name: 'app')]
+    public function index(): Response
+    {
+
+        return $this->render('index.html.twig', []);
+    }
+
+    #[Route('/technicien', name: 'app_tech')]
+    public function technicien(?int $id, ManagerRegistry $doctrine, Request $request, ValidatorInterface $validator): Response
     {
         $entityManager = $doctrine->getManager();
         $repository = $entityManager->getRepository('App\Entity\Room');
         $rooms = $repository->findAll();
 
+        $user = 'technicien';
         return $this->render('admin/index.html.twig', [
+            'user' => $user,
+            'listRooms' => $rooms,
+            'id' => $id,
+        ]);
+    }
+
+        #[Route('/admin', name: 'app_admin')]
+    public function admin(?int $id, ManagerRegistry $doctrine, Request $request, ValidatorInterface $validator): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $repository = $entityManager->getRepository('App\Entity\Room');
+        $rooms = $repository->findAll();
+
+        $user = 'admin';
+
+        return $this->render('admin/index.html.twig', [
+            'user' => $user,
             'controller_name' => 'IndexController',
             'listRooms' => $rooms,
             'id' => $id,
@@ -33,7 +60,7 @@ class AdminController extends AbstractController
     
 
     #[Route('/addRoom', name: 'addRoom')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function addRoom(Request $request, EntityManagerInterface $entityManager): Response
     {
 
         $room = new Room();
@@ -55,20 +82,34 @@ class AdminController extends AbstractController
 
 
     #[Route('/editRoom/{roomName}', name: 'editRoom')]
-    public function modifiRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
+    public function editRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
     {
         $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
-        $form = $this->createForm(AddRoomFormType::class, $room);
+        $form = $this->createForm(AddRoomFormType::class, $room)
+            ->add('Supprimer', SubmitType::class, [
+                'attr' => ['class' => 'deleteButton']
+            ]);
 
         $form->handleRequest($request);
 
 
+
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $entityManager->persist($room);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_admin');
+            if($form->get('Supprimer')->isClicked())
+            {
+                $entityManager->remove($room);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_admin');
+            }
+            else
+            {
+                $entityManager->persist($room);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_admin');
+            }
         }
+
 
         return $this->render('admin/editRoom.html.twig', [
             'room' => $room,
@@ -78,7 +119,7 @@ class AdminController extends AbstractController
 
 
     #[Route('/addSA', name: 'addSA')]
-    public function newSA(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
+    public function addSA(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
         $sa = new AcquisitionUnit();
         $sa->setState("En attente");

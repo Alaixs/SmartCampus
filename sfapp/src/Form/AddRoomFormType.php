@@ -17,6 +17,9 @@ class AddRoomFormType extends AbstractType
             ->add('name', null, [
                 'required' => true,
                 'label' => 'Nom de la salle ',
+                'attr' => array(
+                    'placeholder' => 'Exemple : D203'
+                )
             ])
 
             ->add('floor', ChoiceType::class, [
@@ -30,21 +33,29 @@ class AddRoomFormType extends AbstractType
                     'Troisième étage' => 3
                 ],
                 'label' => 'Étages '
-
-                
             ])
+
             ->add('capacity', null, [
                 'required' => true,
-                'label' => 'Capacité maximale'
+                'label' => 'Capacité maximale',
+                'attr' => array(
+                    'placeholder' => 'Exemple : 30'
+                )
             ])
+
             ->add('hasComputers', null, [
                 'required' => false,
                 'label' => 'Comporte des ordinateurs'
             ])
+
             ->add('area', null, [
                 'required' => true,
-                'label' => 'Surface'
+                'label' => 'Surface',
+                'attr' => array(
+                    'placeholder' => 'Exemple : 60'
+                )
             ])
+
             ->add('exposure', ChoiceType::class, [
                 'required' => true,
                 'row_attr' => ['class' => 'rolling_menu'],
@@ -57,9 +68,13 @@ class AddRoomFormType extends AbstractType
                 ],
 
             ])
+
             ->add('nbWindows', null, [
                 'required' => true,
-                'label' => 'Nombre de fenêtres'
+                'label' => 'Nombre de fenêtres',
+                'attr' => array(
+                    'placeholder' => 'Exemple : 3'
+                )
             ]);
 
     }

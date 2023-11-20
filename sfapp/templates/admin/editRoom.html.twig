@@ -2,47 +2,44 @@
 <html lang="fr">
 <head>
     <title>SmartCampus</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/popUpAddRoomForm.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/formStyle.css') }}">
 
 </head>
 
-<body>
-{% include 'partial/header.html.twig'%}
+    <body>
 
-<div class="popUpAddRoom">
-    <div class="addRoom">
+        {% include 'partial/header.html.twig'%}
 
-        <div class="title">
-            <p>
-                Modification de la salle {{ room.name }}
-            </p>
-            <div>
-
-            </div>
-        </div>
-
-        <div class="formRoom">
-            {{ form_start(addRoomForm) }}
-            <div id="add_room_form">
-                {{ form_rest(addRoomForm) }}
-            </div>
-            <div class="divSubmitButton">
-                <p>* Obligatoire</p>
-                <div>
-                    <button type="submit" class="submitButtonFormRoom">Envoyer</button>
-                    <a href="/" class="submitButtonFormRoom cancelRedButton">
-                        <p>Annuler</p>
-                    </a>
-                    <button class="refresh" type="reset"><img class='img' src={{asset('assets/img/refreshIcon.png') }}></button>
+        <section>
+            <div class="form">
+                <div class="title">
+                    <p>
+                        Modification de la salle {{ room.name }}
+                    </p>
                 </div>
 
+                <div class="formInputs">
+                    {{ form_start(addRoomForm) }}
+                    <div class="formRest">
+                        {{ form_rest(addRoomForm) }}
+                    </div>
+                    <div class="formFooter">
+                        <p>* Obligatoire</p>
+                        <div class="buttonsAndRefresh">
+                            <div class="buttons">
+                                <button type="submit" class="endButton">Envoyer</button>
+                                <a href="/admin" type="submit" class="endButton">Annuler</a>
+                            </div>
+                            <button class="refresh" type="reset"><img class='img' src={{asset('assets/img/refreshIcon.png') }}></button>
+                        </div>
+
+                    </div>
+                    {{ form_end(addRoomForm) }}
+                </div>
             </div>
-            {{ form_end(addRoomForm) }}
+        </section>
 
-        </div>
-    </div>
-</div>
-{% include 'partial/footer.html.twig'%}
+        {% include 'partial/footer.html.twig'%}
 
-</body>
+    </body>
 </html>

@@ -31,7 +31,8 @@ body {
 {
     overflow: hidden;
     overflow-y: auto;
-    height: 50vh;
+    max-height: 50vh;
+    margin-bottom: 1vw;
 }
 
 .planExperimentation > p
@@ -147,6 +148,10 @@ body {
     background-color: #b9ebf6;
 }
 
+.add-or-del-div > :nth-child(2):hover {
+    background-color: #ea9393;
+}
+
 .stopHoverButtonAdd:hover
 {
     background-color: #A2E0EE ;
@@ -163,4 +168,36 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.planExperimentation-div-roomName
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.planExperimentation-div-roomName > div
+{
+    display: flex;
+}
+
+
+.planExperimentation-div-roomName-div
+{
+    width: 100%;
+    justify-content: end;
+}
+
+.img-modif
+{
+    padding-right: 1vw;
+    width: 1.2vw;
+}
+
+.div-img-modif
+{
+    width: inherit;
+    display: flex;
+    justify-content: end;
 }
