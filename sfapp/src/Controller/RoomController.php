@@ -75,7 +75,7 @@ class RoomController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($request->request->has('test')) {
+        if ($request->request->has('desaffecter')) {
             $room->setSA(null);
             $oldSA->setState('En attente');
             $entityManager->persist($room);

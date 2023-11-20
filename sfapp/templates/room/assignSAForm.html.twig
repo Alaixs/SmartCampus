@@ -20,7 +20,6 @@
 
                     {{ form_rest(assignSAForm) }}
 
-
                 </div>
                 <div class="divSubmitButton">
                     <p>* Obligatoire</p>
@@ -28,18 +27,16 @@
 
                         <div class="buttons3">
                             <button type="submit" class="endButton">Envoyer</button>
-                            <a href="/admin" type="submit" class="endButton">Annuler</a>
-                            <button name="test" type="submit" class="endButton">Désaffecter</button>
+                            <button name="desaffecter" type="submit" class="endButton">Désaffecter</button>
+                            <a href="/admin" type="submit" class="endButton">Retour</a>
                         </div>
                     {% else %}
                         <div class="buttons">
                             <button type="submit" class="endButton">Envoyer</button>
-                            <a href="/admin" type="submit" class="endButton">Annuler</a>
+                            <a href="/admin" type="submit" class="endButton">Retour</a>
                         </div>
 
                     {% endif %}
-
-
 
                 </div>
             </div>
