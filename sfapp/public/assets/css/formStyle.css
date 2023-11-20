@@ -89,6 +89,13 @@ input:not(input[type=checkbox]), select {
     justify-content: space-between;
 }
 
+.buttons3 {
+    display: flex;
+    height: 4vh;
+    width: 16vw;
+    justify-content: space-between;
+}
+
 .endButton {
     font-size: 1.3vh;
     width: 5vw;
@@ -108,15 +115,15 @@ input:not(input[type=checkbox]), select {
     background-color: #8fdcee;
 }
 
-.endButton:nth-child(2) {
+.endButton:nth-child(2), .endButton:nth-child(3) {
     background-color: #eea2a2;
 }
 
-.endButton:nth-child(2):hover {
+.endButton:nth-child(2):hover, .endButton:nth-child(3):hover{
     background-color: #ee8f8f;
 }
 
-.buttons > a {
+.buttons > a, .buttons3 > a {
     text-decoration: none;
     display: flex;
     height: 100%;
@@ -124,6 +131,7 @@ input:not(input[type=checkbox]), select {
     align-items: center;
     color: black;
 }
+
 
 input[type="number"] {
     -webkit-appearance: textfield;

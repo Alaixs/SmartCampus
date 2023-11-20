@@ -155,6 +155,15 @@ class AdminController extends AbstractController
 
         $form->handleRequest($request);
 
+        if ($request->request->has('test')) {
+            $room->setSA(null);
+            $oldSA->setState('En attente');
+            $entityManager->persist($room);
+            $entityManager->persist($oldSA);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_admin');
+
+        }
         if ($form->isSubmitted() && $form->isValid()) {
 
             $newSA = $room->getSA();
@@ -164,7 +173,7 @@ class AdminController extends AbstractController
                 $entityManager->persist($oldSA);
             }
 
-            $newSA->setState('SA attribuée');
+            $newSA->setState('SA attribué');
             $entityManager->persist($newSA);
 
             $entityManager->persist($room);

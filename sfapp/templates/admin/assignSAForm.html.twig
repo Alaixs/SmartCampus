@@ -2,36 +2,52 @@
 <html lang="fr" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>SmartCampus</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/popUpAddSAForm.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/formStyle.css') }}">
 </head>
 <body>
 {% include 'partial/header.html.twig'%}
 
 
-<div class="popUpAddSA">
-    <div class="addSA">
+<section>
+    <div class="form">
         <div class="title">
             <p>Ajouter un système d'acquisition</p>
         </div>
-        <div class="formSA">
+        <div class="formInputs">
             {{ form_start(assignSAForm) }}
-            <div class="bodyFormSA">
+            <div class="formRest">
                 <div id="add_sa_form">
+
                     {{ form_rest(assignSAForm) }}
-                    <div class="divSubmitButton">
-                        <p>* Obligatoire</p>
-                        <button type="submit" class="submitButtonFormSA">Envoyer</button>
-                    </div>
+
+
+                </div>
+                <div class="divSubmitButton">
+                    <p>* Obligatoire</p>
+                    {% if room.sa is not empty %}
+
+                        <div class="buttons3">
+                            <button type="submit" class="endButton">Envoyer</button>
+                            <a href="/admin" type="submit" class="endButton">Annuler</a>
+                            <button name="test" type="submit" class="endButton">Désaffecter</button>
+                        </div>
+                    {% else %}
+                        <div class="buttons">
+                            <button type="submit" class="endButton">Envoyer</button>
+                            <a href="/admin" type="submit" class="endButton">Annuler</a>
+                        </div>
+
+                    {% endif %}
+
+
+
                 </div>
             </div>
             {{ form_end(assignSAForm) }}
-            {% if room.sa is not empty %}
-                <a href="/assignSA/{{ room.name }}" class="planExperimentation-div-modifier button">Attribuer</a>
-            {% endif %}
-            <a href="/">Annuler</a>
+
         </div>
     </div>
-</div>
+</section>
 
 {% include 'partial/footer.html.twig'%}
 
