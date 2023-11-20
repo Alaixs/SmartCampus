@@ -110,9 +110,21 @@ class AdminController extends AbstractController
         $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
         $form = $this->createForm(AssignFormType::class, $room);
 
+        $oldSA = $room->getSA();
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $newSA = $room->getSA();
+
+            if ($oldSA) {
+                $oldSA->setState('En attente');
+                $entityManager->persist($oldSA);
+            }
+
+            $newSA->setState('SA attribuée');
+            $entityManager->persist($newSA);
 
             $entityManager->persist($room);
             $entityManager->flush();
