@@ -90,6 +90,7 @@ input:not(input[type=checkbox]), select {
 }
 
 .endButton {
+    font-size: 1.3vh;
     width: 5vw;
     border: 0;
     border-radius: 0;
@@ -113,6 +114,15 @@ input:not(input[type=checkbox]), select {
 
 .endButton:nth-child(2):hover {
     background-color: #ee8f8f;
+}
+
+.buttons > a {
+    text-decoration: none;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: black;
 }
 
 input[type="number"] {
