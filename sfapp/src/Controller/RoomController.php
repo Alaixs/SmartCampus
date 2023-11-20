@@ -38,29 +38,24 @@ class RoomController extends AbstractController
     public function editRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
     {
         $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
-        $form = $this->createForm(AddRoomFormType::class, $room)
-            ->add('Supprimer', SubmitType::class, [
-                'attr' => ['class' => 'deleteButton']
-            ]);
+        $form = $this->createForm(AddRoomFormType::class, $room);
 
         $form->handleRequest($request);
 
+        if ($request->request->has('Supprimer')) {
 
+            $entityManager->remove($room);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_admin');
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if($form->get('Supprimer')->isClicked())
-            {
-                $entityManager->remove($room);
-                $entityManager->flush();
-                return $this->redirectToRoute('app_admin');
-            }
-            else
-            {
+
                 $entityManager->persist($room);
                 $entityManager->flush();
                 return $this->redirectToRoute('app_admin');
-            }
+
         }
 
 
@@ -87,8 +82,9 @@ class RoomController extends AbstractController
             $entityManager->persist($oldSA);
             $entityManager->flush();
             return $this->redirectToRoute('app_admin');
-
         }
+
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $newSA = $room->getSA();
