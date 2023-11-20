@@ -24,6 +24,22 @@ class AdminController extends AbstractController
 
         return $this->render('index.html.twig', []);
     }
+
+    #[Route('/technicien', name: 'app_tech')]
+    public function technicien(?int $id, ManagerRegistry $doctrine, Request $request, ValidatorInterface $validator): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $repository = $entityManager->getRepository('App\Entity\Room');
+        $rooms = $repository->findAll();
+
+        $user = 'technicien';
+        return $this->render('admin/index.html.twig', [
+            'user' => $user,
+            'listRooms' => $rooms,
+            'id' => $id,
+        ]);
+    }
+
         #[Route('/admin', name: 'app_admin')]
     public function admin(?int $id, ManagerRegistry $doctrine, Request $request, ValidatorInterface $validator): Response
     {
@@ -31,7 +47,10 @@ class AdminController extends AbstractController
         $repository = $entityManager->getRepository('App\Entity\Room');
         $rooms = $repository->findAll();
 
+        $user = 'admin';
+
         return $this->render('admin/index.html.twig', [
+            'user' => $user,
             'controller_name' => 'IndexController',
             'listRooms' => $rooms,
             'id' => $id,

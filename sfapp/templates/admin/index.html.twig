@@ -12,11 +12,14 @@
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
                 <p class="planExperimentation-p-title">Plan d'expérimentation</p>
+                {% if user == 'admin' %}
                 <div class="add-or-del-div">
-                <a href="/addSA" class="planExperimentation-div-button-add button add-del-button">Ajouter un système d'acquisition</a>
-                <a href="/deleteSa" class="planExperimentation-div-button-add button add-del-button add-or-del-div ">Supprimer un S.A</a>
-                    
+                    <a href="/addSA" class="planExperimentation-div-button-add button add-del-button">Ajouter un système d'acquisition</a>
+                    <a href="/deleteSa" class="planExperimentation-div-button-add button add-del-button add-or-del-div ">Supprimer un S.A</a>
+
                 </div>
+                {% endif %}
+
             </div>
 
             <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
@@ -43,23 +46,32 @@
                             <div class="planExperimentation-div-roomName-div">
                                 <p>{{ room.name }}</p>
                             </div>
+                            {% if user == 'admin' %}
                             <div>
                                 <a href="/editRoom/{{ room.name }}">
                                     <img alt='modifier' src={{asset('assets/img/editRoomIcon.png') }}>
                                 </a>
                             </div>
+                            {% endif %}
+
                         </div>
                         <div class="planExperimentation-div-div"><p>N/A</p></div>
                         <div class="planExperimentation-div-div"><p> - </p></div>
+                        {% if user == 'admin' %}
                         <button class="planExperimentation-div-modifier button">Attribuer</button>
+                        {% endif %}
+
                     </div>
 
                 {% endfor %}
             </div>
             {% endif %}
+            {% if user == 'admin' %}
             <div class='planExperimentation-div-array'>
                 <a href="/addRoom" class="planExperimentation-div-button-add button">Ajouter une salle</a>
-        </div>
+            </div>
+            {% endif %}
+
     </section>
 
     {% include 'partial/footer.html.twig'%}
