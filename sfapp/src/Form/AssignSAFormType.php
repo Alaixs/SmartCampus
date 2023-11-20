@@ -26,7 +26,6 @@ class AssignFormType extends AbstractType
                 },
             ])
         ;
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
