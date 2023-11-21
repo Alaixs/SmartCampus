@@ -71,7 +71,9 @@ class AcquisitionUnitController extends AbstractController
                 $this->addFlash('error', 'Impossible de supprimer le SA ' . $saId . ' car il est assigné à une salle.');
                 return $this->redirectToRoute('removeSA');
             }
-            
+
+            $this->addFlash('message', 'Le SA ' . $saId . ' a bien été supprimé.');
+
             $entityManager->remove($sa);
             $entityManager->flush();
 
