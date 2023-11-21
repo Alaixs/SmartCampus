@@ -39,8 +39,16 @@ header {
 .siteName {
     margin-left: 4vw;
     width: 100%;
+    display: flex;
+    align-items: center;
 }
 
+.logo
+{
+    width: 4vw;
+    height: auto;
+    margin-right: 0.5vw;
+}
 .siteName > a {
     color: black;
     text-decoration: none;
