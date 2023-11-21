@@ -177,28 +177,18 @@ body {
     align-items: center;
 }
 
-.planExperimentation-div-roomName > div
-{
-    display: flex;
-}
-
-
 .planExperimentation-div-roomName-div
 {
     width: 100%;
-    justify-content: end;
-    margin-left: 2vw;
-}
-
-.img-modif
-{
-    padding-right: 1vw;
-    width: 1.2vw;
+    margin-left: 10%;
 }
 
 .div-img-modif
 {
-    width: inherit;
-    display: flex;
-    justify-content: end;
+    width: 10%;
+}
+.img-modif
+{
+    padding-right: 1vw;
+    width: 1.2vw;
 }

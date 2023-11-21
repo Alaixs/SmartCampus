@@ -46,13 +46,15 @@
                             <div class="planExperimentation-div-roomName-div">
                                 <p>{{ room.name }}</p>
                             </div>
-                            {% if user == 'admin' %}
                             <div class="div-img-modif">
-                                <a href="/editRoom/{{ room.name }}">
+                                {% if user == 'admin' %}
+
+                                    <a href="/editRoom/{{ room.name }}">
                                     <img class="img-modif" alt='modifier' src={{asset('assets/img/editRoomIcon.png') }}>
                                 </a>
+                                {% endif %}
                             </div>
-                            {% endif %}
+
 
                         </div>
 
