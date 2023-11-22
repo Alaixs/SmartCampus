@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>SmartCampus</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
+    <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}">
+
+</head>
+<body>
+    {% include 'partial/header.html.twig'%}
+
+
+    <section class='planExperimentation'>
+        <div class="planExperimentation-div">
+            <div class='planExperimentation-div-title'>
+                <p class="planExperimentation-p-title">Plan d'expérimentation</p>
+                {% if user == 'admin' %}
+                <div class="add-or-del-div">
+                    <a href="/addSA" class="planExperimentation-div-button-add button add-del-button">Ajouter un système d'acquisition</a>
+                    <a href="/removeSA" class="planExperimentation-div-button-add button add-del-button add-or-del-div ">Supprimer un S.A</a>
+
+                </div>
+                {% endif %}
+
+            </div>
+
+            <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
+                <div class="planExperimentation-div-div"><p>SALLES</p></div>
+                <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
+                <div class="planExperimentation-div-div"><p>ETAT S.A</p></div>
+            </div>
+            {% if listRooms is empty %}
+            <div class="noRoom">
+
+                    <p> Aucune salle n'a été ajouté pour le moment </p>
+
+            </div>
+
+            {% else %}
+
+            <div class="planExperimentation-div-allRoom">
+                {% for room in listRooms %}
+
+                    <div class='planExperimentation-div-array'>
+                        <div class="planExperimentation-div-div planExperimentation-div-roomName">
+                            <div class="planExperimentation-div-roomName-div">
+                                <p>{{ room.name }}</p>
+                            </div>
+                            <div class="div-img-modif">
+                                {% if user == 'admin' %}
+
+                                    <a href="/editRoom/{{ room.name }}">
+                                    <img class="img-modif" alt='modifier' src={{asset('assets/img/editRoomIcon.png') }}>
+                                </a>
+                                {% endif %}
+                            </div>
+
+
+                        </div>
+
+                        {% if room.sa is empty %}
+
+                            <div class="planExperimentation-div-div"><p>N/A</p></div>
+                            <div class="planExperimentation-div-div"><p> - </p></div>
+                            {% if user == 'admin' %}
+                                <a href="/assignSA/{{ room.name }}" class="planExperimentation-div-modifier button">Attribuer SA</a>
+                            {% endif %}
+
+                        {% else %}
+
+                            <div class="planExperimentation-div-div"><p>{{ room.sa }}</p></div>
+                            <div class="planExperimentation-div-div"><p>{{ room.sa.state }}</p></div>
+                            {% if user == 'admin' %}
+                                <a href="/assignSA/{{ room.name }}" class="planExperimentation-div-modifier button">Modifier SA</a>
+                            {% endif %}
+
+                        {% endif %}
+
+                    </div>
+
+                {% endfor %}
+                {% endif %}
+
+                {% if user == 'admin' %}
+                    <div class='planExperimentation-div-array'>
+                        <a href="/addRoom" class="planExperimentation-div-button-add button">Ajouter une salle</a>
+                    </div>
+                {% endif %}
+
+            </div>
+
+
+
+        </div>
+            </div>
+
+    </section>
+
+    {% include 'partial/footer.html.twig' %}
+
+
+
+    </body>
+</html>

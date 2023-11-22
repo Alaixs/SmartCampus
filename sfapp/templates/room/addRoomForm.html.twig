@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>SmartCampus - Ajouter une salle</title>
+        <link rel="stylesheet" href="{{ asset('assets/css/formStyle.css') }}">
+        <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+    </head>
+    <body>
+        {% include 'partial/header.html.twig'%}
+
+        <section>
+            <div class="form">
+                <div class="title">
+                    <p>
+                        Ajouter une salle
+                    </p>
+                </div>
+                <div class="formInputs">
+                    {{ form_start(addRoomForm) }}
+                    <div class="formRest">
+                        {{ form_rest(addRoomForm) }}
+                    </div>
+                    <div class="formFooter">
+                        <p>* Obligatoire</p>
+                        <div class="buttons">
+                            <button type="submit" class="endButton">Envoyer</button>
+                            <a href="/admin" type="submit" class="endButton">Retour</a>
+                        </div>
+                    </div>
+                    {{ form_end(addRoomForm) }}
+                </div>
+            </div>
+        </section>
+
+        {% include 'partial/footer.html.twig'%}
+    </body>
+</html>

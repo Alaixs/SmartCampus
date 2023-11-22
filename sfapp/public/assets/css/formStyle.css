@@ -1,0 +1,270 @@
+/* ====--- Style page for every forms ---==== */
+
+/*
+--------------------------------------------------------------
+    FEUILLE DE STYLE GENERALE COMMUNE A TOUS LES FORMULAIRES
+--------------------------------------------------------------
+*/
+
+section {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    width: 60%;
+    max-height: 80vh;
+}
+
+.title {
+    background-color: #F9F9F9;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.5vh;
+    margin-bottom: 5vh;
+    height: 8vh;
+    font-size: 1.5vh;
+}
+
+.formInputs {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.formRest {
+    width: 20vw;
+    max-height: 55vh;
+    overflow: auto;
+    padding-right: 19vw;
+    padding-left: 19vw;
+    margin-bottom: 3vh;
+}
+
+.formRest > div:nth-child(4) {
+    display: flex;
+}
+
+.formRest > div:nth-child(4) > * {
+    width: 50%;
+}
+
+input, select {
+    display: flex;
+    padding: 0;
+    width: 100%;
+    margin-bottom: 5vh;
+    border: none;
+    box-shadow: inset 0px 0px 1px 0px #000000;
+    background-color: white;
+}
+
+input {
+    padding-left: 1vh;
+    width: calc(100% - 1vh);
+}
+
+input:not(input[type=checkbox]), select {
+    height: 4vh;
+}
+
+.formFooter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 2vh;
+}
+
+.buttons {
+    display: flex;
+    height: 4vh;
+    width: 11vw;
+    justify-content: space-between;
+}
+
+.buttons3 {
+    display: flex;
+    height: 4vh;
+    width: 16vw;
+    justify-content: space-between;
+}
+
+.endButton {
+    font-size: 1.3vh;
+    width: 5vw;
+    border: 0;
+    border-radius: 0;
+}
+
+.endButton:hover {
+    cursor: pointer;
+}
+
+.endButton:nth-child(1) {
+    background-color: #A2E0EE;
+}
+
+.endButton:nth-child(1):hover {
+    background-color: #8fdcee;
+}
+
+.endButton:nth-child(2), .endButton:nth-child(3) {
+    background-color: #eea2a2;
+}
+
+.endButton:nth-child(2):hover, .endButton:nth-child(3):hover{
+    background-color: #ee8f8f;
+}
+
+.buttons > a, .buttons3 > a {
+    text-decoration: none;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+
+
+input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.required:after {
+    content: ' *';
+}
+
+/*
+-----------------------------------------------------
+    SPECIFIQUE AUX FORMULAIRES AVEC DEUX PARTIES :
+    - Une partie formulaire
+    - Une partie liste de système d'acquisitions
+-----------------------------------------------------
+*/
+
+.sectionsOfWindow {
+    display: flex;
+    justify-content: space-around;
+    width: 60vw;
+}
+
+.sectionsOfWindow > div {
+    width: 50%;
+}
+
+.sectionsOfWindow > .formRest {
+    padding: 0;
+    margin: 0;
+    overflow: unset;
+}
+
+.formAndFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.line {
+    height: 58vh;
+    width: 0.5px;
+    margin-bottom: 2vh;
+    border: solid black 1px;
+    background-color: black;
+}
+
+.listAll {
+    max-height: 58vh;
+    overflow: auto;
+}
+
+.listAll > ul {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    list-style: none;
+}
+
+.listAll > ul > li {
+    display: flex;
+    list-style-type:none;
+    justify-content: center;
+    background-color: #F9F9F9;
+    margin-bottom: 1vh;
+    width: 60%;
+    height: 6vh;
+    align-items: center;
+}
+
+/*
+--------------------------------------------------------
+    SPECIFIQUE AU FORMULAIRE DE MODIFICATION DE SALLE
+--------------------------------------------------------
+*/
+
+.buttonsAndRefresh {
+    display: flex;
+    width: 13vw;
+    justify-content: space-between;
+}
+
+.img
+{
+    width: 1vw;
+}
+
+.refresh
+{
+    border:none;
+    background-color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.refresh:hover
+{
+    transform: rotate(90deg);
+}
+
+.deleteButton {
+    width: 5vw;
+    border: 0;
+    border-radius: 0;
+    height: 4vh;
+    background-color: #eea2a2;
+}
+
+.deleteButton:hover {
+    cursor: pointer;
+    background-color: #ee8f8f;
+}
+
+/*
+--------------------------------------------------------
+    SPECIFIQUE AUX MESSAGES D'ERREUR LIE AUX FORMULAIRES
+--------------------------------------------------------
+*/
+
+.formRest li
+{
+    color:red;
+    list-style: none;
+}
+
+.formRest ul {
+    padding: 0;
+}
+
+.flash-message
+{
+    color: #58e342;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>SmartCampus</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/formStyle.css') }}">
+    <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+</head>
+
+    <body>
+
+        {% include 'partial/header.html.twig'%}
+
+        <section>
+            <div class="form">
+                <div class="title">
+                    <p>
+                        Modification de la salle {{ room.name }}
+                    </p>
+                </div>
+
+                <div class="formInputs">
+                    {{ form_start(addRoomForm) }}
+                    <div class="formRest">
+                        {{ form_rest(addRoomForm) }}
+                        <button type="submit" name="Supprimer" class="deleteButton">Supprimer</button>
+                    </div>
+                    <div class="formFooter">
+                        <p>* Obligatoire</p>
+                        <div class="buttonsAndRefresh">
+                            <div class="buttons">
+                                <button type="submit" class="endButton">Envoyer</button>
+                                <a href="/admin" type="submit" class="endButton">Retour</a>
+                            </div>
+                            <button class="refresh" type="reset"><img class='img' src={{asset('assets/img/refreshIcon.png') }}></button>
+                        </div>
+
+                    </div>
+                    {{ form_end(addRoomForm) }}
+                </div>
+            </div>
+        </section>
+
+        {% include 'partial/footer.html.twig'%}
+
+    </body>
+</html>

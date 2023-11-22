@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>SmartCampus</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/index.css') }}">
+    <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+</head>
+<body>
+{% include 'partial/header.html.twig'%}
+
+    <section class="connexion">
+        <div>
+            <h1>SMART CAMPUS</h1>
+            <a id='adminButton' href="/admin">J'accède au site en tant que référent</a>
+            <a id='techButton' href="/technicien">J'accède au site en tant que technicien</a>
+        </div>
+    </section>
+
+{% include 'partial/footer.html.twig'%}
+
+</body>
+</html>

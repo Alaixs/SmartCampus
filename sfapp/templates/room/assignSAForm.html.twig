@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>SmartCampus</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/formStyle.css') }}">
+    <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+</head>
+<body>
+{% include 'partial/header.html.twig'%}
+
+
+<section>
+    <div class="form">
+        <div class="title">
+        {% if room.sa is not empty %}
+        <p>Modifier le système d'acquisition</p>
+        {% else %}
+        <p>Ajouter un système d'acquisition</p>
+        {% endif %}
+        </div>
+        <div class="formInputs">
+            {{ form_start(assignSAForm) }}
+            <div class="formRest">
+                <div id="add_sa_form">
+
+                    {{ form_rest(assignSAForm) }}
+
+                </div>
+                <div class="divSubmitButton">
+                    <p>* Obligatoire</p>
+                    {% if room.sa is not empty %}
+
+                        <div class="buttons3">
+                            <button type="submit" class="endButton">Envoyer</button>
+                            <button name="desaffecter" type="submit" class="endButton">Désaffecter</button>
+                            <a href="/admin" type="submit" class="endButton">Retour</a>
+                        </div>
+                    {% else %}
+                        <div class="buttons">
+                            <button type="submit" class="endButton">Envoyer</button>
+                            <a href="/admin" type="submit" class="endButton">Retour</a>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+            </div>
+            {{ form_end(assignSAForm) }}
+
+        </div>
+    </div>
+</section>
+
+{% include 'partial/footer.html.twig'%}
+
+</body>
+</html>
