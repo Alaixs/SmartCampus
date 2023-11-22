@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: RoomRepository::class)]
 class Room
@@ -150,5 +152,13 @@ class Room
         $this->SA = $SA;
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addConstraint(new UniqueEntity([
+            'fields' => ['name'],
+            'message' => 'Cette salle existe déjà'
+        ]));
     }
 }

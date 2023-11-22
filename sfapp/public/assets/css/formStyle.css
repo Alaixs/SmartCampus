@@ -43,7 +43,7 @@ section {
     max-height: 55vh;
     overflow: auto;
     padding-right: 19vw;
-    margin-left: 19vw;
+    padding-left: 19vw;
     margin-bottom: 3vh;
 }
 

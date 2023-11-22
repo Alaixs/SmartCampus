@@ -12,7 +12,11 @@
 <section>
     <div class="form">
         <div class="title">
-            <p>Ajouter un système d'acquisition</p>
+        {% if room.sa is not empty %}
+        <p>Modifier le système d'acquisition</p>
+        {% else %}
+        <p>Ajouter un système d'acquisition</p>
+        {% endif %}
         </div>
         <div class="formInputs">
             {{ form_start(assignSAForm) }}
