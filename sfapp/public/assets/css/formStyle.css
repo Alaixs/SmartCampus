@@ -247,3 +247,24 @@ input[type="number"] {
     cursor: pointer;
     background-color: #ee8f8f;
 }
+
+/*
+--------------------------------------------------------
+    SPECIFIQUE AUX MESSAGES D'ERREUR LIE AUX FORMULAIRES
+--------------------------------------------------------
+*/
+
+.formRest li
+{
+    color:red;
+    list-style: none;
+}
+
+.formRest ul {
+    padding: 0;
+}
+
+.flash-message
+{
+    color: #58e342;
+}
