@@ -24,6 +24,7 @@ class Room
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero(message: 'Le numéro d\'étage ne peut pas être négatif')]
     #[Assert\NotBlank(message: 'Le numéro d\'étage ne peut pas être vide')]
     private ?int $floor = null;
 
