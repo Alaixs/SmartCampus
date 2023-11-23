@@ -75,15 +75,18 @@ class RoomController extends AbstractController
         $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
         $form = $this->createForm(AssignFormType::class, $room);
 
-        $oldSA = $room->getSA();
-
         $form->handleRequest($request);
 
+        $oldSA = $room->getSA();
+
         if ($request->request->has('desaffecter')) {
+            if($entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName))->getSA() != null)
+            {
+                $oldSA->setState('En attente');
+                $entityManager->persist($oldSA);
+            }
             $room->setSA(null);
-            $oldSA->setState('En attente');
             $entityManager->persist($room);
-            $entityManager->persist($oldSA);
             $entityManager->flush();
             return $this->redirectToRoute('app_admin');
         }
