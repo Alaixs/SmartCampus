@@ -43,9 +43,11 @@ class RoomController extends AbstractController
         $form->handleRequest($request);
 
         if ($request->request->has('Supprimer')) {
-
-            $room->getSA()->setState("En attente");
-            $room->setSA(null);
+            if($room->getSA() != null)
+            {
+                $room->getSA()->setState("En attente");
+                $room->setSA(null);
+            }
             $entityManager->remove($room);
             $entityManager->flush();
             return $this->redirectToRoute('app_admin');
