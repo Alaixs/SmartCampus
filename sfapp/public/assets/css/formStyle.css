@@ -18,6 +18,7 @@ section {
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
     width: 60%;
     max-height: 80vh;
+    height: fit-content;
 }
 
 .title {
@@ -29,7 +30,14 @@ section {
     font-size: 1.5vh;
     margin-bottom: 5vh;
     height: 8vh;
-    font-size: 1.5vh;
+    font-size: 2.5vh;
+}
+
+.title > p {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0;
 }
 
 .formInputs {
@@ -38,6 +46,26 @@ section {
     width: 100%;
 }
 
+.required:after {
+    content: ' *';
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 3vh;
+    justify-content: space-between;
+}
+
+a, button {
+    width: 45%;
+}
+
+.formRest {
+    width: 20vw;
+}
+
+/*
 .formRest {
     width: 20vw;
     max-height: 55vh;
@@ -142,7 +170,7 @@ input[type="number"] {
 .required:after {
     content: ' *';
 }
-
+*/
 /*
 -----------------------------------------------------
     SPECIFIQUE AUX FORMULAIRES AVEC DEUX PARTIES :
@@ -150,7 +178,7 @@ input[type="number"] {
     - Une partie liste de système d'acquisitions
 -----------------------------------------------------
 */
-
+/*
 .sectionsOfWindow {
     display: flex;
     justify-content: space-around;
@@ -204,13 +232,13 @@ input[type="number"] {
     height: 6vh;
     align-items: center;
 }
-
+*/
 /*
 --------------------------------------------------------
     SPECIFIQUE AU FORMULAIRE DE MODIFICATION DE SALLE
 --------------------------------------------------------
 */
-
+/*
 .buttonsAndRefresh {
     display: flex;
     width: 13vw;
@@ -247,13 +275,13 @@ input[type="number"] {
     cursor: pointer;
     background-color: #ee8f8f;
 }
-
+*/
 /*
 --------------------------------------------------------
     SPECIFIQUE AUX MESSAGES D'ERREUR LIE AUX FORMULAIRES
 --------------------------------------------------------
 */
-
+/*
 .formRest li
 {
     color:red;
@@ -268,3 +296,5 @@ input[type="number"] {
 {
     color: #58e342;
 }
+
+*/
