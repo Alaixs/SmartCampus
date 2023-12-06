@@ -1,57 +1,63 @@
 body {
     margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    z-index: 1;
-    position: relative;
-    font-family: Arial;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-header {
-    background-color: #FDFDFD;
-    height: 8vh;
-    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: "Arial";
-    letter-spacing: 0.1vw;
-}
-
-.siteName, .usefulLinks {
-    width: 50%;
-}
-
-.usefulLinks {
-    display: flex;
-    justify-content: end;
-}
-
-.usefulLinks > a {
-    text-decoration: none;
-    color: black;
-    margin-right: 4vw;
-}
-
-.siteName {
-    margin-left: 4vw;
-    width: 100%;
+.header {
+    overflow: hidden;
+    background-color: #f1f1f1;
     display: flex;
     align-items: center;
 }
 
-.logo
-{
-    width: 4vw;
-    height: auto;
-    margin-right: 0.5vw;
-}
-.siteName > a {
+.header a {
     color: black;
+    text-align: center;
+    padding: 12px;
     text-decoration: none;
-    font-size: 3vh;
+    font-size: 18px;
+    line-height: 25px;
+    border-radius: 4px;
 }
 
+.header a.smartCampus {
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.header-right {
+    margin-left: auto;
+}
+
+.logo-smartCampus {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    text-decoration: none;
+    color: black;
+}
+
+.logo {
+    margin-right: 10px;
+}
+
+.smartCampus {
+    font-size: 25px;
+    font-weight: 300;
+}
+
+@media screen and (max-width: 300px) {
+    .header {
+        flex-direction: column;
+    }
+
+    .header a.smartCampus {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    .header-right {
+        margin-left: 0;
+    }
+}
