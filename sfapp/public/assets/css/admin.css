@@ -1,3 +1,5 @@
+@media all and (orientation: landscape) { /* HERE YOUR CODE */ }
+
 body {
     height: 100vh;
     display: flex;
@@ -45,14 +47,12 @@ body {
 {
     margin-bottom: 0.5em;
     max-height: 70vh;
-
 }
 
 .planExperimentation-div-title
 {
     background-color: #F9F9F9;
     height: 8vh;
-    margin: 0;
     padding: 0;
     display: flex;
     align-items: center;
@@ -74,58 +74,60 @@ body {
 .add-or-del-div {
     display: flex;
     flex-direction: row;
-    width: 25vw;
+    width: 60%;
+    text-align: center;
 }
 
 .add-or-del-div > :nth-child(2) {
     background-color: #EEA2A2;
 }
 
-
-.add-del-button {
-    height: 10vh;
-}
-
 .planExperimentation-div-array
 {
+    margin-right: 1vw;
+    margin-left: 1vw;
     display: flex;
     align-items: center;
+}
+
+.planExperimentation-div-array > div {
+    width: 25vw;
 }
 
 .planExperimentation-div-div
 {
     background-color: #F9F9F9;
-    margin: 0.3vw 1vw 0 1vw;
+    margin-top: 0.3vw;
     width: 16vw;
     text-align: center;
 
 }
 
-
-.planExperimentation-div-modifier
+.planExperimentation-div-voir-plus
 {
-    margin-right: 1vw;
+    margin-left: 1vw;
+    margin-top: 0.3vw;
     background-color: #A8EEA2;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 5vw;
-    height: 1.7vw;
+    height: 5vh;
 }
 
-.planExperimentation-div-modifier, .planExperimentation-div-button-add {
-    font-size: 1.3vh;
+.planExperimentation-div-voir-plus, .planExperimentation-div-button-add {
+    font-size: 1.3vmin;
     text-decoration: none;
     color: black;
 }
 
-.planExperimentation-div-modifier
+.planExperimentation-div-voir-plus
 {
     border: 0;
     background-color: #A8EEA2;
 }
 
-.planExperimentation-div-modifier:hover
+.planExperimentation-div-voir-plus:hover
 {
     cursor: pointer;
     background-color: #c2f6be;
@@ -135,12 +137,16 @@ body {
 {
     border: 0;
     background-color: #A2E0EE;
-    margin: 0.8vw 1vw 1vw 1vw;
-    height: 1.8vw;
+    margin-right: 1vw ;
+    height: 4vh;
     width: 16vw;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.addRoom {
+    margin-top: 0.8vw
 }
 
 .planExperimentation-div-button-add:hover {
@@ -180,7 +186,6 @@ body {
 .planExperimentation-div-roomName-div
 {
     width: 100%;
-    margin-left: 10%;
 }
 
 .div-img-modif
@@ -191,4 +196,71 @@ body {
 {
     padding-right: 1vw;
     width: 1.2vw;
+}
+
+@media screen and (max-width: 650px) {
+    .planExperimentation-div-title {
+        flex-direction: column;
+        height: 30%;
+        padding: 1vh;
+        background-color: white;
+    }
+    .planExperimentation-div-button-add {
+        text-align: center;
+    }
+
+    .add-or-del-div {
+        flex-direction: column;
+        margin-top: 0.5vh;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .add-or-del-div > a {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    .planExperimentation-div-array-columnName {
+        display: none;
+    }
+
+    .planExperimentation-div-allRoom {
+        margin: 2vw;
+    }
+
+    .planExperimentation-div {
+        width: 90%;
+        border: solid 1px rgb(243, 243, 243);
+        box-shadow: none;
+    }
+
+    .planExperimentation-div-array {
+        flex-direction: column;
+    }
+
+    .planExperimentation-div-array > div, .planExperimentation-div-array > a{
+        width: 100%;
+    }
+
+    .planExperimentation-div-array > a {
+        margin: 0 0 1vh 0;
+        padding: 0;
+        font-size: 11px;
+    }
+
+    .planExperimentation-div-title > p {
+        font-size: 15px;
+        margin-top: 1vh;
+        padding-bottom: 1vh;
+        width: 100%;
+        border-bottom: solid 1px black;
+        text-align: center;
+    }
+
+    .planExperimentation-div-voir-plus {
+        height: 3vh;
+    }
+
 }
