@@ -46,10 +46,6 @@ section {
     width: 100%;
 }
 
-.required:after {
-    content: ' *';
-}
-
 .buttons {
     display: flex;
     flex-direction: row;
@@ -65,7 +61,7 @@ a, button {
     width: 20vw;
 }
 
-/*
+
 .formRest {
     width: 20vw;
     max-height: 55vh;
@@ -79,18 +75,18 @@ a, button {
     display: flex;
 }
 
-.formRest > div:nth-child(4) > * {
-    width: 50%;
-}
-
-input, select {
+input:not(:nth-child(1)), select {
     display: flex;
     padding: 0;
     width: 100%;
-    margin-bottom: 5vh;
+    margin-bottom: 2vh;
     border: none;
     box-shadow: inset 0px 0px 1px 0px #000000;
     background-color: white;
+}
+
+input:nth-child(1) {
+    margin-bottom: 2vh;
 }
 
 input {
@@ -124,6 +120,14 @@ input:not(input[type=checkbox]), select {
     justify-content: space-between;
 }
 
+.delete {
+    background-color: #eea2a2;
+}
+
+.delete:hover {
+    background-color: #ee8f8f;
+}
+
 .endButton {
     font-size: 1.3vh;
     width: 5vw;
@@ -135,20 +139,20 @@ input:not(input[type=checkbox]), select {
     cursor: pointer;
 }
 
-.endButton:nth-child(1) {
+.endButton:nth-child(2):not(.delete) {
     background-color: #A2E0EE;
 }
 
-.endButton:nth-child(1):hover {
+.endButton:nth-child(2):hover:not(.delete) {
     background-color: #8fdcee;
 }
 
-.endButton:nth-child(2), .endButton:nth-child(3) {
-    background-color: #eea2a2;
+.endButton:nth-child(1), .endButton:nth-child(3) {
+    background-color: #dddddd;
 }
 
-.endButton:nth-child(2):hover, .endButton:nth-child(3):hover{
-    background-color: #ee8f8f;
+.endButton:nth-child(1):hover, .endButton:nth-child(3):hover{
+    background-color: #cdcdcd;
 }
 
 .buttons > a, .buttons3 > a {
@@ -170,7 +174,17 @@ input[type="number"] {
 .required:after {
     content: ' *';
 }
-*/
+
+.form-check {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+}
+
+.form-check > label {
+    width: 150%;
+}
+
 /*
 -----------------------------------------------------
     SPECIFIQUE AUX FORMULAIRES AVEC DEUX PARTIES :
@@ -178,7 +192,7 @@ input[type="number"] {
     - Une partie liste de système d'acquisitions
 -----------------------------------------------------
 */
-/*
+
 .sectionsOfWindow {
     display: flex;
     justify-content: space-around;
@@ -232,13 +246,13 @@ input[type="number"] {
     height: 6vh;
     align-items: center;
 }
-*/
+
 /*
 --------------------------------------------------------
     SPECIFIQUE AU FORMULAIRE DE MODIFICATION DE SALLE
 --------------------------------------------------------
 */
-/*
+
 .buttonsAndRefresh {
     display: flex;
     width: 13vw;
@@ -275,13 +289,13 @@ input[type="number"] {
     cursor: pointer;
     background-color: #ee8f8f;
 }
-*/
+
 /*
 --------------------------------------------------------
     SPECIFIQUE AUX MESSAGES D'ERREUR LIE AUX FORMULAIRES
 --------------------------------------------------------
 */
-/*
+
 .formRest li
 {
     color:red;
@@ -297,4 +311,3 @@ input[type="number"] {
     color: #58e342;
 }
 
-*/
