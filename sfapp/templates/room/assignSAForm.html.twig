@@ -30,15 +30,15 @@
                     <p>* Obligatoire</p>
                     {% if room.sa is not empty %}
                         <div class="buttons3">
+                            <a href="/admin" type="submit" class="endButton">Retour</a>
                             <button type="submit" class="endButton">Envoyer</button>
                             <a href="/unAssignSA/{{ room.name }}" class="endButton">Désaffecter</a>
-                            <a href="/admin" type="submit" class="endButton">Retour</a>
                         </div>
                     {% else %}
 
                         <div class="buttons">
-                            <button type="submit" class="endButton">Envoyer</button>
                             <a href="/admin" type="submit" class="endButton">Retour</a>
+                            <button type="submit" class="endButton">Affecter</button>
                         </div>
 
                     {% endif %}

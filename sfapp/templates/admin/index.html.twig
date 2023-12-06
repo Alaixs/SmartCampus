@@ -63,7 +63,7 @@
                             <div class="planExperimentation-div-div"><p>N/A</p></div>
                             <div class="planExperimentation-div-div"><p> - </p></div>
                             {% if user == 'admin' %}
-                                <a href="/assignSA/{{ room.name }}" class="planExperimentation-div-modifier button">Attribuer SA</a>
+                                <a href="/assignSA/{{ room.name }}" class="planExperimentation-div-modifier button">Affecter SA</a>
                             {% endif %}
 
                         {% else %}
@@ -71,7 +71,7 @@
                             <div class="planExperimentation-div-div"><p>{{ room.sa }}</p></div>
                             <div class="planExperimentation-div-div"><p>{{ room.sa.state }}</p></div>
                             {% if user == 'admin' %}
-                                <a href="/assignSA/{{ room.name }}" class="planExperimentation-div-modifier button">Modifier SA</a>
+                                <a href="/assignSA/{{ room.name }}" class="planExperimentation-div-modifier button">Gérer SA</a>
                             {% endif %}
 
                         {% endif %}

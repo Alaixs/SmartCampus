@@ -139,6 +139,14 @@ input:not(input[type=checkbox]), select {
     cursor: pointer;
 }
 
+.endButton:nth-child(1), .endButton:nth-child(3) {
+    background-color: #dddddd;
+}
+
+.endButton:nth-child(1):hover {
+    background-color: #cdcdcd;
+}
+
 .endButton:nth-child(2):not(.delete) {
     background-color: #A2E0EE;
 }
@@ -147,12 +155,12 @@ input:not(input[type=checkbox]), select {
     background-color: #8fdcee;
 }
 
-.endButton:nth-child(1), .endButton:nth-child(3) {
-    background-color: #dddddd;
+.endButton:nth-child(3) {
+    background-color: #ee8f8f;
 }
 
-.endButton:nth-child(1):hover, .endButton:nth-child(3):hover{
-    background-color: #cdcdcd;
+.endButton:nth-child(3):hover {
+    background-color: #ea9393;
 }
 
 .buttons > a, .buttons3 > a {
