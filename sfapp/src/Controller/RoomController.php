@@ -6,8 +6,8 @@ use App\Entity\Room;
 use App\Form\AddRoomFormType;
 use App\Form\AssignFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,17 +42,6 @@ class RoomController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($request->request->has('Supprimer')) {
-            if($room->getSA() != null)
-            {
-                $room->getSA()->setState("En attente");
-                $room->setSA(null);
-            }
-            $entityManager->remove($room);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_admin');
-        }
-
         if ($form->isSubmitted() && $form->isValid()) {
 
 
@@ -68,6 +57,27 @@ class RoomController extends AbstractController
             'addRoomForm' => $form
         ]);
     }
+
+    #[Route('/deleteRoom/{roomName}', name: 'deleteRoom')]
+    public function deleteRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
+    {
+
+        $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
+
+        if($room)
+        {
+            if($room->getSA() != null)
+            {
+                $room->getSA()->setState("En attente");
+                $room->setSA(null);
+            }
+            $entityManager->remove($room);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('app_admin');
+
+    }
+
 
     #[Route('/assignSA/{roomName}', name: 'assignSA')]
     public function assignSAtoRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
@@ -119,6 +129,16 @@ class RoomController extends AbstractController
             $entityManager->flush();
         }
         return $this->redirectToRoute('app_admin');
+    }
+
+    #[Route('/detailRoom/{roomName}', name: 'detailRoom')]
+    public function detailRoom(string $roomName, Request $request, RoomRepository $repository): Response
+    {
+        $room = $repository->findOneBy(array('name' => $roomName));
+
+        return $this->render('room/detailRoom.html.twig', [
+            'room' => $room,
+        ]);
     }
 
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>SmartCampus</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/formStyle.css') }}">
+    <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+</head>
+<body>
+{% include 'partial/header.html.twig'%}
+
+
+<section>
+    <div class="form">
+        <div class="title">
+            <p>Detail de la salle {{ room.name }}</p>
+            <p>Detail du S.A</p>
+        </div>
+        <div class="formInputs">
+            <div class="sectionsOfWindow">
+                <div class="formAndFooter">
+                    <div class="formRest">
+                        <p>Etages : {{ room.floor }}</p>
+                        <p>Capcité maximum : {{ room.capacity }} personnes</p>
+                        <p>Cette salle contiens des ordinateurs : {{ room.hasComputers }}</p>
+                        <p>Superficie : {{ room.area }} m²</p>
+                        <p>Exposition : {{ room.exposure }}</p>
+                        <p>Nombres de fenêtres : {{ room.nbWindows }}</p>
+                    </div>
+                    <div class="formFooter">
+                        <div class="buttons">
+                            <a href="/editRoom/{{ room.name }}" type="submit" class="endButton">Modifier salle</a>
+                            <a href="/deleteRoom/{{ room.name }}" class="endButton delete">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+                <section class = "line"></section>
+                <div class="sectionsOfWindow">
+                    <div class="formAndFooter">
+                        <div class="formRest">
+                            {% if room.sa  %}
+                                <p>Numéro du S.A : {{ room.sa }}</p>
+                                <p>Etat du S.A : {{ room.sa.state }}</p>
+                            {% else %}
+                                <p>AUCUN SA AFFECTER A CETTE SALLE</p>
+                                <p>Pour continuer veuillez affecter un système d'acquisition</p>
+                            {% endif %}
+
+
+                        </div>
+                        <div class="formFooter">
+                            <div class="buttons">
+                                <a href="/assignSA/{{ room.name }}" class="endButton">Gérer l'affectation</a>
+                                <a href="/unAssignSA/{{ room.name }}" class="endButton delete">Désaffecter</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% include 'partial/footer.html.twig'%}
+
+</body>
+</html>

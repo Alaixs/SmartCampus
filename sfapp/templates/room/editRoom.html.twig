@@ -22,7 +22,7 @@
                     {{ form_start(addRoomForm) }}
                     <div class="formRest">
                         {{ form_rest(addRoomForm) }}
-                        <button type="submit" name="Supprimer" class="deleteButton">Supprimer</button>
+                        <a href="/deleteRoom/{{ room.name }}"  class="deleteButton">Supprimer</a>
                     </div>
                     <div class="formFooter">
                         <p>* Obligatoire</p>
