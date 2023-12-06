@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SmartCampus - Ajouter une salle</title>
         <link rel="stylesheet" href="{{ asset('assets/css/formStyle.css') }}">
         <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
@@ -25,8 +26,7 @@
                     <div class="formFooter">
                         <p>* Obligatoire</p>
                         <div class="buttons">
-                            <a type="submit" href="/admin" class="endButton">Retour</a>
-                            <button type="submit" class="endButton">Ajouter</button>
+                            <button type="submit" class="endButton submit">Ajouter</button>
                         </div>
                     </div>
                     {{ form_end(addRoomForm) }}

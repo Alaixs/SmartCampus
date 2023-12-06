@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/html">
+<html lang="fr">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartCampus</title>
     <link rel="stylesheet" href="{{ asset('assets/css/formStyle.css') }}">
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
@@ -19,7 +20,9 @@
         {% endif %}
         </div>
         <div class="formInputs">
+
             {{ form_start(assignSAForm) }}
+
             <div class="formRest">
                 <div id="add_sa_form">
 
@@ -29,20 +32,19 @@
                 <div class="divSubmitButton">
                     <p>* Obligatoire</p>
                     {% if room.sa is not empty %}
-                        <div class="buttons3">
-                            <a href="/admin" type="submit" class="endButton">Retour</a>
-                            <button type="submit" class="endButton">Envoyer</button>
-                            <a href="/unAssignSA/{{ room.name }}" class="endButton">Désaffecter</a>
+
+                        <div class="doubleButtons">
+                            <button type="submit" class="endButton submit">Envoyer</button>
+                            <button href="/unAssignSA/{{ room.name }}" class="endButton delete">Désaffecter</button>
                         </div>
+
                     {% else %}
 
                         <div class="buttons">
-                            <a href="/admin" type="submit" class="endButton">Retour</a>
                             <button type="submit" class="endButton">Affecter</button>
                         </div>
 
                     {% endif %}
-
                 </div>
             </div>
             {{ form_end(assignSAForm) }}

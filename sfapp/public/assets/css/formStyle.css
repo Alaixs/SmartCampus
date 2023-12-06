@@ -18,6 +18,7 @@ section {
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
     width: 60%;
     max-height: 80vh;
+    min-width: fit-content;
     height: fit-content;
 }
 
@@ -35,6 +36,7 @@ section {
 
 .title > p {
     height: 100%;
+    min-height: 50%;
     display: flex;
     align-items: center;
     margin: 0;
@@ -113,11 +115,33 @@ input:not(input[type=checkbox]), select {
     justify-content: space-between;
 }
 
-.buttons3 {
+.doubleButtons {
     display: flex;
-    height: 4vh;
-    width: 16vw;
     justify-content: space-between;
+    height: 60px;
+}
+
+.doubleButtons button {
+    width: 48%;
+    min-height: 40px;
+    min-width: fit-content;
+}
+
+@media (max-width: 900px) {
+    .doubleButtons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .doubleButtons button {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .formRest {
+        height: 100%;
+        margin-bottom: 5vh;
+    }
 }
 
 .delete {
@@ -131,39 +155,38 @@ input:not(input[type=checkbox]), select {
 .endButton {
     font-size: 1.3vh;
     width: 5vw;
+    min-width: 50px;
     border: 0;
-    border-radius: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .endButton {
+        width: fit-content;
+        min-width: 0; /* Remove the minimum width */
+    }
 }
 
 .endButton:hover {
     cursor: pointer;
 }
 
-.endButton:nth-child(1), .endButton:nth-child(3) {
-    background-color: #dddddd;
-}
-
-.endButton:nth-child(1):hover {
-    background-color: #cdcdcd;
-}
-
-.endButton:nth-child(2):not(.delete) {
-    background-color: #A2E0EE;
-}
-
-.endButton:nth-child(2):hover:not(.delete) {
+.submit.endButton {
     background-color: #8fdcee;
 }
 
-.endButton:nth-child(3) {
+.submit.endButton:hover {
+    background-color: #A2E0EE;
+}
+
+.delete.endButton {
     background-color: #ee8f8f;
 }
 
-.endButton:nth-child(3):hover {
-    background-color: #ea9393;
+.delete.endButton:hover {
+    background-color: #eea2a2;
 }
 
-.buttons > a, .buttons3 > a {
+.buttons > a, .doubleButtons > a {
     text-decoration: none;
     display: flex;
     height: 100%;
