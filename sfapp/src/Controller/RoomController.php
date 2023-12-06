@@ -72,27 +72,27 @@ class RoomController extends AbstractController
     #[Route('/assignSA/{roomName}', name: 'assignSA')]
     public function assignSAtoRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
+        $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(['name' => $roomName]);
         $form = $this->createForm(AssignFormType::class, $room);
 
         $form->handleRequest($request);
-
-        $oldSA = $room->getSA();
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $newSA = $room->getSA();
 
-            if ($oldSA) {
+            $oldSA = $entityManager->getUnitOfWork()->getOriginalEntityData($room)['SA'];
+
+            if ($oldSA !== null) {
                 $oldSA->setState('En attente');
                 $entityManager->persist($oldSA);
             }
 
             $newSA->setState('En attente d\'installation');
             $entityManager->persist($newSA);
-
             $entityManager->persist($room);
             $entityManager->flush();
+
             return $this->redirectToRoute('app_admin');
         }
 
@@ -101,6 +101,7 @@ class RoomController extends AbstractController
             'assignSAForm' => $form,
         ]);
     }
+
 
     #[Route('/unAssignSA/{roomName}', name: 'unAssignSA')]
     public function unAssignSAtoRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response

@@ -19,10 +19,14 @@ class AssignFormType extends AbstractType
                 'class' => AcquisitionUnit::class,
                 'required' => true,
                 'label' => 'Numéro du SA',
-                'query_builder' => function (EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) use ($builder) {
+                    $room = $builder->getData();
+
                     return $er->createQueryBuilder('au')
                         ->where('au.state = :state')
-                        ->setParameter('state', 'En attente');
+                        ->orWhere('au = :currentSA')
+                        ->setParameter('state', 'En attente')
+                        ->setParameter('currentSA', $room->getSA());
                 },
             ])
         ;
