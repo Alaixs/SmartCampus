@@ -79,19 +79,6 @@ class RoomController extends AbstractController
 
         $oldSA = $room->getSA();
 
-        if ($request->request->has('desaffecter')) {
-            if($entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName))->getSA() != null)
-            {
-                $oldSA->setState('En attente');
-                $entityManager->persist($oldSA);
-            }
-            $room->setSA(null);
-            $entityManager->persist($room);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_admin');
-        }
-
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $newSA = $room->getSA();
@@ -114,4 +101,23 @@ class RoomController extends AbstractController
             'assignSAForm' => $form,
         ]);
     }
+
+    #[Route('/unAssignSA/{roomName}', name: 'unAssignSA')]
+    public function unAssignSAtoRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
+        if($room->getSA() != null)
+        {
+            $oldSA = $room->getSA();
+            $room->setSA(null);
+            $oldSA->setState('En attente');
+
+            $entityManager->persist($oldSA);
+            $entityManager->persist($room);
+
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('app_admin');
+    }
+
 }
