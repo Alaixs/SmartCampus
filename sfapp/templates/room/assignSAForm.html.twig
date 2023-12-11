@@ -13,6 +13,9 @@
 <section>
     <div class="form">
         <div class="title">
+                <a href="{{ path('detail_room', {'name': room.name}) }}">
+                    <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
+                </a>
             {% if room.sa is not empty %}
                 <p>Modifier le système d'acquisition de la salle {{ room.name }}</p>
             {% else %}

@@ -9,7 +9,6 @@
 <body>
     {% include 'partial/header.html.twig'%}
 
-
     <section class='planExperimentation'>
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
@@ -18,24 +17,23 @@
                 <div class="add-or-del-div">
                     <a href="/addSA" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
                     <a href="/removeSA" class="planExperimentation-div-button-add add-or-del-div ">Supprimer un S.A</a>
-
                 </div>
                 {% endif %}
 
             </div>
+            {% if listRooms is empty %}
+            <div class="noRoom">
+
+                    <p class="noRoomText"> Aucune salle a été ajouté pour le moment. Commencez par en ajouter une. </p>
+
+            </div>
+
+            {% else %}
 
             <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
                 <div class="planExperimentation-div-div"><p>SALLES</p></div>
                 <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
             </div>
-            {% if listRooms is empty %}
-            <div class="noRoom">
-
-                    <p> Aucune salle n'a été ajouté pour le moment </p>
-
-            </div>
-
-            {% else %}
 
             <div class="planExperimentation-div-allRoom">
                 {% for room in listRooms %}

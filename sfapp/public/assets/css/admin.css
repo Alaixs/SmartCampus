@@ -19,6 +19,7 @@ body {
     align-items: center;
     z-index: 2;
     max-height: 80vh;
+    min-height: 23vh;
 }
 
 .planExperimentation-div
@@ -182,6 +183,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-justify: distribute;
 }
 
 .planExperimentation-div-roomName
