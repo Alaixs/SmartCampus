@@ -5,6 +5,11 @@
     FEUILLE DE STYLE GENERALE COMMUNE A TOUS LES FORMULAIRES
 --------------------------------------------------------------
 */
+.detailTitle
+{
+    text-align: center;
+    margin-bottom: 3vh;
+}
 
 section {
     display: flex;
@@ -155,4 +160,9 @@ a, button {
     margin-bottom: 2vh;
     border: solid black 1px;
     background-color: black;
+}
+
+.button
+{
+    width: 5vw;
 }
