@@ -101,7 +101,7 @@ body {
     width: 16vw;
     text-align: center;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     flex-direction: row;
 }
@@ -109,6 +109,7 @@ body {
 .lilPastille {
     width: 3vh;
     height: 3vh;
+    margin-left: 5vh;
 }
 
 .planExperimentation-div-voir-plus
@@ -206,22 +207,10 @@ body {
     width: 1.2vw;
 }
 
-.greenCircle {
-    background-color: #52dc52;
-}
-
-.redCircle {
-    background-color: #dc5252;
-}
-
-.grayCircle {
-    background-color: #9b9b9b;
-}
-
 .greenCircle, .redCircle, .grayCircle{
     max-width: 3vh;
     height: 3vh;
-    border-radius: 100px;
+    cursor: help;
 }
 
 @media screen and (max-width: 650px) {

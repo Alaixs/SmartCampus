@@ -27,7 +27,7 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         $SA1002 = new AcquisitionUnit();
-        $SA1002->setState("En attente d'installation");
+        $SA1002->setState("Dysfonctionnement");
         $SA1002->setNumber("SA1002");
 
         $manager->persist($SA1002);
