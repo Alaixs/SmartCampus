@@ -20,8 +20,12 @@
                 <div class="formAndFooter">
                     <div class="formRest">
                         <p class="detailTitle">Détail de la salle {{ room.name }}</p>
-                        <p>Etages : {{ room.floor }}</p>
-                        <p>Capcité maximum : {{ room.capacity }} personne{{ room.capacity > 1 ? 's' : ''}}</p>
+                        <p>Étage : {{
+                            room.floor == 0 ? 'Rez-de-chaussée'
+                            : room.floor == 1 ? '1er'
+                            : room.floor ~ 'ème'
+                            }}</p>
+                        <p>Capacité maximum : {{ room.capacity }} personne{{ room.capacity > 1 ? 's' : ''}}</p>
                         <p>Cette salle contient des ordinateurs : {{ room.hasComputers ? 'Oui' : 'Non' }}</p>
                         <p>Superficie : {{ room.area }} m²</p>
                         <p>Exposition : {{ room.exposure }}</p>
@@ -38,15 +42,20 @@
                 <div class="sectionsOfWindow">
                     <div class="formAndFooter">
                         <div class="formRest">
-
-                            {% if room.sa  %}
+                            {% if room.sa %}
                                 <p class="detailTitle">Détail du S.A affecté</p>
 
                                 <p>Numéro du S.A : {{ room.sa }}</p>
                                 <p>Etat du S.A : {{ room.sa.state }}</p>
-                            {% else %}
+                            {% elseif hasSAAvailable %}
                                 <p class="detailTitle">AUCUN S.A AFFECTÉ</p>
                                 <p class="detailTitle">Vous pouvez affecter un S.A</p>
+                            {% elseif not hasSAInDatabase %}
+                                <p class="detailTitle">AUCUN S.A N'A ÉTÉ AJOUTÉ POUR LE MOMENT</p>
+                                <p class="detailTitle">Commencez par ajouter un S.A</p>
+                            {% else %}
+                                <p class="detailTitle">AUCUN S.A N'EST ACTUELLEMENT DISPONIBLE</p>
+                                <p class="detailTitle">Commencez par ajouter un S.A</p>
                             {% endif %}
 
 
@@ -56,8 +65,10 @@
                                 {% if room.sa %}
                                     <a href="/assignSA/{{ room.name }}" class="endButton">Gérer l'affectation</a>
                                     <a href="/unAssignSA/{{ room.name }}" class="endButton delete">Désaffecter</a>
-                                {% else %}
+                                {% elseif hasSAAvailable %}
                                     <a href="/assignSA/{{ room.name }}" class="endButton">Affecter un S.A</a>
+                                {% else %}
+                                    <a href="/addSA" class="endButton">Ajouter un S.A</a>
 
                                 {% endif %}
                             </div>

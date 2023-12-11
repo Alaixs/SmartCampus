@@ -7,6 +7,8 @@ use App\Form\AddRoomFormType;
 use App\Form\AssignFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\RoomRepository;
+use App\Repository\AcquisitionUnitRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -132,12 +134,16 @@ class RoomController extends AbstractController
     }
 
     #[Route('/detailRoom/{roomName}', name: 'detailRoom')]
-    public function detailRoom(string $roomName, Request $request, RoomRepository $repository): Response
+    public function detailRoom(string $roomName, Request $request, RoomRepository $RoomRepository, AcquisitionUnitRepository $SARepository): Response
     {
-        $room = $repository->findOneBy(array('name' => $roomName));
+        $room = $RoomRepository->findOneBy(array('name' => $roomName));
+        $hasSAInDatabase = $SARepository->count([]) > 0;
+        $hasSAAvailable = $SARepository->count(array('state' => "En attente d'affectation")) > 0;
 
         return $this->render('room/detailRoom.html.twig', [
             'room' => $room,
+            'hasSAAvailable' => $hasSAAvailable,
+            "hasSAInDatabase" => $hasSAInDatabase
         ]);
     }
 
