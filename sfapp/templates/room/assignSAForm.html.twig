@@ -13,11 +13,11 @@
 <section>
     <div class="form">
         <div class="title">
-        {% if room.sa is not empty %}
-        <p>Modifier le système d'acquisition</p>
-        {% else %}
-        <p>Ajouter un système d'acquisition</p>
-        {% endif %}
+            {% if room.sa is not empty %}
+                <p>Modifier le système d'acquisition de la salle {{ room.name }}</p>
+            {% else %}
+                <p>Attribuer un système d'acquisition à la salle {{ room.name }}</p>
+            {% endif %}
         </div>
         <div class="formInputs">
 
@@ -33,9 +33,8 @@
                     <p>* Obligatoire</p>
                     {% if room.sa is not empty %}
 
-                        <div class="doubleButtons">
-                            <button type="submit" class="endButton submit">Envoyer</button>
-                            <button href="/unAssignSA/{{ room.name }}" class="endButton delete">Désaffecter</button>
+                        <div class="buttons">
+                            <button type="submit" class="endButton">Affecter</button>
                         </div>
 
                     {% else %}

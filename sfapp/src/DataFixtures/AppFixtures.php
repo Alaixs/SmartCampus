@@ -13,14 +13,14 @@ class AppFixtures extends Fixture
     {
         // Creates acquisition unit entities
         $SA1000 = new AcquisitionUnit();
-        $SA1000->setState("En attente d'attribution");
+        $SA1000->setState("En attente d'affectation");
         $SA1000->setNumber("SA1000");
 
         $manager->persist($SA1000);
         $manager->flush();
 
         $SA1001 = new AcquisitionUnit();
-        $SA1001->setState("En attente d'attribution");
+        $SA1001->setState("En attente d'affectation");
         $SA1001->setNumber("SA1001");
 
         $manager->persist($SA1001);

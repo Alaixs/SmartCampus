@@ -68,7 +68,7 @@ class RoomController extends AbstractController
         {
             if($room->getSA() != null)
             {
-                $room->getSA()->setState("En attente");
+                $room->getSA()->setState("En attente d'affectation");
                 $room->setSA(null);
             }
             $entityManager->remove($room);
@@ -94,7 +94,7 @@ class RoomController extends AbstractController
             $oldSA = $entityManager->getUnitOfWork()->getOriginalEntityData($room)['SA'];
 
             if ($oldSA !== null) {
-                $oldSA->setState('En attente');
+                $oldSA->setState("En attente d'affectation");
                 $entityManager->persist($oldSA);
             }
 
@@ -121,7 +121,7 @@ class RoomController extends AbstractController
         {
             $oldSA = $room->getSA();
             $room->setSA(null);
-            $oldSA->setState('En attente');
+            $oldSA->setState('En attente d\'affectation');
 
             $entityManager->persist($oldSA);
             $entityManager->persist($room);

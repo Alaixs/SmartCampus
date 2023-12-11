@@ -25,7 +25,7 @@ class AssignFormType extends AbstractType
                     return $er->createQueryBuilder('au')
                         ->where('au.state = :state')
                         ->orWhere('au = :currentSA')
-                        ->setParameter('state', 'En attente')
+                        ->setParameter('state', "En attente d'affectation")
                         ->setParameter('currentSA', $room->getSA());
                 },
             ])

@@ -19,7 +19,7 @@ class AcquisitionUnitController extends AbstractController
     public function addSA(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
         $sa = new AcquisitionUnit();
-        $sa->setState("En attente");
+        $sa->setState("En attente d'attribution");
 
         $form = $this->createForm(AddSaFormType::class, $sa);
         $form->handleRequest($request);
