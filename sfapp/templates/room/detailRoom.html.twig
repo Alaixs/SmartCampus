@@ -12,6 +12,9 @@
 <section>
     <div class="form">
         <div class="title">
+            <a href="/admin">
+                <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
+            </a>
             <p>Salle {{ room.name }}</p>
             <p>Systèmes d'acquisition</p>
         </div>
@@ -20,7 +23,7 @@
                 <div class="formAndFooter">
                     <div class="formRest">
                         <p class="detailTitle">Détail de la salle {{ room.name }}</p>
-                        <p>Etages : {{ room.floor }}</p>
+                        <p>Etage : {{ room.floor }}</p>
                         <p>Capcité maximum : {{ room.capacity }} personne{{ room.capacity > 1 ? 's' : ''}}</p>
                         <p>Cette salle contient des ordinateurs : {{ room.hasComputers ? 'Oui' : 'Non' }}</p>
                         <p>Superficie : {{ room.area }} m²</p>

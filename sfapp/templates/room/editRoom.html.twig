@@ -13,6 +13,9 @@
         <section>
             <div class="form">
                 <div class="title">
+                <a href="{{ path('detail_room', {'name': room.name}) }}">
+                        <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
+                    </a>
                     <p>
                         Modification de la salle {{ room.name }}
                     </p>
@@ -22,18 +25,14 @@
                     {{ form_start(addRoomForm) }}
                     <div class="formRest">
                         {{ form_rest(addRoomForm) }}
-                        <a href="/deleteRoom/{{ room.name }}"  class="deleteButton">Supprimer</a>
                     </div>
                     <div class="formFooter">
                         <p>* Obligatoire</p>
-                        <div class="buttonsAndRefresh">
+                        <div class="buttons">
                             <div class="buttons">
                                 <button type="submit" class="endButton">Envoyer</button>
-                                <a href="/admin" type="submit" class="endButton">Retour</a>
                             </div>
-                            <button class="refresh" type="reset"><img class='img' src={{asset('assets/img/refreshIcon.png') }}></button>
                         </div>
-
                     </div>
                     {{ form_end(addRoomForm) }}
                 </div>

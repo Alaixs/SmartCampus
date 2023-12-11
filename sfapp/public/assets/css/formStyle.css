@@ -24,21 +24,23 @@ section {
     background-color: #F9F9F9;
     width: 100%;
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    font-size: 1.5vh;
+    justify-content: center;
+    position: relative;
+    font-size: 2.5vh;
     margin-bottom: 5vh;
     height: 8vh;
-    font-size: 2.5vh;
 }
 
-.title > p {
-    height: 100%;
-    min-height: 50%;
-    display: flex;
-    align-items: center;
-    margin: 0;
+.title img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px 0 0 10px;
+    background-color: rgba(112, 111, 111, 0.212);
+    border-radius: 10px;
 }
+
 
 .formInputs {
     display: flex;
@@ -48,14 +50,10 @@ section {
 
 .buttons {
     display: flex;
-    flex-direction: row;
-    margin-bottom: 3vh;
+    height: 4vh;
     justify-content: space-between;
 }
 
-a, button {
-    width: 45%;
-}
 
 .formRest {
     width: 20vw;
@@ -106,12 +104,6 @@ input:not(input[type=checkbox]), select {
     margin-bottom: 2vh;
 }
 
-.buttons {
-    display: flex;
-    height: 4vh;
-    width: 11vw;
-    justify-content: space-between;
-}
 
 .doubleButtons {
     display: flex;
