@@ -100,7 +100,15 @@ body {
     margin-top: 0.3vw;
     width: 16vw;
     text-align: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
 
+.lilPastille {
+    width: 3vh;
+    height: 3vh;
 }
 
 .planExperimentation-div-voir-plus
@@ -196,6 +204,24 @@ body {
 {
     padding-right: 1vw;
     width: 1.2vw;
+}
+
+.greenCircle {
+    background-color: #52dc52;
+}
+
+.redCircle {
+    background-color: #dc5252;
+}
+
+.grayCircle {
+    background-color: #9b9b9b;
+}
+
+.greenCircle, .redCircle, .grayCircle{
+    max-width: 3vh;
+    height: 3vh;
+    border-radius: 100px;
 }
 
 @media screen and (max-width: 650px) {

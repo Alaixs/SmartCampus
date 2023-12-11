@@ -49,9 +49,22 @@
                         </div>
 
                         {% if room.sa is empty %}
-                            <div class="planExperimentation-div-div"><p>Aucun SA affecté</p></div>
+                            <div class="planExperimentation-div-div">
+                                <p>-</p>
+                            </div>
                         {% else %}
-                            <div class="planExperimentation-div-div"><p>{{ room.sa }}</p></div>
+                            <div class="planExperimentation-div-div">
+                                <p>{{ room.sa }}</p>
+                                <div class="lilPastille">
+                                    {% if room.sa.state == "En attente d'installation" %}
+                                        <div class="grayCircle"></div>
+                                    {% elseif room.sa.state == "Operationnel"%}
+                                        <div class="greenCircle"></div>
+                                    {% elseif room.sa.state == "Dysfonctionnement" %}
+                                        <div class="redCircle"></div>
+                                    {% endif %}
+                                </div>
+                            </div>
                         {% endif %}
 
                         {% if user == 'admin' %}

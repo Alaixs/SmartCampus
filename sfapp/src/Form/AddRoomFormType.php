@@ -61,10 +61,10 @@ class AddRoomFormType extends AbstractType
                 'row_attr' => ['class' => 'rolling_menu'],
                 'label' => 'Exposition',
                 'choices' => [
-                    'Nord' => 'north',
-                    'Sud' => 'south',
-                    'Est' => 'east',
-                    'Ouest' => 'west'
+                    'Nord' => 'Nord',
+                    'Sud' => 'Sud',
+                    'Est' => 'Est',
+                    'Ouest' => 'Ouest'
                 ],
 
             ])
