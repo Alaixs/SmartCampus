@@ -34,6 +34,37 @@
                         <p>Exposition : {{ room.exposure }}</p>
                         <p>Cette salle contient {{ room.nbWindows }} fenêtre{{ room.nbWindows > 1 ? 's' }}</p>
                     </div>
+
+                    {% if temp[0] == -1 and humidity[0] == -1 and co2[0] == -1 %}
+                        <div>
+                            <p>Aucune mesure n'a été faite dans cette salle</p>
+                        </div>
+                    {% else %}
+                        <div>
+                            <ul class="data">
+                                <li>Dernière mesure : {{ temp[1] }} </li>
+                                {% if temp[0] < 0 %}
+                                    <li>Une erreur est survenue avec le capteur de température</li>
+                                {% else %}
+                                    <li>Dernière mesure de température : {{ temp[0] }}C° </li>
+                                {% endif %}
+
+                                {% if humidity[0] < 0 %}
+                                    <li>Une erreur est survenue avec le capteur d'humidité</li>
+                                {% else %}
+                                    <li>Humidité actuelle de la salle {{ humidity[0] }}%</li>
+                                {% endif %}
+
+                                {% if co2[0] < 0 %}
+                                    <li>Une erreur est survenue avec le capteur de CO2</li>
+                                {% else %}
+                                    <li>Taux de CO2 dans la <salle></salle> : {{ co2[0]  }}PPM</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+
                     <div class="formFooter">
                         <div class="buttons">
                             <a href="/editRoom/{{ room.name }}" type="submit" class="endButton">Modifier salle</a>

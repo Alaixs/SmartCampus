@@ -60,19 +60,24 @@ a, button {
 
 .formRest {
     width: 20vw;
+    max-height: 55vh;
+    overflow: auto;
+    padding-right: 19vw;
+    padding-left: 19vw;
 }
 
+.data > li {
+    list-style: none;
+    margin: 16px 0;
+}
 
-.formRest {
+.data {
     width: 20vw;
     max-height: 55vh;
     overflow: auto;
     padding-right: 19vw;
     padding-left: 19vw;
-    margin-bottom: 3vh;
 }
-
-
 
 .formFooter {
     display: flex;
