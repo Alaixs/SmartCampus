@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <section class = "line"></section>
-
+                        {% if listeSa %}
                         <div class="listAll">
                             <ul>
                                 {% for sa in listeSa %}
@@ -40,6 +40,14 @@
                                 {% endfor %}
                             </ul>
                         </div>
+                        {% else %}
+                            <div class="listAll">
+                                <p class="textCenter">
+                                    Aucun S.A a été ajouté pour le moment.
+                                </p>
+                                <p class="textCenter">Commencez par en ajouter un.</p>
+                            </div>
+                        {% endif %}
                     </div>
 
                     {{ form_end(addSAForm) }}
