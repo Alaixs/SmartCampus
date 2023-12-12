@@ -17,6 +17,13 @@ section {
     width: 100%;
 }
 
+.backArrow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px 0 0 10px;
+}
+
 .form {
     display: flex;
     flex-direction: column;
@@ -27,6 +34,7 @@ section {
 }
 
 .title {
+    position: relative;
     background-color: #F9F9F9;
     width: 100%;
     display: flex;
@@ -54,9 +62,6 @@ section {
     justify-content: space-between;
 }
 
-a, button {
-    width: 45%;
-}
 
 .formRest {
     width: 20vw;
