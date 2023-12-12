@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,5 +25,17 @@ class TechnicienController extends AbstractController
             'listRooms' => $rooms,
             'id' => $id,
         ]);
+    }
+
+    #[Route('/defSAoperationnel/{idSA}', name: 'set_sa_to_op')]
+    public function setSAToOp(int $idSA, Request $request, EntityManagerInterface $entityManager): Response
+    {
+
+        $idSA = $entityManager->getRepository('App\Entity\AcquisitionUnit')->findOneBy(array('id' => $idSA));
+
+        $idSA->setState("Operationnel");
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_tech');
     }
 }

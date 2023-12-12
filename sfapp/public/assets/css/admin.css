@@ -123,6 +123,7 @@ body {
     align-items: center;
     width: 5vw;
     height: 5vh;
+    text-align: center;
 }
 
 .planExperimentation-div-voir-plus, .planExperimentation-div-button-add {
