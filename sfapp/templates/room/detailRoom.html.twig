@@ -35,31 +35,39 @@
                         <p>Cette salle contient {{ room.nbWindows }} fenêtre{{ room.nbWindows > 1 ? 's' }}</p>
                     </div>
 
-                    {% if temp[0] == -1 and humidity[0] == -1 and co2[0] == -1 %}
+
+                    {% if (temp[0] == -1 and humidity[0] == -1 and co2[0] == -1) or not room.sa or room.sa.state != 'Operationnel' %}
                         <div>
-                            <p>Aucune mesure n'a été faite dans cette salle</p>
+                            <p style="text-align: center">Aucune mesure n'a été faite dans cette salle</p>
+                            {% if not room.sa %}
+                                <p>Pour commencez à récupéré des données, veuillez afecter un S.A</p>
+                            {% elseif room.sa.state != 'Operationnel' %}
+                                <p>Le S.A doit être opérationnel afin de pouvoir récupéré des données</p>
+                            {% endif %}
                         </div>
+
                     {% else %}
                         <div>
                             <ul class="data">
                                 <li>Dernière mesure : {{ temp[1] }} </li>
-                                {% if temp[0] < 0 %}
-                                    <li>Une erreur est survenue avec le capteur de température</li>
-                                {% else %}
-                                    <li>Dernière mesure de température : {{ temp[0] }}C° </li>
-                                {% endif %}
 
-                                {% if humidity[0] < 0 %}
-                                    <li>Une erreur est survenue avec le capteur d'humidité</li>
-                                {% else %}
-                                    <li>Humidité actuelle de la salle {{ humidity[0] }}%</li>
-                                {% endif %}
+                                <li>{{
+                                        temp[0] == -1 ? "Une erreur est survenue avec le capteur de température " :
+                                        "Dernière mesure de température : " ~  temp[0]  ~ "C°"
+                                    }}
+                                </li>
+                                <li>
+                                    {{   humidity[0] < 0 ? "Une erreur est survenue avec le capteur d'humidité" :
+                                    "Humidité actuelle de la salle " ~ humidity[0] ~ "%"
+                                    }}
+                                </li>
+                                <li>
+                                    {{ co2[0] < 0 ? "Une erreur est survenue avec le capteur de CO2" :
+                                        "Taux de CO2 dans la salle : " ~ co2[0] ~ "PPM"
 
-                                {% if co2[0] < 0 %}
-                                    <li>Une erreur est survenue avec le capteur de CO2</li>
-                                {% else %}
-                                    <li>Taux de CO2 dans la <salle></salle> : {{ co2[0]  }}PPM</li>
-                                {% endif %}
+                                    }}
+                                </li>
+
                             </ul>
                         </div>
                     {% endif %}

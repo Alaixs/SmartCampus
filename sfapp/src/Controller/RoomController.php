@@ -106,7 +106,7 @@ class RoomController extends AbstractController
             $entityManager->persist($room);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_admin');
+            return $this->redirectToRoute('detailRoom', ['roomName' => $roomName]);
         }
 
         return $this->render('room/assignSAForm.html.twig', [

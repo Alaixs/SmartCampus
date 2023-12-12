@@ -80,8 +80,9 @@ section {
     width: 20vw;
     max-height: 55vh;
     overflow: auto;
-    padding-right: 19vw;
-    padding-left: 19vw;
+    padding: 0 0 0 10px;
+    margin: 0;
+    border: solid black 1px;
 }
 
 .formFooter {
@@ -176,3 +177,5 @@ section {
 {
     width: 5vw;
 }
+
+
