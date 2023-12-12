@@ -4,7 +4,7 @@
     "id" : 22,
     "nom" : "temp",
     "valeur" : 22,
-    "dataCapture" : "2020-12-10 10:00:00",
+    "dataCapture" : "12-12-2023 10:00:00",
     "localisation" : "D207",
     "description" : "",
     "tag" : 1
@@ -16,7 +16,7 @@
     "id" : 22,
     "nom" : "temp",
     "valeur" : 18,
-    "dataCapture" : "15-12-2023 10:00:00",
+    "dataCapture" : "13-12-2023 10:00:00",
     "localisation" : "D207",
     "description" : "",
     "tag" : 1
@@ -26,7 +26,7 @@
     "id" : 25,
     "nom" : "temp",
     "valeur" : 20,
-    "dataCapture" : "2020-12-12 10:00:00",
+    "dataCapture" : "11-12-2023 10:00:00",
     "localisation" : "D207",
     "description" : "",
     "tag" : 1
@@ -35,8 +35,18 @@
   {
     "id" : 25,
     "nom" : "humidity",
-    "valeur" : 20,
-    "dataCapture" : "2022-12-12 10:00:00",
+    "valeur" : 56,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D207",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "humidity",
+    "valeur" : 57,
+    "dataCapture" : "14-12-2023 10:00:00",
     "localisation" : "D207",
     "description" : "",
     "tag" : 1
@@ -45,8 +55,8 @@
   {
     "id" : 25,
     "nom" : "co2",
-    "valeur" : 20,
-    "dataCapture" : "2022-12-12 10:00:00",
+    "valeur" : 640,
+    "dataCapture" : "13-12-2023 10:00:00",
     "localisation" : "D207",
     "description" : "",
     "tag" : 1
@@ -56,7 +66,7 @@
     "id" : 25,
     "nom" : "co2",
     "valeur" : 18,
-    "dataCapture" : "2023-12-12 10:00:00",
+    "dataCapture" : "11-12-2023 8:00:00",
     "localisation" : "D207",
     "description" : "",
     "tag" : 1
@@ -64,8 +74,8 @@
   {
     "id" : 25,
     "nom" : "co2",
-    "valeur" : 18,
-    "dataCapture" : "2023-12-12 10:00:00",
+    "valeur" : 640,
+    "dataCapture" : "10-12-2023 10:00:00",
     "localisation" : "D206",
     "description" : "",
     "tag" : 1
@@ -73,9 +83,9 @@
   {
     "id" : 15,
     "nom" : "temp",
-    "valeur" : 20,
-    "dataCapture" : "2022-11-12 10:00:00",
-    "localisation" : "D207",
+    "valeur" : 640,
+    "dataCapture" : "13-12-2023 8:00:00",
+      "localisation" : "D207",
     "description" : "",
     "tag" : 1
   }

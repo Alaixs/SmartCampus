@@ -4,13 +4,7 @@ namespace App\Domain;
 
 class GetDataJson implements GetDataInteface
 {
-
-    public function sortArrayByTime($array)
-    {
-        return usort($array, function ($a, $b) {
-            return strtotime($b['dataCapture']) - strtotime($a['dataCapture']);
-        });
-    }
+    public array $allValues;
 
     public function filterArrayByOne($array, $key, $value)
     {
@@ -25,17 +19,17 @@ class GetDataJson implements GetDataInteface
             $json = file_get_contents(__DIR__ . '/data.json');
             $data = json_decode($json, true);
 
-            $filteredByType = $this->filterArrayByOne($data, 'nom', $type);
-            $allValues = $this->filterArrayByOne($filteredByType, 'localisation', $roomName);
-            usort($allValues, function ($a, $b) {
+            $this->allValues = $this->filterArrayByOne($data, 'nom', $type);
+            $this->allValues = $this->filterArrayByOne($this->allValues, 'localisation', $roomName);
+            usort($this->allValues, function ($a, $b) {
                 return strtotime($b['dataCapture']) - strtotime($a['dataCapture']);
             });
-
-            if (!empty($allValues)) {
-                $lastValue = $allValues[0]['valeur'];
-                $lastValueDate = $allValues[0]['dataCapture'];
+            if (!empty($this->allValues)) {
+                $lastValue = $this->allValues[0]['valeur'];
+                $lastValueDate = $this->allValues[0]['dataCapture'];
                 return [$lastValue, $lastValueDate];
             }
+
         }
 
         return [-1];
