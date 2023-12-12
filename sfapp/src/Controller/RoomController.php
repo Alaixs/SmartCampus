@@ -8,6 +8,7 @@ use App\Form\AssignFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\RoomRepository;
 use App\Repository\AcquisitionUnitRepository;
+use App\Domain\GetDataJson;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -134,16 +135,24 @@ class RoomController extends AbstractController
     }
 
     #[Route('/detailRoom/{roomName}', name: 'detailRoom')]
-    public function detailRoom(string $roomName, Request $request, RoomRepository $RoomRepository, AcquisitionUnitRepository $SARepository): Response
+    public function detailRoom(string $roomName, Request $request, RoomRepository $RoomRepository, AcquisitionUnitRepository $SARepository, GetDataJson $getDataJson): Response
     {
         $room = $RoomRepository->findOneBy(array('name' => $roomName));
         $hasSAInDatabase = $SARepository->count([]) > 0;
         $hasSAAvailable = $SARepository->count(array('state' => "En attente d'affectation")) > 0;
 
+        $temp = $getDataJson->getLastValueByType($room->getName(), 'temp');
+        $humidity = $getDataJson->getLastValueByType($room->getName(), 'humidity');
+        $co2 = $getDataJson->getLastValueByType($room->getName(), 'co2');
+
+
         return $this->render('room/detailRoom.html.twig', [
             'room' => $room,
             'hasSAAvailable' => $hasSAAvailable,
-            "hasSAInDatabase" => $hasSAInDatabase
+            "hasSAInDatabase" => $hasSAInDatabase,
+            'temp' => $temp,
+            'humidity' => $humidity,
+            'co2' => $co2
         ]);
     }
 
