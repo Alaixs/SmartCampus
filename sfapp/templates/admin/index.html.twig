@@ -46,6 +46,7 @@
 
                         </div>
 
+                        <!-- Gestion de l'état des SA" -->
                         {% if room.sa is empty %}
                             <div class="planExperimentation-div-div">
                                 <p>-</p>
@@ -55,11 +56,11 @@
                                 <p>{{ room.sa }}</p>
                                 <div class="lilPastille">
                                     {% if room.sa.state == "En attente d'installation" %}
-                                        <div class="grayCircle"></div>
+                                        <img src="{{ asset('assets/img/StateImages/waitingForInstallation.png') }}" title="Le système d'acquisition n'a pas encore été installé." class="grayCircle"/>
                                     {% elseif room.sa.state == "Operationnel"%}
-                                        <div class="greenCircle"></div>
+                                        <img src="{{ asset('assets/img/StateImages/ok.png') }}" title="Le système d'acquisition fonctionne correctement." class="greenCircle"/>
                                     {% elseif room.sa.state == "Dysfonctionnement" %}
-                                        <div class="redCircle"></div>
+                                        <img src="{{ asset('assets/img/StateImages/notOk.png') }}" title="Le système d'acquisition est en panne." class="redCircle"/>
                                     {% endif %}
                                 </div>
                             </div>
