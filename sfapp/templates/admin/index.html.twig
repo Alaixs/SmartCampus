@@ -67,6 +67,10 @@
 
                         {% if user == 'admin' %}
                             <a href="/detailRoom/{{ room.name }}" class="planExperimentation-div-voir-plus">Voir plus</a>
+                        {% else %}
+                            {% if room.sa is not empty and (room.sa.state != "Operationnel" and room.sa.state != "Dysfonctionnement")%}
+                                <a href="/defSAoperationnel/{{ room.sa.id }}" class="planExperimentation-div-voir-plus">Définir le SA comme opérationnel</a>
+                            {% endif %}
                         {% endif %}
                     </div>
 
