@@ -40,9 +40,9 @@
                         <div>
                             <p style="text-align: center">Aucune mesure n'a été faite dans cette salle</p>
                             {% if not room.sa %}
-                                <p>Pour commencez à récupéré des données, veuillez afecter un S.A</p>
+                                <p>Pour commencer à récupérer des données, veuillez affecter un S.A</p>
                             {% elseif room.sa.state != 'Operationnel' %}
-                                <p>Le S.A doit être opérationnel afin de pouvoir récupéré des données</p>
+                                <p>Le S.A doit être opérationnel afin de pouvoir récupérer des données</p>
                             {% endif %}
                         </div>
 

@@ -16,7 +16,7 @@ class RemoveSAFormType extends AbstractType
         $builder
             ->add('number', EntityType::class, [
                 'class' => AcquisitionUnit::class,
-                'label' => "Systèmes d'acquisitions",
+                'label' => "Systèmes d'acquisition",
             ]);
     }
     public function configureOptions(OptionsResolver $resolver): void
