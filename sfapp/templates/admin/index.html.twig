@@ -16,7 +16,9 @@
                 {% if user == 'admin' %}
                 <div class="add-or-del-div">
                     <a href="/addSA" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
-                    <a href="/removeSA" class="planExperimentation-div-button-add add-or-del-div ">Supprimer un S.A</a>
+                    {% if listSA %}
+                        <a href="/removeSA" class="planExperimentation-div-button-add add-or-del-div ">Supprimer un S.A</a>
+                    {% endif %}
                 </div>
                 {% endif %}
 

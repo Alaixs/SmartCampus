@@ -51,6 +51,7 @@ class AcquisitionUnitController extends AbstractController
         $form->handleRequest($request);
 
 
+
         if ($form->isSubmitted()) {
             $saId = $form->get('number')->getData();
 
@@ -77,6 +78,11 @@ class AcquisitionUnitController extends AbstractController
             $entityManager->remove($sa);
             $entityManager->flush();
 
+            $listSA = $entityManager->getRepository('App\Entity\AcquisitionUnit')->findAll();
+            if (sizeof($listSA) == 0);
+            {
+                return $this->redirectToRoute('app_admin');
+            }
             return $this->redirectToRoute('removeSA');
         }
 

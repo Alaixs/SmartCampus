@@ -25,8 +25,10 @@ class AdminController extends AbstractController
     public function admin(?int $id, ManagerRegistry $doctrine, Request $request, ValidatorInterface $validator): Response
     {
         $entityManager = $doctrine->getManager();
-        $repository = $entityManager->getRepository('App\Entity\Room');
-        $rooms = $repository->findAll();
+        $roomRepository = $entityManager->getRepository('App\Entity\Room');
+        $saRepository = $entityManager->getRepository('App\Entity\AcquisitionUnit');
+        $rooms = $roomRepository->findAll();
+        $sas = $saRepository->findAll();
 
         $user = 'admin';
 
@@ -34,6 +36,7 @@ class AdminController extends AbstractController
             'user' => $user,
             'controller_name' => 'IndexController',
             'listRooms' => $rooms,
+            'listSA' => $sas,
             'id' => $id,
         ]);
     }
