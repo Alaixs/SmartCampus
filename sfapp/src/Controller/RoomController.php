@@ -25,15 +25,22 @@ class RoomController extends AbstractController
         $form = $this->createForm(AddRoomFormType::class, $room);
         $form->handleRequest($request);
 
+        $showToast = false;
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager->persist($room);
             $entityManager->flush();
-            return $this->redirectToRoute('app_admin');
+
+            $showToast = true;
+
+            $entityManager->persist($room);
+            //return $this->redirectToRoute('app_admin');
         }
         return $this->render('room/addRoomForm.html.twig', [
-            'addRoomForm' => $form
+            'addRoomForm' => $form,
+            'showToast' => $showToast,
         ]);
     }
 
@@ -46,8 +53,6 @@ class RoomController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-
                 $entityManager->persist($room);
                 $entityManager->flush();
                 return $this->redirectToRoute('app_admin');

@@ -26,21 +26,29 @@ class AcquisitionUnitController extends AbstractController
 
         $SaManager = $doctrine->getManager();
         $repository = $SaManager->getRepository('App\Entity\AcquisitionUnit');
+        
         $listeSa = $repository->findAll();
+
+        $showToast = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($sa);
             $entityManager->flush();
 
-            return $this->redirectToRoute('addSA');
+            $showToast = true;
 
+            $listeSa = $repository->findAll();
+
+            //return $this->redirectToRoute('addSA');
         }
 
         return $this->render('acquisition_unit/addSAForm.html.twig', [
             'addSAForm' => $form,
             'listeSa' => $listeSa,
+            'showToast' => $showToast,
         ]);
     }
+
 
     #[Route('/removeSA', name: 'removeSA')]
     public function removeSA(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
