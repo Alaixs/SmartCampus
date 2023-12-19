@@ -5,20 +5,27 @@ namespace App\Tests;
 use App\Entity\AcquisitionUnit;
 use App\Repository\AcquisitionUnitRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Domain\StateSA;
 
 class SetAcquisitionUnitStatusToOperationalTest extends WebTestCase
 {
     public function testSetAcquisitionUnitStatusToOperational()
     {
+        $SANumber = 'SA2000';
+
         $client = static::createClient();
-        $entityManager = $client->getContainer()->get('doctrine')->getManager();
+        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $saNumber = 'SA1000';
-        $SA1000 = $entityManager->getRepository(AcquisitionUnit::class)->findOneBy(['number' => $saNumber]);
+        $newSA = new AcquisitionUnit();
+        $newSA->setNumber($SANumber);
+        $newSA->setState(StateSA::ATTENTE_AFFECTATION->value);
 
-        $this->assertInstanceOf(AcquisitionUnit::class, $SA1000);
+        $entityManager->persist($newSA);
+        $entityManager->flush();
 
-        $crawler = $client->request('GET', '/defSAoperationnel/{idSA}' . $saNumber);
+        $this->assertInstanceOf(AcquisitionUnit::class, $newSA);
+
+        $crawler = $client->request('GET', '/defSAoperationnel/' . $SANumber);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
