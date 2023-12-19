@@ -38,7 +38,6 @@ class RoomController extends AbstractController
             $showToast = true;
 
             $entityManager->persist($room);
-            //return $this->redirectToRoute('app_admin');
         }
         return $this->render('room/addRoomForm.html.twig', [
             'addRoomForm' => $form,

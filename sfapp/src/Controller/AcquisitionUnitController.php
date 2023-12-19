@@ -36,9 +36,8 @@ class AcquisitionUnitController extends AbstractController
 
             $showToast = true;
 
-            $listeSa = $repository->findAll();
+            $listeSa = $acquisitionUnitRepository->findAll();
 
-            //return $this->redirectToRoute('addSA');
         }
 
         return $this->render('acquisition_unit/addSAForm.html.twig', [
