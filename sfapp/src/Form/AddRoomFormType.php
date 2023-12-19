@@ -32,7 +32,6 @@ class AddRoomFormType extends AbstractType
                     'Deuxième étage' => 2,
                     'Troisième étage' => 3
                 ],
-                'label' => 'Étage '
             ])
 
             ->add('capacity', null, [

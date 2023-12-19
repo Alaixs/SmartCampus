@@ -12,7 +12,7 @@
 <section>
     <div class="form">
         <div class="title">
-            <a class="backArrow" href="/admin">
+            <a class="backArrow" href="{{ path('app_admin') }}">
                 <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
             </a>
             <p>Salle {{ room.name }}</p>
@@ -36,7 +36,7 @@
                     </div>
 
 
-                    {% if (temp[0] == -1 and humidity[0] == -1 and co2[0] == -1) or not room.sa or room.sa.state != 'Operationnel' %}
+                    {% if (temp[0] == -1 and humidity[0] == -1 and co2[0] == -1) or not room.sa or room.sa.state != 'Opérationnel' %}
                         <div>
                             <p style="text-align: center">Aucune mesure n'a été faite dans cette salle</p>
                             {% if not room.sa %}
@@ -75,8 +75,8 @@
 
                     <div class="formFooter">
                         <div class="buttons">
-                            <a href="/editRoom/{{ room.name }}" type="submit" class="endButton">Modifier la salle</a>
-                            <a href="/deleteRoom/{{ room.name }}" class="endButton delete">Supprimer</a>
+                            <a href="{{ path('editRoom', {'room' : room.id}) }}" type="submit" class="endButton">Modifier la salle</a>
+                            <a href="{{ path('deleteRoom', {'room' : room.id}) }}" class="endButton delete">Supprimer</a>
                         </div>
                     </div>
                 </div>
@@ -105,12 +105,12 @@
                         <div class="formFooter">
                             <div class="buttons {{ room.sa ? '' : 'button'}}">
                                 {% if room.sa %}
-                                    <a href="/assignSA/{{ room.name }}" class="endButton">Gérer l'affectation</a>
-                                    <a href="/unAssignSA/{{ room.name }}" class="endButton delete">Désaffecter</a>
+                                    <a href="{{ path('assignSA', {'room' : room.id }) }}" class="endButton">Gérer l'affectation</a>
+                                    <a href="{{ path('unAssignSA', {'room' : room.id}) }}" class="endButton delete">Désaffecter</a>
                                 {% elseif hasSAAvailable %}
-                                    <a href="/assignSA/{{ room.name }}" class="endButton">Affecter un S.A</a>
+                                    <a href="{{ path('assignSA', {'room' : room.id}) }}" class="endButton">Affecter un S.A</a>
                                 {% else %}
-                                    <a href="/addSA" class="endButton">Ajouter un S.A</a>
+                                    <a href="{{ path('addSA') }}" class="endButton">Ajouter un S.A</a>
 
                                 {% endif %}
                             </div>

@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
+use App\Domain\GetDataInteface;
 use App\Entity\Room;
 use App\Form\AddRoomFormType;
-use App\Form\AssignFormType;
+use App\Form\AssignSAFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\RoomRepository;
 use App\Repository\AcquisitionUnitRepository;
 use App\Domain\GetDataJson;
+use App\Domain\StateSA;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,10 +39,9 @@ class RoomController extends AbstractController
         ]);
     }
 
-    #[Route('/editRoom/{roomName}', name: 'editRoom')]
-    public function editRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/editRoom/{room}', name: 'editRoom')]
+    public function editRoom(Room $room, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
         $form = $this->createForm(AddRoomFormType::class, $room);
 
         $form->handleRequest($request);
@@ -61,17 +62,15 @@ class RoomController extends AbstractController
         ]);
     }
 
-    #[Route('/deleteRoom/{roomName}', name: 'deleteRoom')]
-    public function deleteRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/deleteRoom/{room}', name: 'deleteRoom')]
+    public function deleteRoom(Room $room, EntityManagerInterface $entityManager): Response
     {
-
-        $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
 
         if($room)
         {
             if($room->getSA() != null)
             {
-                $room->getSA()->setState("En attente d'affectation");
+                $room->getSA()->setState(StateSA::ATTENTE_AFFECTATION->value);
                 $room->setSA(null);
             }
             $entityManager->remove($room);
@@ -82,11 +81,11 @@ class RoomController extends AbstractController
     }
 
 
-    #[Route('/assignSA/{roomName}', name: 'assignSA')]
-    public function assignSAtoRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/assignSA/{room}', name: 'assignSA')]
+    public function assignSAtoRoom(Room $room, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(['name' => $roomName]);
-        $form = $this->createForm(AssignFormType::class, $room);
+
+        $form = $this->createForm(AssignSAFormType::class, $room);
 
         $form->handleRequest($request);
 
@@ -97,16 +96,16 @@ class RoomController extends AbstractController
             $oldSA = $entityManager->getUnitOfWork()->getOriginalEntityData($room)['SA'];
 
             if ($oldSA !== null) {
-                $oldSA->setState("En attente d'affectation");
+                $oldSA->setState(StateSA::ATTENTE_AFFECTATION->value);
                 $entityManager->persist($oldSA);
             }
 
-            $newSA->setState('En attente d\'installation');
+            $newSA->setState(StateSA::ATTENTE_INSTALLATION->value);
             $entityManager->persist($newSA);
             $entityManager->persist($room);
             $entityManager->flush();
 
-            return $this->redirectToRoute('detailRoom', ['roomName' => $roomName]);
+            return $this->redirectToRoute('detailRoom', ['room' => $room->getId()]);
         }
 
         return $this->render('room/assignSAForm.html.twig', [
@@ -116,15 +115,14 @@ class RoomController extends AbstractController
     }
 
 
-    #[Route('/unAssignSA/{roomName}', name: 'unAssignSA')]
-    public function unAssignSAtoRoom(string $roomName, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/unAssignSA/{room}', name: 'unAssignSA')]
+    public function unAssignSAtoRoom(Room $room, EntityManagerInterface $entityManager): Response
     {
-        $room = $entityManager->getRepository('App\Entity\Room')->findOneBy(array('name' => $roomName));
         if($room->getSA() != null)
         {
             $oldSA = $room->getSA();
             $room->setSA(null);
-            $oldSA->setState('En attente d\'affectation');
+            $oldSA->setState(StateSA::ATTENTE_AFFECTATION->value);
 
             $entityManager->persist($oldSA);
             $entityManager->persist($room);
@@ -134,11 +132,10 @@ class RoomController extends AbstractController
         return $this->redirectToRoute('app_admin');
     }
 
-    #[Route('/detailRoom/{roomName}', name: 'detailRoom')]
-    public function detailRoom(string $roomName, Request $request, RoomRepository $RoomRepository, AcquisitionUnitRepository $SARepository, GetDataJson $getDataJson): Response
+    #[Route('/detailRoom/{room}', name: 'detailRoom')]
+    public function detailRoom(Room $room, RoomRepository $RoomRepository, AcquisitionUnitRepository $SARepository, GetDataInteface $getDataJson): Response
     {
-        $room = $RoomRepository->findOneBy(array('name' => $roomName));
-        $hasSAInDatabase = $SARepository->count([]) > 0;
+        $hasSAInDatabase = $SARepository->count(array()) > 0;
         $hasSAAvailable = $SARepository->count(array('state' => "En attente d'affectation")) > 0;
 
         $temp = $getDataJson->getLastValueByType($room->getName(), 'temp');
@@ -149,7 +146,7 @@ class RoomController extends AbstractController
         return $this->render('room/detailRoom.html.twig', [
             'room' => $room,
             'hasSAAvailable' => $hasSAAvailable,
-            "hasSAInDatabase" => $hasSAInDatabase,
+            'hasSAInDatabase' => $hasSAInDatabase,
             'temp' => $temp,
             'humidity' => $humidity,
             'co2' => $co2

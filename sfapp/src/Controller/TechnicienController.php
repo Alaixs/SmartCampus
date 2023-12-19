@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Domain\StateSA;
+use App\Entity\AcquisitionUnit;
+use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,27 +16,22 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class TechnicienController extends AbstractController
 {
     #[Route('/technicien', name: 'app_tech')]
-    public function technicien(?int $id, ManagerRegistry $doctrine, Request $request, ValidatorInterface $validator): Response
+    public function technicien(RoomRepository $roomRepository): Response
     {
-        $entityManager = $doctrine->getManager();
-        $repository = $entityManager->getRepository('App\Entity\Room');
-        $rooms = $repository->findAll();
+        $rooms = $roomRepository->findAll();
 
         $user = 'technicien';
         return $this->render('admin/index.html.twig', [
             'user' => $user,
             'listRooms' => $rooms,
-            'id' => $id,
         ]);
     }
 
-    #[Route('/defSAoperationnel/{idSA}', name: 'set_sa_to_op')]
-    public function setSAToOp(int $idSA, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/defSAoperationnel/{SA}', name: 'set_sa_to_op')]
+    public function setSAToOp(AcquisitionUnit $SA, Request $request, EntityManagerInterface $entityManager): Response
     {
 
-        $idSA = $entityManager->getRepository('App\Entity\AcquisitionUnit')->findOneBy(array('id' => $idSA));
-
-        $idSA->setState("Operationnel");
+        $SA->setState(StateSA::OPERATIONNEL->value);
         $entityManager->flush();
 
         return $this->redirectToRoute('app_tech');
