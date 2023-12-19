@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Form;
+namespace App\Tests;
 
 use App\Entity\AcquisitionUnit;
 use App\Form\AddSaFormType;

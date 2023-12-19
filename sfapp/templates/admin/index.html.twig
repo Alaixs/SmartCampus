@@ -15,9 +15,9 @@
                 <p class="planExperimentation-p-title">Plan d'expérimentation</p>
                 {% if user == 'admin' %}
                 <div class="add-or-del-div">
-                    <a href="/addSA" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
+                    <a href="{{ path('addSA') }}" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
                     {% if listSA %}
-                        <a href="/removeSA" class="planExperimentation-div-button-add add-or-del-div ">Supprimer un S.A</a>
+                        <a href="{{ path('removeSA') }}" class="planExperimentation-div-button-add add-or-del-div ">Supprimer un S.A</a>
                     {% endif %}
                 </div>
                 {% endif %}
@@ -59,7 +59,7 @@
                                 <div class="lilPastille">
                                     {% if room.sa.state == "En attente d'installation" %}
                                         <img src="{{ asset('assets/img/StateImages/waitingForInstallation.png') }}" title="Le système d'acquisition n'a pas encore été installé." class="grayCircle"/>
-                                    {% elseif room.sa.state == "Operationnel"%}
+                                    {% elseif room.sa.state == "Opérationnel"%}
                                         <img src="{{ asset('assets/img/StateImages/ok.png') }}" title="Le système d'acquisition fonctionne correctement." class="greenCircle"/>
                                     {% elseif room.sa.state == "Dysfonctionnement" %}
                                         <img src="{{ asset('assets/img/StateImages/notOk.png') }}" title="Le système d'acquisition est en panne." class="redCircle"/>
@@ -69,10 +69,10 @@
                         {% endif %}
 
                         {% if user == 'admin' %}
-                            <a href="/detailRoom/{{ room.name }}" class="planExperimentation-div-voir-plus">Voir plus</a>
+                            <a href="{{ path('detailRoom', {'room' : room.id}) }}" class="planExperimentation-div-voir-plus">Voir plus</a>
                         {% else %}
-                            {% if room.sa is not empty and (room.sa.state != "Operationnel" and room.sa.state != "Dysfonctionnement")%}
-                                <a href="/defSAoperationnel/{{ room.sa.id }}" class="planExperimentation-div-voir-plus">Définir le SA comme opérationnel</a>
+                            {% if room.sa is not empty and (room.sa.state != "Opérationnel" and room.sa.state != "Dysfonctionnement")%}
+                                <a href="{{ path('set_sa_to_op', {'SA' :room.sa.id}) }}" class="planExperimentation-div-voir-plus">Définir le SA comme opérationnel</a>
                             {% endif %}
                         {% endif %}
                     </div>
@@ -82,17 +82,12 @@
 
                 {% if user == 'admin' %}
                     <div class='planExperimentation-div-array'>
-                        <a href="/addRoom" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
+                        <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
                     </div>
                 {% endif %}
 
             </div>
-
-
-
         </div>
-            </div>
-
     </section>
 
     {% include 'partial/footer.html.twig' %}

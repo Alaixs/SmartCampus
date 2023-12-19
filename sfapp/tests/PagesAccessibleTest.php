@@ -188,7 +188,7 @@ class PagesAccessibleTest extends WebTestCase
         $client->request('GET', '/unAssignSA/'. $roomName);
     }
 
-    public function testDeleteRoom()
+    public function testRemoveRoom()
     {
         $roomName = 'D450';
         $roomRepository = $this->getMockBuilder(RoomRepository::class)
@@ -213,7 +213,7 @@ class PagesAccessibleTest extends WebTestCase
 
         $client->getContainer()->set(RoomRepository::class, $roomRepository);
 
-        $client->request('GET', '/deleteRoom/'. $roomName);
+        $client->request('GET', '/removeRoom/'. $roomName);
     }
 
 }

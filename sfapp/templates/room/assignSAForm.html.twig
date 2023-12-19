@@ -13,7 +13,7 @@
 <section>
     <div class="form">
         <div class="title">
-                <a href="{{ path('detail_room', {'name': room.name}) }}">
+                <a href="{{ path('detail_room', {'name': room.id }) }}">
                     <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
                 </a>
             {% if room.sa is not empty %}

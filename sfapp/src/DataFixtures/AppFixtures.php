@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Domain\StateSA;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -15,25 +16,25 @@ class AppFixtures extends Fixture
          * Creates acquisition unit entities
          */
         $SA1000 = new AcquisitionUnit();
-        $SA1000->setState("En attente d'affectation");
+        $SA1000->setState(StateSA::ATTENTE_AFFECTATION->value);
         $SA1000->setNumber("SA1000");
         $manager->persist($SA1000);
         $manager->flush();
 
         $SA1001 = new AcquisitionUnit();
-        $SA1001->setState("Operationnel");
+        $SA1001->setState(StateSA::OPERATIONNEL->value);
         $SA1001->setNumber("SA1001");
         $manager->persist($SA1001);
         $manager->flush();
 
         $SA1002 = new AcquisitionUnit();
-        $SA1002->setState("En attente d'installation");
+        $SA1002->setState(StateSA::ATTENTE_INSTALLATION->value);
         $SA1002->setNumber("SA1002");
         $manager->persist($SA1002);
         $manager->flush();
 
         $SA1003 = new AcquisitionUnit();
-        $SA1003->setState("Dysfonctionnement");
+        $SA1003->setState(StateSA::DYSFONCTIONNEMENT->value);
         $SA1003->setNumber("SA1003");
         $manager->persist($SA1003);
         $manager->flush();
