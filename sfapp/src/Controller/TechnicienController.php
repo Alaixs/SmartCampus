@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Domain\GetDataInteface;
 use App\Domain\StateSA;
 use App\Entity\AcquisitionUnit;
+use App\Entity\Room;
+use App\Form\RemoveSAFormType;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,13 +30,44 @@ class TechnicienController extends AbstractController
         ]);
     }
 
+    #[Route('/manageSA/{SA}', name: 'manage_sa')]
+    public function manageSA(Room $room, GetDataInteface $getDataJson): Response
+    {
+        $temp = $getDataJson->getLastValueByType($room->getName(), 'temp');
+        $humidity = $getDataJson->getLastValueByType($room->getName(), 'humidity');
+        $co2 = $getDataJson->getLastValueByType($room->getName(), 'co2');
+
+        return $this->render('technicien/manageSA.html.twig', [
+            'room' => $room,
+            'temp' => $temp,
+            'humidity' => $humidity,
+            'co2' => $co2
+        ]);
+    }
+
     #[Route('/defSAoperationnel/{SA}', name: 'set_sa_to_op')]
-    public function setSAToOp(AcquisitionUnit $SA, Request $request, EntityManagerInterface $entityManager): Response
+    public function setSAToOp(AcquisitionUnit $SA, EntityManagerInterface $entityManager): Response
     {
 
         $SA->setState(StateSA::OPERATIONNEL->value);
         $entityManager->flush();
 
         return $this->redirectToRoute('app_tech');
+    }
+
+    #[Route('/testData/{SA}', name: 'test_data')]
+    public function testData(Room $room, GetDataInteface $getDataJson): Response
+    {
+
+        $temp = $getDataJson->getLastValueByType($room->getName(), 'temp');
+        $humidity = $getDataJson->getLastValueByType($room->getName(), 'humidity');
+        $co2 = $getDataJson->getLastValueByType($room->getName(), 'co2');
+
+        return $this->render('technicien/manageSA.html.twig', [
+            'room' => $room,
+            'temp' => $temp,
+            'humidity' => $humidity,
+            'co2' => $co2
+        ]);
     }
 }

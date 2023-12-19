@@ -71,8 +71,8 @@
                         {% if user == 'admin' %}
                             <a href="{{ path('detailRoom', {'room' : room.id}) }}" class="planExperimentation-div-voir-plus">Voir plus</a>
                         {% else %}
-                            {% if room.sa is not empty and (room.sa.state != "Opérationnel" and room.sa.state != "Dysfonctionnement")%}
-                                <a href="{{ path('set_sa_to_op', {'SA' :room.sa.id}) }}" class="planExperimentation-div-voir-plus">Définir le SA comme opérationnel</a>
+                            {% if room.sa is not empty and (room.sa.state != "Opérationnel")%}
+                                <a href="{{ path('manage_sa', {'SA' :room.sa.id}) }}" class="planExperimentation-div-voir-plus">Gérer SA</a>
                             {% endif %}
                         {% endif %}
                     </div>

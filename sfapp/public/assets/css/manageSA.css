@@ -1,0 +1,157 @@
+
+
+section {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 70%;
+}
+
+.dataTest, .roomInfo {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    max-height: 80vh;
+
+}
+
+.dataTest {
+    width: 60%;
+}
+
+.roomInfo {
+    width: 20%;
+}
+
+.title {
+    background-color: #F9F9F9;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    font-size: 2.5vh;
+    margin-bottom: 5vh;
+    height: 8vh;
+}
+
+.title img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px 0 0 10px;
+}
+
+.title > a
+{
+    position: absolute;
+    top : 0;
+    left : 0;
+}
+
+.dataInformations {
+    width: 100%;
+    height: 55%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dataArray {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.arrayTitles {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 7vh;
+    width: 100%;
+    margin-bottom: 3vh;
+}
+
+.arrayTitles > div {
+    background-color: #F9F9F9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 33%;
+    height: 7vh;
+}
+
+.arrayLines {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.line {
+    margin-bottom: 1vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #F9F9F9;
+    height: 7vh;
+}
+
+.line > div {
+    display: flex;
+    justify-content: center;
+    width: 33%;
+}
+
+.errorMsg {
+    text-align: center;
+}
+
+.errorMsg > p {
+    color: #dc6d6d;
+}
+
+.testAndValidateButtons {
+    width: 100%;
+    height: 5vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 4vh;
+}
+
+.testDataButton {
+    background-color: #A2E0EE;
+    color: black;
+}
+
+.testDataButton, .setSAToOpButton {
+    height: 5vh;
+    width: 10vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+}
+
+.testDataButton:hover {
+    background-color: #b9ebf6;
+}
+
+.listInfoRoom > ol {
+    list-style: none;
+    width: 100%;
+}
+
+.listInfoRoom > ol > li {
+    width: 80%;
+    background-color: #F9F9F9;
+    margin-bottom: 1vh;
+    height: 5vh;
+    display: flex;
+    justify-content: center ;
+    align-items: center;
+}

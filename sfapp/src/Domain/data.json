@@ -11,6 +11,35 @@
   },
 
 
+  {
+    "id" : 22,
+    "nom" : "temp",
+    "valeur" : 20,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D101",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "humidity",
+    "valeur" : 57,
+    "dataCapture" : "14-12-2023 10:00:00",
+    "localisation" : "D101",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "co2",
+    "valeur" : 640,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D101",
+    "description" : "",
+    "tag" : 1
+  },
 
   {
     "id" : 22,
