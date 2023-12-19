@@ -62,8 +62,8 @@ class RoomController extends AbstractController
         ]);
     }
 
-    #[Route('/deleteRoom/{room}', name: 'deleteRoom')]
-    public function deleteRoom(Room $room, EntityManagerInterface $entityManager): Response
+    #[Route('/removeRoom/{room}', name: 'removeRoom')]
+    public function removeRoom(Room $room, EntityManagerInterface $entityManager): Response
     {
 
         if($room)

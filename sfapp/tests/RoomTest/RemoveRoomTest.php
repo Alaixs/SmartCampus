@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Tests\RoomTest;
+namespace App\Tests;
 
 use App\Entity\Room;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DeleteRoomTest extends WebTestCase
+class RemoveRoomTest extends WebTestCase
 {
     /**
      * La méthode testSubmitValidData() vérifie si le formulaire est valide avec des données correctes.

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\RoomTest\Form;
+namespace App\Tests;
 
 use App\Entity\Room;
 use App\Form\AddRoomFormType;
