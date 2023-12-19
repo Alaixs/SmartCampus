@@ -38,7 +38,7 @@
                                     </div>
                                     {% if (temp[0] < 0) %}
                                         <div>
-                                            <p>Données inconnues</p>
+                                            <p>Données non reçues</p>
                                         </div>
                                         <div>
                                             <p> - </p>
@@ -69,7 +69,7 @@
                                     </div>
                                     {% if (humidity[0] < 0) %}
                                         <div>
-                                            <p>Données inconnues</p>
+                                            <p>Données non reçues</p>
                                         </div>
                                         <div>
                                             <p> - </p>
@@ -101,7 +101,7 @@
                                     </div>
                                     {% if (co2[0] < 0) %}
                                         <div>
-                                            <p>Données inconnues</p>
+                                            <p>Données non reçues</p>
                                         </div>
                                         <div>
                                             <p> - </p>
@@ -138,8 +138,9 @@
                                         Le capteur ne peut pas être défini comme opérationnel. Réglez le(s) problème(s) et retestez la remontée des données.
                                     </p>
                                 </div>
+                            {% endif %}
 
-                            {% elseif (temp[0] > 50 or humidity[0] >= 100 or co2[0] > 1800) %}
+                            {% if (temp[0] > 50 or humidity[0] >= 100 or co2[0] > 1800) %}
 
                                 <div class="errorMsg">
                                     <p>
@@ -191,24 +192,24 @@
                 <div class="roomInfo">
                     <div class="form">
                         <div class="title">
-                            <p>Info de la salle {{ room.name }}</p>
+                            <p>Informations de la salle {{ room.name }}</p>
                         </div>
                         <div class="listInfoRoom">
                             <ol>
                                 <li>
-                                    {% if (room.floor == 0) %}
-                                        Etage : Rez de chaussée
-                                    {% else %}
-                                        Etage : {{ room.floor }}
-                                    {% endif %}
+                                    Étage : {{
+                                    room.floor == 0 ? 'Rez-de-chaussée'
+                                    : room.floor == 1 ? '1er'
+                                    : room.floor ~ 'ème'
+                                    }}
                                 </li>
-                                <li>Capacité : {{ room.capacity }}</li>
+                                <li>Capacité : {{ room.capacity }} personnes</li>
                                 {% if (room.hasComputers) %}
                                     <li>Ordinateur : oui</li>
                                 {% else %}
                                     <li>Ordinateur : non</li>
                                 {% endif %}
-                                <li>Surface : {{ room.area }}</li>
+                                <li>Surface : {{ room.area }} mètres carrés</li>
                                 <li>Exposition : {{ room.exposure }}</li>
                                 <li>Nombre de fenêtres : {{ room.nbWindows }}</li>
                             </ol>
