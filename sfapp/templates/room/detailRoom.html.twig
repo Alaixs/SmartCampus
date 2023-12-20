@@ -1,3 +1,4 @@
+
 <!-- Bootstrap 5.3.2 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -9,6 +10,19 @@
     <title>SmartCampus</title>
     <link rel="stylesheet" href="{{ asset('assets/css/detailRoom.css') }}">
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function reloadPage() {
+            setTimeout(function() {
+                location.reload(); // Reload the current page
+            }, 60000); // 1 minutes in milliseconds (300,000 ms)
+        }
+
+        // Start the reload timer when the page loads
+        reloadPage();
+
+
+    </script>
 </head>
 <body>
 {% include 'partial/header.html.twig'%}
@@ -27,7 +41,6 @@
             <div class="sectionsOfWindow">
                 <div class="formAndFooter">
                     <div class="restOfForm">
-                        <p class="detailTitle">Détail de la salle {{ room.name }}</p>
                         <p>Étage : {{
                             room.floor == 0 ? 'Rez-de-chaussée'
                             : room.floor == 1 ? '1er'
@@ -39,44 +52,6 @@
                         <p>Exposition : {{ room.exposure }}</p>
                         <p>Cette salle contient {{ room.nbWindows }} fenêtre{{ room.nbWindows > 1 ? 's' }}</p>
                     </div>
-
-
-                    {% if (temp[0] == -1 and humidity[0] == -1 and co2[0] == -1) or not room.sa or room.sa.state != 'Opérationnel' %}
-                        <div>
-                            <p style="text-align: center">Aucune mesure n'a été faite dans cette salle</p>
-                            {% if not room.sa %}
-                                <p>Pour commencer à récupérer des données, veuillez affecter un S.A</p>
-                            {% elseif room.sa.state != 'Operationnel' %}
-                                <p>Le S.A doit être opérationnel afin de pouvoir récupérer des données</p>
-                            {% endif %}
-                        </div>
-
-                    {% else %}
-                        <div>
-                            <ul class="data">
-                                <li>Dernière mesure : {{ temp[1] }} </li>
-
-                                <li>{{
-                                        temp[0] == -1 ? "Une erreur est survenue avec le capteur de température " :
-                                        "Dernière mesure de température : " ~  temp[0]  ~ "C°"
-                                    }}
-                                </li>
-                                <li>
-                                    {{   humidity[0] < 0 ? "Une erreur est survenue avec le capteur d'humidité" :
-                                    "Humidité actuelle de la salle " ~ humidity[0] ~ "%"
-                                    }}
-                                </li>
-                                <li>
-                                    {{ co2[0] < 0 ? "Une erreur est survenue avec le capteur de CO2" :
-                                        "Taux de CO2 dans la salle : " ~ co2[0] ~ "PPM"
-
-                                    }}
-                                </li>
-
-                            </ul>
-                        </div>
-                    {% endif %}
-
 
                     <div class="formFooter">
                         <div class="buttons">
@@ -106,64 +81,116 @@
                     </div>
                 </div>
                 <section class = "line"></section>
-                <div class="sectionsOfWindow">
+                <div class="rightSection">
                     <div class="formAndFooter">
-                        <div class="restOfForm">
-                            {% if room.sa %}
-                                <p class="detailTitle">Détail du S.A affecté</p>
 
-                                <p>Numéro du S.A : {{ room.sa }}</p>
-                                <p>Etat du S.A : {{ room.sa.state }}</p>
+                        <div class="infoSA">
+                            {% if room.sa %}
+                                <p class="detailTitle">Numéro du S.A : {{ room.sa }}</p>
+                                <p class="detailTitle">Etat du S.A : {{ room.sa.state }}</p>
                             {% elseif hasSAAvailable %}
                                 <p class="detailTitle">AUCUN S.A AFFECTÉ</p>
-                                <p class="detailTitle">Vous pouvez affecter un S.A</p>
+                                <p class="detailTitle">Affectez un S.A pour commencer la prise de données</p>
                             {% elseif not hasSAInDatabase %}
-                                <p class="detailTitle">AUCUN S.A N'A ÉTÉ AJOUTÉ POUR LE MOMENT</p>
+                                <p class="detailTitle">AUCUN S.A N'A ÉTÉ AJOUTE POUR LE MOMENT</p>
                                 <p class="detailTitle">Commencez par ajouter un S.A</p>
                             {% else %}
                                 <p class="detailTitle">AUCUN S.A N'EST ACTUELLEMENT DISPONIBLE</p>
                                 <p class="detailTitle">Commencez par ajouter un S.A</p>
                             {% endif %}
-
-
                         </div>
-                        <div class="formFooter">
-                            <div class="buttons {{ room.sa ? '' : 'button'}}">
-                                {% if room.sa %}
-                                    <a href="{{ path('assignSA', {'room' : room.id }) }}" class="endButton">Gérer l'affectation</a>
-                                    <button type="button" class="endButton delete" data-bs-toggle="modal" data-bs-target="#unassignSaModal">
-                                        Désaffecter
-                                    </button>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="unassignSaModal" tabindex="-1" aria-labelledby="unassignSaModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-2" id="unassignSaModalLabel">Êtes-vous sûr ?</h1>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Vous allez désaffecter le SA {{ room.sa }} de la salle {{ room.name }}
-                                                </div>
-                                                <div class="modal-footer">
-                                                        <button type="button" class="endButton cancelButtonModal" data-bs-dismiss="modal">Annuler</button>
-                                                    <a style="text-decoration: none"  href="{{ path('unAssignSA', {'room' : room.id})}}" class="endButton delete">Confirmer</a>
-                                                </div>
+                        <div class="adviceForUser">
+                            {% if (temp[0] < 0 and humidity[0] < 0 and co2[0]) %}
+
+                                {% if (temp[1] != 0) %}
+
+                                    <p>Un ou plusieurs capteurs ne renvoie pas les données correctement</p>
+
+                                {% elseif room.sa %}
+                                    {% if room.sa.state != 'Opérationnel' %}
+
+                                        <p>Aucune valeur n'a été prise pour le moment</p>
+                                        <p>Attendez qu'un technicien rende le S.A opérationnel</p>
+
+                                    {% else %}
+                                        <p>En attente de la remontée des données du S.A</p>
+                                        <div class="loader"></div>
+                                    {% endif %}
+
+                                {% endif %}
+
+                            {% else %}
+
+                                <div>
+                                    <ul class="data">
+                                        {% if temp[1] != 0 %}
+                                            <li>Dernière mesure : {{ temp[1] }} </li>
+                                        {% elseif humidity[1] != 0 %}
+                                            <li>Dernière mesure : {{ temp[1] }} </li>
+                                        {% elseif co2[1] != 0 %}
+                                            <li>Dernière mesure : {{ temp[1] }} </li>
+                                        {% else %}
+                                            <li>Erreur</li>
+                                        {% endif %}
+                                        
+                                        {% if (temp[0] > 0) %}
+                                            <li id="tempValue">Dernière mesure de température: {{ temp[0] }}°C</li>
+                                        {% else %}
+                                            <li>Une erreur est survenue</li>
+                                        {% endif %}
+                                        {% if (humidity[0] > 0) %}
+                                            <li id="humidityValue">Humidité actuelle de la salle: {{ humidity[0] }}%</li>
+                                        {% else %}
+                                            <li>Une erreur est survenue</li>
+                                        {% endif %}
+                                        {% if (co2[0] > 0) %}
+                                            <li id="co2Value">Taux de CO2 dans la salle: {{ co2[0] }}PPM</li>
+                                        {% else %}
+                                            <li>Une erreur est survenue</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+
+                            {% endif %}
+                        </div>
+
+                    </div>
+                    <div class="formFooter">
+                        <div class="buttons {{ room.sa ? '' : 'button'}}">
+                            {% if room.sa %}
+                                <a href="{{ path('assignSA', {'room' : room.id }) }}" class="endButton">Gérer l'affectation</a>
+                                <button type="button" class="endButton delete" data-bs-toggle="modal" data-bs-target="#unassignSaModal">
+                                    Désaffecter
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="unassignSaModal" tabindex="-1" aria-labelledby="unassignSaModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-2" id="unassignSaModalLabel">Êtes-vous sûr ?</h1>
+                                            </div>
+                                            <div class="modal-body">
+                                                Vous allez désaffecter le SA {{ room.sa }} de la salle {{ room.name }}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="endButton cancelButtonModal" data-bs-dismiss="modal">Annuler</button>
+                                                <a style="text-decoration: none"  href="{{ path('unAssignSA', {'room' : room.id})}}" class="endButton delete">Confirmer</a>
                                             </div>
                                         </div>
                                     </div>
-                                {% elseif hasSAAvailable %}
-                                    <a href="{{ path('assignSA', {'room' : room.id}) }}" class="endButton">Affecter un S.A</a>
-                                {% else %}
-                                    <a href="{{ path('addSA') }}" class="endButton">Ajouter un S.A</a>
+                                </div>
+                            {% elseif hasSAAvailable %}
+                                <a href="{{ path('assignSA', {'room' : room.id}) }}" class="endButton">Affecter un S.A</a>
+                            {% else %}
+                                <a href="{{ path('addSA') }}" class="endButton">Ajouter un S.A</a>
 
-                                {% endif %}
-                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>

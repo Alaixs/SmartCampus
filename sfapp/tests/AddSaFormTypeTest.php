@@ -25,9 +25,6 @@ class AddSaFormTypeTest extends WebTestCase
         $this->assertTrue($form->isValid());
 
         $this->assertEquals($acquisitionUnit, $form->getData());
-
-        dump($acquisitionUnit, $form->getData());
-
     }
 
 }
