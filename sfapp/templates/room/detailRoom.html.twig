@@ -124,11 +124,31 @@
 
                                 <div>
                                     <ul class="data">
-                                        <li>Dernière mesure : {{ temp[1] }} </li>
-
-                                        <li id="tempValue">Dernière mesure de température: {{ temp[0] }}°C</li>
-                                        <li id="humidityValue">Humidité actuelle de la salle: {{ humidity[0] }}%</li>
-                                        <li id="co2Value">Taux de CO2 dans la salle: {{ co2[0] }}PPM</li>
+                                        {% if temp[1] != 0 %}
+                                            <li>Dernière mesure : {{ temp[1] }} </li>
+                                        {% elseif humidity[1] != 0 %}
+                                            <li>Dernière mesure : {{ temp[1] }} </li>
+                                        {% elseif co2[1] != 0 %}
+                                            <li>Dernière mesure : {{ temp[1] }} </li>
+                                        {% else %}
+                                            <li>Erreur</li>
+                                        {% endif %}
+                                        
+                                        {% if (temp[0] > 0) %}
+                                            <li id="tempValue">Dernière mesure de température: {{ temp[0] }}°C</li>
+                                        {% else %}
+                                            <li>Une erreur est survenue</li>
+                                        {% endif %}
+                                        {% if (humidity[0] > 0) %}
+                                            <li id="humidityValue">Humidité actuelle de la salle: {{ humidity[0] }}%</li>
+                                        {% else %}
+                                            <li>Une erreur est survenue</li>
+                                        {% endif %}
+                                        {% if (co2[0] > 0) %}
+                                            <li id="co2Value">Taux de CO2 dans la salle: {{ co2[0] }}PPM</li>
+                                        {% else %}
+                                            <li>Une erreur est survenue</li>
+                                        {% endif %}
                                     </ul>
                                 </div>
 
