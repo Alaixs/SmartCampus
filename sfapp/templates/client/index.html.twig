@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>SmartCampus</title>
+        <link rel="stylesheet" href="{{ asset('assets/css/client.css') }}">
+        <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+    </head>
+
+    <body>
+
+        {% include 'partial/header.html.twig'%}
+
+        <section>
+            <div class="selectorPannel">
+                <div class="floors">
+                    {% for i in 0..building.nbFloor %}
+                        <ul>
+                            <a href="{{ path('app_client', {'floor' : i}) }}">
+                                <li>
+                                        {{
+                                        i == 0 ? 'Rez de chaussée'
+                                        : i == 1 ? '1er étage'
+                                        : i ~ 'ème étage'
+                                        }}
+                                </li>
+                            </a>
+                        </ul>
+                    {% endfor %}
+                </div>
+                <ul class="rooms">
+                    {% for room in listRoom %}
+                    <a href="#">
+                        <li>
+                            {{ room.name }}
+                        </li>
+                    </a>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </section>
+
+        {% include 'partial/footer.html.twig'%}
+
+    </body>
+</html>

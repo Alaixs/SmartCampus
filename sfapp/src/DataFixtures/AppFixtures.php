@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Domain\StateSA;
 use App\Entity\AcquisitionUnit;
+use App\Entity\Building;
 use App\Entity\Room;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -105,6 +106,16 @@ class AppFixtures extends Fixture
         $D109->setHasComputers(true);
         $D109->setNbWindows(64);
         $manager->persist($D109);
+        $manager->flush();
+
+        /*
+         *  Create building entities
+         */
+
+        $bat1 = new Building();
+        $bat1->setName('Informatique');
+        $bat1->setNbFloor(3);
+        $manager->persist($bat1);
         $manager->flush();
     }
 }
