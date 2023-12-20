@@ -45,14 +45,20 @@ class TechnicienController extends AbstractController
         ]);
     }
 
-    #[Route('/defSAoperationnel/{SA}', name: 'set_sa_to_op')]
-    public function setSAToOp(AcquisitionUnit $SA, EntityManagerInterface $entityManager): Response
+    #[Route('/defSAoperationnel/{room}', name: 'set_sa_to_op')]
+    public function setSAToOp(Room $room, EntityManagerInterface $entityManager, GetDataInteface $getDataJson): Response
     {
+        $temp = $getDataJson->getLastValueByType($room->getName(), 'temp');
+        $humidity = $getDataJson->getLastValueByType($room->getName(), 'humidity');
+        $co2 = $getDataJson->getLastValueByType($room->getName(), 'co2');
 
-        $SA->setState(StateSA::OPERATIONNEL->value);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_tech');
+        if($temp[0] > 0 && $co2[0] > 0 && $humidity[0] > 0)
+        {
+            $room->getSA()->setState(StateSA::OPERATIONNEL->value);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_tech');
+        }
+        return $this->redirectToRoute('test_data', ['SA' =>  $room->getSA()->getId()]);
     }
 
     #[Route('/testData/{SA}', name: 'test_data')]

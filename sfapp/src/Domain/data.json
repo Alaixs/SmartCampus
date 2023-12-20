@@ -177,6 +177,34 @@
       "localisation" : "D207",
     "description" : "",
     "tag" : 1
-  }
+  },
 
+  {
+    "id" : 25,
+    "nom" : "co2",
+    "valeur" : 640,
+    "dataCapture" : "10-12-2023 10:00:00",
+    "localisation" : "D999",
+    "description" : "",
+    "tag" : 1
+  },
+  {
+    "id" : 15,
+    "nom" : "temp",
+    "valeur" : 640,
+    "dataCapture" : "13-12-2023 8:00:00",
+    "localisation" : "D999",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "humidity",
+    "valeur" : 57,
+    "dataCapture" : "14-12-2023 10:00:00",
+    "localisation" : "D999",
+    "description" : "",
+    "tag" : 1
+  }
 ]
