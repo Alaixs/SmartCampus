@@ -9,10 +9,10 @@ use App\Form\AssignSAFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\RoomRepository;
 use App\Repository\AcquisitionUnitRepository;
-use App\Domain\GetDataJson;
 use App\Domain\StateSA;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -156,5 +156,4 @@ class RoomController extends AbstractController
             'co2' => $co2
         ]);
     }
-
 }

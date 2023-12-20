@@ -32,7 +32,7 @@ class GetDataJson implements GetDataInteface
 
         }
 
-        return [-1];
+        return [-1, 0];
     }
 
 }
