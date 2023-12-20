@@ -28,12 +28,13 @@
             <a href="/" class="buttonGuest">J’accède au site en tant qu’invité</a>
         </div>
         <div class="formInputs">
-            {{ form_start(loginForm) }}
+        <form action="{{ path('app_login') }}" method="post">
                 <p>Accès administrateur</p>
-                {{ form_row(loginForm._username) }}
-                {{ form_row(loginForm._password) }}
-                <button type="submit" class="buttonLogin">Se connecter</button>
-            {{ form_end(loginForm) }}
+            <input type="text" class="form-control" id="username" name="_username" placeholder="Nom d'utilisateur">
+            <input type="password" class="form-control" id="password" name="_password" placeholder="Mot de passe">
+            <input type="hidden" name="_target_path" value="/admin">
+            <button type="submit" class="buttonLogin">Se connecter</button>
+
         </div>
     </div>
 </section>

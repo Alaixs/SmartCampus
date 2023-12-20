@@ -9,6 +9,15 @@
         </a>
     </div>
     {% if app.user %}
-        <p>Logged in as {{ app.user.username }}</p> 
+    <div class="info-container">
+        <p>Connecté en tant que {{ app.user.username }}</p>
+        <a href="{{ path('app_logout') }}">
+            <img src="assets/img/logout.svg" alt="logout">
+        </a>
+    </div>
+    {% else %}
+    <div class="info-container">
+        <a href="{{ path('app_login') }}"> Accès administrateur </a>
+    </div>
     {% endif %}
 </footer>

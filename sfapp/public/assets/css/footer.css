@@ -1,4 +1,3 @@
-
 .footer {
     background-color: #FDFDFD;
     height: 4vh;
@@ -17,4 +16,14 @@
 .LRUnivLink > a {
     text-decoration: none;
     color: black;
+}
+
+.info-container {
+    display: flex;
+    align-items: center;
+    margin-right: 2vw;
+}
+
+.info-container img {
+    margin-left: 1vw;
 }
