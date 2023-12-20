@@ -15,26 +15,25 @@ class AddRoomFormTypeTest extends WebTestCase
     public function testSubmitValidData()
     {
         $client = static::createClient();
-    
+
         $room = new Room();
-    
+
         $form = $client->getContainer()->get('form.factory')->create(AddRoomFormType::class, $room);
-    
+
         $formData = [
-            'name' => 'D301',
+            'name' => 'D500',
             'floor' => 3,
             'capacity' => 40,
-            'hasComputers' => 0,    
+            'hasComputers' => 0,
             'area' => 50,
-            'exposure' => 'north',
+            'exposure' => 'Nord',
             'nbWindows' => 4
         ];
-    
+
         $form->submit($formData);
 
         $this->assertTrue($form->isValid());
-    
-       // dump($form->getErrors(true, false));
+
 
     }
 
@@ -56,7 +55,7 @@ class AddRoomFormTypeTest extends WebTestCase
             'capacity' => -4,
             'hasComputers' => 0,
             'area' => 50,
-            'exposure' => 'north',
+            'exposure' => 'Nord',
             'nbWindows' => 4
         ];
 
@@ -84,7 +83,7 @@ class AddRoomFormTypeTest extends WebTestCase
             'capacity' => 40,
             'hasComputers' => 0,
             'area' => -4,
-            'exposure' => 'north',
+            'exposure' => 'Nord',
             'nbWindows' => 4
         ];
 
@@ -111,7 +110,7 @@ class AddRoomFormTypeTest extends WebTestCase
             'capacity' => 40,
             'hasComputers' => 0,
             'area' => 0 ,
-            'exposure' => 'north',
+            'exposure' => 'Nord',
             'nbWindows' => 4
         ];
 
@@ -138,7 +137,7 @@ class AddRoomFormTypeTest extends WebTestCase
             'capacity' => 40,
             'hasComputers' => 0,
             'area' => 40 ,
-            'exposure' => 'north',
+            'exposure' => 'Nord',
             'nbWindows' => -4
         ];
 

@@ -2,7 +2,6 @@
 
 namespace App\Tests;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Room;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -13,6 +12,9 @@ class PagesAccessibleTest extends WebTestCase
      * La méthode testIndexPageIsAccessible() verifie si le code de retour de la page index est bien 200
      * @return void
      */
+
+    private string $roomName = '404';
+
     public function testIndexPageIsAccessible()
     {
         $client = static::createClient();
@@ -79,14 +81,14 @@ class PagesAccessibleTest extends WebTestCase
      * La méthode testDeleteSAPageIsAccessible() verifie si le code de retour de la page deleteSa est bien 200
      * @return void
      */
-    public function testDeleteSAPageIsAccessible()
-    {
-        $client = static::createClient();
-
-        $client->request('GET', '/deleteSa');
-        //A modifier quand fonctionnel
-        $this->assertEquals(404, $client->getResponse()->getStatusCode());
-    }
+//    public function testRemoveSAPageIsAccessible()
+//    {
+//        $client = static::createClient();
+//
+//        $client->request('GET', '/removeSA');
+//
+//        $this->assertEquals(500, $client->getResponse()->getStatusCode());
+//    }
 
     /**
      * La méthode testEditRoomPageIsAccessible() verifie si le code de retour de la page editRoom est bien 200
@@ -94,31 +96,29 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testEditRoomPageIsAccessible()
     {
-        $roomName = 'D400';
 
-        $roomRepository = $this->getMockBuilder(RoomRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $room = new Room();
-        $room->setName($roomName);
-        $room->setCapacity(60);
-        $room->setFloor(3);
-        $room->setExposure('north');
-        $room->setArea(60);
-        $room->setNbWindows(5);
-        $room->setHasComputers(true);
-
-        $roomRepository->expects($this->once())
-            ->method('findOneBy')
-            ->with($this->equalTo(['name' => $roomName]))
-            ->willReturn($room);
 
         $client = static::createClient();
 
-        $client->getContainer()->set(RoomRepository::class, $roomRepository);
+        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $client->request('GET', '/editRoom/'. $roomName);
+        $newRoom = new Room();
+        $newRoom->setName('404');
+        $newRoom->setArea(10);
+        $newRoom->setFloor(2);
+        $newRoom->setExposure('Nord');
+        $newRoom->setCapacity(20);
+        $newRoom->setHasComputers(0);
+        $newRoom->setNbWindows(4);
+
+        $entityManager->persist($newRoom);
+        $entityManager->flush();
+
+        $roomRepository = $client->getContainer()->get(RoomRepository::class);
+
+        $room = $roomRepository->findOneBy(array('name' => $this->roomName));
+
+        $client->request('GET', '/editRoom/'. $room->getId());
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
@@ -130,31 +130,14 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testAssignSA()
     {
-        $roomName = 'D450';
-
-        $roomRepository = $this->getMockBuilder(RoomRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $room = new Room();
-        $room->setName($roomName);
-        $room->setCapacity(60);
-        $room->setFloor(3);
-        $room->setExposure('north');
-        $room->setArea(60);
-        $room->setNbWindows(5);
-        $room->setHasComputers(true);
-
-        $roomRepository->expects($this->once())
-            ->method('findOneBy')
-            ->with($this->equalTo(['name' => $roomName]))
-            ->willReturn($room);
 
         $client = static::createClient();
 
-        $client->getContainer()->set(RoomRepository::class, $roomRepository);
+        $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
-        $client->request('GET', '/assignSA/'. $roomName);
+        $room = $roomRepository->findOneBy(array('name' => $this->roomName));
+
+        $client->request('GET', '/assignSA/' . $room->getId());
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -162,58 +145,30 @@ class PagesAccessibleTest extends WebTestCase
 
     public function testUnAssignSA()
     {
-        $roomName = 'D450';
-        $roomRepository = $this->getMockBuilder(RoomRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $room = new Room();
-        $room->setName($roomName);
-        $room->setCapacity(60);
-        $room->setFloor(3);
-        $room->setExposure('north');
-        $room->setArea(60);
-        $room->setNbWindows(5);
-        $room->setHasComputers(true);
-
-        $roomRepository->expects($this->once())
-            ->method('findOneBy')
-            ->with($this->equalTo(['name' => $roomName]))
-            ->willReturn($room);
 
         $client = static::createClient();
 
-        $client->getContainer()->set(RoomRepository::class, $roomRepository);
+        $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
-        $client->request('GET', '/unAssignSA/'. $roomName);
+        $room = $roomRepository->findOneBy(array('name' => $this->roomName));
+
+        $client->request('GET', '/unAssignSA/'. $room->getId());
+
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
     }
 
     public function testRemoveRoom()
     {
-        $roomName = 'D450';
-        $roomRepository = $this->getMockBuilder(RoomRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $room = new Room();
-        $room->setName($roomName);
-        $room->setCapacity(60);
-        $room->setFloor(3);
-        $room->setExposure('north');
-        $room->setArea(60);
-        $room->setNbWindows(5);
-        $room->setHasComputers(true);
-
-        $roomRepository->expects($this->once())
-            ->method('findOneBy')
-            ->with($this->equalTo(['name' => $roomName]))
-            ->willReturn($room);
-
         $client = static::createClient();
 
-        $client->getContainer()->set(RoomRepository::class, $roomRepository);
+        $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
-        $client->request('GET', '/removeRoom/'. $roomName);
+        $room = $roomRepository->findOneBy(array('name' => $this->roomName));
+
+        $client->request('GET', '/removeRoom/'. $room->getId());
+
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
 }
