@@ -39,6 +39,12 @@ class AppFixtures extends Fixture
         $manager->persist($SA1003);
         $manager->flush();
 
+        $SA1004 = new AcquisitionUnit();
+        $SA1004->setState(StateSA::EN_PANNE->value);
+        $SA1004->setNumber("SA1004");
+        $manager->persist($SA1004);
+        $manager->flush();
+
         /*
          *  Creates room entities
         */
@@ -74,6 +80,7 @@ class AppFixtures extends Fixture
         $D101->setExposure("Ouest");
         $D101->setHasComputers(false);
         $D101->setNbWindows(5);
+        $D101->setSA($SA1004);
         $manager->persist($D101);
         $manager->flush();
 
@@ -86,8 +93,18 @@ class AppFixtures extends Fixture
         $D102->setHasComputers(true);
         $D102->setNbWindows(6);
         $D102->setSA($SA1003);
-
         $manager->persist($D102);
+        $manager->flush();
+
+        $D109 = new Room();
+        $D109->setName("D109");
+        $D109->setArea(40);
+        $D109->setCapacity(20);
+        $D109->setFloor(1);
+        $D109->setExposure("Est");
+        $D109->setHasComputers(true);
+        $D109->setNbWindows(64);
+        $manager->persist($D109);
         $manager->flush();
     }
 }
