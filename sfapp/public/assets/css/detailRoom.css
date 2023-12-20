@@ -63,8 +63,8 @@ section {
 }
 
 
-.formRest {
-    width: 20vw;
+.restOfForm {
+    width: 50vw;
     max-height: 55vh;
     overflow: auto;
     padding-right: 19vw;
@@ -91,6 +91,7 @@ section {
     align-items: center;
     flex-direction: column;
     margin-bottom: 2vh;
+    margin-top: 2vh;
 }
 
 .buttons {
@@ -152,7 +153,7 @@ section {
     width: 50%;
 }
 
-.sectionsOfWindow > .formRest {
+.sectionsOfWindow > .restOfForm {
     padding: 0;
     margin: 0;
     overflow: unset;
@@ -178,4 +179,10 @@ section {
     width: 5vw;
 }
 
-
+.modal-footer > a, .cancelButtonModal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3vh;
+    color: inherit;
+}
