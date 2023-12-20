@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCampus - Se connecter</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+</head>
+<body>
+
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+{% include 'partial/header.html.twig'%}
+
+ <section class="loginCard">
+    <div class="formLogin">
+        <div class="guestForm">
+            <div class="guestTitle">
+                <h1>Smart Campus</h1>
+            </div>
+            <div class="guestSubtitle">
+                <p>Usagers de La Rochelle Université</p>
+                <p>(étudiants, enseignants ou administratifs)</p>
+            </div>
+            <a href="/" class="buttonGuest">J’accède au site en tant qu’invité</a>
+        </div>
+        <div class="formInputs">
+            {{ form_start(loginForm) }}
+                <p>Accès administrateur</p>
+                {{ form_row(loginForm._username) }}
+                {{ form_row(loginForm._password) }}
+                <button type="submit" class="buttonLogin">Se connecter</button>
+            {{ form_end(loginForm) }}
+        </div>
+    </div>
+</section>
+{% include 'partial/footer.html.twig' %}
+
+</body>
+</html>

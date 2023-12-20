@@ -13,7 +13,7 @@
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
                 <p class="planExperimentation-p-title">Plan d'expérimentation</p>
-                {% if user == 'admin' %}
+                {% if app.user.username == 'yacine' %}
                 <div class="add-or-del-div">
                     <a href="{{ path('addSA') }}" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
                     {% if listSA %}
@@ -68,7 +68,7 @@
                             </div>
                         {% endif %}
 
-                        {% if user == 'admin' %}
+                        {% if app.user.username == 'yacine'%}
                             <a href="{{ path('detailRoom', {'room' : room.id}) }}" class="planExperimentation-div-voir-plus">Voir plus</a>
                         {% else %}
                             {% if room.sa is not empty and (room.sa.state != "Opérationnel" and room.sa.state != "Dysfonctionnement")%}
@@ -80,7 +80,7 @@
                 {% endfor %}
                 {% endif %}
 
-                {% if user == 'admin' %}
+                {% if app.user.username == 'yacine' %}
                     <div class='planExperimentation-div-array'>
                         <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
                     </div>

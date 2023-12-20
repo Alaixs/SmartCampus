@@ -7,10 +7,21 @@ use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use App\Entity\User;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
+
 
 class AppFixtures extends Fixture
 {
-    public function load(ObjectManager $manager): void
+    private $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+    
+    public function load(ObjectManager $manager) : void
     {
         /*
          * Creates acquisition unit entities
@@ -88,6 +99,27 @@ class AppFixtures extends Fixture
         $D102->setSA($SA1003);
 
         $manager->persist($D102);
+        $manager->flush();
+
+        /*
+         * Creates user entities
+         */
+        $yacine = new User();
+        $yacine->setUsername("yacine");
+        $hashedPassword = $this->passwordHasher->hashPassword($yacine, 'jesuisyacine');
+
+        $yacine->setPassword($hashedPassword);
+        $yacine->setRoles(['ROLE_ADMIN']);
+        $manager->persist($yacine);
+        $manager->flush();
+
+        $technicien = new User();
+        $technicien->setUsername("technicien");
+        $hashedPassword = $this->passwordHasher->hashPassword($technicien, 'jesuistechnicien');
+
+        $technicien->setPassword($hashedPassword);
+        $technicien->setRoles(['ROLE_TECHNICIEN']);
+        $manager->persist($technicien);
         $manager->flush();
     }
 }
