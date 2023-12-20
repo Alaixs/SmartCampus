@@ -133,7 +133,7 @@ class RoomController extends AbstractController
 
             $entityManager->flush();
         }
-        return $this->redirectToRoute('app_admin');
+        return $this->redirectToRoute('detailRoom', ['room' => $room->getId()]);
     }
 
     #[Route('/detailRoom/{room}', name: 'detailRoom')]
