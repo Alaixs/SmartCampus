@@ -57,13 +57,7 @@ section {
     justify-content: space-between;
 }
 
-
-.formRest {
-    width: 20vw;
-}
-
-
-.formRest {
+.restOfForm {
     width: 20vw;
     max-height: 55vh;
     overflow: auto;
@@ -72,7 +66,11 @@ section {
     margin-bottom: 3vh;
 }
 
-.formRest > div:nth-child(4) {
+.selector {
+    width: 50vw;
+}
+
+.restOfForm > div:nth-child(4) {
     display: flex;
 }
 
@@ -131,7 +129,7 @@ input:not(input[type=checkbox]), select {
         margin-bottom: 5px;
     }
 
-    .formRest {
+    .restOfForm {
         height: 100%;
         margin-bottom: 5vh;
     }
@@ -173,6 +171,7 @@ input:not(input[type=checkbox]), select {
 
 .delete.endButton {
     background-color: #ee8f8f;
+    color: black;
 }
 
 .delete.endButton:hover {
@@ -209,6 +208,12 @@ input[type="number"] {
     width: 150%;
 }
 
+/* Classe générée automatiquement par Bootstrap */
+.form-select {
+    border: none;
+    border-radius: 0;
+}
+
 /*
 -----------------------------------------------------
     SPECIFIQUE AUX FORMULAIRES AVEC DEUX PARTIES :
@@ -227,7 +232,7 @@ input[type="number"] {
     width: 50%;
 }
 
-.sectionsOfWindow > .formRest {
+.sectionsOfWindow > .restOfForm {
     padding: 0;
     margin: 0;
     overflow: unset;
@@ -270,6 +275,15 @@ input[type="number"] {
     height: 6vh;
     align-items: center;
 }
+
+.modal-footer > .delete, .cancelButtonModal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3vh;
+    color: inherit;
+}
+
 
 /*
 --------------------------------------------------------
@@ -318,19 +332,20 @@ input[type="number"] {
 {
     text-align: center;
 }
+
 /*
 --------------------------------------------------------
     SPECIFIQUE AUX MESSAGES D'ERREUR LIE AUX FORMULAIRES
 --------------------------------------------------------
 */
 
-.formRest li
+.restOfForm li
 {
     color:red;
     list-style: none;
 }
 
-.formRest ul {
+.restOfForm ul {
     padding: 0;
 }
 

@@ -1,3 +1,9 @@
+<!-- Bootstrap 5.3.2 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -19,7 +25,7 @@
             {{ form_start(removeSAForm) }}
             <div class="sectionsOfWindow">
                 <div class="formAndFooter">
-                    <div class="formRest">
+                    <div class="restOfForm selector">
                         {{ form_rest(removeSAForm) }}
                     </div>
                         {% for flashMessage in app.flashes('message') %}
@@ -35,7 +41,27 @@
                     <div class="formFooter">
                         <p>* Obligatoire</p>
                         <div class="buttons">
-                            <button type="submit" class="endButton delete">Supprimer</button>
+                            <button type="button" class="endButton delete" data-bs-toggle="modal" data-bs-target="#removeSaModal">
+                                Supprimer
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="removeSaModal" tabindex="-1" aria-labelledby="removeSaModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-2" id="removeSaModalLabel">Êtes-vous sûr ?</h1>
+                                        </div>
+                                        <div class="modal-body">
+                                            Vous êtes sur le point de supprimer le SA sélectionné
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="endButton cancelButtonModal" data-bs-dismiss="modal">Annuler</button>
+                                            <button type="submit" class="endButton delete">Confirmer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
