@@ -12,7 +12,7 @@ class RemoveRoomTest extends WebTestCase
      * La méthode testSubmitValidData() vérifie si le formulaire est valide avec des données correctes.
      * @return void
      */
-    public function testDeleteRoom()
+    public function testRemoveRoom()
     {
         $roomName = 'D404';
 
@@ -36,16 +36,25 @@ class RemoveRoomTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $client->request('GET', '/detailRoom/' . $room->getId());
+        $crawler = $client->request('GET', '/detailRoom/' . $room->getId());
 
         $this->assertStringContainsString($roomName, $client->getResponse()->getContent(), 'ca marche?');
 
-        $client->clickLink('Supprimer');
-        $crawler = $client->followRedirect();
-        $this->assertEquals($crawler->getUri(), 'http://localhost/admin');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $link = $crawler->selectLink('Confirmer')->first()->link();
+        $client->click($link);
 
+        $crawler = $client->followRedirect();
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertStringNotContainsString($roomName, $client->getResponse()->getContent(), 'ca marche?');
+
+        $room = $roomRepository->findOneBy(array('name' => $roomName));
+
+        if($room)
+        {
+            $entityManager->remove($room);
+            $entityManager->flush();
+        }
+
     }
 }
 
