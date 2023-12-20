@@ -58,12 +58,16 @@ section {
 }
 
 .restOfForm {
-    width: 50vw;
+    width: 20vw;
     max-height: 55vh;
     overflow: auto;
     padding-right: 19vw;
     padding-left: 19vw;
     margin-bottom: 3vh;
+}
+
+.selector {
+    width: 50vw;
 }
 
 .restOfForm > div:nth-child(4) {
@@ -279,6 +283,7 @@ input[type="number"] {
     height: 3vh;
     color: inherit;
 }
+
 
 /*
 --------------------------------------------------------
