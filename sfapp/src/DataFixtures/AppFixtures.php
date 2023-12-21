@@ -15,96 +15,96 @@ class AppFixtures extends Fixture
         /*
          * Creates acquisition unit entities
          */
-        $SA1000 = new AcquisitionUnit();
-        $SA1000->setState(StateSA::ATTENTE_AFFECTATION->value);
-        $SA1000->setNumber("SA1000");
-        $manager->persist($SA1000);
+        $esp009 = new AcquisitionUnit();
+        $esp009->setState(StateSA::OPERATIONNEL->value);
+        $esp009->setNumber("ESP-009");
+        $manager->persist($esp009);
         $manager->flush();
 
-        $SA1001 = new AcquisitionUnit();
-        $SA1001->setState(StateSA::OPERATIONNEL->value);
-        $SA1001->setNumber("SA1001");
-        $manager->persist($SA1001);
+        $esp008 = new AcquisitionUnit();
+        $esp008->setState(StateSA::ATTENTE_AFFECTATION->value);
+        $esp008->setNumber("ESP-008");
+        $manager->persist($esp008);
         $manager->flush();
 
-        $SA1002 = new AcquisitionUnit();
-        $SA1002->setState(StateSA::ATTENTE_INSTALLATION->value);
-        $SA1002->setNumber("SA1002");
-        $manager->persist($SA1002);
+        $esp010 = new AcquisitionUnit();
+        $esp010->setState(StateSA::ATTENTE_INSTALLATION->value);
+        $esp010->setNumber("ESP-010");
+        $manager->persist($esp010);
         $manager->flush();
 
-        $SA1003 = new AcquisitionUnit();
-        $SA1003->setState(StateSA::DYSFONCTIONNEMENT->value);
-        $SA1003->setNumber("SA1003");
-        $manager->persist($SA1003);
+        $esp011 = new AcquisitionUnit();
+        $esp011->setState(StateSA::DYSFONCTIONNEMENT->value);
+        $esp011->setNumber("ESP-011");
+        $manager->persist($esp011);
         $manager->flush();
 
-        $SA1004 = new AcquisitionUnit();
-        $SA1004->setState(StateSA::EN_PANNE->value);
-        $SA1004->setNumber("SA1004");
-        $manager->persist($SA1004);
+        $esp007 = new AcquisitionUnit();
+        $esp007->setState(StateSA::EN_PANNE->value);
+        $esp007->setNumber("ESP-007");
+        $manager->persist($esp007);
         $manager->flush();
 
         /*
          *  Creates room entities
         */
-        $D207 = new Room();
-        $D207->setName("D207");
-        $D207->setArea(30);
-        $D207->setCapacity(25);
-        $D207->setFloor(2);
-        $D207->setExposure("Nord");
-        $D207->setHasComputers(true);
-        $D207->setNbWindows(5);
-        $D207->setSA($SA1001);
-        $manager->persist($D207);
+        $d207 = new Room();
+        $d207->setName("D207");
+        $d207->setArea(30);
+        $d207->setCapacity(25);
+        $d207->setFloor(2);
+        $d207->setExposure("Nord");
+        $d207->setHasComputers(true);
+        $d207->setNbWindows(5);
+        $d207->setSA($esp009);
+        $manager->persist($d207);
         $manager->flush();
 
-        $D204 = new Room();
-        $D204->setName("D204");
-        $D204->setArea(25);
-        $D204->setCapacity(30);
-        $D204->setFloor(2);
-        $D204->setExposure("Sud");
-        $D204->setHasComputers(true);
-        $D204->setNbWindows(4);
-        $D204->setSA($SA1002);
-        $manager->persist($D204);
+        $d204 = new Room();
+        $d204->setName("D204");
+        $d204->setArea(25);
+        $d204->setCapacity(30);
+        $d204->setFloor(2);
+        $d204->setExposure("Sud");
+        $d204->setHasComputers(true);
+        $d204->setNbWindows(4);
+        $d204->setSA($esp007);
+        $manager->persist($d204);
         $manager->flush();
 
-        $D101 = new Room();
-        $D101->setName("D101");
-        $D101->setArea(60);
-        $D101->setCapacity(50);
-        $D101->setFloor(1);
-        $D101->setExposure("Ouest");
-        $D101->setHasComputers(false);
-        $D101->setNbWindows(5);
-        $D101->setSA($SA1004);
-        $manager->persist($D101);
+        $d101 = new Room();
+        $d101->setName("D101");
+        $d101->setArea(60);
+        $d101->setCapacity(50);
+        $d101->setFloor(1);
+        $d101->setExposure("Ouest");
+        $d101->setHasComputers(false);
+        $d101->setNbWindows(5);
+        $d101->setSA($esp010);
+        $manager->persist($d101);
         $manager->flush();
 
-        $D102 = new Room();
-        $D102->setName("D102");
-        $D102->setArea(78);
-        $D102->setCapacity(60);
-        $D102->setFloor(1);
-        $D102->setExposure("Est");
-        $D102->setHasComputers(true);
-        $D102->setNbWindows(6);
-        $D102->setSA($SA1003);
-        $manager->persist($D102);
+        $d102 = new Room();
+        $d102->setName("D102");
+        $d102->setArea(78);
+        $d102->setCapacity(60);
+        $d102->setFloor(1);
+        $d102->setExposure("Est");
+        $d102->setHasComputers(true);
+        $d102->setNbWindows(6);
+        $d102->setSA($esp011);
+        $manager->persist($d102);
         $manager->flush();
 
-        $D109 = new Room();
-        $D109->setName("D109");
-        $D109->setArea(40);
-        $D109->setCapacity(20);
-        $D109->setFloor(1);
-        $D109->setExposure("Est");
-        $D109->setHasComputers(true);
-        $D109->setNbWindows(64);
-        $manager->persist($D109);
+        $d105 = new Room();
+        $d105->setName("D105");
+        $d105->setArea(40);
+        $d105->setCapacity(20);
+        $d105->setFloor(1);
+        $d105->setExposure("Est");
+        $d105->setHasComputers(true);
+        $d105->setNbWindows(64);
+        $manager->persist($d105);
         $manager->flush();
     }
 }
