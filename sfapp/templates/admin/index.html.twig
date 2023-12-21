@@ -8,7 +8,7 @@
 </head>
 <body>
     {% include 'partial/header.html.twig'%}
-
+    {% include "components/search_data.html.twig" with {form: form} only %}
     <section class='planExperimentation'>
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
