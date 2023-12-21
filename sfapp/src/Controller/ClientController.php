@@ -13,12 +13,13 @@ class ClientController extends AbstractController
     #[Route('/client/{floor<\d+>?0}', name: 'app_client')]
     public function index(int $floor, BuildingRepository $buildingRepository, RoomRepository $roomRepository): Response
     {
-        $building = $buildingRepository->findOneBy(['name' => 'Informatique']);
+        $building = $buildingRepository->findOneBy(['name' => 'Département informatique']);
         $listRoom = $roomRepository->findBy(array('floor' => $floor));
 
         return $this->render('client/index.html.twig', [
             'building' => $building,
-            'listRoom' => $listRoom
+            'listRoom' => $listRoom,
+            'floor' => $floor
         ]);
     }
 }

@@ -113,7 +113,7 @@ class AppFixtures extends Fixture
          */
 
         $bat1 = new Building();
-        $bat1->setName('Informatique');
+        $bat1->setName('Département informatique');
         $bat1->setNbFloor(3);
         $manager->persist($bat1);
         $manager->flush();

@@ -15,13 +15,25 @@
                 <div class="floors">
                     {% for i in 0..building.nbFloor %}
                         <ul>
-                            <a href="{{ path('app_client', {'floor' : i}) }}">
+                            <a href="{{ path('app_client', {'floor' : i}) }}" class="borderHover">
                                 <li>
-                                        {{
-                                        i == 0 ? 'Rez de chaussée'
-                                        : i == 1 ? '1er étage'
-                                        : i ~ 'ème étage'
-                                        }}
+                                    {% if i == floor %}
+                                        <p class="border currentFloor">
+                                            {{
+                                            i == 0 ? 'Rez de chaussée'
+                                            : i == 1 ? '1er étage'
+                                            : i ~ 'ème étage'
+                                            }}
+                                        </p>
+                                    {% else %}
+                                        <p class="border">
+                                            {{
+                                            i == 0 ? 'Rez de chaussée'
+                                            : i == 1 ? '1er étage'
+                                            : i ~ 'ème étage'
+                                            }}
+                                        </p>
+                                    {% endif %}
                                 </li>
                             </a>
                         </ul>
