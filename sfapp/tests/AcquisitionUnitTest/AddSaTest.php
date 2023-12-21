@@ -16,7 +16,7 @@ class AddSaTest extends WebTestCase
         $newSa = 'SA9999';
         $client = static::createClient();
 
-            $crawler = $client->request('GET', '/addSA');
+        $crawler = $client->request('GET', '/addSA');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Ajouter')->form();

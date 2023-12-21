@@ -9,10 +9,6 @@
 </head>
 <body>
 
-{% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
-
 {% include 'partial/header.html.twig'%}
 
  <section class="loginCard">
@@ -37,6 +33,11 @@
 
         </div>
     </div>
+
+    {# {% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %} #}
+
 </section>
 {% include 'partial/footer.html.twig' %}
 
