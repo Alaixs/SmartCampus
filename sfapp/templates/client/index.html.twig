@@ -46,7 +46,7 @@
                     {% if pagination.getTotalItemCount() > 0 %}
                         {% for room in pagination %}
                             <div class="linkToRoom">
-                                <a href="#">
+                                <a href="{{ path('view_data', {'room' : room.id}) }}">
                                     <li>
                                         {{ room.name }}
                                     </li>

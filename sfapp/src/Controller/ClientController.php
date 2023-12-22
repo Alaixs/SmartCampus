@@ -17,6 +17,8 @@ class ClientController extends AbstractController
     {
         $building = $buildingRepository->findOneBy(['name' => 'Département informatique']);
 
+        $room = $roomRepository->findAll();
+
         $roomsQuery = $roomRepository->findRoomsByFloor($floor);
 
         $pagination = $paginator->paginate(
@@ -28,7 +30,16 @@ class ClientController extends AbstractController
         return $this->render('client/index.html.twig', [
             'building' => $building,
             'pagination' => $pagination,
-            'floor' => $floor
+            'floor' => $floor,
+            'room' => $room
+        ]);
+    }
+
+    #[Route('/viewData/{room}', name: 'view_data')]
+    public function viewData(): Response
+    {
+
+        return $this->render('client/viewData.html.twig', [
         ]);
     }
 }
