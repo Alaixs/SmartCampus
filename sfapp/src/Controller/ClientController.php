@@ -22,7 +22,7 @@ class ClientController extends AbstractController
         $pagination = $paginator->paginate(
             $roomsQuery,
             $request->query->getInt('page', 1),
-            3
+            12
         );
 
         return $this->render('client/index.html.twig', [
