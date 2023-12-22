@@ -7,12 +7,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddSaFormType extends AbstractType
+class AddAcquisitionUnitFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('number', null, [
+            ->add('name', null, [
                 'required' => true,
                 'label' => 'Numéro du SA',
                 'attr' => array(

@@ -22,11 +22,11 @@
             <p>Supprimer un système d'acquisition</p>
         </div>
         <div class="formInputs">
-            {{ form_start(removeSAForm) }}
+            {{ form_start(removeAcquisitionUnitForm) }}
             <div class="sectionsOfWindow">
                 <div class="formAndFooter">
                     <div class="restOfForm selector">
-                        {{ form_rest(removeSAForm) }}
+                        {{ form_rest(removeAcquisitionUnitForm) }}
                     </div>
                         {% for flashMessage in app.flashes('message') %}
                             <div class="flash-message">
@@ -41,16 +41,16 @@
                     <div class="formFooter">
                         <p>* Obligatoire</p>
                         <div class="buttons">
-                            <button type="button" class="endButton delete" data-bs-toggle="modal" data-bs-target="#removeSaModal">
+                            <button type="button" class="endButton delete" data-bs-toggle="modal" data-bs-target="#removeAcquisitionUnitModal">
                                 Supprimer
                             </button>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="removeSaModal" tabindex="-1" aria-labelledby="removeSaModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="removeAcquisitionUnitModal" tabindex="-1" aria-labelledby="removeAcquisitionUnitModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-2" id="removeSaModalLabel">Êtes-vous sûr ?</h1>
+                                            <h1 class="modal-title fs-2" id="removeAcquisitionUnitModalLabel">Êtes-vous sûr ?</h1>
                                         </div>
                                         <div class="modal-body">
                                             Vous êtes sur le point de supprimer le SA sélectionné
@@ -66,7 +66,7 @@
                     </div>
                 </div>
 
-            {{ form_end(removeSAForm) }}
+            {{ form_end(removeAcquisitionUnitForm) }}
         </div>
     </div>
 </section>

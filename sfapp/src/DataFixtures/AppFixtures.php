@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Domain\StateSA;
+use App\Domain\AcquisitionUnitState;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -16,32 +16,32 @@ class AppFixtures extends Fixture
          * Creates acquisition unit entities
          */
         $esp009 = new AcquisitionUnit();
-        $esp009->setState(StateSA::OPERATIONNEL->value);
-        $esp009->setNumber("ESP-009");
+        $esp009->setState(AcquisitionUnitState::OPERATIONNEL->value);
+        $esp009->setName("ESP-009");
         $manager->persist($esp009);
         $manager->flush();
 
         $esp008 = new AcquisitionUnit();
-        $esp008->setState(StateSA::ATTENTE_AFFECTATION->value);
-        $esp008->setNumber("ESP-008");
+        $esp008->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+        $esp008->setName("ESP-008");
         $manager->persist($esp008);
         $manager->flush();
 
         $esp010 = new AcquisitionUnit();
-        $esp010->setState(StateSA::ATTENTE_INSTALLATION->value);
-        $esp010->setNumber("ESP-010");
+        $esp010->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
+        $esp010->setName("ESP-010");
         $manager->persist($esp010);
         $manager->flush();
 
         $esp011 = new AcquisitionUnit();
-        $esp011->setState(StateSA::DYSFONCTIONNEMENT->value);
-        $esp011->setNumber("ESP-011");
+        $esp011->setState(AcquisitionUnitState::DYSFONCTIONNEMENT->value);
+        $esp011->setName("ESP-011");
         $manager->persist($esp011);
         $manager->flush();
 
         $esp007 = new AcquisitionUnit();
-        $esp007->setState(StateSA::EN_PANNE->value);
-        $esp007->setNumber("ESP-007");
+        $esp007->setState(AcquisitionUnitState::EN_PANNE->value);
+        $esp007->setName("ESP-007");
         $manager->persist($esp007);
         $manager->flush();
 
@@ -56,7 +56,7 @@ class AppFixtures extends Fixture
         $d207->setExposure("Nord");
         $d207->setHasComputers(true);
         $d207->setNbWindows(5);
-        $d207->setSA($esp009);
+        $d207->setAcquisitionUnit($esp009);
         $manager->persist($d207);
         $manager->flush();
 
@@ -68,7 +68,7 @@ class AppFixtures extends Fixture
         $d204->setExposure("Sud");
         $d204->setHasComputers(true);
         $d204->setNbWindows(4);
-        $d204->setSA($esp007);
+        $d204->setAcquisitionUnit($esp007);
         $manager->persist($d204);
         $manager->flush();
 
@@ -80,7 +80,7 @@ class AppFixtures extends Fixture
         $d101->setExposure("Ouest");
         $d101->setHasComputers(false);
         $d101->setNbWindows(5);
-        $d101->setSA($esp010);
+        $d101->setAcquisitionUnit($esp010);
         $manager->persist($d101);
         $manager->flush();
 
@@ -92,7 +92,7 @@ class AppFixtures extends Fixture
         $d102->setExposure("Est");
         $d102->setHasComputers(true);
         $d102->setNbWindows(6);
-        $d102->setSA($esp011);
+        $d102->setAcquisitionUnit($esp011);
         $manager->persist($d102);
         $manager->flush();
 

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Domain\StateSA;
+use App\Domain\AcquisitionUnitState;
 use App\Entity\AcquisitionUnit;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,15 +23,15 @@ class TechnicienController extends AbstractController
         $user = 'technicien';
         return $this->render('admin/index.html.twig', [
             'user' => $user,
-            'listRooms' => $rooms,
+            'roomList' => $rooms,
         ]);
     }
 
-    #[Route('/defSAoperationnel/{SA}', name: 'set_sa_to_op')]
-    public function setSAToOp(AcquisitionUnit $SA, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/setAcquisitionUnitOperational/{acquisitionUnit}', name: 'set_au_to_operational')]
+    public function setAcquisitionUnitOperational(AcquisitionUnit $acquisitionUnit, Request $request, EntityManagerInterface $entityManager): Response
     {
 
-        $SA->setState(StateSA::OPERATIONNEL->value);
+        $acquisitionUnit->setState(AcquisitionUnitState::OPERATIONNEL->value);
         $entityManager->flush();
 
         return $this->redirectToRoute('app_tech');

@@ -85,18 +85,18 @@
                     <div class="formAndFooter">
 
                         <div class="infoSA">
-                            {% if room.sa %}
-                                <p class="detailTitle">Numéro du S.A : {{ room.sa }}</p>
-                                <p class="detailTitle">Etat du S.A : {{ room.sa.state }}</p>
-                            {% elseif hasSAAvailable %}
-                                <p class="detailTitle">AUCUN S.A AFFECTÉ</p>
-                                <p class="detailTitle">Affectez un S.A pour commencer la prise de données</p>
+                            {% if room.acquisitionUnit %}
+                                <p class="detailTitle">Numéro du SA : {{ room.acquisitionUnit }}</p>
+                                <p class="detailTitle">État du SA : {{ room.acquisitionUnit.state }}</p>
+                            {% elseif hasAcquisitionUnitAvailable %}
+                                <p class="detailTitle">AUCUN SA AFFECTÉ</p>
+                                <p class="detailTitle">Affectez un SA pour commencer la prise de données</p>
                             {% elseif not hasSAInDatabase %}
-                                <p class="detailTitle">AUCUN S.A N'A ÉTÉ AJOUTE POUR LE MOMENT</p>
-                                <p class="detailTitle">Commencez par ajouter un S.A</p>
+                                <p class="detailTitle">AUCUN SA N'A ÉTÉ AJOUTÉ POUR LE MOMENT</p>
+                                <p class="detailTitle">Commencez par ajouter un SA</p>
                             {% else %}
-                                <p class="detailTitle">AUCUN S.A N'EST ACTUELLEMENT DISPONIBLE</p>
-                                <p class="detailTitle">Commencez par ajouter un S.A</p>
+                                <p class="detailTitle">AUCUN SA N'EST ACTUELLEMENT DISPONIBLE</p>
+                                <p class="detailTitle">Commencez par ajouter un SA</p>
                             {% endif %}
                         </div>
 
@@ -107,11 +107,11 @@
 
                                     <p>Un ou plusieurs capteurs ne renvoie pas les données correctement</p>
 
-                                {% elseif room.sa %}
-                                    {% if room.sa.state != 'Opérationnel' %}
+                                {% elseif room.acquisitionUnit %}
+                                    {% if room.acquisitionUnit.state != 'Opérationnel' %}
 
                                         <p>Aucune valeur n'a été prise pour le moment</p>
-                                        <p>Attendez qu'un technicien rende le S.A opérationnel</p>
+                                        <p>Attendez qu'un technicien rende le SA opérationnel</p>
 
                                     {% else %}
                                         <p>En attente de la remontée des données du S.A</p>
@@ -137,17 +137,17 @@
                                         {% if (temp[0] > 0) %}
                                             <li id="tempValue">Dernière mesure de température: {{ temp[0] }}°C</li>
                                         {% else %}
-                                            <li>Une erreur est survenue</li>
+                                            <li>Une erreur est survenue.</li>
                                         {% endif %}
                                         {% if (humidity[0] > 0) %}
                                             <li id="humidityValue">Humidité actuelle de la salle: {{ humidity[0] }}%</li>
                                         {% else %}
-                                            <li>Une erreur est survenue</li>
+                                            <li>Une erreur est survenue.</li>
                                         {% endif %}
                                         {% if (co2[0] > 0) %}
                                             <li id="co2Value">Taux de CO2 dans la salle: {{ co2[0] }}PPM</li>
                                         {% else %}
-                                            <li>Une erreur est survenue</li>
+                                            <li>Une erreur est survenue.</li>
                                         {% endif %}
                                     </ul>
                                 </div>
@@ -157,34 +157,34 @@
 
                     </div>
                     <div class="formFooter">
-                        <div class="buttons {{ room.sa ? '' : 'button'}}">
-                            {% if room.sa %}
-                                <a href="{{ path('assignSA', {'room' : room.id }) }}" class="endButton">Gérer l'affectation</a>
-                                <button type="button" class="endButton delete" data-bs-toggle="modal" data-bs-target="#unassignSaModal">
+                        <div class="buttons {{ room.acquisitionUnit ? '' : 'button'}}">
+                            {% if room.acquisitionUnit %}
+                                <a href="{{ path('assignAU', {'room' : room.id }) }}" class="endButton">Gérer l'affectation</a>
+                                <button type="button" class="endButton delete" data-bs-toggle="modal" data-bs-target="#unassignAcquisitionUnitModal">
                                     Désaffecter
                                 </button>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="unassignSaModal" tabindex="-1" aria-labelledby="unassignSaModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="unassignAcquisitionUnitModal" tabindex="-1" aria-labelledby="unassignAcquisitionUnitModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-2" id="unassignSaModalLabel">Êtes-vous sûr ?</h1>
+                                                <h1 class="modal-title fs-2" id="unassignAcquisitionUnitModalLabel">Êtes-vous sûr ?</h1>
                                             </div>
                                             <div class="modal-body">
-                                                Vous allez désaffecter le SA {{ room.sa }} de la salle {{ room.name }}
+                                                Vous allez désaffecter le SA {{ room.acquisitionUnit }} de la salle {{ room.name }}
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="endButton cancelButtonModal" data-bs-dismiss="modal">Annuler</button>
-                                                <a style="text-decoration: none"  href="{{ path('unAssignSA', {'room' : room.id})}}" class="endButton delete">Confirmer</a>
+                                                <a style="text-decoration: none"  href="{{ path('unassignAU', {'room' : room.id})}}" class="endButton delete">Confirmer</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            {% elseif hasSAAvailable %}
-                                <a href="{{ path('assignSA', {'room' : room.id}) }}" class="endButton">Affecter un S.A</a>
+                            {% elseif hasAcquisitionUnitAvailable %}
+                                <a href="{{ path('assignAU', {'room' : room.id}) }}" class="endButton">Affecter un SA</a>
                             {% else %}
-                                <a href="{{ path('addSA') }}" class="endButton">Ajouter un S.A</a>
+                                <a href="{{ path('addAU') }}" class="endButton">Ajouter un SA</a>
 
                             {% endif %}
                         </div>

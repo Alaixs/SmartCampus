@@ -19,11 +19,11 @@
                     <p>Systèmes d'acquisition déjà enregistrés</p>
                 </div>
                 <div class="formInputs">
-                    {{ form_start(addSAForm) }}
+                    {{ form_start(addAcquisitionUnitForm) }}
                     <div class="sectionsOfWindow">
                         <div class="formAndFooter">
                             <div class="restOfForm">
-                                {{ form_rest(addSAForm) }}
+                                {{ form_rest(addAcquisitionUnitForm) }}
                             </div>
                             <div class="formFooter">
                                 <p>* Obligatoire</p>
@@ -33,25 +33,25 @@
                             </div>
                         </div>
                         <section class = "line"></section>
-                        {% if listeSa %}
+                        {% if acquisitionUnitList %}
                         <div class="listAll">
                             <ul>
-                                {% for sa in listeSa %}
-                                    <li>{{ sa.number }}</li>
+                                {% for sa in acquisitionUnitList %}
+                                    <li>{{ sa.name }}</li>
                                 {% endfor %}
                             </ul>
                         </div>
                         {% else %}
                             <div class="listAll">
                                 <p class="textCenter">
-                                    Aucun S.A a été ajouté pour le moment.
+                                    Aucun SA n'a été ajouté pour le moment.
                                 </p>
                                 <p class="textCenter">Commencez par en ajouter un.</p>
                             </div>
                         {% endif %}
                     </div>
 
-                    {{ form_end(addSAForm) }}
+                    {{ form_end(addAcquisitionUnitForm) }}
                     {% if showToast %}
                     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
                     <script src="{{ asset('assets/js/toast.js') }}"></script>

@@ -2,10 +2,12 @@
 
 namespace App\Tests;
 
+use App\Domain\AcquisitionUnitState;
+use App\Entity\AcquisitionUnit;
 use App\Repository\AcquisitionUnitRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class AddSaTest extends WebTestCase
+class AddAcquisitionUnitTest extends WebTestCase
 {
     /**
      * La méthode testSubmitValidData() vérifie si le formulaire est valide avec des données correctes.
@@ -13,34 +15,34 @@ class AddSaTest extends WebTestCase
      */
     public function testSubmitValidData()
     {
-        $newSa = 'SA9999';
+        $newAcquisitionUnit = 'ESP-017';
         $client = static::createClient();
 
-            $crawler = $client->request('GET', '/addSA');
+        $crawler = $client->request('GET', '/addSA');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Ajouter')->form();
 
         // I complete the form
         $form->setValues(array(
-            'add_sa_form[number]' => $newSa,
+            'add_sa_form[number]' => $newAcquisitionUnit,
         ));
 
         $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertStringContainsString($newSa, $client->getResponse()->getContent(), 'ca marche?');
+        $this->assertStringContainsString($newAcquisitionUnit, $client->getResponse()->getContent(), 'ca marche?');
 
 
-        $this->deleteSa($client, $newSa);
+        $this->deleteSa($client, $newAcquisitionUnit);
     }
 
-    private function deleteSa($client, $saName) : void
+    private function deleteSa($client, $acquisitionUnitName) : void
     {
         $acquisitionUnitRepository = $client->getContainer()->get(AcquisitionUnitRepository::class);
-        $sa = $acquisitionUnitRepository->findOneBy(array('number' => $saName));
-        if ($sa) {
+        $acquisitionUnit = $acquisitionUnitRepository->findOneBy(array('number' => $acquisitionUnitName));
+        if ($acquisitionUnit) {
             $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
-            $entityManager->remove($sa);
+            $entityManager->remove($acquisitionUnit);
             $entityManager->flush();
         }
     }
@@ -48,11 +50,11 @@ class AddSaTest extends WebTestCase
     {
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $newSa = new AcquisitionUnit();
-        $newSa->setNumber($saNumber);
-        $newSa->setState(StateSA::ATTENTE_AFFECTATION->value);
+        $newAcquisitionUnit = new AcquisitionUnit();
+        $newAcquisitionUnit->setName($saNumber);
+        $newAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
 
-        $entityManager->persist($newSa);
+        $entityManager->persist($newAcquisitionUnit);
         $entityManager->flush();
     }
 

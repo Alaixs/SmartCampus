@@ -2,7 +2,7 @@
 namespace App\Domain;
 
 
-enum StateSA : string
+enum AcquisitionUnitState : string
 {
     case OPERATIONNEL = "Opérationnel";
     case ATTENTE_AFFECTATION = "En attente d'affectation";

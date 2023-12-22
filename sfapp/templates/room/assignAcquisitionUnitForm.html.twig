@@ -13,10 +13,10 @@
 <section>
     <div class="form">
         <div class="title">
-                <a href="{{ path('detail_room', {'name': room.id }) }}">
+                <a href="{{ path('roomDetail', {'room': room.id }) }}">
                     <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
                 </a>
-            {% if room.sa is not empty %}
+            {% if room.acquisitionUnit is not empty %}
                 <p>Modifier le système d'acquisition de la salle {{ room.name }}</p>
             {% else %}
                 <p>Attribuer un système d'acquisition à la salle {{ room.name }}</p>
@@ -24,17 +24,17 @@
         </div>
         <div class="formInputs">
 
-            {{ form_start(assignSAForm) }}
+            {{ form_start(assignAcquisitionUnitForm) }}
 
             <div class="restOfForm">
                 <div id="add_sa_form">
 
-                    {{ form_rest(assignSAForm) }}
+                    {{ form_rest(assignAcquisitionUnitForm) }}
 
                 </div>
                 <div class="divSubmitButton">
                     <p>* Obligatoire</p>
-                    {% if room.sa is not empty %}
+                    {% if room.acquisitionUnit is not empty %}
 
                         <div class="buttons">
                             <button type="submit" class="endButton">Affecter</button>
@@ -49,7 +49,7 @@
                     {% endif %}
                 </div>
             </div>
-            {{ form_end(assignSAForm) }}
+            {{ form_end(assignAcquisitionUnitForm) }}
 
         </div>
     </div>

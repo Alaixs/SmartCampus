@@ -10,8 +10,8 @@ class EditRoomTest extends WebTestCase
 {
     public function testEditValidRoomName()
     {
-        $roomName = 'D999';
-        $newRoomName = 'D998';
+        $roomName = 'D309';
+        $newRoomName = 'D307';
         $client = static::createClient();
 
         $this->createRoom($client, $roomName);
@@ -20,7 +20,7 @@ class EditRoomTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $client->request('GET', '/detailRoom/' . $room->getId());
+        $client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $crawler = $client->clickLink('Modifier la salle');
@@ -42,7 +42,7 @@ class EditRoomTest extends WebTestCase
 
     public function testEditNotValidRoomName()
     {
-        $roomName = 'D999';
+        $roomName = 'D309';
         $newRoomName = 'D207';
         $client = static::createClient();
 
@@ -65,16 +65,15 @@ class EditRoomTest extends WebTestCase
         $client->submit($form);
         $this->assertEquals(422, $client->getResponse()->getStatusCode());
 
-        $client->request('GET','/detailRoom/' . $room->getId());
+        $client->request('GET','/roomDetail/' . $room->getId());
         $this->assertStringNotContainsString($newRoomName, $client->getResponse()->getContent(), 'ca marche?');
-
 
         $this->deleteRoom($client, $roomName);
     }
 
     public function testEditValidFloor()
     {
-        $roomName = 'D999';
+        $roomName = 'D309';
         $newFloor = 1;
         $client = static::createClient();
 

@@ -13,7 +13,7 @@ class AddRoomTest extends WebTestCase
      */
     public function testAddRoomValidData()
     {
-        $roomName = 'D999';
+        $roomName = 'D309';
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/addRoom' );
@@ -35,7 +35,6 @@ class AddRoomTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $this->assertStringContainsString($roomName, $client->getResponse()->getContent(), 'ca marche?');
-
 
         $this->deleteRoom($client, $roomName);
     }
@@ -65,7 +64,7 @@ class AddRoomTest extends WebTestCase
 
     public function testSubmitNegativeCapacity()
     {
-        $roomName = 'D999';
+        $roomName = 'D309';
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/addRoom' );
@@ -90,9 +89,9 @@ class AddRoomTest extends WebTestCase
         $this->assertStringNotContainsString($roomName, $client->getResponse()->getContent(), 'ca marche?');
     }
 
-    public function testSubmitNegativeAeraSize()
+    public function testSubmitNegativeAreaSize()
     {
-        $roomName = 'D999';
+        $roomName = 'D309';
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/addRoom' );
@@ -118,9 +117,9 @@ class AddRoomTest extends WebTestCase
         $this->assertStringNotContainsString($roomName, $client->getResponse()->getContent(), 'ca marche?');
     }
 
-    public function testSubmitNullAeraSize()
+    public function testSubmitNullAreaSize()
     {
-        $roomName = 'D999';
+        $roomName = 'D309';
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/addRoom' );
@@ -148,7 +147,7 @@ class AddRoomTest extends WebTestCase
 
     public function testSubmitNegativeNumberOfWindows()
     {
-        $roomName = 'D999';
+        $roomName = 'D309';
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/addRoom' );
@@ -176,13 +175,13 @@ class AddRoomTest extends WebTestCase
 
     private function deleteRoom($client, $roomName) : void
     {
-    $roomRepository = $client->getContainer()->get(RoomRepository::class);
-    $room = $roomRepository->findOneBy(array('name' => $roomName));
-    if ($room) {
-            $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
-            $entityManager->remove($room);
-            $entityManager->flush();
+        $roomRepository = $client->getContainer()->get(RoomRepository::class);
+        $room = $roomRepository->findOneBy(array('name' => $roomName));
+        if ($room)
+        {
+                $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
+                $entityManager->remove($room);
+                $entityManager->flush();
         }
-
     }
 }

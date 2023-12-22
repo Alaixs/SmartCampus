@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class AddRoomFormTypeTest extends WebTestCase
 {
     /**
-     * La méthode testSubmitValidData() verifie si le form est valide avec des données correct
+     * La méthode testSubmitValidData() vérifie si le form est valide avec des données correctes
      * @return void
      */
     public function testSubmitValidData()
@@ -33,12 +33,10 @@ class AddRoomFormTypeTest extends WebTestCase
         $form->submit($formData);
 
         $this->assertTrue($form->isValid());
-
-
     }
 
     /**
-     * La méthode testSubmitNegativeCapacity() verifie si le form est invalide avec la valeur de la capacité d'une salle en negative
+     * La méthode testSubmitNegativeCapacity() vérifie si le form est invalide avec la valeur de la capacité d'une salle en negative
      * @return void
      */
     public function testSubmitNegativeCapacity()
@@ -62,14 +60,13 @@ class AddRoomFormTypeTest extends WebTestCase
         $form->submit($formData);
 
         $this->assertFalse($form->isValid());
-        // dump($form->getErrors(true, false));
     }
 
     /**
-     * La méthode testSubmitNegativeAeraSize() verifie si le form est invalide avec la valeur de la taille d'une salle en negative
+     * La méthode testSubmitNegativeAreaSize() vérifie si le form est invalide avec la valeur de la taille d'une salle en negative
      * @return void
      */
-    public function testSubmitNegativeAeraSize()
+    public function testSubmitNegativeAreaSize()
     {
         $client = static::createClient();
 
@@ -93,10 +90,10 @@ class AddRoomFormTypeTest extends WebTestCase
     }
 
     /**
-     * La méthode testSubmitNullAeraSize() verifie si le form est invalide avec la valeur de la taille d'une salle en nulle
+     * La méthode testSubmitNullAreaSize() vérifie si le form est invalide avec la valeur de la taille d'une salle en nulle
      * @return void
      */
-    public function testSubmitNullAeraSize()
+    public function testSubmitNullAreaSize()
     {
         $client = static::createClient();
 
@@ -120,7 +117,7 @@ class AddRoomFormTypeTest extends WebTestCase
     }
 
     /**
-     * La méthode testSubmitNegativeNumberOfWindows() verifie si le form est invalide avec la valeur du nombre de fenetre en negative
+     * La méthode testSubmitNegativeNumberOfWindows() vérifie si le form est invalide avec la valeur du nombre de fenêtres en negative
      * @return void
      */
     public function testSubmitNegativeNumberOfWindows()

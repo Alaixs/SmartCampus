@@ -5,11 +5,11 @@ namespace App\Controller;
 use App\Domain\GetDataInteface;
 use App\Entity\Room;
 use App\Form\AddRoomFormType;
-use App\Form\AssignSAFormType;
+use App\Form\AssignAcquisitionUnitFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\RoomRepository;
 use App\Repository\AcquisitionUnitRepository;
-use App\Domain\StateSA;
+use App\Domain\AcquisitionUnitState;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -55,7 +55,7 @@ class RoomController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager->persist($room);
                 $entityManager->flush();
-                return $this->redirectToRoute('detailRoom', ['room' => $room->getId()]);
+                return $this->redirectToRoute('roomDetail', ['room' => $room->getId()]);
 
         }
 
@@ -72,10 +72,10 @@ class RoomController extends AbstractController
 
         if($room)
         {
-            if($room->getSA() != null)
+            if($room->getAcquisitionUnit() != null)
             {
-                $room->getSA()->setState(StateSA::ATTENTE_AFFECTATION->value);
-                $room->setSA(null);
+                $room->getAcquisitionUnit()->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+                $room->setAcquisitionUnit(null);
             }
             $entityManager->remove($room);
             $entityManager->flush();
@@ -85,72 +85,72 @@ class RoomController extends AbstractController
     }
 
 
-    #[Route('/assignSA/{room}', name: 'assignSA')]
-    public function assignSAtoRoom(Room $room, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/assignAcquisitionUnit/{room}', name: 'assignAU')]
+    public function assignAcquisitionUnitToRoom(Room $room, Request $request, EntityManagerInterface $entityManager): Response
     {
 
-        $form = $this->createForm(AssignSAFormType::class, $room);
+        $form = $this->createForm(AssignAcquisitionUnitFormType::class, $room);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $newSA = $room->getSA();
+            $newAcquisitionUnit = $room->getAcquisitionUnit();
 
-            $oldSA = $entityManager->getUnitOfWork()->getOriginalEntityData($room)['SA'];
+            $oldAcquisitionUnit = $entityManager->getUnitOfWork()->getOriginalEntityData($room)['acquisitionUnit'];
 
-            if ($oldSA !== null) {
-                $oldSA->setState(StateSA::ATTENTE_AFFECTATION->value);
-                $entityManager->persist($oldSA);
+            if ($oldAcquisitionUnit !== null) {
+                $oldAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+                $entityManager->persist($oldAcquisitionUnit);
             }
 
-            $newSA->setState(StateSA::ATTENTE_INSTALLATION->value);
-            $entityManager->persist($newSA);
+            $newAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
+            $entityManager->persist($newAcquisitionUnit);
             $entityManager->persist($room);
             $entityManager->flush();
 
-            return $this->redirectToRoute('detailRoom', ['room' => $room->getId()]);
+            return $this->redirectToRoute('roomDetail', ['room' => $room->getId()]);
         }
 
-        return $this->render('room/assignSAForm.html.twig', [
+        return $this->render('room/assignAcquisitionUnitForm.html.twig', [
             'room' => $room,
-            'assignSAForm' => $form,
+            'assignAcquisitionUnitForm' => $form,
         ]);
     }
 
 
-    #[Route('/unAssignSA/{room}', name: 'unAssignSA')]
-    public function unAssignSAtoRoom(Room $room, EntityManagerInterface $entityManager): Response
+    #[Route('/unassignAcquisitionUnit/{room}', name: 'unassignAU')]
+    public function unassignAcquisitionUnitFromRoom(Room $room, EntityManagerInterface $entityManager): Response
     {
-        if($room->getSA() != null)
+        if($room->getAcquisitionUnit() != null)
         {
-            $oldSA = $room->getSA();
-            $room->setSA(null);
-            $oldSA->setState(StateSA::ATTENTE_AFFECTATION->value);
+            $oldAcquisitionUnit = $room->getAcquisitionUnit();
+            $room->setAcquisitionUnit(null);
+            $oldAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
 
-            $entityManager->persist($oldSA);
+            $entityManager->persist($oldAcquisitionUnit);
             $entityManager->persist($room);
 
             $entityManager->flush();
         }
-        return $this->redirectToRoute('detailRoom', ['room' => $room->getId()]);
+        return $this->redirectToRoute('roomDetail', ['room' => $room->getId()]);
     }
 
-    #[Route('/detailRoom/{room}', name: 'detailRoom')]
-    public function detailRoom(Room $room, RoomRepository $RoomRepository, AcquisitionUnitRepository $SARepository, GetDataInteface $getDataJson): Response
+    #[Route('/roomDetail/{room}', name: 'roomDetail')]
+    public function roomDetail(Room $room, RoomRepository $RoomRepository, AcquisitionUnitRepository $acquisitionUnitRepository, GetDataInteface $getDataJson): Response
     {
-        $hasSAInDatabase = $SARepository->count(array()) > 0;
-        $hasSAAvailable = $SARepository->count(array('state' => "En attente d'affectation")) > 0;
+        $hasAcquisitionUnitInDatabase = $acquisitionUnitRepository->count(array()) > 0;
+        $hasAcquisitionUnitAvailable = $acquisitionUnitRepository->count(array('state' => "En attente d'affectation")) > 0;
 
         $temp = $getDataJson->getLastValueByType($room->getName(), 'temp');
         $humidity = $getDataJson->getLastValueByType($room->getName(), 'humidity');
         $co2 = $getDataJson->getLastValueByType($room->getName(), 'co2');
 
 
-        return $this->render('room/detailRoom.html.twig', [
+        return $this->render('room/roomDetail.html.twig', [
             'room' => $room,
-            'hasSAAvailable' => $hasSAAvailable,
-            'hasSAInDatabase' => $hasSAInDatabase,
+            'hasAcquisitionUnitAvailable' => $hasAcquisitionUnitAvailable,
+            'hasAcquisitionUnitInDatabase' => $hasAcquisitionUnitInDatabase,
             'temp' => $temp,
             'humidity' => $humidity,
             'co2' => $co2

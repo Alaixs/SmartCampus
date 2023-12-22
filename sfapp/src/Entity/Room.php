@@ -51,7 +51,7 @@ class Room
     private ?int $nbWindows = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?AcquisitionUnit $SA = null;
+    private ?AcquisitionUnit $acquisitionUnit = null;
 
     public function getId(): ?int
     {
@@ -142,14 +142,14 @@ class Room
         return $this;
     }
 
-    public function getSA(): ?AcquisitionUnit
+    public function getAcquisitionUnit(): ?AcquisitionUnit
     {
-        return $this->SA;
+        return $this->acquisitionUnit;
     }
 
-    public function setSA(?AcquisitionUnit $SA): static
+    public function setAcquisitionUnit(?AcquisitionUnit $acquisitionUnit): static
     {
-        $this->SA = $SA;
+        $this->acquisitionUnit = $acquisitionUnit;
 
         return $this;
     }
