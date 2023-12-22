@@ -84,13 +84,14 @@
                 {% endfor %}
                 {% endif %}
 
-                {% if user == 'admin' %}
-                    <div class='planExperimentation-div-array'>
-                        <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
-                    </div>
-                {% endif %}
 
             </div>
+
+            {% if user == 'admin' %}
+                <div class='planExperimentation-div-array'>
+                    <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
+                </div>
+            {% endif %}
         </div>
     </section>
 

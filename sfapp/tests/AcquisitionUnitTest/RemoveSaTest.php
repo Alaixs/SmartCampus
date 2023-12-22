@@ -15,22 +15,32 @@
 //     */
 //    public function testSubmitValidData()
 //    {
-//        $saNumber = 'SA9999';
+//        $saNumber = 'SA99700';
 //        $client = static::createClient();
-//        //$this->createSa($client,$saNumber);
-//        $crawler = $client->request('GET', '/removeSA/1');
+//
+//        $this->createSa($client,$saNumber);
+//
+//        $crawler = $client->request('GET','/removeSA');
 //        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 //
+//
+//
+//
 //        $form = $crawler->selectButton('Supprimer')->form();
-//        dump($form->getValues());
+//
+//
+//        $saRepository = $client->getContainer()->get(AcquisitionUnitRepository::class);
+//        $sa = $saRepository->findOneBy(array('number' => $saNumber));
+//
 //        // I complete the form
-////        $form->setValues(array(
-////            'add_sa_form[number]' => $newSa,
-////        ));
-////
-////        $client->submit($form);
-////        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-////        $this->assertStringContainsString($newSa, $client->getResponse()->getContent(), 'ca marche?');
+//        $form->setValues(array(
+//            'remove_sa_form[number]' => $sa->getId(),
+//        ));
+//
+//        $client->submit($form);
+//        $client->request('GET', '/addSA');
+//        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+//        $this->assertStringNotContainsString($saNumber, $client->getResponse()->getContent(), 'ca marche?');
 //    }
 //    private function createSa($client, $saNumber) : void
 //    {
