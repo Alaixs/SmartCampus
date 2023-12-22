@@ -4,6 +4,9 @@
         <title>SmartCampus</title>
         <link rel="stylesheet" href="{{ asset('assets/css/client.css') }}">
         <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+        <style>
+
+        </style>
     </head>
 
     <body>
@@ -40,17 +43,23 @@
                     {% endfor %}
                 </div>
                 <ul class="rooms">
-                    {% for room in listRoom %}
-                    <a href="#">
-                        <li>
-                            {{ room.name }}
-                        </li>
-                    </a>
+                    {% for room in pagination %}
+                        <div class="linkToRoom">
+                            <a href="#">
+                                <li>
+                                    {{ room.name }}
+                                </li>
+                            </a>
+                        </div>
                     {% endfor %}
-
                 </ul>
             </div>
+            {# Display pagination controls #}
+            <div class="pagination">
+                {{ knp_pagination_render(pagination) }}
+            </div>
         </section>
+
 
         {% include 'partial/footer.html.twig'%}
 
