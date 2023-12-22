@@ -50,16 +50,30 @@ class RoomRepository extends ServiceEntityRepository
 
     public function findBySearch(SearchData $searchData): array
     {
-        $room = $this->createQueryBuilder('r');
+        $data = $this->createQueryBuilder('r');
         if(!empty($searchData->q))
         {
-            $room = $room
+            $data = $data
                 ->andWhere('r.name LIKE :q')
                 ->setParameter('q', "%{$searchData->q}%");
         }
-        $room = $room
+        if(!empty($searchData->floors))
+        {
+            $data = $data
+                ->andWhere('r.floor IN (:floors)')
+                ->setParameter('floors', $searchData->floors);
+        }
+        if(!empty($searchData->aquisitionUnitState))
+        {
+            $data = $data
+                ->join('r.SA', 's')
+                ->andWhere('s.state IN (:aquisitionUnitState)')
+                ->setParameter('aquisitionUnitState', $searchData->aquisitionUnitState);
+        }
+
+        $data = $data
             ->getQuery()
             ->getResult();
-        return $room;
+        return $data;
     }
 }

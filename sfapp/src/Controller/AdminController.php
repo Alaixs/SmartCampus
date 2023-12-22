@@ -28,6 +28,7 @@ class AdminController extends AbstractController
         $form = $this->createForm(SearchFormType::class, $searchData);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+
             $rooms = $roomRepository->findBySearch($searchData);
 
             return $this->render('admin/index.html.twig', [

@@ -7,5 +7,8 @@ class SearchData {
     public string $q = '';
 
     /** @var array  */
-    public array $states = [];
+    public array $floors = [];
+
+    /** @var array  */
+    public array $aquisitionUnitState = [];
 }
