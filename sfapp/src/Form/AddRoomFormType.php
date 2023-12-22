@@ -32,7 +32,6 @@ class AddRoomFormType extends AbstractType
                     'Deuxième étage' => 2,
                     'Troisième étage' => 3
                 ],
-                'label' => 'Étages '
             ])
 
             ->add('capacity', null, [
@@ -61,10 +60,10 @@ class AddRoomFormType extends AbstractType
                 'row_attr' => ['class' => 'rolling_menu'],
                 'label' => 'Exposition',
                 'choices' => [
-                    'Nord' => 'north',
-                    'Sud' => 'south',
-                    'Est' => 'east',
-                    'Ouest' => 'west'
+                    'Nord' => 'Nord',
+                    'Sud' => 'Sud',
+                    'Est' => 'Est',
+                    'Ouest' => 'Ouest'
                 ],
 
             ])

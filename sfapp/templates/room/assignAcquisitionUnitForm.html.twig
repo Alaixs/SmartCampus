@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCampus</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/formStyle.css') }}">
+    <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+</head>
+<body>
+{% include 'partial/header.html.twig'%}
+
+
+<section>
+    <div class="form">
+        <div class="title">
+                <a href="{{ path('roomDetail', {'room': room.id }) }}">
+                    <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
+                </a>
+            {% if room.acquisitionUnit is not empty %}
+                <p>Modifier le système d'acquisition de la salle {{ room.name }}</p>
+            {% else %}
+                <p>Attribuer un système d'acquisition à la salle {{ room.name }}</p>
+            {% endif %}
+        </div>
+        <div class="formInputs">
+
+            {{ form_start(assignAcquisitionUnitForm) }}
+
+            <div class="restOfForm">
+                <div id="add_sa_form">
+
+                    {{ form_rest(assignAcquisitionUnitForm) }}
+
+                </div>
+                <div class="divSubmitButton">
+                    <p>* Obligatoire</p>
+                    {% if room.acquisitionUnit is not empty %}
+
+                        <div class="buttons">
+                            <button type="submit" class="endButton">Affecter</button>
+                        </div>
+
+                    {% else %}
+
+                        <div class="buttons">
+                            <button type="submit" class="endButton">Affecter</button>
+                        </div>
+
+                    {% endif %}
+                </div>
+            </div>
+            {{ form_end(assignAcquisitionUnitForm) }}
+
+        </div>
+    </div>
+</section>
+
+{% include 'partial/footer.html.twig'%}
+
+</body>
+</html>

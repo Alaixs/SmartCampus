@@ -6,7 +6,7 @@ use App\Repository\AcquisitionUnitRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-
+use App\Domain\AcquisitionUnitState;
 #[ORM\Entity(repositoryClass: AcquisitionUnitRepository::class)]
 class AcquisitionUnit
 {
@@ -19,7 +19,7 @@ class AcquisitionUnit
     private ?string $state = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $number = null;
+    private ?string $name = null;
 
     public function getId(): ?int
     {
@@ -38,14 +38,14 @@ class AcquisitionUnit
         return $this;
     }
 
-    public function getNumber(): ?string
+    public function getName(): ?string
     {
-        return $this->number;
+        return $this->name;
     }
 
-    public function setNumber(string $number): static
+    public function setName(string $name): static
     {
-        $this->number = $number;
+        $this->name = $name;
 
         return $this;
     }
@@ -53,13 +53,13 @@ class AcquisitionUnit
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addConstraint(new UniqueEntity([
-            'fields' => ['number'],
+            'fields' => ['name'],
             'message' => 'Ce SA existe déjà.',
         ]));
     }
 
     public function __toString(): string
     {
-        return $this->number;
+        return $this->name;
     }
 }

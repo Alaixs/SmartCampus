@@ -10,19 +10,23 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AssignFormType extends AbstractType
+class AssignAcquisitionUnitFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('SA', EntityType::class, [
+            ->add('acquisitionUnit', EntityType::class, [
                 'class' => AcquisitionUnit::class,
                 'required' => true,
                 'label' => 'Numéro du SA',
-                'query_builder' => function (EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) use ($builder) {
+                    $room = $builder->getData();
+
                     return $er->createQueryBuilder('au')
                         ->where('au.state = :state')
-                        ->setParameter('state', 'En attente');
+                        ->orWhere('au = :currentAU')
+                        ->setParameter('state', "En attente d'affectation")
+                        ->setParameter('currentAU', $room->getAcquisitionUnit());
                 },
             ])
         ;

@@ -1,0 +1,250 @@
+/* ====--- Style page for every forms ---==== */
+
+/*
+--------------------------------------------------------------
+    FEUILLE DE STYLE GENERALE COMMUNE A TOUS LES FORMULAIRES
+--------------------------------------------------------------
+*/
+.detailTitle
+{
+    text-align: center;
+    margin-bottom: 3vh;
+}
+
+section {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.backArrow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px 0 0 10px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    width: 60%;
+    max-height: 80vh;
+    height: fit-content;
+}
+
+.title {
+    position: relative;
+    background-color: #F9F9F9;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.5vh;
+    margin-bottom: 5vh;
+    height: 8vh;
+    font-size: 2.5vh;
+}
+
+.title > p {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0 ;
+    margin-left: 3vw;
+}
+
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 3vh;
+    justify-content: space-between;
+}
+
+
+.infoSA {
+    width: 50vw;
+    max-height: 55vh;
+    overflow: auto;
+    padding-right: 19vw;
+    padding-left: 19vw;
+}
+
+.data > li {
+    list-style: none;
+    margin: 16px 0;
+}
+
+.data {
+    width: 20vw;
+    max-height: 55vh;
+    overflow: auto;
+    padding: 0 0 0 10px;
+    margin: 0;
+    border: solid black 1px;
+}
+
+.formFooter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 2vh;
+    margin-top: 2vh;
+}
+
+.buttons {
+    display: flex;
+    height: 4vh;
+    width: 11vw;
+    justify-content: space-between;
+}
+
+
+
+
+.endButton {
+    font-size: 1.3vh;
+    width: 5vw;
+    border: 0;
+    border-radius: 0;
+    background-color: #cdcdcd;
+}
+
+.endButton:hover {
+    cursor: pointer;
+}
+
+
+.delete {
+    background-color: #eea2a2;
+}
+
+.delete:hover {
+    background-color: #ee8f8f;
+}
+
+
+.buttons > a, .buttons3 > a {
+    text-decoration: none;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    text-align: center;
+}
+
+.errorMessage {
+    width: 100%;
+}
+
+/*
+-----------------------------------------------------
+    Gérer les deux parties  :
+    - Une partie formulaire
+    - Une partie liste de système d'acquisitions
+--------------  ---------------------------------------
+*/
+
+.sectionsOfWindow, .rightSection {
+    display: flex;
+    justify-content: space-between;
+    width: 60vw;
+}
+
+.rightSection {
+    flex-direction: column;
+}
+
+.infoSA {
+    text-align: center;
+}
+
+.infoSA:nth-child(2) {
+    text-align: center;
+}
+
+.sectionsOfWindow > div {
+    width: 50%;
+    margin-top: 3vh;
+}
+
+.sectionsOfWindow > .infoSA, .rightSection > .infoSA {
+    padding: 0;
+    margin: 0;
+    overflow: unset;
+}
+
+.formAndFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.line {
+    height: 58vh;
+    width: 0.5px;
+    margin-bottom: 2vh;
+    border: solid black 1px;
+    background-color: black;
+}
+
+.button
+{
+    width: 5vw;
+}
+
+.modal-footer > a, .cancelButtonModal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3vh;
+    color: inherit;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    margin-top: 4vh;
+    width: 1vw;
+    aspect-ratio: 1;
+    position: relative;
+}
+.loader:before,
+.loader:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: -8px 0 0 -8px;
+    width: 12px;
+    aspect-ratio: 1;
+    background: #dedede;
+    animation:
+            l1-1 2s  infinite,
+            l1-2 .5s infinite;
+}
+.loader:after {
+    background: #000000;
+    animation-delay: -1s,0s;
+}
+@keyframes l1-1 {
+    0%   {top:0   ;left:0}
+    25%  {top:100%;left:0}
+    50%  {top:100%;left:100%}
+    75%  {top:0   ;left:100%}
+    100% {top:0   ;left:0}
+}
+@keyframes l1-2 {
+    80%,100% {transform: rotate(0.5turn)}
+}
+
+.adviceForUser {
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

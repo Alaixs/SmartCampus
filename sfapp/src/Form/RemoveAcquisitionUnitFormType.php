@@ -9,14 +9,14 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RemoveSAFormType extends AbstractType
+class RemoveAcquisitionUnitFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('number', EntityType::class, [
+            ->add('name', EntityType::class, [
                 'class' => AcquisitionUnit::class,
-                'label' => "Systèmes d'acquisitions",
+                'label' => "Systèmes d'acquisition",
             ]);
     }
     public function configureOptions(OptionsResolver $resolver): void

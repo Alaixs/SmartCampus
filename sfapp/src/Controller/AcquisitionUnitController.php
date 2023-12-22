@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Domain\AcquisitionUnitState;
 use App\Entity\AcquisitionUnit;
-use App\Form\AddSaFormType;
-use App\Form\RemoveSAFormType;
+use App\Form\AddAcquisitionUnitFormType;
+use App\Form\RemoveAcquisitionUnitFormType;
 
+use App\Repository\AcquisitionUnitRepository;
+use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,73 +17,80 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AcquisitionUnitController extends AbstractController
 {
-    #[Route('/addSA', name: 'addSA')]
-    public function addSA(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
+    #[Route('/addAcquisitionUnit', name: 'addAU')]
+    public function addAcquisitionUnit(Request $request, EntityManagerInterface $entityManager, AcquisitionUnitRepository $acquisitionUnitRepository): Response
     {
-        $sa = new AcquisitionUnit();
-        $sa->setState("En attente");
+        $acquisitionUnit = new AcquisitionUnit();
+        $acquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
 
-        $form = $this->createForm(AddSaFormType::class, $sa);
+        $form = $this->createForm(AddAcquisitionUnitFormType::class, $acquisitionUnit);
         $form->handleRequest($request);
 
-        $SaManager = $doctrine->getManager();
-        $repository = $SaManager->getRepository('App\Entity\AcquisitionUnit');
-        $listeSa = $repository->findAll();
+        $acquisitionUnitList = $acquisitionUnitRepository->findAll();
+
+        $showToast = false;
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($sa);
+            $entityManager->persist($acquisitionUnit);
             $entityManager->flush();
 
-            return $this->redirectToRoute('addSA');
+            $showToast = true;
+
+            $acquisitionUnitList = $acquisitionUnitRepository->findAll();
 
         }
 
-        return $this->render('acquisition_unit/addSAForm.html.twig', [
-            'addSAForm' => $form,
-            'listeSa' => $listeSa,
+        return $this->render('acquisition_unit/addAcquisitionUnitForm.html.twig', [
+            'addAcquisitionUnitForm' => $form,
+            'acquisitionUnitList' => $acquisitionUnitList,
+            'showToast' => $showToast,
         ]);
     }
 
-    #[Route('/removeSA', name: 'removeSA')]
-    public function removeSA(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
+    #[Route('/removeAcquisitionUnit/{acquisitionUnit?}', name: 'removeAU')]
+    public function removeAcquisitionUnit(Request $request, EntityManagerInterface $entityManager, RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository, ?AcquisitionUnit $acquisitionUnit): Response
     {
-        $sa = new AcquisitionUnit();
+        $acquisitionUnit = new AcquisitionUnit();
 
-        $form = $this->createForm(RemoveSAFormType::class, $sa);
+        $form = $this->createForm(RemoveAcquisitionUnitFormType::class, $acquisitionUnit);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted()) {
-            $saId = $form->get('number')->getData();
 
-            $sa = $entityManager->getRepository(AcquisitionUnit::class)->find($saId);
+            $au = $acquisitionUnitRepository->findOneBy(array('name' => $acquisitionUnit->getName()));
 
-            if (!$sa) {
-                throw $this->createNotFoundException('L\'entité AcquisitionUnit avec l\'ID ' . $saId . ' n\'existe pas.');
+            if (!$au) {
+                throw $this->createNotFoundException('L\'entité AcquisitionUnit avec l\'ID ' . $au . ' n\'existe pas.');
             }
 
-            $query = $entityManager->createQuery(
-                'SELECT r
-                FROM App\Entity\Room r
-                WHERE r.SA = :saId'
-            )->setParameter('saId', $saId);
-    
+            $room = $roomRepository->findOneBy(array('acquisitionUnit' => $au));
 
-            if ($query->getResult()) {
-                $this->addFlash('error', 'Impossible de supprimer le SA ' . $saId . ' car il est assigné à une salle.');
-                return $this->redirectToRoute('removeSA');
+
+            if ($room) {
+                $this->addFlash('error', 'Impossible de supprimer le SA ' . $au . ' car il est assigné à une salle.');
+                return $this->redirectToRoute('removeAU');
             }
 
-            $this->addFlash('message', 'Le SA ' . $saId . ' a bien été supprimé.');
+            $this->addFlash('message', 'Le SA ' . $au . ' a bien été supprimé.');
 
-            $entityManager->remove($sa);
+
+            $entityManager->remove($au);
             $entityManager->flush();
 
-            return $this->redirectToRoute('removeSA');
+            $acquisitionUnitList = $acquisitionUnitRepository->findAll();
+
+            if(empty($acquisitionUnitList)) {
+                return $this->redirectToRoute('app_admin');
+            }
+            else {
+                return $this->redirectToRoute('removeAU');
+
+            }
+
         }
 
-        return $this->render('acquisition_unit/removeSAForm.html.twig', [
-            'removeSAForm' => $form,
+        return $this->render('acquisition_unit/removeAcquisitionUnitForm.html.twig', [
+            'removeAcquisitionUnitForm' => $form,
         ]);
     }
 

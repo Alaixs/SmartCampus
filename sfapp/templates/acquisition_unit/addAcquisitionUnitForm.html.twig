@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <title>SmartCampus</title>
+        <link rel="stylesheet" href="{{ asset('assets/css/formStyle.css') }}">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+        <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+    </head>
+    <body>
+    {% include 'partial/header.html.twig'%}
+
+        <section>
+            <div class="form">
+                <div class="title">
+                    <a href="{{ path('app_admin') }}">
+                        <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
+                    </a>
+                    <p>Ajouter un système d'acquisition</p>
+                    <p>Systèmes d'acquisition déjà enregistrés</p>
+                </div>
+                <div class="formInputs">
+                    {{ form_start(addAcquisitionUnitForm) }}
+                    <div class="sectionsOfWindow">
+                        <div class="formAndFooter">
+                            <div class="restOfForm">
+                                {{ form_rest(addAcquisitionUnitForm) }}
+                            </div>
+                            <div class="formFooter">
+                                <p>* Obligatoire</p>
+                                <div class="buttons">
+                                    <button type="submit" class="endButton submit">Ajouter</button>
+                                </div>
+                            </div>
+                        </div>
+                        <section class = "line"></section>
+                        {% if acquisitionUnitList %}
+                        <div class="listAll">
+                            <ul>
+                                {% for sa in acquisitionUnitList %}
+                                    <li>{{ sa.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% else %}
+                            <div class="listAll">
+                                <p class="textCenter">
+                                    Aucun SA n'a été ajouté pour le moment.
+                                </p>
+                                <p class="textCenter">Commencez par en ajouter un.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {{ form_end(addAcquisitionUnitForm) }}
+                    {% if showToast %}
+                    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+                    <script src="{{ asset('assets/js/toast.js') }}"></script>
+                        <script>
+                        showToastSA();
+                        </script>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+    {% include 'partial/footer.html.twig'%}
+
+    </body>
+</html>

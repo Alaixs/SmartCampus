@@ -1,0 +1,123 @@
+[
+
+  {
+    "id" : 22,
+    "nom" : "temp",
+    "valeur" : 22,
+    "dataCapture" : "12-12-2023 10:00:00",
+    "localisation" : "D207",
+    "description" : "",
+    "tag" : 1
+  },
+
+
+
+  {
+    "id" : 22,
+    "nom" : "temp",
+    "valeur" : 18,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D207",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "temp",
+    "valeur" : 20,
+    "dataCapture" : "11-12-2023 10:00:00",
+    "localisation" : "D207",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "humidity",
+    "valeur" : 56,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D207",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "humidity",
+    "valeur" : 57,
+    "dataCapture" : "14-12-2023 10:00:00",
+    "localisation" : "D207",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 22,
+    "nom" : "temp",
+    "valeur" : 19,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D400",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "humidity",
+    "valeur" : 56,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D400",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "co2",
+    "valeur" : 640,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D400",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "co2",
+    "valeur" : 640,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D207",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "co2",
+    "valeur" : 18,
+    "dataCapture" : "11-12-2023 8:00:00",
+    "localisation" : "D207",
+    "description" : "",
+    "tag" : 1
+  },
+  {
+    "id" : 25,
+    "nom" : "co2",
+    "valeur" : 640,
+    "dataCapture" : "10-12-2023 10:00:00",
+    "localisation" : "D206",
+    "description" : "",
+    "tag" : 1
+  },
+  {
+    "id" : 15,
+    "nom" : "temp",
+    "valeur" : 640,
+    "dataCapture" : "13-12-2023 8:00:00",
+      "localisation" : "D207",
+    "description" : "",
+    "tag" : 1
+  }
+
+]

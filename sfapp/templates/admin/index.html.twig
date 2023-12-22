@@ -4,11 +4,10 @@
     <title>SmartCampus</title>
     <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
     {% include 'partial/header.html.twig'%}
-
 
     <section class='planExperimentation'>
         <div class="planExperimentation-div">
@@ -16,84 +15,84 @@
                 <p class="planExperimentation-p-title">Plan d'expérimentation</p>
                 {% if user == 'admin' %}
                 <div class="add-or-del-div">
-                    <a href="/addSA" class="planExperimentation-div-button-add button add-del-button">Ajouter un système d'acquisition</a>
-                    <a href="/removeSA" class="planExperimentation-div-button-add button add-del-button add-or-del-div ">Supprimer un S.A</a>
-
+                    <a href="{{ path('addAU') }}" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
+                    {% if acquisitionUnitList %}
+                        <a href="{{ path('removeAU') }}" class="planExperimentation-div-button-add add-or-del-div ">Supprimer un S.A</a>
+                    {% endif %}
                 </div>
                 {% endif %}
 
             </div>
-
-            <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
-                <div class="planExperimentation-div-div"><p>SALLES</p></div>
-                <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
-                <div class="planExperimentation-div-div"><p>ETAT S.A</p></div>
-            </div>
-            {% if listRooms is empty %}
+            {% if roomList is empty %}
             <div class="noRoom">
 
-                    <p> Aucune salle n'a été ajouté pour le moment </p>
+                    <p class="noRoomText"> Aucune salle n'a été ajoutée pour le moment. Commencez par en ajouter une. </p>
 
             </div>
 
             {% else %}
 
+            <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
+                <div class="planExperimentation-div-div"><p>SALLES</p></div>
+                <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
+            </div>
+
             <div class="planExperimentation-div-allRoom">
-                {% for room in listRooms %}
+                {% for room in roomList %}
 
                     <div class='planExperimentation-div-array'>
                         <div class="planExperimentation-div-div planExperimentation-div-roomName">
                             <div class="planExperimentation-div-roomName-div">
                                 <p>{{ room.name }}</p>
                             </div>
-                            <div class="div-img-modif">
-                                {% if user == 'admin' %}
-
-                                    <a href="/editRoom/{{ room.name }}">
-                                    <img class="img-modif" alt='modifier' src={{asset('assets/img/editRoomIcon.png') }}>
-                                </a>
-                                {% endif %}
-                            </div>
-
 
                         </div>
 
-                        {% if room.sa is empty %}
-
-                            <div class="planExperimentation-div-div"><p>N/A</p></div>
-                            <div class="planExperimentation-div-div"><p> - </p></div>
-                            {% if user == 'admin' %}
-                                <a href="/assignSA/{{ room.name }}" class="planExperimentation-div-modifier button">Attribuer SA</a>
-                            {% endif %}
-
+                        <!-- Gestion de l'état des SA" -->
+                        {% if room.acquisitionUnit is empty %}
+                            <div class="planExperimentation-div-div">
+                                <p>-</p>
+                            </div>
                         {% else %}
-
-                            <div class="planExperimentation-div-div"><p>{{ room.sa }}</p></div>
-                            <div class="planExperimentation-div-div"><p>{{ room.sa.state }}</p></div>
-                            {% if user == 'admin' %}
-                                <a href="/assignSA/{{ room.name }}" class="planExperimentation-div-modifier button">Modifier SA</a>
-                            {% endif %}
-
+                            <div class="planExperimentation-div-div">
+                                <p>{{ room.acquisitionUnit }}</p>
+                                <div class="lilPastille">
+                                    {% if room.acquisitionUnit.state == "En attente d'installation" and user == "admin" %}
+                                        <img src="{{ asset('assets/img/StateImages/hourglass.png') }}" title="Le système d'acquisition n'a pas encore été installé." class="grayCircle"/>
+                                    {% elseif room.acquisitionUnit.state == "En attente d'installation" and user == "technicien" %}
+                                        <img src="{{ asset('assets/img/StateImages/waitingForInstallation.png') }}" title="Le système d'acquisition doit être installé." class="grayCircle"/>
+                                    {% elseif room.acquisitionUnit.state == "Opérationnel"%}
+                                        <img src="{{ asset('assets/img/StateImages/ok.png') }}" title="Le système d'acquisition fonctionne correctement." class="greenCircle"/>
+                                    {% elseif room.acquisitionUnit.state == "Dysfonctionnement" %}
+                                        <img src="{{ asset('assets/img/StateImages/notOk.png') }}" title="Le système d'acquisition est en panne." class="redCircle"/>
+                                    {% elseif room.acquisitionUnit.state == "En panne" %}
+                                        <img src="{{ asset('assets/img/StateImages/questionMark.png') }}" title="Les données remontées par le système d'acquisition sont aberrantes." class="redCircle"/>
+                                    {% endif %}
+                                </div>
+                            </div>
                         {% endif %}
 
+                        {% if user == 'admin' %}
+                            <a href="{{ path('roomDetail', {'room' : room.id}) }}" class="planExperimentation-div-voir-plus">Voir plus</a>
+                        {% else %}
+                            {% if room.acquisitionUnit is not empty and (room.acquisitionUnit.state != "Opérationnel" and room.acquisitionUnit.state != "Dysfonctionnement")%}
+                                <a href="{{ path('set_au_to_operational', {'acquisitionUnit' :room.acquisitionUnit.id}) }}" class="planExperimentation-div-voir-plus">Définir le SA comme opérationnel</a>
+                            {% endif %}
+                        {% endif %}
                     </div>
 
                 {% endfor %}
                 {% endif %}
 
-                {% if user == 'admin' %}
-                    <div class='planExperimentation-div-array'>
-                        <a href="/addRoom" class="planExperimentation-div-button-add button">Ajouter une salle</a>
-                    </div>
-                {% endif %}
 
             </div>
 
-
-
+            {% if user == 'admin' %}
+                <div class='planExperimentation-div-array'>
+                    <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
+                </div>
+            {% endif %}
         </div>
-            </div>
-
     </section>
 
     {% include 'partial/footer.html.twig' %}
