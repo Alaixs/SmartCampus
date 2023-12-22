@@ -52,6 +52,7 @@ class RoomRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
             ->where('r.floor = :floor')
             ->setParameter('floor', $floor)
+            ->orderBy('r.name', 'ASC')
             ->getQuery();
     }
 

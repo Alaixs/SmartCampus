@@ -43,18 +43,23 @@
                     {% endfor %}
                 </div>
                 <ul class="rooms">
-                    {% for room in pagination %}
-                        <div class="linkToRoom">
-                            <a href="#">
-                                <li>
-                                    {{ room.name }}
-                                </li>
-                            </a>
+                    {% if pagination.getTotalItemCount() > 0 %}
+                        {% for room in pagination %}
+                            <div class="linkToRoom">
+                                <a href="#">
+                                    <li>
+                                        {{ room.name }}
+                                    </li>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="noRoom">
+                            <p>Aucune salle n'a été ajouté à cet étage pour le moment</p>
                         </div>
-                    {% endfor %}
+                    {% endif %}
                 </ul>
             </div>
-            {# Display pagination controls #}
             <div class="pagination">
                 {{ knp_pagination_render(pagination) }}
             </div>

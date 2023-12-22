@@ -12,7 +12,7 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class ClientController extends AbstractController
 {
-    #[Route('/client/{floor<\d+>?0}', name: 'app_client')]
+    #[Route('/roomSelection/{floor<\d+>?0}', name: 'app_client')]
     public function index(int $floor, BuildingRepository $buildingRepository, RoomRepository $roomRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $building = $buildingRepository->findOneBy(['name' => 'Département informatique']);
