@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
 use App\Entity\Room;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -45,4 +46,14 @@ class RoomRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findRoomsByFloor(int $floor): Query
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.floor = :floor')
+            ->setParameter('floor', $floor)
+            ->orderBy('r.name', 'ASC')
+            ->getQuery();
+    }
+
 }
