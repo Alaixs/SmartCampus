@@ -128,7 +128,7 @@ class PagesAccessibleTest extends WebTestCase
      * La méthode testAssignSA() verifie si le code de retour de la page assignSA est bien 200
      * @return void
      */
-    public function testAssignSA()
+    public function testAssignSAIsAccessible()
     {
 
         $client = static::createClient();
@@ -143,7 +143,7 @@ class PagesAccessibleTest extends WebTestCase
 
     }
 
-    public function testUnAssignSA()
+    public function testUnAssignSAIsAccessible()
     {
 
         $client = static::createClient();
@@ -158,7 +158,7 @@ class PagesAccessibleTest extends WebTestCase
 
     }
 
-    public function testRemoveRoom()
+    public function testRemoveRoomIsAccessible()
     {
         $client = static::createClient();
 
@@ -171,4 +171,12 @@ class PagesAccessibleTest extends WebTestCase
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
+    public function testLoginIsAccessible()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/login');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 }

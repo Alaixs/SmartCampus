@@ -14,11 +14,11 @@ class LoginController extends AbstractController
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
 
-          /* // Voici le error qui ne passe pas le test, pourtant il est fonctionnel et la page reste fonctionnel
-         $error = $authenticationUtils->getLastAuthenticationError(); */
+           // Voici le error qui ne passe pas le test, pourtant il est fonctionnel et la page reste fonctionnel
+         $error = $authenticationUtils->getLastAuthenticationError(); 
 
         return $this->render('login/index.html.twig', [
-            //'error' => $error,
+            'error' => $error,
         ]);
     }
 

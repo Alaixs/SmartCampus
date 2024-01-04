@@ -32,11 +32,10 @@
             <button type="submit" class="buttonLogin">Se connecter</button>
 
         </div>
+    {% if error %}
+    <div class="error-message">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
     </div>
-
-    {# {% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %} #}
 
 </section>
 {% include 'partial/footer.html.twig' %}
