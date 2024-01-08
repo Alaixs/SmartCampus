@@ -5,225 +5,229 @@ namespace App\Tests;
 use App\Entity\Room;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 
 class EditRoomTest extends WebTestCase
 {
+
+    private $client;
+
+    protected function setUp(): void
+    {
+        $this->client = static::createClient();
+        $userRepository = $this->client->getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(['username' => 'yacine']);
+        $this->client->loginUser($testUser);
+    }
+
     public function testEditValidRoomName()
     {
-        $roomName = 'D309';
-        $newRoomName = 'D307';
-        $client = static::createClient();
+        $roomName = 'D999';
+        $newRoomName = 'D998';
 
-        $this->createRoom($client, $roomName);
-
-        $roomRepository = $client->getContainer()->get(RoomRepository::class);
+        $userRepository = $this->client->getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
+        $this->client->loginUser($testUser);
+        $this->createRoom($roomName);
+        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $client->request('GET', '/roomDetail/' . $room->getId());
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $crawler = $client->clickLink('Modifier la salle');
+        $crawler = $this->client->clickLink('Modifier la salle');
 
         $form = $crawler->selectButton('Modifier')->form();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $form->setValues(array('add_room_form[name]' => $newRoomName));
 
-        $client->submit($form);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $client->followRedirect();
+        $this->client->submit($form);
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->client->followRedirect();
 
-        $this->assertStringContainsString($newRoomName, $client->getResponse()->getContent(), 'ca marche?');
+        $this->assertStringContainsString($newRoomName, $this->client->getResponse()->getContent(), 'ca marche?');
 
 
-        $this->deleteRoom($client, $newRoomName);
+        $this->deleteRoom($newRoomName);
     }
 
     public function testEditNotValidRoomName()
     {
         $roomName = 'D309';
         $newRoomName = 'D207';
-        $client = static::createClient();
 
-        $this->createRoom($client, $roomName);
-
-        $roomRepository = $client->getContainer()->get(RoomRepository::class);
+        $this->createRoom($roomName);
+        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $client->request('GET', '/detailRoom/' . $room->getId());
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $crawler = $client->clickLink('Modifier la salle');
+        $crawler = $this->client->clickLink('Modifier la salle');
 
         $form = $crawler->selectButton('Modifier')->form();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $form->setValues(array('add_room_form[name]' => $newRoomName));
 
-        $client->submit($form);
-        $this->assertEquals(422, $client->getResponse()->getStatusCode());
+        $this->client->submit($form);
+        $this->assertEquals(422, $this->client->getResponse()->getStatusCode());
 
-        $client->request('GET','/roomDetail/' . $room->getId());
-        $this->assertStringNotContainsString($newRoomName, $client->getResponse()->getContent(), 'ca marche?');
+        $this->client->request('GET','/detailRoom/' . $room->getId());
+        $this->assertStringNotContainsString($newRoomName, $this->client->getResponse()->getContent(), 'ca marche?');
 
-        $this->deleteRoom($client, $roomName);
+
+        $this->deleteRoom($roomName);
     }
 
     public function testEditValidFloor()
     {
         $roomName = 'D309';
         $newFloor = 1;
-        $client = static::createClient();
 
-        $this->createRoom($client, $roomName);
-
-        $roomRepository = $client->getContainer()->get(RoomRepository::class);
+        $this->createRoom($roomName);
+        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $client->request('GET', '/detailRoom/' . $room->getId());
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $crawler = $client->clickLink('Modifier la salle');
+        $crawler = $this->client->clickLink('Modifier la salle');
 
         $form = $crawler->selectButton('Modifier')->form();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $form->setValues(array('add_room_form[floor]' => $newFloor));
 
-        $client->submit($form);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $client->followRedirect();
-        $this->assertStringContainsString('1er', $client->getResponse()->getContent(), 'ca marche?');
+        $this->client->submit($form);
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->client->followRedirect();
+        $this->assertStringContainsString('1er', $this->client->getResponse()->getContent(), 'ca marche?');
 
-        $this->deleteRoom($client, $roomName);
+        $this->deleteRoom($roomName);
     }
 
     public function testEditValidCapacity()
     {
         $roomName = 'D999';
         $newCapacity = 40;
-        $client = static::createClient();
 
-        $this->createRoom($client, $roomName);
-
-        $roomRepository = $client->getContainer()->get(RoomRepository::class);
+        $this->createRoom($roomName);
+        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $client->request('GET', '/detailRoom/' . $room->getId());
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $crawler = $client->clickLink('Modifier la salle');
+        $crawler = $this->client->clickLink('Modifier la salle');
 
         $form = $crawler->selectButton('Modifier')->form();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $form->setValues(array('add_room_form[capacity]' => $newCapacity));
 
-        $client->submit($form);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $client->followRedirect();
-        $this->assertStringContainsString('40 personnes', $client->getResponse()->getContent(), 'ca marche?');
+        $this->client->submit($form);
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->client->followRedirect();
+        $this->assertStringContainsString('40 personnes', $this->client->getResponse()->getContent(), 'ca marche?');
 
-        $this->deleteRoom($client, $roomName);
+        $this->deleteRoom($roomName);
     }
 
     public function testEditNotValidCapacity()
     {
         $roomName = 'D999';
         $newCapacity = -1;
-        $client = static::createClient();
 
-        $this->createRoom($client, $roomName);
+        $this->createRoom($roomName);
 
-        $roomRepository = $client->getContainer()->get(RoomRepository::class);
+        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $client->request('GET', '/detailRoom/' . $room->getId());
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $crawler = $client->clickLink('Modifier la salle');
+        $crawler = $this->client->clickLink('Modifier la salle');
 
         $form = $crawler->selectButton('Modifier')->form();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $form->setValues(array('add_room_form[capacity]' => $newCapacity));
 
-        $client->submit($form);
-        $this->assertEquals(422, $client->getResponse()->getStatusCode());
-        $client->request('GET','/detailRoom/' . $room->getId());
-        $this->assertStringNotContainsString('1er', $client->getResponse()->getContent(), 'ca marche?');
+        $this->client->submit($form);
+        $this->assertEquals(422, $this->client->getResponse()->getStatusCode());
+        $this->client->request('GET','/detailRoom/' . $room->getId());
+        $this->assertStringNotContainsString('1er', $this->client->getResponse()->getContent(), 'ca marche?');
 
-        $this->deleteRoom($client, $roomName);
+        $this->deleteRoom($roomName);
     }
 
     public function testEditValidArea()
     {
         $roomName = 'D999';
         $newArea = 40;
-        $client = static::createClient();
 
-        $this->createRoom($client, $roomName);
-
-        $roomRepository = $client->getContainer()->get(RoomRepository::class);
+        $this->createRoom($roomName);
+        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $client->request('GET', '/detailRoom/' . $room->getId());
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $crawler = $client->clickLink('Modifier la salle');
+        $crawler = $this->client->clickLink('Modifier la salle');
 
         $form = $crawler->selectButton('Modifier')->form();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $form->setValues(array('add_room_form[area]' => $newArea));
 
-        $client->submit($form);
-        $this->assertEquals(302, $client->getResponse()->getStatusCode());
-        $client->followRedirect();
-        $this->assertStringContainsString('40 m²', $client->getResponse()->getContent(), 'ca marche?');
+        $this->client->submit($form);
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->client->followRedirect();
+        $this->assertStringContainsString('40 m²', $this->client->getResponse()->getContent(), 'ca marche?');
 
-        $this->deleteRoom($client, $roomName);
+        $this->deleteRoom($roomName);
     }
 
     public function testEditNotValidArea()
     {
         $roomName = 'D999';
         $newArea = -1;
-        $client = static::createClient();
 
-        $this->createRoom($client, $roomName);
+        $this->createRoom($roomName);
 
-        $roomRepository = $client->getContainer()->get(RoomRepository::class);
+        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $client->request('GET', '/detailRoom/' . $room->getId());
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $crawler = $client->clickLink('Modifier la salle');
+        $crawler = $this->client->clickLink('Modifier la salle');
 
         $form = $crawler->selectButton('Modifier')->form();
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $form->setValues(array('add_room_form[area]' => $newArea));
 
-        $client->submit($form);
-        $this->assertEquals(422, $client->getResponse()->getStatusCode());
-        $client->request('GET','/detailRoom/' . $room->getId());
-        $this->assertStringNotContainsString('1er', $client->getResponse()->getContent(), 'ca marche?');
+        $this->client->submit($form);
+        $this->assertEquals(422, $this->client->getResponse()->getStatusCode());
+        $this->client->request('GET','/detailRoom/' . $room->getId());
+        $this->assertStringNotContainsString('1er', $this->client->getResponse()->getContent(), 'ca marche?');
 
-        $this->deleteRoom($client, $roomName);
+        $this->deleteRoom($roomName);
     }
 
-    private function createRoom($client, $roomName) : void
+    private function createRoom($roomName) : void
     {
-        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
 
         $newRoom = new Room();
         $newRoom->setName($roomName);
@@ -238,15 +242,16 @@ class EditRoomTest extends WebTestCase
         $entityManager->flush();
     }
 
-    private function deleteRoom($client, $roomName) : void
+    private function deleteRoom($roomName): void
     {
-        $roomRepository = $client->getContainer()->get(RoomRepository::class);
-        $room = $roomRepository->findOneBy(array('name' => $roomName));
+        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
+        $room = $roomRepository->findOneBy(['name' => $roomName]);
+    
         if ($room) {
-            $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
+            $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
             $entityManager->remove($room);
             $entityManager->flush();
         }
-    }
+    }    
 
 }

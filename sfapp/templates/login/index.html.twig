@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCampus - Se connecter</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+</head>
+<body>
+
+{% include 'partial/header.html.twig'%}
+
+ <section class="loginCard">
+    <div class="formLogin">
+        <div class="guestForm">
+            <div class="guestTitle">
+                <h1>Smart Campus</h1>
+            </div>
+            <div class="guestSubtitle">
+                <p>Usagers de La Rochelle Université</p>
+                <p>(étudiants, enseignants ou administratifs)</p>
+            </div>
+            <a href="/" class="buttonGuest">J’accède au site en tant qu’invité</a>
+        </div>
+        <div class="formInputs">
+        <form action="{{ path('app_login') }}" method="post">
+                <p>Accès administrateur</p>
+            <input type="text" class="form-control" id="username" name="_username" placeholder="Nom d'utilisateur">
+            <input type="password" class="form-control" id="password" name="_password" placeholder="Mot de passe">
+            <input type="hidden" name="_target_path" value="/admin">
+            <button type="submit" class="buttonLogin">Se connecter</button>
+
+        </div>
+    {% if error %}
+    <div class="error-message">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    </div>
+
+</section>
+{% include 'partial/footer.html.twig' %}
+
+</body>
+</html>

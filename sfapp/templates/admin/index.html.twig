@@ -13,7 +13,7 @@
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
                 <p class="planExperimentation-p-title">Plan d'expérimentation</p>
-                {% if user == 'admin' %}
+                {% if app.user.username == 'yacine' %}
                 <div class="add-or-del-div">
                     <a href="{{ path('addAU') }}" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
                     {% if acquisitionUnitList %}
@@ -72,8 +72,8 @@
                             </div>
                         {% endif %}
 
-                        {% if user == 'admin' %}
-                            <a href="{{ path('roomDetail', {'room' : room.id}) }}" class="planExperimentation-div-voir-plus">Voir plus</a>
+                        {% if app.user.username == 'yacine'%}
+                            <a href="{{ path('detailRoom', {'room' : room.id}) }}" class="planExperimentation-div-voir-plus">Voir plus</a>
                         {% else %}
                             {% if room.acquisitionUnit is not empty and (room.acquisitionUnit.state != "Opérationnel" and room.acquisitionUnit.state != "Dysfonctionnement")%}
                                 <a href="{{ path('set_au_to_operational', {'acquisitionUnit' :room.acquisitionUnit.id}) }}" class="planExperimentation-div-voir-plus">Définir le SA comme opérationnel</a>
@@ -84,10 +84,15 @@
                 {% endfor %}
                 {% endif %}
 
+                {% if app.user.username == 'yacine' %}
+                    <div class='planExperimentation-div-array'>
+                        <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
+                    </div>
+                {% endif %}
 
             </div>
 
-            {% if user == 'admin' %}
+            {% if app.user.username == 'yacine' %}
                 <div class='planExperimentation-div-array'>
                     <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
                 </div>
