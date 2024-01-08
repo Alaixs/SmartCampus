@@ -4,6 +4,7 @@ namespace App\Tests;
 
 use App\Repository\AcquisitionUnitRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 
 class AddSaTest extends WebTestCase
 {
@@ -14,14 +15,17 @@ class AddSaTest extends WebTestCase
     public function testSubmitValidData()
     {
         $newSa = 'SA9999';
+
         $client = static::createClient();
+        $userRepository = $client->getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
+        $client->loginUser($testUser);
 
         $crawler = $client->request('GET', '/addSA');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Ajouter')->form();
 
-        // I complete the form
         $form->setValues(array(
             'add_sa_form[number]' => $newSa,
         ));

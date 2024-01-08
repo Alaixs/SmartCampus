@@ -137,5 +137,6 @@ class AppFixtures extends Fixture
         $technicien->setPassword($hashedPassword);
         $technicien->setRoles(['ROLE_TECHNICIEN']);
         $manager->persist($technicien);
+        $manager->flush();
     }
 }

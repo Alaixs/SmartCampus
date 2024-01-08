@@ -8,6 +8,7 @@ use App\Repository\AcquisitionUnitRepository;
 use App\Entity\AcquisitionUnit;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 
 class UnassignedSaTest extends WebTestCase
 {
@@ -17,6 +18,9 @@ class UnassignedSaTest extends WebTestCase
         $saNumber = 'SA4321';
 
         $client = static::createClient();
+        $userRepository = $client->getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
+        $client->loginUser($testUser);        
 
         $this->addRoomAndSa($client, $roomName, $saNumber);
 

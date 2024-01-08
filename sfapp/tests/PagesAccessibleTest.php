@@ -5,6 +5,7 @@ namespace App\Tests;
 use App\Entity\Room;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 
 class PagesAccessibleTest extends WebTestCase
 {
@@ -14,6 +15,16 @@ class PagesAccessibleTest extends WebTestCase
      */
 
     private string $roomName = '404';
+
+    private function getClientWithLoggedInUser(string $username): \Symfony\Bundle\FrameworkBundle\KernelBrowser
+    {
+        $client = static::createClient();
+        $userRepository = $client->getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(['username' => $username]);
+        $client->loginUser($testUser);
+
+        return $client;
+    }
 
     public function testIndexPageIsAccessible()
     {
@@ -30,7 +41,7 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testAdminPageIsAccessible()
     {
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('yacine');
 
         $client->request('GET', '/admin');
 
@@ -43,7 +54,7 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testAddRoomPageIsAccessible()
     {
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('yacine');
 
         $client->request('GET', '/addRoom');
 
@@ -56,8 +67,7 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testTechnicienPageIsAccessible()
     {
-        $client = static::createClient();
-
+        $client = $this->getClientWithLoggedInUser('technicien');
 
         $client->request('GET', '/technicien');
 
@@ -70,7 +80,7 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testAddSAPageIsAccessible()
     {
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('yacine');
 
         $client->request('GET', '/addSA');
 
@@ -97,8 +107,7 @@ class PagesAccessibleTest extends WebTestCase
     public function testEditRoomPageIsAccessible()
     {
 
-
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('yacine');
 
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
@@ -131,8 +140,8 @@ class PagesAccessibleTest extends WebTestCase
     public function testAssignSAIsAccessible()
     {
 
-        $client = static::createClient();
-
+        $client = $this->getClientWithLoggedInUser('yacine');
+        
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
         $room = $roomRepository->findOneBy(array('name' => $this->roomName));
@@ -146,7 +155,7 @@ class PagesAccessibleTest extends WebTestCase
     public function testUnAssignSAIsAccessible()
     {
 
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('yacine');
 
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
@@ -160,7 +169,7 @@ class PagesAccessibleTest extends WebTestCase
 
     public function testRemoveRoomIsAccessible()
     {
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('yacine');
 
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
@@ -173,7 +182,7 @@ class PagesAccessibleTest extends WebTestCase
 
     public function testLoginIsAccessible()
     {
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('yacine');
 
         $client->request('GET', '/login');
 
