@@ -1,0 +1,139 @@
+p {
+    letter-spacing: 3px;
+}
+
+section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 60%;
+    padding: 0;
+    margin: 0;
+}
+
+.dataVisualisation{
+    width: 75%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.displayPanel {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+}
+
+.pageIndicator {
+    display: flex;
+    flex-direction: row;
+    width: 14vw;
+    justify-content: space-between;
+    padding-bottom: 5vh;
+    margin: 0;
+}
+
+.indicator {
+    list-style: none;
+    width: 2vw;
+    height: .3vh;
+    background-color: #C1C1C1;
+}
+
+.selectedIndicator {
+    background-color: black;
+}
+
+.dataPanel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+    position: relative;
+}
+
+.dataPanel > p:not(.panelTitle) {
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    font-size: 2.5vh;
+    letter-spacing: 1vh;
+}
+
+.tempPanel {
+    background-color: #FFF2D2;
+}
+
+.humPanel {
+    background-color: #D9F6FF;
+}
+
+.co2Panel {
+    background-color: #d6ffc3;
+}
+
+.panelTitle {
+    position: absolute;
+    top: 0;
+    left: 1.3vw;
+    font-size: 2.2vh;
+}
+
+.currentValueData {
+    display: flex;
+    flex-direction: row;
+    height: 7vh;
+    width: 70%;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.8vh;
+}
+
+.currentValueData > p:nth-child(1) {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F4F4F4;
+}
+
+.stateDanger {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scrollArrow {
+    width: 4vh;
+    height: 4vh;
+    margin: 3vh;
+}
+
+.rightArrow {
+    transform: rotate(180deg);
+}
+
+.returnToFloorPage {
+    background-color: #F4F4F4;
+    color: black;
+    height: 5vh;
+    width: 14vw;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0px 0px 2px 0px rgba(0,0,0,0);
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+.returnToFloorPage:hover {
+    box-shadow: inset 0px 0px 2px 0px rgba(0,0,0,0.25);
+}
+
+
