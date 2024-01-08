@@ -210,11 +210,18 @@ body {
     width: 1.2vw;
 }
 
+.filterForm
+{
+    background-color: mediumpurple;
+    padding-left: 5vh;
+}
+
 .greenCircle, .redCircle, .grayCircle{
     max-width: 3vh;
     height: 3vh;
     cursor: help;
 }
+
 
 @media screen and (max-width: 650px) {
     .planExperimentation-div-title {
@@ -223,6 +230,7 @@ body {
         padding: 1vh;
         background-color: white;
     }
+
     .planExperimentation-div-button-add {
         text-align: center;
     }
@@ -280,5 +288,4 @@ body {
     .planExperimentation-div-voir-plus {
         height: 3vh;
     }
-
 }

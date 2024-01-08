@@ -30,7 +30,6 @@ class AdminController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
 
             $rooms = $roomRepository->findBySearch($searchData);
-
             return $this->render('admin/index.html.twig', [
                 'form' => $form->createView(),
                 'user' => $user,

@@ -8,7 +8,6 @@
 </head>
 <body>
     {% include 'partial/header.html.twig'%}
-    {% include "components/search_data.html.twig" with {form: form} only %}
     <section class='planExperimentation'>
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
@@ -89,14 +88,13 @@
                         <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
                     </div>
                 {% endif %}
-
             </div>
+        </div>
+        <div class="filterForm">
+            {% include "components/search_data.html.twig" with {form: form} only %}
         </div>
     </section>
 
     {% include 'partial/footer.html.twig' %}
-
-
-
     </body>
 </html>
