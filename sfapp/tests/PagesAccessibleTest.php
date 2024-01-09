@@ -78,11 +78,11 @@ class PagesAccessibleTest extends WebTestCase
      * La méthode testAddSAPageIsAccessible() verifie si le code de retour de la page addSA est bien 200
      * @return void
      */
-    public function testAddSAPageIsAccessible()
+    public function testAddAcquisitionUnitPageIsAccessible()
     {
         $client = $this->getClientWithLoggedInUser('yacine');
 
-        $client->request('GET', '/addSA');
+        $client->request('GET', '/addAcquisitionUnit');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
@@ -137,7 +137,7 @@ class PagesAccessibleTest extends WebTestCase
      * La méthode testAssignSA() verifie si le code de retour de la page assignSA est bien 200
      * @return void
      */
-    public function testAssignSAIsAccessible()
+    public function testAssignAcquisitionUnitIsAccessible()
     {
 
         $client = $this->getClientWithLoggedInUser('yacine');
@@ -146,7 +146,7 @@ class PagesAccessibleTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $this->roomName));
 
-        $client->request('GET', '/assignSA/' . $room->getId());
+        $client->request('GET', '/assignAcquisitionUnit/' . $room->getId());
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -161,7 +161,7 @@ class PagesAccessibleTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $this->roomName));
 
-        $client->request('GET', '/unAssignSA/'. $room->getId());
+        $client->request('GET', '/unassignAcquisitionUnit/'. $room->getId());
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
 

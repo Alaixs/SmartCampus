@@ -73,7 +73,7 @@
                         {% endif %}
 
                         {% if app.user.username == 'yacine'%}
-                            <a href="{{ path('detailRoom', {'room' : room.id}) }}" class="planExperimentation-div-voir-plus">Voir plus</a>
+                            <a href="{{ path('roomDetail', {'room' : room.id}) }}" class="planExperimentation-div-voir-plus">Voir plus</a>
                         {% else %}
                             {% if room.acquisitionUnit is not empty and (room.acquisitionUnit.state != "Opérationnel" and room.acquisitionUnit.state != "Dysfonctionnement")%}
                                 <a href="{{ path('set_au_to_operational', {'acquisitionUnit' :room.acquisitionUnit.id}) }}" class="planExperimentation-div-voir-plus">Définir le SA comme opérationnel</a>

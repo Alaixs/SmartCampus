@@ -2,8 +2,6 @@
 
 namespace App\Tests;
 
-use App\Domain\AcquisitionUnitState;
-use App\Entity\AcquisitionUnit;
 use App\Repository\AcquisitionUnitRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Repository\UserRepository;
@@ -23,30 +21,30 @@ class AddAcquisitionUnitTest extends WebTestCase
         $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
         $client->loginUser($testUser);
 
-        $crawler = $client->request('GET', '/addSA');
+        $crawler = $client->request('GET', '/addAcquisitionUnit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Ajouter')->form();
 
         $form->setValues(array(
-            'add_sa_form[number]' => $newAcquisitionUnit,
+            'add_sa_form[number]' => $newSa,
         ));
 
         $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertStringContainsString($newAcquisitionUnit, $client->getResponse()->getContent(), 'ca marche?');
+        $this->assertStringContainsString($newSa, $client->getResponse()->getContent(), 'ca marche?');
 
 
-        $this->deleteSa($client, $newAcquisitionUnit);
+        $this->deleteSa($client, $newSa);
     }
 
-    private function deleteSa($client, $acquisitionUnitName) : void
+    private function deleteSa($client, $saName) : void
     {
         $acquisitionUnitRepository = $client->getContainer()->get(AcquisitionUnitRepository::class);
-        $acquisitionUnit = $acquisitionUnitRepository->findOneBy(array('number' => $acquisitionUnitName));
-        if ($acquisitionUnit) {
+        $sa = $acquisitionUnitRepository->findOneBy(array('number' => $saName));
+        if ($sa) {
             $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
-            $entityManager->remove($acquisitionUnit);
+            $entityManager->remove($sa);
             $entityManager->flush();
         }
     }
@@ -54,11 +52,11 @@ class AddAcquisitionUnitTest extends WebTestCase
     {
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $newAcquisitionUnit = new AcquisitionUnit();
-        $newAcquisitionUnit->setName($saNumber);
-        $newAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+        $newSa = new AcquisitionUnit();
+        $newSa->setNumber($saNumber);
+        $newSa->setState(StateSA::ATTENTE_AFFECTATION->value);
 
-        $entityManager->persist($newAcquisitionUnit);
+        $entityManager->persist($newSa);
         $entityManager->flush();
     }
 
