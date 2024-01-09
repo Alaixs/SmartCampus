@@ -27,7 +27,7 @@ class AddAcquisitionUnitTest extends WebTestCase
         $form = $crawler->selectButton('Ajouter')->form();
 
         $form->setValues(array(
-            'add_sa_form[number]' => $newSa,
+            'add_acquisition_unit_form[name]' => $newSa,
         ));
 
         $client->submit($form);
@@ -41,24 +41,12 @@ class AddAcquisitionUnitTest extends WebTestCase
     private function deleteSa($client, $saName) : void
     {
         $acquisitionUnitRepository = $client->getContainer()->get(AcquisitionUnitRepository::class);
-        $sa = $acquisitionUnitRepository->findOneBy(array('number' => $saName));
+        $sa = $acquisitionUnitRepository->findOneBy(array('name' => $saName));
         if ($sa) {
             $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
             $entityManager->remove($sa);
             $entityManager->flush();
         }
     }
-    private function createSa($client, $saNumber) : void
-    {
-        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
-
-        $newSa = new AcquisitionUnit();
-        $newSa->setNumber($saNumber);
-        $newSa->setState(StateSA::ATTENTE_AFFECTATION->value);
-
-        $entityManager->persist($newSa);
-        $entityManager->flush();
-    }
-
 
 }

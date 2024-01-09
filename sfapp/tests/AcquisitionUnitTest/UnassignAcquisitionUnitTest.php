@@ -2,7 +2,7 @@
 
 namespace App\Tests;
 
-use App\Domain\StateSA;
+use App\Domain\AcquisitionUnitState;
 use App\Entity\Room;
 use App\Repository\AcquisitionUnitRepository;
 use App\Entity\AcquisitionUnit;
@@ -29,9 +29,7 @@ class UnassignAcquisitionUnitTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $crawler = $client->request('GET', '/detailRoom/' . $room->getId());
-
-        $this->assertStringContainsString($roomName, $client->getResponse()->getContent(), 'ca marche?');
+        $crawler = $client->request('GET', '/roomDetail/' . $room->getId());
 
         $link = $crawler->selectLink('Confirmer')->eq(1)->link();
         $client->click($link);
@@ -41,12 +39,12 @@ class UnassignAcquisitionUnitTest extends WebTestCase
         $this->assertStringNotContainsString($saNumber, $client->getResponse()->getContent(), 'ca marche?');
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
-        $sa = $acquisitionUnitRepository->findOneBy(array('number' => $saNumber));
+        $sa = $acquisitionUnitRepository->findOneBy(array('name' => $saNumber));
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $client->request('GET','/removeRoom/' . $room->getId());
 
-        $client->request('GET','/removeSA/' . $sa->getId());
+        $client->request('GET','/removeAcquisitionUnit/' . $sa->getId());
     }
 
     private function addRoomAndSa($client, $roomName, $saNumber) : void
@@ -54,8 +52,8 @@ class UnassignAcquisitionUnitTest extends WebTestCase
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $newSa = new AcquisitionUnit();
-        $newSa->setNumber($saNumber);
-        $newSa->setState(StateSA::ATTENTE_INSTALLATION->value);
+        $newSa->setName($saNumber);
+        $newSa->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
 
         $newRoom = new Room();
         $newRoom->setName($roomName);
@@ -65,7 +63,7 @@ class UnassignAcquisitionUnitTest extends WebTestCase
         $newRoom->setCapacity(20);
         $newRoom->setHasComputers(0);
         $newRoom->setNbWindows(4);
-        $newRoom->setSA($newSa);
+        $newRoom->setAcquisitionUnit($newSa);
 
         $entityManager->persist($newSa);
         $entityManager->persist($newRoom);

@@ -40,7 +40,7 @@ class RemoveRoomTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $crawler = $client->request('GET', '/detailRoom/' . $room->getId());
+        $crawler = $client->request('GET', '/roomDetail/' . $room->getId());
 
         $this->assertStringContainsString($roomName, $client->getResponse()->getContent(), 'ca marche?');
 

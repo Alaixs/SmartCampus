@@ -33,7 +33,7 @@ class EditRoomTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $crawler = $this->client->clickLink('Modifier la salle');
@@ -63,7 +63,7 @@ class EditRoomTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $crawler = $this->client->clickLink('Modifier la salle');
@@ -76,7 +76,7 @@ class EditRoomTest extends WebTestCase
         $this->client->submit($form);
         $this->assertEquals(422, $this->client->getResponse()->getStatusCode());
 
-        $this->client->request('GET','/detailRoom/' . $room->getId());
+        $this->client->request('GET','/roomDetail/' . $room->getId());
         $this->assertStringNotContainsString($newRoomName, $this->client->getResponse()->getContent(), 'ca marche?');
 
 
@@ -93,7 +93,7 @@ class EditRoomTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $crawler = $this->client->clickLink('Modifier la salle');
@@ -121,7 +121,7 @@ class EditRoomTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $crawler = $this->client->clickLink('Modifier la salle');
@@ -150,7 +150,7 @@ class EditRoomTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $crawler = $this->client->clickLink('Modifier la salle');
@@ -162,7 +162,7 @@ class EditRoomTest extends WebTestCase
 
         $this->client->submit($form);
         $this->assertEquals(422, $this->client->getResponse()->getStatusCode());
-        $this->client->request('GET','/detailRoom/' . $room->getId());
+        $this->client->request('GET','/roomDetail/' . $room->getId());
         $this->assertStringNotContainsString('1er', $this->client->getResponse()->getContent(), 'ca marche?');
 
         $this->deleteRoom($roomName);
@@ -178,7 +178,7 @@ class EditRoomTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $crawler = $this->client->clickLink('Modifier la salle');
@@ -207,7 +207,7 @@ class EditRoomTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $this->client->request('GET', '/detailRoom/' . $room->getId());
+        $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $crawler = $this->client->clickLink('Modifier la salle');
@@ -219,7 +219,7 @@ class EditRoomTest extends WebTestCase
 
         $this->client->submit($form);
         $this->assertEquals(422, $this->client->getResponse()->getStatusCode());
-        $this->client->request('GET','/detailRoom/' . $room->getId());
+        $this->client->request('GET','/roomDetail/' . $room->getId());
         $this->assertStringNotContainsString('1er', $this->client->getResponse()->getContent(), 'ca marche?');
 
         $this->deleteRoom($roomName);

@@ -2,7 +2,7 @@
 
 namespace App\Tests;
 
-use App\Domain\StateSA;
+use App\Domain\AcquisitionUnitState;
 use App\Entity\Room;
 use App\Repository\AcquisitionUnitRepository;
 use App\Entity\AcquisitionUnit;
@@ -33,22 +33,22 @@ class AssignAcquisitionUnitTest extends WebTestCase
         $acquisitionUnitRepository = $client->getContainer()->get(AcquisitionUnitRepository::class);
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
-        $sa = $acquisitionUnitRepository->findOneBy(array('number' => $saNumber));
+        $sa = $acquisitionUnitRepository->findOneBy(array('name' => $saNumber));
 
-        $crawler = $client->request('GET', '/detailRoom/' . $room->getId());
+        $crawler = $client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $client->request('GET', '/detailRoom/' . $room->getId());
+        $client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $crawler = $client->clickLink('Affecter un S.A');
+        $crawler = $client->clickLink('Affecter un SA');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
 
         $form = $crawler->selectButton('Affecter')->form();
-
+        
         //     I complete the form
-        $form->setValues(array('assign_sa_form[SA]' => $sa->getId()));
+        $form->setValues(array('assign_acquisition_unit_form[acquisitionUnit]' => $sa->getId()));
 
         $client->submit($form);
         $client->followRedirect();
@@ -66,8 +66,8 @@ class AssignAcquisitionUnitTest extends WebTestCase
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $newSa = new AcquisitionUnit();
-        $newSa->setNumber($saNumber);
-        $newSa->setState(StateSA::ATTENTE_AFFECTATION->value);
+        $newSa->setName($saNumber);
+        $newSa->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
 
         $entityManager->persist($newSa);
         $entityManager->flush();
@@ -103,7 +103,7 @@ class AssignAcquisitionUnitTest extends WebTestCase
     private function deleteSa($client, $saName) : void
     {
         $acquisitionUnitRepository = $client->getContainer()->get(AcquisitionUnitRepository::class);
-        $sa = $acquisitionUnitRepository->findOneBy(array('number' => $saName));
+        $sa = $acquisitionUnitRepository->findOneBy(array('name' => $saName));
         if ($sa) {
             $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
             $entityManager->remove($sa);
