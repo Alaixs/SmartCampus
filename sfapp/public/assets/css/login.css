@@ -114,4 +114,14 @@ form {
     border: none;
     font-family: 'Roboto-Regular';
     letter-spacing: 2px;
+    cursor: pointer;
+}
+
+.error-message {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 1vh;
+    color: #dc6d6d;
+    font-size: 1.7vh;
 }

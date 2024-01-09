@@ -84,12 +84,6 @@
                 {% endfor %}
                 {% endif %}
 
-                {% if app.user.username == 'yacine' %}
-                    <div class='planExperimentation-div-array'>
-                        <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
-                    </div>
-                {% endif %}
-
             </div>
 
             {% if app.user.username == 'yacine' %}
