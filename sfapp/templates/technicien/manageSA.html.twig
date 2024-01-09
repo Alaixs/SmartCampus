@@ -12,7 +12,7 @@
             <section>
                 <div class="dataTest">
                     <div class="title">
-                        <a href="{{ path('app_tech') }}">
+                        <a href="{{ path('app_admin') }}">
                             <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
                         </a>
                         <p>Panneau de gestion du {{ room.acquisitionUnit }}</p>
@@ -151,11 +151,11 @@
                             {% endif %}
 
                             <div class="testAndValidateButtons">
-                                <a href="{{ path('manage_acquisitionUnit', {'acquisitionUnit' : room.acquisitionUnit}) }}" class="testDataButton">
+                                <a href="{{ path('manageAcquisitionUnit', {'acquisitionUnit' : room.acquisitionUnit.id}) }}" class="testDataButton">
                                     Tester la remontée des données
                                 </a>
                                 <div class="setSAToOp">
-                                    <a href="{{ path('set_au_to_operational', {'acquisitionUnit' : room.acquisitionUnit.id}) }}" class="setSAToOpButton">
+                                    <a href="{{ path('app_admin', {'acquisitionUnit' : room.acquisitionUnit.id}) }}" class="setSAToOpButton">
                                         Rendre le SA opérationnel
                                     </a>
                                 </div>

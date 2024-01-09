@@ -30,19 +30,8 @@ class TechnicienController extends AbstractController
         ]);
     }
 
-    #[Route('/manageSA/{acquisitionUnit}', name: 'manage_acquisitionUnit')]
-    public function manageSA(AcquisitionUnit $AU, Room $room, GetDataInteface $getDataJson): Response
-    {
-
-        return $this->render('technicien/manageSA.html.twig', [
-            'room' => $room,
-
-        ]);
-    }
-
-
-    #[Route('/setAcquisitionUnitOperational/{acquisitionUnit}', name: 'set_au_to_operational')]
-    public function setAcquisitionUnitOperational(Room $room, GetDataInteface $getDataJson, AcquisitionUnit $acquisitionUnit, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/manageAcquisitionUnit/{acquisitionUnit}', name: 'manageAcquisitionUnit')]
+    public function manageAcquisitionUnit(Room $room, GetDataInteface $getDataJson, AcquisitionUnit $acquisitionUnit): Response
     {
 
         $temp = $getDataJson->getLastValueByType($room->getName(), 'temp');
@@ -50,8 +39,6 @@ class TechnicienController extends AbstractController
         $co2 = $getDataJson->getLastValueByType($room->getName(), 'co2');
 
 
-        $acquisitionUnit->setState(AcquisitionUnitState::OPERATIONNEL->value);
-        $entityManager->flush();
         return $this->render('technicien/manageSA.html.twig', [
             'room' => $room,
             'temp' => $temp,
