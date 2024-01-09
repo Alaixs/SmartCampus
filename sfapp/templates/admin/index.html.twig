@@ -22,12 +22,23 @@
                 {% endif %}
 
             </div>
-            {% if listRooms is empty %}
-            <div class="noRoom">
+            {% if allRooms is empty %}
 
-                    <p class="noRoomText"> Aucune salle a été ajouté pour le moment. Commencez par en ajouter une. </p>
+                {% if not formSubmitted %}
+                <div class="noRoom">
+                    <p class="noRoomText">Aucune salle n'a été ajoutée pour le moment. Commencez par en ajouter une.</p>
+                </div>
 
-            </div>
+                {% elseif formSubmitted and filtersApplied %}
+                <div class="noRoom">
+                    <p class="noRoomText">Aucune salle ne correspond à vos critères</p>
+                </div>
+
+                {% elseif formSubmitted and not filtersApplied %}
+                    <div class="noRoom">
+                        <p class="noRoomText">Aucune salle n'a été ajoutée pour le moment. Commencez par en ajouter une.</p>
+                    </div>
+                {% endif %}
 
             {% else %}
 
@@ -37,7 +48,7 @@
             </div>
 
             <div class="planExperimentation-div-allRoom">
-                {% for room in listRooms %}
+                {% for room in allRooms %}
 
                     <div class='planExperimentation-div-array'>
                         <div class="planExperimentation-div-div planExperimentation-div-roomName">
@@ -90,7 +101,7 @@
                 {% endif %}
             </div>
         </div>
-        <div class="filterForm">
+        <div class="filters">
             {% include "components/search_data.html.twig" with {form: form} only %}
         </div>
     </section>

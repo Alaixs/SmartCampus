@@ -19,6 +19,8 @@ class TechnicienController extends AbstractController
     public function technicien(RoomRepository $roomRepository, Request $request): Response
     {
         $rooms = $roomRepository->findAll();
+        $formSubmitted = false;
+        $filtersApplied = false;
 
         $user = 'technicien';
 
@@ -26,22 +28,32 @@ class TechnicienController extends AbstractController
         $searchData = new SearchData();
         $form = $this->createForm(SearchFormType::class, $searchData);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if($form->isSubmitted() && $form->isValid())
+        {
             $rooms = $roomRepository->findBySearch($searchData);
-
+            $formSubmitted = true;
+            $rooms = $roomRepository->findBySearch($searchData);
+            if(!empty($searchData->getQ()) or !empty($searchData->getFloors()) or !empty($searchData->getAcquisitionUnitState()))
+            {
+                $filtersApplied = true;
+            }
             return $this->render('admin/index.html.twig', [
                 'form' => $form->createView(),
                 'user' => $user,
-                'listRooms' => $rooms,
+                'allRooms' => $rooms,
+                'formSubmitted' => $formSubmitted,
+                'filtersApplied' => $filtersApplied,
             ]);
         }
 
 
-        
+
         return $this->render('admin/index.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
-            'listRooms' => $rooms,
+            'allRooms' => $rooms,
+            'formSubmitted' => $formSubmitted,
+            'filtersApplied' => $filtersApplied,
         ]);
     }
 

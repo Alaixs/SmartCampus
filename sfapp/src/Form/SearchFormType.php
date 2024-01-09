@@ -1,8 +1,6 @@
 <?php
 namespace App\Form;
 
-
-use App\Entity\Room;
 use App\Model\SearchData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,9 +27,9 @@ class SearchFormType extends  AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ])
-            ->add('aquisitionUnitState', ChoiceType::class, [
-                'label' => 'État du système d\'aquisition',
-                'choices' => $this->getAquisitionUnitStateChoices(),
+            ->add('acquisitionUnitState', ChoiceType::class, [
+                'label' => 'État du système d\'acquisition',
+                'choices' => $this->getAcquisitionUnitStateChoices(),
                 'multiple' => true,
                 'expanded' => true,
             ])
@@ -50,16 +48,15 @@ class SearchFormType extends  AbstractType
         return $floors;
     }
 
-    private function getAquisitionUnitStateChoices(): array
+    private function getAcquisitionUnitStateChoices(): array
     {
         $state = [
             'En attente d\'affectation' => 'En attente d\'affectation',
-            'Opérationnel' => 'Opérationnel',
             'En attente d\'installation' => 'En attente d\'installation',
             'Dysfonctionnement' => 'Dysfonctionnement',
             'En panne' => 'En panne',
+            'Opérationnel' => 'Opérationnel',
         ];
-
         return $state;
     }
 

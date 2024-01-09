@@ -64,13 +64,13 @@ class RoomRepository extends ServiceEntityRepository
                 ->setParameter('floors', $searchData->floors);
         }
 
-        if (!empty($searchData->aquisitionUnitState)) {
+        if (!empty($searchData->acquisitionUnitState)) {
             $queryBuilder
                 ->leftJoin('r.SA', 's')
-                ->andWhere('s.state IN (:aquisitionUnitState)')
-                ->setParameter('aquisitionUnitState', $searchData->aquisitionUnitState);
+                ->andWhere('s.state IN (:acquisitionUnitState)')
+                ->setParameter('acquisitionUnitState', $searchData->acquisitionUnitState);
 
-            if (in_array('En attente d\'affectation', $searchData->aquisitionUnitState)) {
+            if (in_array('En attente d\'affectation', $searchData->acquisitionUnitState)) {
                 $queryBuilder->orwhere('r.SA IS NULL');
             }
         }
