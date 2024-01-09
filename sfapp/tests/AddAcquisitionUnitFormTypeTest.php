@@ -3,10 +3,10 @@
 namespace App\Tests;
 
 use App\Entity\AcquisitionUnit;
-use App\Form\AddSaFormType;
+use App\Form\AddAcquisitionUnitFormType;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class AddSaFormTypeTest extends WebTestCase
+class AddAcquisitionUnitFormTypeTest extends WebTestCase
 {
     public function testSubmitValidData()
     {
@@ -14,10 +14,10 @@ class AddSaFormTypeTest extends WebTestCase
 
         $acquisitionUnit = new AcquisitionUnit();
 
-        $form = $client->getContainer()->get('form.factory')->create(AddSaFormType::class, $acquisitionUnit);
+        $form = $client->getContainer()->get('form.factory')->create(AddAcquisitionUnitFormType::class, $acquisitionUnit);
 
         $formData = [
-            'number' => '9831',
+            'name' => 'ESP-003',
         ];
 
         $form->submit($formData);
@@ -25,9 +25,6 @@ class AddSaFormTypeTest extends WebTestCase
         $this->assertTrue($form->isValid());
 
         $this->assertEquals($acquisitionUnit, $form->getData());
-
-        dump($acquisitionUnit, $form->getData());
-
     }
 
 }

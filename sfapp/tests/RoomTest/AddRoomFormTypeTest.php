@@ -9,37 +9,34 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class AddRoomFormTypeTest extends WebTestCase
 {
     /**
-     * La méthode testSubmitValidData() verifie si le form est valide avec des données correct
+     * La méthode testSubmitValidData() vérifie si le form est valide avec des données correctes
      * @return void
      */
     public function testSubmitValidData()
     {
         $client = static::createClient();
-    
+
         $room = new Room();
-    
+
         $form = $client->getContainer()->get('form.factory')->create(AddRoomFormType::class, $room);
-    
+
         $formData = [
-            'name' => 'D301',
+            'name' => 'D500',
             'floor' => 3,
             'capacity' => 40,
-            'hasComputers' => 0,    
+            'hasComputers' => 0,
             'area' => 50,
-            'exposure' => 'north',
+            'exposure' => 'Nord',
             'nbWindows' => 4
         ];
-    
+
         $form->submit($formData);
 
         $this->assertTrue($form->isValid());
-    
-       // dump($form->getErrors(true, false));
-
     }
 
     /**
-     * La méthode testSubmitNegativeCapacity() verifie si le form est invalide avec la valeur de la capacité d'une salle en negative
+     * La méthode testSubmitNegativeCapacity() vérifie si le form est invalide avec la valeur de la capacité d'une salle en negative
      * @return void
      */
     public function testSubmitNegativeCapacity()
@@ -56,21 +53,20 @@ class AddRoomFormTypeTest extends WebTestCase
             'capacity' => -4,
             'hasComputers' => 0,
             'area' => 50,
-            'exposure' => 'north',
+            'exposure' => 'Nord',
             'nbWindows' => 4
         ];
 
         $form->submit($formData);
 
         $this->assertFalse($form->isValid());
-        // dump($form->getErrors(true, false));
     }
 
     /**
-     * La méthode testSubmitNegativeAeraSize() verifie si le form est invalide avec la valeur de la taille d'une salle en negative
+     * La méthode testSubmitNegativeAreaSize() vérifie si le form est invalide avec la valeur de la taille d'une salle en negative
      * @return void
      */
-    public function testSubmitNegativeAeraSize()
+    public function testSubmitNegativeAreaSize()
     {
         $client = static::createClient();
 
@@ -84,7 +80,7 @@ class AddRoomFormTypeTest extends WebTestCase
             'capacity' => 40,
             'hasComputers' => 0,
             'area' => -4,
-            'exposure' => 'north',
+            'exposure' => 'Nord',
             'nbWindows' => 4
         ];
 
@@ -94,10 +90,10 @@ class AddRoomFormTypeTest extends WebTestCase
     }
 
     /**
-     * La méthode testSubmitNullAeraSize() verifie si le form est invalide avec la valeur de la taille d'une salle en nulle
+     * La méthode testSubmitNullAreaSize() vérifie si le form est invalide avec la valeur de la taille d'une salle en nulle
      * @return void
      */
-    public function testSubmitNullAeraSize()
+    public function testSubmitNullAreaSize()
     {
         $client = static::createClient();
 
@@ -111,7 +107,7 @@ class AddRoomFormTypeTest extends WebTestCase
             'capacity' => 40,
             'hasComputers' => 0,
             'area' => 0 ,
-            'exposure' => 'north',
+            'exposure' => 'Nord',
             'nbWindows' => 4
         ];
 
@@ -121,7 +117,7 @@ class AddRoomFormTypeTest extends WebTestCase
     }
 
     /**
-     * La méthode testSubmitNegativeNumberOfWindows() verifie si le form est invalide avec la valeur du nombre de fenetre en negative
+     * La méthode testSubmitNegativeNumberOfWindows() vérifie si le form est invalide avec la valeur du nombre de fenêtres en negative
      * @return void
      */
     public function testSubmitNegativeNumberOfWindows()
@@ -138,7 +134,7 @@ class AddRoomFormTypeTest extends WebTestCase
             'capacity' => 40,
             'hasComputers' => 0,
             'area' => 40 ,
-            'exposure' => 'north',
+            'exposure' => 'Nord',
             'nbWindows' => -4
         ];
 

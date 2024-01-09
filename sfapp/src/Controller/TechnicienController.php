@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Domain\GetDataInteface;
 use App\Domain\StateSA;
+use App\Domain\AcquisitionUnitState;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Form\RemoveSAFormType;
@@ -26,10 +27,11 @@ class TechnicienController extends AbstractController
         $user = 'technicien';
         return $this->render('admin/index.html.twig', [
             'user' => $user,
-            'listRooms' => $rooms,
+            'roomList' => $rooms,
         ]);
     }
 
+<<<<<<< sfapp/src/Controller/TechnicienController.php
     #[Route('/manageSA/{SA}', name: 'manage_sa')]
     public function manageSA(Room $room, GetDataInteface $getDataJson): Response
     {
@@ -68,6 +70,14 @@ class TechnicienController extends AbstractController
         $temp = $getDataJson->getLastValueByType($room->getName(), 'temp');
         $humidity = $getDataJson->getLastValueByType($room->getName(), 'humidity');
         $co2 = $getDataJson->getLastValueByType($room->getName(), 'co2');
+=======
+    #[Route('/setAcquisitionUnitOperational/{acquisitionUnit}', name: 'set_au_to_operational')]
+    public function setAcquisitionUnitOperational(AcquisitionUnit $acquisitionUnit, Request $request, EntityManagerInterface $entityManager): Response
+    {
+
+        $acquisitionUnit->setState(AcquisitionUnitState::OPERATIONNEL->value);
+        $entityManager->flush();
+>>>>>>> sfapp/src/Controller/TechnicienController.php
 
         return $this->render('technicien/manageSA.html.twig', [
             'room' => $room,

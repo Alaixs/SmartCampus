@@ -13,7 +13,7 @@
         <section>
             <div class="form">
                 <div class="title">
-                <a href="{{ path('detailRoom', {'room': room.id}) }}">
+                <a href="{{ path('roomDetail', {'room': room.id}) }}">
                         <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
                     </a>
                     <p>
@@ -23,7 +23,7 @@
 
                 <div class="formInputs">
                     {{ form_start(addRoomForm) }}
-                    <div class="formRest">
+                    <div class="restOfForm">
                         {{ form_rest(addRoomForm) }}
                     </div>
                     <div class="formFooter">

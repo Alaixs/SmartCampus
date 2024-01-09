@@ -16,15 +16,14 @@ class AdminController extends AbstractController
     #[Route('/admin', name: 'app_admin')]
     public function admin(RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository): Response
     {
-        $rooms = $roomRepository->findAll();
-        $sas = $acquisitionUnitRepository->findAll();
-
+        $roomList = $roomRepository->findAll();
+        $acquisitionUnitList = $acquisitionUnitRepository->findAll();
         $user = 'admin';
 
         return $this->render('admin/index.html.twig', [
             'user' => $user,
-            'listRooms' => $rooms,
-            'listSA' => $sas,
+            'roomList' => $roomList,
+            'acquisitionUnitList' => $acquisitionUnitList,
         ]);
     }
 }

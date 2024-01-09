@@ -6,5 +6,5 @@ controllers:
 
 detail_room:
     path: '/detailRoom/{name}'
-    controller: 'App\Controller\YourControllerName::yourActionMethodName'
+    controller: 'App\Controller\RoomController::detailRoom'
 
