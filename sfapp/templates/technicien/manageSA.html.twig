@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>SmartCampus</title>
+        <link rel="stylesheet" href="{{ asset('assets/css/manageSA.css') }}">
+        <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
+        {% include 'partial/header.html.twig'%}
+
+            <section>
+                <div class="dataTest">
+                    <div class="title">
+                        <a href="{{ path('app_tech') }}">
+                            <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
+                        </a>
+                        <p>Panneau de gestion du {{ room.sa }}</p>
+                    </div>
+                    <div class="dataInformations">
+                        <div class="dataArray">
+                            <div class="arrayTitles">
+                                <div class="receiver">
+                                    <p>Capteurs</p>
+                                </div>
+                                <div class="dataFeedbackState">
+                                    <p>Etat de la remontée de données</p>
+                                </div>
+                                <div class="dataValues">
+                                    <p>Données remontées</p>
+                                </div>
+                            </div>
+
+                            <div class="arrayLines">
+                                <div class="tempLine line">
+                                    <div>
+                                        <p>Température</p>
+                                    </div>
+                                    {% if (temp[0] < 0) %}
+                                        <div>
+                                            <p>Données non reçues</p>
+                                        </div>
+                                        <div>
+                                            <p> - </p>
+                                        </div>
+                                    {% else %}
+                                        <div>
+                                            <p>Données reçues</p>
+                                        </div>
+                                        <div>
+                                            <p class="tempVisu">{{ temp[0] ~ " °C"}}</p>
+                                            <style>
+                                                {% if (temp[0] > 50) %}
+                                                    .tempVisu {
+                                                        color: #dc6d6d;
+                                                    }
+                                                {% else %}
+                                                    .tempVisu {
+                                                        color: #58e342;
+                                                    }
+                                                {% endif %}
+                                            </style>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="humLine line">
+                                    <div>
+                                        <p>Humidité </p>
+                                    </div>
+                                    {% if (humidity[0] < 0) %}
+                                        <div>
+                                            <p>Données non reçues</p>
+                                        </div>
+                                        <div>
+                                            <p> - </p>
+                                        </div>
+                                    {% else %}
+                                        <div>
+                                            <p>Données reçues</p>
+                                        </div>
+                                        <div>
+                                            <p class="humVisu">{{ humidity[0] ~ " %"}}</p>
+                                            <style>
+                                                {% if (humidity[0] >= 100) %}
+                                                    .humVisu {
+                                                        color: #dc6d6d;
+                                                    }
+                                                {% else %}
+                                                    .humVisu {
+                                                        color: #58e342;
+                                                    }
+                                                {% endif %}
+                                            </style>
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+                                <div class="co2Line line">
+                                    <div>
+                                        <p>Dioxyde de Carbone (CO2)</p>
+                                    </div>
+                                    {% if (co2[0] < 0) %}
+                                        <div>
+                                            <p>Données non reçues</p>
+                                        </div>
+                                        <div>
+                                            <p> - </p>
+                                        </div>
+                                    {% else %}
+                                        <div>
+                                            <p>Données reçues</p>
+                                        </div>
+                                        <div>
+                                            <p class="co2Visu">{{ co2[0] ~ " ppm"}}</p>
+
+                                            <style>
+                                                {% if (co2[0] > 1800)%}
+                                                    .co2Visu {
+                                                        color: #dc6d6d;
+                                                    }
+                                                {% else %}
+                                                    .co2Visu {
+                                                        color: #58e342;
+                                                    }
+                                                {% endif %}
+                                            </style>
+
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+
+                            {% if (temp[0] < 0 or humidity[0] < 0 or co2[0] < 0) %}
+                                <div class="errorMsg">
+                                    <p>Un ou plusieurs problèmes sont survenus.
+                                        </br>
+                                        Le capteur ne peut pas être défini comme opérationnel. Réglez le(s) problème(s) et retestez la remontée des données.
+                                    </p>
+                                </div>
+                            {% endif %}
+
+                            {% if (temp[0] > 50 or humidity[0] >= 100 or co2[0] > 1800) %}
+
+                                <div class="errorMsg">
+                                    <p>
+                                        Une ou plusieurs valeurs sont incohérentes (voir valeurs rouges).
+                                    </p>
+                                </div>
+
+                            {% endif %}
+
+                            <div class="testAndValidateButtons">
+                                <a href="{{ path('manage_sa', {'SA' : room.sa.id}) }}" class="testDataButton">
+                                    Tester la remontée des données
+                                </a>
+                                <div class="setSAToOp">
+                                    <a href="{{ path('set_sa_to_op', {'room' : room.id}) }}" class="setSAToOpButton">
+                                        Rendre le SA opérationnel
+                                    </a>
+                                </div>
+
+                                <style>
+                                    {% if (temp[0] < 0 or humidity[0] < 0 or co2[0] < 0 or temp[0] > 50 or humidity[0] >= 100 or co2[0] > 1800) %}
+                                        .setSAToOpButton {
+                                            background-color: #d5d5d5;
+                                            color: gray;
+                                            pointer-events: none;
+                                        }
+
+                                        .setSAToOp {
+                                            cursor: not-allowed;
+                                        }
+
+                                    {% else %}
+                                        .setSAToOpButton {
+                                            background-color: #A2E0EE;
+                                            color: black;
+                                        }
+                                        .setSAToOpButton:hover {
+                                            background-color: #b9ebf6;
+                                        }
+                                    {% endif %}
+                                </style>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="roomInfo">
+                    <div class="form">
+                        <div class="title">
+                            <p>Informations de la salle {{ room.name }}</p>
+                        </div>
+                        <div class="listInfoRoom">
+                            <ol>
+                                <li>
+                                    Étage : {{
+                                    room.floor == 0 ? 'Rez-de-chaussée'
+                                    : room.floor == 1 ? '1er'
+                                    : room.floor ~ 'ème'
+                                    }}
+                                </li>
+                                <li>Capacité : {{ room.capacity }} personnes</li>
+                                {% if (room.hasComputers) %}
+                                    <li>Ordinateur : oui</li>
+                                {% else %}
+                                    <li>Ordinateur : non</li>
+                                {% endif %}
+                                <li>Surface : {{ room.area }} mètres carrés</li>
+                                <li>Exposition : {{ room.exposure }}</li>
+                                <li>Nombre de fenêtres : {{ room.nbWindows }}</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        {% include 'partial/footer.html.twig'%}
+
+    </body>
+</html>
