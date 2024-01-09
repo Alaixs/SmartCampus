@@ -5,7 +5,7 @@ namespace App\Tests;
 use App\Entity\AcquisitionUnit;
 use App\Repository\AcquisitionUnitRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use App\Domain\StateSA;
+use App\Domain\AcquisitionUnitState;
 
 class SetAcquisitionUnitStatusToOperationalTest extends WebTestCase
 {
@@ -18,7 +18,7 @@ class SetAcquisitionUnitStatusToOperationalTest extends WebTestCase
 
         $newSA = new AcquisitionUnit();
         $newSA->setNumber($SANumber);
-        $newSA->setState(StateSA::ATTENTE_AFFECTATION->value);
+        $newSA->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
 
         $entityManager->persist($newSA);
         $entityManager->flush();

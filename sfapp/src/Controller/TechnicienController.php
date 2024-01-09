@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Domain\GetDataInteface;
-use App\Domain\StateSA;
+use App\Domain\AcquisitionUnitState;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Form\RemoveSAFormType;
@@ -30,37 +30,37 @@ class TechnicienController extends AbstractController
         ]);
     }
 
-    #[Route('/manageSA/{SA}', name: 'manage_sa')]
-    public function manageSA(Room $room, GetDataInteface $getDataJson): Response
+    #[Route('/manageSA/{acquisitionUnit}', name: 'manage_acquisitionUnit')]
+    public function manageSA(AcquisitionUnit $AU, Room $room, GetDataInteface $getDataJson): Response
     {
+
+        return $this->render('technicien/manageSA.html.twig', [
+            'room' => $room,
+
+        ]);
+    }
+
+
+    #[Route('/setAcquisitionUnitOperational/{acquisitionUnit}', name: 'set_au_to_operational')]
+    public function setAcquisitionUnitOperational(Room $room, GetDataInteface $getDataJson, AcquisitionUnit $acquisitionUnit, Request $request, EntityManagerInterface $entityManager): Response
+    {
+
         $temp = $getDataJson->getLastValueByType($room->getName(), 'temp');
         $humidity = $getDataJson->getLastValueByType($room->getName(), 'humidity');
         $co2 = $getDataJson->getLastValueByType($room->getName(), 'co2');
 
+
+        $acquisitionUnit->setState(AcquisitionUnitState::OPERATIONNEL->value);
+        $entityManager->flush();
         return $this->render('technicien/manageSA.html.twig', [
             'room' => $room,
             'temp' => $temp,
             'humidity' => $humidity,
-            'co2' => $co2
+            'co2' => $co2,
+            'acquisitionUnit' => $acquisitionUnit
         ]);
     }
-
-    #[Route('/defSAoperationnel/{room}', name: 'set_sa_to_op')]
-    public function setSAToOp(Room $room, EntityManagerInterface $entityManager, GetDataInteface $getDataJson): Response
-    {
-        $temp = $getDataJson->getLastValueByType($room->getName(), 'temp');
-        $humidity = $getDataJson->getLastValueByType($room->getName(), 'humidity');
-        $co2 = $getDataJson->getLastValueByType($room->getName(), 'co2');
-
-        if($temp[0] > 0 && $co2[0] > 0 && $humidity[0] > 0)
-        {
-            $room->getSA()->setState(StateSA::OPERATIONNEL->value);
-            $entityManager->flush();
-            return $this->redirectToRoute('app_tech');
-        }
-        return $this->redirectToRoute('test_data', ['SA' =>  $room->getSA()->getId()]);
-    }
-
+    
     #[Route('/testData/{SA}', name: 'test_data')]
     public function testData(Room $room, GetDataInteface $getDataJson): Response
     {

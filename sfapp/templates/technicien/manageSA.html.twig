@@ -15,7 +15,7 @@
                         <a href="{{ path('app_tech') }}">
                             <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
                         </a>
-                        <p>Panneau de gestion du {{ room.sa }}</p>
+                        <p>Panneau de gestion du {{ room.acquisitionUnit }}</p>
                     </div>
                     <div class="dataInformations">
                         <div class="dataArray">
@@ -151,11 +151,11 @@
                             {% endif %}
 
                             <div class="testAndValidateButtons">
-                                <a href="{{ path('manage_sa', {'SA' : room.sa.id}) }}" class="testDataButton">
+                                <a href="{{ path('manage_acquisitionUnit', {'acquisitionUnit' : room.acquisitionUnit}) }}" class="testDataButton">
                                     Tester la remontée des données
                                 </a>
                                 <div class="setSAToOp">
-                                    <a href="{{ path('set_sa_to_op', {'room' : room.id}) }}" class="setSAToOpButton">
+                                    <a href="{{ path('set_au_to_operational', {'acquisitionUnit' : room.acquisitionUnit.id}) }}" class="setSAToOpButton">
                                         Rendre le SA opérationnel
                                     </a>
                                 </div>
