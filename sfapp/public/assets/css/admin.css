@@ -22,6 +22,13 @@ body {
     min-height: 23vh;
 }
 
+.infosRoomAndAU {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .planExperimentation-div
 {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.255);
@@ -61,6 +68,13 @@ body {
     justify-content: space-between;
 }
 
+.test {
+    background-color: #F9F9F9;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+
+}
 .planExperimentation > div
 {
     display: flex;
@@ -100,6 +114,7 @@ body {
     background-color: #F9F9F9;
     margin-top: 0.3vw;
     width: 16vw;
+    height: 5vh;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -221,6 +236,17 @@ body {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.255);
     margin-left: 5vh;
     height: 100%;
+}
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0vh 1vh;
+}
+
+.filterFloors, .filterStates {
+    padding-left: 1vh;
 }
 
 .filterForm  > form {

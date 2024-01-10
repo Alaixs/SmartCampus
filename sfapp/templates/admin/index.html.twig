@@ -43,8 +43,8 @@
             {% else %}
 
             <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
-                <div class="planExperimentation-div-div"><p>SALLES</p></div>
-                <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
+                <div class="planExperimentation-div-div"><div class="infosRoomAndAU">SALLES</div></div>
+                <div class="planExperimentation-div-div"><div class="infosRoomAndAU">SYSTEMES D'ACQUISITION</div></div>
             </div>
 
             <div class="planExperimentation-div-allRoom">
@@ -53,7 +53,7 @@
                     <div class='planExperimentation-div-array'>
                         <div class="planExperimentation-div-div planExperimentation-div-roomName">
                             <div class="planExperimentation-div-roomName-div">
-                                <p>{{ room.name }}</p>
+                                <div class="infosRoomAndAU">{{ room.name }}</div>
                             </div>
 
                         </div>
@@ -61,11 +61,11 @@
                         <!-- Gestion de l'état des SA" -->
                         {% if room.sa is empty %}
                             <div class="planExperimentation-div-div">
-                                <p>-</p>
+                                <div class="infosRoomAndAU">-</div>
                             </div>
                         {% else %}
                             <div class="planExperimentation-div-div">
-                                <p>{{ room.sa }}</p>
+                                <div class="infosRoomAndAU">{{ room.sa }}</div>
                                 <div class="lilPastille">
                                     {% if room.sa.state == "En attente d'installation" and user == "admin" %}
                                         <img src="{{ asset('assets/img/StateImages/hourglass.png') }}" title="Le système d'acquisition n'a pas encore été installé." class="grayCircle"/>
