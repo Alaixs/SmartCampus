@@ -57,7 +57,7 @@
                             <div class="planExperimentation-div-div">
                                 <p>{{ room.acquisitionUnit }}</p>
                                 <div class="lilPastille">
-                                    {% if room.acquisitionUnit.state == "En attente d'installation" and app.user.username == "admin" %}
+                                    {% if room.acquisitionUnit.state == "En attente d'installation" and app.user.username == "yacine" %}
                                         <img src="{{ asset('assets/img/StateImages/hourglass.png') }}" title="Le système d'acquisition n'a pas encore été installé." class="grayCircle"/>
                                     {% elseif room.acquisitionUnit.state == "En attente d'installation" and app.user.username == "technicien" %}
                                         <img src="{{ asset('assets/img/StateImages/waitingForInstallation.png') }}" title="Le système d'acquisition doit être installé." class="grayCircle"/>
