@@ -20,7 +20,6 @@ class AdminController extends AbstractController
     public function admin(RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository, ?AcquisitionUnit $acquisitionUnit = null, EntityManagerInterface $entityManager): Response {
         $roomList = $roomRepository->findAll();
         $acquisitionUnitList = $acquisitionUnitRepository->findAll();
-        $user = 'admin';
 
         if ($acquisitionUnit) {
             $acquisitionUnit->setState(AcquisitionUnitState::OPERATIONNEL->value);
@@ -28,7 +27,6 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/index.html.twig', [
-            'user' => $user,
             'roomList' => $roomList,
             'acquisitionUnitList' => $acquisitionUnitList,
             'acquisitionUnit' => $acquisitionUnit

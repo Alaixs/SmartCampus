@@ -23,9 +23,7 @@ class TechnicienController extends AbstractController
     public function technicien(RoomRepository $roomRepository): Response
     {
         $rooms = $roomRepository->findAll();
-        $user = 'technicien';
         return $this->render('admin/index.html.twig', [
-            'user' => $user,
             'listRooms' => $rooms,
         ]);
     }
