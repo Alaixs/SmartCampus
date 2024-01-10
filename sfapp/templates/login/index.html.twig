@@ -33,17 +33,17 @@
             </div>
         </div>
         <div class="formInputs">
-        <form action="{{ path('app_login') }}" method="post">
+            <form action="{{ path('app_login') }}" method="post">
                 <p>Accès administrateur</p>
-            <input type="text" class="form-control" id="username" name="_username" placeholder="Nom d'utilisateur">
-            <input type="password" class="form-control" id="password" name="_password" placeholder="Mot de passe">
-            <input type="hidden" name="_target_path" value="/admin">
-            <button type="submit" class="buttonLogin">Se connecter</button>
-
+                <input type="text" class="form-control" id="username" name="_username" placeholder="Nom d'utilisateur">
+                <input type="password" class="form-control" id="password" name="_password" placeholder="Mot de passe">
+                <input type="hidden" name="_target_path" value="/admin">
+                <button type="submit" class="buttonLogin">Se connecter</button>
+            </form>
+            {% if error %}
+                <div class="error-message">Identifiant ou mot de passe incorrect</div>
+            {% endif %}
         </div>
-    {% if error %}
-    <div class="error-message">Identifiant ou mot de passe incorrect</div>
-    {% endif %}
     </div>
 
 </section>
