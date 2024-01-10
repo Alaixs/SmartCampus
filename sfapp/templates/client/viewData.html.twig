@@ -219,7 +219,7 @@
                 {% endif %}
             </div>
             <div>
-                <a class="returnToFloorPage" href="{{ path('app_client')}}">Revenir à la page précédente</a>
+                <a class="returnToFloorPage" href="{{ path('app_client', {'floor' : room.floor})}}">Revenir à la page précédente</a>
                 <style>
                     .returnToFloorPage {
                         margin-top: 3vh;
@@ -228,7 +228,7 @@
             </div>
         {% else %}
             <p>Aucune donnée n'a été récupérée pour le moment dans la salle {{ room.name }}</p>
-            <a class="returnToFloorPage" href="{{ path('app_client')}}">Revenir à la page précédente</a>
+            <a class="returnToFloorPage" href="{{ path('app_client', {'floor' : room.floor})}}">Revenir à la page précédente</a>
         {% endif %}
     </section>
 
