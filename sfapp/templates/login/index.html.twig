@@ -14,14 +14,20 @@
  <section class="loginCard">
     <div class="formLogin">
         <div class="guestForm">
-            <div class="guestTitle">
-                <h1>Smart Campus</h1>
+            <div>
+                <img class="loginImageTree" src="{{ asset('assets/img/tree.png') }}">
             </div>
-            <div class="guestSubtitle">
-                <p>Usagers de La Rochelle Université</p>
-                <p>(étudiants, enseignants ou administratifs)</p>
+            <div class="guestInfo">
+                <div class="guestTitle">
+                    <h1>Smart Campus</h1>
+                </div>
+                <div class="guestSubtitle">
+                    <p>Usagers de La Rochelle Université</p>
+                    <p>(étudiants, enseignants ou administratifs)</p>
+                </div>
+                <a href="/" class="buttonGuest">J’accède au site en tant qu’utilisateur</a>
             </div>
-            <a href="/" class="buttonGuest">J’accède au site en tant qu’invité</a>
+            <img class="loginImageBee" src="{{ asset('assets/img/bee.png') }}">
         </div>
         <div class="formInputs">
         <form action="{{ path('app_login') }}" method="post">
