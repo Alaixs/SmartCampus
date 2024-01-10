@@ -152,6 +152,10 @@ class PagesAccessibleTest extends WebTestCase
 
     }
 
+    /**
+     * La méthode testUnAssignSAIsAccessible() verifie si le code de retour de la page testUnAssignSAIsAccessible est bien 302
+     * @return void
+     */
     public function testUnAssignSAIsAccessible()
     {
 
@@ -167,6 +171,10 @@ class PagesAccessibleTest extends WebTestCase
 
     }
 
+    /**
+     * La méthode testRemoveRoomIsAccessible() verifie si le code de retour de la page testRemoveRoomIsAccessible est bien 302
+     * @return void
+     */
     public function testRemoveRoomIsAccessible()
     {
         $client = $this->getClientWithLoggedInUser('yacine');
@@ -180,11 +188,47 @@ class PagesAccessibleTest extends WebTestCase
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
+    /**
+     * La méthode testLoginIsAccessible() verifie si le code de retour de la page testLoginIsAccessible est bien 200
+     * @return void
+     */
     public function testLoginIsAccessible()
     {
         $client = $this->getClientWithLoggedInUser('yacine');
 
         $client->request('GET', '/login');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * La méthode testViewDataPageIsAccessible() verifie si le code de retour de la page testViewDataPageIsAccessible est bien 200
+     * @return void
+     */
+    public function testViewDataPageIsAccessible()
+    {
+
+        $client = static::createClient();
+
+        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $newRoom = new Room();
+        $newRoom->setName('404');
+        $newRoom->setArea(10);
+        $newRoom->setFloor(2);
+        $newRoom->setExposure('Nord');
+        $newRoom->setCapacity(20);
+        $newRoom->setHasComputers(0);
+        $newRoom->setNbWindows(4);
+
+        $entityManager->persist($newRoom);
+        $entityManager->flush();
+
+        $roomRepository = $client->getContainer()->get(RoomRepository::class);
+
+        $room = $roomRepository->findOneBy(array('name' => $this->roomName));
+
+        $client->request('GET', '/viewData/'. $room->getId());
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
