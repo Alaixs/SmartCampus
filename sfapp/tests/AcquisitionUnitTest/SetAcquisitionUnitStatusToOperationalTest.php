@@ -11,13 +11,13 @@ class SetAcquisitionUnitStatusToOperationalTest extends WebTestCase
 {
     public function testSetAcquisitionUnitStatusToOperational()
     {
-        $SANumber = 'SA2000';
+        $AUName = 'SA2000';
 
         $client = static::createClient();
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $newSA = new AcquisitionUnit();
-        $newSA->setNumber($SANumber);
+        $newSA->setName($AUName);
         $newSA->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
 
         $entityManager->persist($newSA);
@@ -25,9 +25,9 @@ class SetAcquisitionUnitStatusToOperationalTest extends WebTestCase
 
         $this->assertInstanceOf(AcquisitionUnit::class, $newSA);
 
-        $crawler = $client->request('GET', '/defSAoperationnel/' . $SANumber);
+        $crawler = $client->request('GET', '/defAcquisitionUnitOperationnel/' . $newSA->getId());
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 }
 

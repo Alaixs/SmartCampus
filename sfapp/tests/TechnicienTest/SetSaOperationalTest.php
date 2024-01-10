@@ -7,28 +7,33 @@ use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 
 class SetSaOperationalTest extends WebTestCase
 {
     public function testValidData()
     {
 
+        $client = static::createClient();
+        $userRepository = $client->getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
+        $client->loginUser($testUser);
+
         $roomName = 'D999';
         $saNumber = 'SA8759';
-        $client = static::createClient();
 
         $this->addRoomAndSa($client, $roomName, $saNumber);
 
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
         $room = $roomRepository->findOneBy(array('name' => $roomName));
-        $client->request('GET', '/manageSA/' . $room->getSA()->getId());
+        $client->request('GET', '/manageAcquisitionUnit/' . $room->getAcquisitionUnit()->getId());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $client->clickLink('Rendre le SA opérationnel');
         $client->followRedirect();
         $this->assertStringContainsString("ok.png", $client->getResponse()->getContent());
         $this->deleteRoom($client, $room);
-        $this->deleteSA($client, $room->getSA());
+        $this->deleteSA($client, $room->getAcquisitionUnit());
     }
 
     public function testNotValidData()
@@ -44,14 +49,14 @@ class SetSaOperationalTest extends WebTestCase
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
 
-        $client->request('GET', '/manageSA/' . $room->getSA()->getId());
+        $client->request('GET', '/manageAcquisitionUnit/' . $room->getAcquisitionUnit()->getId());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $client->clickLink('Rendre le SA opérationnel');
         $client->followRedirect();
         $this->assertStringNotContainsString("ok.png", $client->getResponse()->getContent());
         $this->deleteRoom($client, $room);
-        $this->deleteSA($client, $room->getSA());
+        $this->deleteSA($client, $room->getAcquisitionUnit());
     }
 
     private function addRoomAndSa($client, $roomName, $saNumber) : void
@@ -59,7 +64,7 @@ class SetSaOperationalTest extends WebTestCase
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $newSa = new AcquisitionUnit();
-        $newSa->setNumber($saNumber);
+        $newSa->setName($saNumber);
         $newSa->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
 
         $newRoom = new Room();
@@ -70,7 +75,7 @@ class SetSaOperationalTest extends WebTestCase
         $newRoom->setCapacity(20);
         $newRoom->setHasComputers(0);
         $newRoom->setNbWindows(4);
-        $newRoom->setSA($newSa);
+        $newRoom->setAcquisitionUnit($newSa);
 
         $entityManager->persist($newSa);
         $entityManager->persist($newRoom);

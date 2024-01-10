@@ -8,6 +8,12 @@ use App\Repository\UserRepository;
 
 class AddAcquisitionUnitTest extends WebTestCase
 {
+
+    public static function setUpBeforeClass(): void
+    {
+        exec('php bin/console doctrine:fixtures:load --env=test --quiet');
+    }
+    
     /**
      * La méthode testSubmitValidData() vérifie si le formulaire est valide avec des données correctes.
      * @return void

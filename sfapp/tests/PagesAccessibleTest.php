@@ -69,7 +69,7 @@ class PagesAccessibleTest extends WebTestCase
     {
         $client = $this->getClientWithLoggedInUser('technicien');
 
-        $client->request('GET', '/technicien');
+        $client->request('GET', '/admin');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }

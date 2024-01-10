@@ -16,15 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
 
-    #[Route('/admin/{acquisitionUnit?}', name: 'app_admin')]
-    public function admin(RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository, ?AcquisitionUnit $acquisitionUnit = null, EntityManagerInterface $entityManager): Response {
+    #[Route('/admin', name: 'app_admin')]
+    public function admin(RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository, EntityManagerInterface $entityManager, ?AcquisitionUnit $acquisitionUnit = null): Response {
         $roomList = $roomRepository->findAll();
         $acquisitionUnitList = $acquisitionUnitRepository->findAll();
-
-        if ($acquisitionUnit) {
-            $acquisitionUnit->setState(AcquisitionUnitState::OPERATIONNEL->value);
-            $entityManager->flush();
-        }
 
         return $this->render('admin/index.html.twig', [
             'roomList' => $roomList,

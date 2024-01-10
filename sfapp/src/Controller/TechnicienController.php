@@ -61,4 +61,14 @@ class TechnicienController extends AbstractController
             'co2' => $co2
         ]);
     }
+
+    #[Route('/defAcquisitionUnitOperationnel/{acquisitionUnit}', name: 'app_defAcquisitionUnitOperationnel')]
+    public function defAcquisitionUnitOperationnel(AcquisitionUnit $acquisitionUnit, EntityManagerInterface $entityManager): Response {
+        
+        $acquisitionUnit->setState(AcquisitionUnitState::OPERATIONNEL->value);
+
+        $entityManager->flush();
+    
+        return $this->redirectToRoute('app_admin');
+    }
 }

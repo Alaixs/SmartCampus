@@ -49,7 +49,7 @@ class LoginConnexionTest extends WebTestCase
 
         $client->followRedirect();
 
-        $this->assertSelectorTextContains('.loginCard .error-message', 'Invalid credentials.');
+        $this->assertSelectorTextContains('.loginCard .error-message', 'Identifiant ou mot de passe incorrect');
 
     }
 
