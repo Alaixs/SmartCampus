@@ -42,18 +42,41 @@ body {
     height: 80%;
 }
 
-.loginImageBee:hover {
-
-}
-
 .guestForm > * {
     width: 30%;
+}
+
+.loginImages {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginImages > img {
+    position: absolute;
+
 }
 
 .loginImageTree {
     width: 80%;
 }
 
+.loginImageBee, .loginImageSmilingBee {
+    width: 80%;
+}
+
+.loginImageSmilingBee {
+    visibility: hidden;
+}
+
+.loginImages:hover > .loginImageSmilingBee {
+    visibility: visible;
+}
+
+.loginImages:hover > .loginImageBee {
+    visibility: hidden;
+}
 
 .guestTitle > h1 {
     font-family: 'Roboto-Regular';

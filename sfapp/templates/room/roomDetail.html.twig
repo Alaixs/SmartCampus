@@ -91,7 +91,7 @@
                             {% elseif hasAcquisitionUnitAvailable %}
                                 <p class="detailTitle">AUCUN SA AFFECTÉ</p>
                                 <p class="detailTitle">Affectez un SA pour commencer la prise de données</p>
-                            {% elseif not hasSAInDatabase %}
+                            {% elseif not hasAcquisitionUnitInDatabase %}
                                 <p class="detailTitle">AUCUN SA N'A ÉTÉ AJOUTÉ POUR LE MOMENT</p>
                                 <p class="detailTitle">Commencez par ajouter un SA</p>
                             {% else %}
@@ -107,18 +107,15 @@
 
                                     <p>Un ou plusieurs capteurs ne renvoie pas les données correctement</p>
 
-                                {% elseif room.acquisitionUnit %}
-                                    {% if room.acquisitionUnit.state != 'Opérationnel' %}
+                            {% elseif room.acquisitionUnit %}
+                                {% if room.acquisitionUnit.state != 'Opérationnel' %}
 
-                                        <p>Aucune valeur n'a été prise pour le moment</p>
-                                        <p>Attendez qu'un technicien rende le SA opérationnel</p>
-
-                                    {% else %}
-                                        <p>En attente de la remontée des données du S.A</p>
-                                        <div class="loader"></div>
-                                    {% endif %}
+                                    <p>Aucune valeur n'a été prise pour le moment</p>
+                                    <p>Attendez qu'un technicien rende le SA opérationnel</p>
 
                                 {% endif %}
+
+                            {% endif %}
 
                             {% else %}
 

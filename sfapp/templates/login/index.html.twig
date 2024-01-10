@@ -27,7 +27,10 @@
                 </div>
                 <a href="/" class="buttonGuest">J’accède au site en tant qu’utilisateur</a>
             </div>
-            <img class="loginImageBee" src="{{ asset('assets/img/bee.png') }}">
+            <div class="loginImages">
+                <img class="loginImageBee" src="{{ asset('assets/img/bee.png') }}">
+                <img class="loginImageSmilingBee" src="{{ asset('assets/img/smilingBee.png') }}">
+            </div>
         </div>
         <div class="formInputs">
         <form action="{{ path('app_login') }}" method="post">
