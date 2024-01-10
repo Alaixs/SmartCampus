@@ -27,7 +27,7 @@ class LoginConnexionTest extends WebTestCase
 
         $client->followRedirect();
 
-        $this->assertSelectorTextContains('.info-container p', 'Connecté en tant que yacine');
+        $this->assertSelectorTextContains('.info-container', 'Connecté en tant que yacine');
     }
 
     public function testLoginWithBadCredentials(): void
@@ -72,7 +72,7 @@ class LoginConnexionTest extends WebTestCase
 
         $client->followRedirect();
 
-        $this->assertSelectorTextContains('.info-container p', 'Connecté en tant que yacine');
+        $this->assertSelectorTextContains('.info-container', 'Connecté en tant que yacine');
 
         $client->request('GET', '/logout');
 
