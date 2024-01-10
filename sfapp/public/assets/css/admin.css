@@ -283,25 +283,30 @@ input#search_form_q {
     justify-content: space-evenly;
 }
 
-.endFormButtons > button {
+.endFormButtons > button, .endFormButtons > a {
     width: 40%;
     height: 50%;
     border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-decoration: none;
+    color: black;
 }
 
-.endFormButtons > button:nth-child(1) {
+.endFormButtons > button {
     background-color: #A2E0EE;
 }
 
-.endFormButtons > button:nth-child(2) {
+.endFormButtons > a {
     background-color: #efefef;
 }
 
-.endFormButtons > button:nth-child(1):hover {
+.endFormButtons > button:hover {
     background-color: #b9ebf6;
 }
 
-.endFormButtons > button:nth-child(2):hover {
+.endFormButtons > a:hover {
     background-color: #F4F4F4;
 }
 @media screen and (max-width: 650px) {

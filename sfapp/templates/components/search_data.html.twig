@@ -20,10 +20,12 @@
     <div class="filterStates">
         {{ form_row(form.acquisitionUnitState) }}
     </div>
+
     <div class="endFormButtons">
         <button type="submit">Valider</button>
-        <button type="reset">Réinitialiser</button>
+        <a href="{{ path('app_admin') }}">Réinitialiser</a>
     </div>
+
     {{ form_end(form) }}
 </section>
 
