@@ -55,7 +55,6 @@ body {
 
 .loginImages > img {
     position: absolute;
-
 }
 
 .loginImageTree {
@@ -63,7 +62,7 @@ body {
 }
 
 .loginImageBee, .loginImageSmilingBee {
-    width: 80%;
+    width: 100%;
 }
 
 .loginImageSmilingBee {
