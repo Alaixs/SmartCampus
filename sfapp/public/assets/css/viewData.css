@@ -67,12 +67,24 @@ section {
     background-color: #FFF2D2;
 }
 
+.clickableTempPanel:hover {
+    background-color: #fff5e1;
+}
+
 .humPanel {
     background-color: #D9F6FF;
 }
 
+.clickableHumPanel:hover {
+    background-color: #e8f9ff;
+}
+
 .co2Panel {
     background-color: #d6ffc3;
+}
+
+.clickableCo2Panel:hover {
+    background-color: #e6ffdb;
 }
 
 .panelTitle {
@@ -115,10 +127,18 @@ section {
     margin: 3vh;
 }
 
-.rightArrow {
+.dataPanel {
+    text-decoration: none;
+    color: black;
+}
+
+.rightArrow, .rightUnclickableArrow {
     transform: rotate(180deg);
 }
 
+.unclickableScrollArrow {
+    opacity: 0.3;
+}
 .returnToFloorPage {
     background-color: #F4F4F4;
     color: black;
