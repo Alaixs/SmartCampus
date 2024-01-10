@@ -2,8 +2,10 @@
 
 namespace App\Domain;
 
+use App\Entity\Room;
+
 interface GetDataInteface
 {
-    public function getLastValueByType($roomId, $type): array;
+    public function getLastValueByType(Room $room, $type): array;
 
 }

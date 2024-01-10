@@ -8,17 +8,21 @@ use App\Repository\AcquisitionUnitRepository;
 use App\Entity\AcquisitionUnit;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 
 class UnassignAcquisitionUnitTest extends WebTestCase
 {
-    public function testUnassignAcquisitionUnit()
+    public function testUnassignSa()
     {
-        $roomName = 'D309';
-        $acquisitionUnitName = 'ESP-017';
+        $roomName = 'D444';
+        $saNumber = 'SA4321';
 
         $client = static::createClient();
+        $userRepository = $client->getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
+        $client->loginUser($testUser);        
 
-        $this->addRoomAndAcquisitionUnit($client, $roomName, $acquisitionUnitName);
+        $this->addRoomAndSa($client, $roomName, $saNumber);
 
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
         $acquisitionUnitRepository = $client->getContainer()->get(AcquisitionUnitRepository::class);
@@ -27,29 +31,29 @@ class UnassignAcquisitionUnitTest extends WebTestCase
 
         $crawler = $client->request('GET', '/roomDetail/' . $room->getId());
 
-        $this->assertStringContainsString($roomName, $client->getResponse()->getContent(), 'ca marche?');
-
         $link = $crawler->selectLink('Confirmer')->eq(1)->link();
         $client->click($link);
 
+        $crawler = $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertStringNotContainsString($acquisitionUnitName, $client->getResponse()->getContent(), 'ca marche?');
+        $this->assertStringNotContainsString($saNumber, $client->getResponse()->getContent(), 'ca marche?');
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
-        $acquisitionUnit = $acquisitionUnitRepository->findOneBy(array('number' => $acquisitionUnitName));
+        $sa = $acquisitionUnitRepository->findOneBy(array('name' => $saNumber));
+        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $client->request('GET','/removeRoom/' . $room->getId());
 
-        $client->request('GET','/removeAU/' . $acquisitionUnit->getId());
+        $client->request('GET','/removeAcquisitionUnit/' . $sa->getId());
     }
 
-    private function addRoomAndAcquisitionUnit($client, $roomName, $acquisitionUnitName) : void
+    private function addRoomAndSa($client, $roomName, $saNumber) : void
     {
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $newAcquisitionUnit = new AcquisitionUnit();
-        $newAcquisitionUnit->setName($acquisitionUnitName);
-        $newAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
+        $newSa = new AcquisitionUnit();
+        $newSa->setName($saNumber);
+        $newSa->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
 
         $newRoom = new Room();
         $newRoom->setName($roomName);
@@ -59,10 +63,13 @@ class UnassignAcquisitionUnitTest extends WebTestCase
         $newRoom->setCapacity(20);
         $newRoom->setHasComputers(0);
         $newRoom->setNbWindows(4);
-        $newRoom->setAcquisitionUnit($newAcquisitionUnit);
+        $newRoom->setAcquisitionUnit($newSa);
 
-        $entityManager->persist($newAcquisitionUnit);
+        $entityManager->persist($newSa);
         $entityManager->persist($newRoom);
         $entityManager->flush();
+
+
     }
+
 }

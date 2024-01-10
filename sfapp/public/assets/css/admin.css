@@ -1,6 +1,12 @@
-@media all and (orientation: landscape) { /* HERE YOUR CODE */ }
+* {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    sc
+}
 
 body {
+    margin: 0;
+    padding: 0;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -92,6 +98,11 @@ body {
 
 .planExperimentation-div-array > div {
     width: 25vw;
+}
+
+.planExperimentation-div-allRoom {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 .planExperimentation-div-div
@@ -212,7 +223,7 @@ body {
     width: 1.2vw;
 }
 
-.greenCircle, .redCircle, .grayCircle{
+.greenCircle, .redCircle, .grayCircle {
     max-width: 3vh;
     height: 3vh;
     cursor: help;

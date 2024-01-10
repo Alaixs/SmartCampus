@@ -18,7 +18,12 @@ class AcquisitionUnit
     #[ORM\Column(length: 255)]
     private ?string $state = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 7)]
+    #[Assert\NotBlank(message: 'Le nom du SA ne peut pas être vide')]
+    #[Assert\Length(
+        max: 3,
+        maxMessage: 'Le nom du SA ne peut pas contenir plus de 3 caractères'
+    )]
     private ?string $name = null;
 
     public function getId(): ?int

@@ -5,6 +5,7 @@ namespace App\Tests;
 use App\Entity\Room;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 
 class RemoveRoomTest extends WebTestCase
 {
@@ -17,6 +18,9 @@ class RemoveRoomTest extends WebTestCase
         $roomName = 'D404';
 
         $client = static::createClient();
+        $userRepository = $client->getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
+        $client->loginUser($testUser);
 
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
@@ -36,7 +40,7 @@ class RemoveRoomTest extends WebTestCase
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
 
-        $crawler = $client->request('GET', '/detailRoom/' . $room->getId());
+        $crawler = $client->request('GET', '/roomDetail/' . $room->getId());
 
         $this->assertStringContainsString($roomName, $client->getResponse()->getContent(), 'ca marche?');
 

@@ -8,6 +8,7 @@ use App\Repository\AcquisitionUnitRepository;
 use App\Entity\AcquisitionUnit;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 
 class AssignAcquisitionUnitTest extends WebTestCase
 {
@@ -17,18 +18,22 @@ class AssignAcquisitionUnitTest extends WebTestCase
      */
     public function testSubmitValidData()
     {
-        $acquisitionUnitName = 'ESP-017';
-        $roomName = 'D309';
+        $saNumber = 'SA9999';
+        $roomName = 'D999';
+
         $client = static::createClient();
+        $userRepository = $client->getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
+        $client->loginUser($testUser);
 
         $this->createRoom($client, $roomName);
-        $this->createAcquisitionUnit($client, $acquisitionUnitName);
+        $this->createSa($client, $saNumber);
 
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
         $acquisitionUnitRepository = $client->getContainer()->get(AcquisitionUnitRepository::class);
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
-        $acquisitionUnit = $acquisitionUnitRepository->findOneBy(array('number' => $acquisitionUnitName));
+        $sa = $acquisitionUnitRepository->findOneBy(array('name' => $saNumber));
 
         $crawler = $client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -41,30 +46,30 @@ class AssignAcquisitionUnitTest extends WebTestCase
 
 
         $form = $crawler->selectButton('Affecter')->form();
-
-        // I complete the form
-        $form->setValues(array('assign_sa_form[SA]' => $acquisitionUnit->getId()));
+        
+        //     I complete the form
+        $form->setValues(array('assign_acquisition_unit_form[acquisitionUnit]' => $sa->getId()));
 
         $client->submit($form);
         $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertStringContainsString($acquisitionUnitName, $client->getResponse()->getContent(), 'ca marche?');
+        $this->assertStringContainsString($saNumber, $client->getResponse()->getContent(), 'ca marche?');
 
         $this->deleteRoom($client, $roomName);
-        $this->deleteAcquisitionUnit($client, $acquisitionUnitName);
+        $this->deleteSa($client, $saNumber);
     }
 
 
 
-    private function createAcquisitionUnit($client, $acquisitionUnitName) : void
+    private function createSa($client, $saNumber) : void
     {
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $newAcquisitionUnit = new AcquisitionUnit();
-        $newAcquisitionUnit->setName($acquisitionUnitName);
-        $newAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+        $newSa = new AcquisitionUnit();
+        $newSa->setName($saNumber);
+        $newSa->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
 
-        $entityManager->persist($newAcquisitionUnit);
+        $entityManager->persist($newSa);
         $entityManager->flush();
     }
 
@@ -95,13 +100,13 @@ class AssignAcquisitionUnitTest extends WebTestCase
             $entityManager->flush();
         }
     }
-    private function deleteAcquisitionUnit($client, $acquisitionUnitName) : void
+    private function deleteSa($client, $saName) : void
     {
         $acquisitionUnitRepository = $client->getContainer()->get(AcquisitionUnitRepository::class);
-        $acquisitionUnit = $acquisitionUnitRepository->findOneBy(array('number' => $acquisitionUnitName));
-        if ($acquisitionUnit) {
+        $sa = $acquisitionUnitRepository->findOneBy(array('name' => $saName));
+        if ($sa) {
             $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
-            $entityManager->remove($acquisitionUnit);
+            $entityManager->remove($sa);
             $entityManager->flush();
         }
     }

@@ -14,7 +14,7 @@ Toastify({
     onClick: function(){}
   }).showToast();
 
-  document.getElementById("add_sa_form_number").value = "";
+  document.getElementById("add_acquisition_unit_form_name").value = "";
 }
 
 function showToastRoom() {
