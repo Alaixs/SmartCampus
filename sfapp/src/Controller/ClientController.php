@@ -47,15 +47,15 @@ class ClientController extends AbstractController
 
         switch ($valueSelected) {
             case 'temp':
-                $currentValue = $getDataJson->getLastValueByType($room->getName(), 'temp');
+                $currentValue = $getDataJson->getLastValueByType($room, 'temp');
                 $defaultValueType = 0;
                 break;
             case 'humidity':
-                $currentValue = $getDataJson->getLastValueByType($room->getName(), 'humidity');
+                $currentValue = $getDataJson->getLastValueByType($room, 'humidity');
                 $defaultValueType = 1;
                 break;
             case 'co2':
-                $currentValue = $getDataJson->getLastValueByType($room->getName(), 'co2');
+                $currentValue = $getDataJson->getLastValueByType($room, 'co2');
                 $defaultValueType = 2;
                 break;
         }
