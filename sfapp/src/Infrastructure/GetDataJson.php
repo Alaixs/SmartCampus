@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Domain;
+namespace App\Infrastructure;
+
+use App\Domain\GetDataInteface;
 
 class GetDataJson implements GetDataInteface
 {
@@ -13,7 +15,7 @@ class GetDataJson implements GetDataInteface
         });
     }
 
-    public function getLastValueByType($roomName, $type): array
+    public function getLastValueByType($room, $type): array
     {
         if (file_exists(__DIR__ . '/data.json')) {
             $json = file_get_contents(__DIR__ . '/data.json');

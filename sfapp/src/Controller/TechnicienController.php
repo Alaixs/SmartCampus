@@ -32,9 +32,9 @@ class TechnicienController extends AbstractController
     public function manageAcquisitionUnit(Room $room, GetDataInteface $getDataJson, AcquisitionUnit $acquisitionUnit): Response
     {
 
-        $temp = $getDataJson->getLastValueByType($room->getName(), 'temp');
-        $humidity = $getDataJson->getLastValueByType($room->getName(), 'humidity');
-        $co2 = $getDataJson->getLastValueByType($room->getName(), 'co2');
+        $temp = $getDataJson->getLastValueByType($room, 'temp');
+        $humidity = $getDataJson->getLastValueByType($room, 'hum');
+        $co2 = $getDataJson->getLastValueByType($room, 'co2');
 
 
         return $this->render('technicien/manageSA.html.twig', [
