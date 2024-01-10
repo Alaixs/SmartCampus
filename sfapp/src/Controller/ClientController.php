@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Domain\GetDataInteface;
+use App\Entity\Room;
 use App\Repository\BuildingRepository;
 use App\Repository\RoomRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,15 +33,39 @@ class ClientController extends AbstractController
             'building' => $building,
             'pagination' => $pagination,
             'floor' => $floor,
-            'room' => $room
+            'room' => $room,
         ]);
     }
 
-    #[Route('/viewData/{room}', name: 'view_data')]
-    public function viewData(): Response
+    #[Route('/viewData/{room}/{valueSelected?temp}', name: 'view_data')]
+    public function viewData(string $valueSelected, Room $room, GetDataInteface $getDataJson): Response
     {
+        $valueType = ['temp', 'humidity', 'co2'];
+        if (!in_array($valueSelected, $valueType)) {
+            throw $this->createNotFoundException('Invalid value selected.');
+        }
+
+        switch ($valueSelected) {
+            case 'temp':
+                $currentValue = $getDataJson->getLastValueByType($room->getName(), 'temp');
+                $defaultValueType = 0;
+                break;
+            case 'humidity':
+                $currentValue = $getDataJson->getLastValueByType($room->getName(), 'humidity');
+                $defaultValueType = 1;
+                break;
+            case 'co2':
+                $currentValue = $getDataJson->getLastValueByType($room->getName(), 'co2');
+                $defaultValueType = 2;
+                break;
+        }
 
         return $this->render('client/viewData.html.twig', [
+            'valueSelected' => $valueSelected,
+            'room' => $room,
+            'currentValue' => $currentValue,
+            'valueType' => $valueType,
+            'defaultValueType' => $defaultValueType
         ]);
     }
 }
