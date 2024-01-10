@@ -51,7 +51,7 @@ class ClientController extends AbstractController
                 $defaultValueType = 0;
                 break;
             case 'humidity':
-                $currentValue = $getDataJson->getLastValueByType($room, 'humidity');
+                $currentValue = $getDataJson->getLastValueByType($room, 'hum');
                 $defaultValueType = 1;
                 break;
             case 'co2':
