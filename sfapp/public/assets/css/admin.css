@@ -275,7 +275,35 @@ input#search_form_q {
     cursor: help;
 }
 
+.endFormButtons {
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
 
+.endFormButtons > button {
+    width: 40%;
+    height: 50%;
+    border: none;
+}
+
+.endFormButtons > button:nth-child(1) {
+    background-color: #A2E0EE;
+}
+
+.endFormButtons > button:nth-child(2) {
+    background-color: #efefef;
+}
+
+.endFormButtons > button:nth-child(1):hover {
+    background-color: #b9ebf6;
+}
+
+.endFormButtons > button:nth-child(2):hover {
+    background-color: #F4F4F4;
+}
 @media screen and (max-width: 650px) {
     .planExperimentation-div-title {
         flex-direction: column;
