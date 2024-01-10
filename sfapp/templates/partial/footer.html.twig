@@ -10,9 +10,9 @@
     </div>
     {% if app.user %}
     <div class="info-container">
-        <p>Connecté en tant que {{ app.user.username }}</p>
+        Connecté en tant que {{ app.user.username }}
         <a href="{{ path('app_logout') }}">
-            <img src="assets/img/logout.svg" alt="logout">
+            <img src="{{ asset('assets/img/logout.svg') }}" alt="logout">
         </a>
     </div>
     {% else %}
