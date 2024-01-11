@@ -8,7 +8,17 @@
             La Rochelle Université
         </a>
     </div>
+
+
     {% if app.user %}
+        {% if app.user.username == 'technicien' %}
+            <div class="installation-manual">
+                <a href="https://letmegooglethat.com/?q=Comment+%C3%AAtre+%C3%A0+l%27heure+%3F">
+                    Télécharger le manuel d'installation du SA
+                </a>
+            </div>
+        {% endif %}
+
     <div class="info-container">
         Connecté en tant que {{ app.user.username }}
         <a href="{{ path('app_logout') }}">
@@ -16,8 +26,12 @@
         </a>
     </div>
     {% else %}
-    <div class="info-container">
-        <a href="{{ path('app_login') }}"> Accès administrateur </a>
-    </div>
+        {% set currentPath = path(app.request.attributes.get('_route'),
+            app.request.attributes.get('_route_params')) %}
+        {% if currentPath != '/login' %}
+        <div class="info-container">
+            <a href="{{ path('app_login') }}"> Accès administrateur </a>
+        </div>
+        {% endif %}
     {% endif %}
 </footer>

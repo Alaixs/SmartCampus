@@ -76,7 +76,7 @@
                             <a href="{{ path('roomDetail', {'room' : room.id}) }}" class="planExperimentation-div-voir-plus">Voir plus</a>
                         {% else %}
                             {% if room.acquisitionUnit is not empty and (room.acquisitionUnit.state != "Opérationnel" and room.acquisitionUnit.state != "Dysfonctionnement")%}
-                                <a href="{{ path('manageAcquisitionUnit', {'acquisitionUnit' :room.acquisitionUnit.id}) }}" class="planExperimentation-div-voir-plus">Définir le SA comme opérationnel</a>
+                                <a href="{{ path('manageAcquisitionUnit', {'acquisitionUnit' :room.acquisitionUnit.id}) }}" class="planExperimentation-div-voir-plus">Rendre le SA opérationnel</a>
                             {% endif %}
                         {% endif %}
                     </div>
