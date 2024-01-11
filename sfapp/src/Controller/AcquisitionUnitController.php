@@ -14,11 +14,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 
 class AcquisitionUnitController extends AbstractController
 {
     #[Route('/addAcquisitionUnit', name: 'addAU')]
-    public function addAcquisitionUnit(Request $request, EntityManagerInterface $entityManager, AcquisitionUnitRepository $acquisitionUnitRepository): Response
+    public function addAcquisitionUnit(Request $request, EntityManagerInterface $entityManager, AcquisitionUnitRepository $acquisitionUnitRepository, ValidatorInterface $validator): Response
     {
         $acquisitionUnit = new AcquisitionUnit();
         $acquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
@@ -28,22 +30,28 @@ class AcquisitionUnitController extends AbstractController
 
         $acquisitionUnitList = $acquisitionUnitRepository->findAll();
 
-        $showToast = false;
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($acquisitionUnit);
-            $entityManager->flush();
+            // Vérifier la contrainte UniqueEntity manuellement
+            $validationErrors = $validator->validate($acquisitionUnit);
 
-            $showToast = true;
+            if (count($validationErrors) > 0) {
+                // Il y a des erreurs de validation (doublon de nom)
+                foreach ($validationErrors as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
+            } else {
+                // Pas d'erreurs de validation, persistez l'entité
+                $entityManager->persist($acquisitionUnit);
+                $entityManager->flush();
 
-            $acquisitionUnitList = $acquisitionUnitRepository->findAll();
-
+                $this->addFlash('message', 'Le SA ' . $acquisitionUnit->getName() . ' a bien été ajouté.');
+                return $this->redirectToRoute('addAU');
+            }
         }
 
         return $this->render('acquisition_unit/addAcquisitionUnitForm.html.twig', [
             'addAcquisitionUnitForm' => $form,
             'acquisitionUnitList' => $acquisitionUnitList,
-            'showToast' => $showToast,
         ]);
     }
 

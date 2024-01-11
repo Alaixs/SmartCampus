@@ -26,7 +26,13 @@
                     {{ form_start(addRoomForm) }}
                     <div class="restOfForm">
                         {{ form_rest(addRoomForm) }}
-                    </div>
+    
+                        {% for flashMessage in app.flashes('message') %}
+                            <div class="flash-message">
+                                {{ flashMessage }}
+                            </div>
+                        {% endfor %}
+                        
                     <div class="formFooter">
                         <p>* Obligatoire</p>
                         <div class="buttons">
@@ -34,13 +40,6 @@
                         </div>
                     </div>
                     {{ form_end(addRoomForm) }}
-                    {% if showToast %}
-                        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-                        <script src="{{ asset('assets/js/toast.js') }}"></script>
-                        <script>
-                        showToastRoom();
-                        </script>
-                    {% endif %}
                 </div>
             </div>
         </section>

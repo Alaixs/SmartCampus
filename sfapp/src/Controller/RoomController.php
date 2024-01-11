@@ -27,21 +27,18 @@ class RoomController extends AbstractController
         $form = $this->createForm(AddRoomFormType::class, $room);
         $form->handleRequest($request);
 
-        $showToast = false;
-
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager->persist($room);
             $entityManager->flush();
 
-            $showToast = true;
+            $this->addFlash('message', 'La salle ' . $room->getName() . ' a bien été ajoutée.');
 
-            $entityManager->persist($room);
+            return $this->redirectToRoute('addRoom');
+
         }
         return $this->render('room/addRoomForm.html.twig', [
             'addRoomForm' => $form,
-            'showToast' => $showToast,
         ]);
     }
 
