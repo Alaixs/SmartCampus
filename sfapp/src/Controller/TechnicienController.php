@@ -6,7 +6,6 @@ use App\Domain\GetDataInteface;
 use App\Domain\AcquisitionUnitState;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
-use App\Form\RemoveSAFormType;
 use App\Form\SearchFormType;
 use App\Model\SearchData;
 use App\Repository\RoomRepository;
@@ -22,35 +21,23 @@ class TechnicienController extends AbstractController
     #[Route('/technicien', name: 'app_tech')]
     public function technicien(RoomRepository $roomRepository, Request $request): Response
     {
-        $rooms = $roomRepository->findAll();
-        $formSubmitted = false;
-        $filtersApplied = false;
-
-        $user = 'technicien';
-
-
         $searchData = new SearchData();
         $form = $this->createForm(SearchFormType::class, $searchData);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $rooms = $roomRepository->findBySearch($searchData);
+
+        $rooms = $roomRepository->findAll();
+        $formSubmitted = false;
+        $filtersApplied = false;
+        $user = 'technicien';
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $formSubmitted = true;
             $rooms = $roomRepository->findBySearch($searchData);
-            if(!empty($searchData->getQ()) or !empty($searchData->getFloors()) or !empty($searchData->getAcquisitionUnitState()))
-            {
+
+            if (!empty($searchData->getQ()) || !empty($searchData->getFloors()) || !empty($searchData->getAcquisitionUnitState())) {
                 $filtersApplied = true;
             }
-            return $this->render('admin/index.html.twig', [
-                'form' => $form->createView(),
-                'user' => $user,
-                'allRooms' => $rooms,
-                'formSubmitted' => $formSubmitted,
-                'filtersApplied' => $filtersApplied,
-            ]);
         }
-
-
 
         return $this->render('admin/index.html.twig', [
             'form' => $form->createView(),
@@ -60,6 +47,7 @@ class TechnicienController extends AbstractController
             'filtersApplied' => $filtersApplied,
         ]);
     }
+
 
     #[Route('/manageAcquisitionUnit/{acquisitionUnit}', name: 'manageAcquisitionUnit')]
     public function manageAcquisitionUnit(Room $room, GetDataInteface $getDataJson, AcquisitionUnit $acquisitionUnit): Response

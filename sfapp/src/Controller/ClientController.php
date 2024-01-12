@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 
+
 class ClientController extends AbstractController
 {
     #[Route('/{floor<\d+>?0}', name: 'app_client')]

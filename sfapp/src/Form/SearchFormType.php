@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SearchFormType extends  AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options) : void
     {
         $builder
             ->add('q', TextType::class, [
@@ -38,29 +38,26 @@ class SearchFormType extends  AbstractType
 
     private function getFloorChoices(): array
     {
-        $floors = [
+        return [
             'Rez-de-chaussée' => 0,
             '1er étage' => 1,
             '2ème étage' => 2,
             '3ème étage' => 3,
         ];
-
-        return $floors;
     }
 
     private function getAcquisitionUnitStateChoices(): array
     {
-        $state = [
+        return [
             'En attente d\'affectation' => 'En attente d\'affectation',
             'En attente d\'installation' => 'En attente d\'installation',
             'Dysfonctionnement' => 'Dysfonctionnement',
             'En panne' => 'En panne',
             'Opérationnel' => 'Opérationnel',
         ];
-        return $state;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver) : void
     {
         $resolver->setDefaults([
             'data_class' => SearchData::class,

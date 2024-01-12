@@ -167,11 +167,19 @@ form {
     background-color: #D9F6FF;
 }
 
-.error-message {
+.error-message{
     display: flex;
     justify-content: center;
-    align-content: center;
     margin-bottom: 1vh;
-    color: #dc6d6d;
-    font-size: 1.7vh;
+
+}
+
+.error-message > p {
+    margin: 0;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 0.75rem 1.25rem;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }

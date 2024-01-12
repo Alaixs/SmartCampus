@@ -56,7 +56,7 @@ class AcquisitionUnitController extends AbstractController
     }
 
     #[Route('/removeAcquisitionUnit/{acquisitionUnit?}', name: 'removeAU')]
-    public function removeAcquisitionUnit(Request $request, EntityManagerInterface $entityManager, RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository, ?AcquisitionUnit $acquisitionUnit): Response
+    public function removeAcquisitionUnit(Request $request, EntityManagerInterface $entityManager, RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository): Response
     {
         $acquisitionUnit = new AcquisitionUnit();
 

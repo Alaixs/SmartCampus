@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest;
 
 use App\Repository\AcquisitionUnitRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

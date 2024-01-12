@@ -10,4 +10,3 @@ enum AcquisitionUnitState : string
     case DYSFONCTIONNEMENT = "Dysfonctionnement";
     case EN_PANNE = "En panne";
 }
-?>

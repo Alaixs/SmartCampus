@@ -133,7 +133,6 @@
                             {% if (temp[0] < 0 or humidity[0] < 0 or co2[0] < 0) %}
                                 <div class="errorMsg">
                                     <p>Un ou plusieurs problèmes sont survenus.
-                                        </br>
                                         Le capteur ne peut pas être défini comme opérationnel. Réglez le(s) problème(s) et retestez la remontée des données.
                                     </p>
                                 </div>
@@ -216,7 +215,6 @@
                     </div>
                 </div>
             </section>
-        </section>
 
         {% include 'partial/footer.html.twig'%}
 
