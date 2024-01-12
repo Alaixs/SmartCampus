@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest;
 
 use App\Domain\AcquisitionUnitState;
 use App\Entity\AcquisitionUnit;

@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest;
 
-use App\Repository\AcquisitionUnitRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
 
 class LoginConnexionTest extends WebTestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest;
 
 use App\Entity\Room;
 use App\Repository\RoomRepository;
@@ -47,7 +47,7 @@ class RemoveRoomTest extends WebTestCase
         $link = $crawler->selectLink('Confirmer')->first()->link();
         $client->click($link);
 
-        $crawler = $client->followRedirect();
+        $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertStringNotContainsString($roomName, $client->getResponse()->getContent(), 'ca marche?');
 

@@ -154,7 +154,7 @@ class Room
         return $this;
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadata $metadata) : void
     {
         $metadata->addConstraint(new UniqueEntity([
             'fields' => ['name'],

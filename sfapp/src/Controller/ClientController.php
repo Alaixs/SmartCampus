@@ -40,6 +40,9 @@ class ClientController extends AbstractController
     #[Route('/viewData/{room}/{valueSelected?temp}', name: 'view_data')]
     public function viewData(string $valueSelected, Room $room, GetDataInteface $getDataJson): Response
     {
+        $currentValue = null;
+        $defaultValueType = null;
+
         $valueType = ['temp', 'humidity', 'co2'];
         if (!in_array($valueSelected, $valueType)) {
             throw $this->createNotFoundException('Invalid value selected.');

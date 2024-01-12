@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest;
 
 use App\Domain\AcquisitionUnitState;
 use App\Entity\Room;
@@ -35,7 +35,7 @@ class AssignAcquisitionUnitTest extends WebTestCase
         $room = $roomRepository->findOneBy(array('name' => $roomName));
         $sa = $acquisitionUnitRepository->findOneBy(array('name' => $saNumber));
 
-        $crawler = $client->request('GET', '/roomDetail/' . $room->getId());
+        $client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $client->request('GET', '/roomDetail/' . $room->getId());

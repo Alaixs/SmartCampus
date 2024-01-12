@@ -7,12 +7,10 @@ use App\Entity\Room;
 use App\Form\AddRoomFormType;
 use App\Form\AssignAcquisitionUnitFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\RoomRepository;
 use App\Repository\AcquisitionUnitRepository;
 use App\Domain\AcquisitionUnitState;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -134,7 +132,7 @@ class RoomController extends AbstractController
     }
 
     #[Route('/roomDetail/{room}', name: 'roomDetail')]
-    public function roomDetail(Room $room, RoomRepository $RoomRepository, AcquisitionUnitRepository $acquisitionUnitRepository, GetDataInteface $getDataJson): Response
+    public function roomDetail(Room $room, AcquisitionUnitRepository $acquisitionUnitRepository, GetDataInteface $getDataJson): Response
     {
         $hasAcquisitionUnitInDatabase = $acquisitionUnitRepository->count(array()) > 0;
         $hasAcquisitionUnitAvailable = $acquisitionUnitRepository->count(array('state' => "En attente d'affectation")) > 0;

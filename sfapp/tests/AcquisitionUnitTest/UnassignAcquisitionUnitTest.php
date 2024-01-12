@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest\AcquisitionUnitTest;
 
 use App\Domain\AcquisitionUnitState;
 use App\Entity\Room;
@@ -34,13 +34,13 @@ class UnassignAcquisitionUnitTest extends WebTestCase
         $link = $crawler->selectLink('Confirmer')->eq(1)->link();
         $client->click($link);
 
-        $crawler = $client->followRedirect();
+        $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertStringNotContainsString($saNumber, $client->getResponse()->getContent(), 'ca marche?');
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
         $sa = $acquisitionUnitRepository->findOneBy(array('name' => $saNumber));
-        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $client->request('GET','/removeRoom/' . $room->getId());
 

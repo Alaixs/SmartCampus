@@ -4,6 +4,7 @@ namespace App\Tests;
 
 use App\Entity\Room;
 use App\Repository\RoomRepository;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Repository\UserRepository;
 
@@ -16,7 +17,7 @@ class PagesAccessibleTest extends WebTestCase
 
     private string $roomName = '404';
 
-    private function getClientWithLoggedInUser(string $username): \Symfony\Bundle\FrameworkBundle\KernelBrowser
+    private function getClientWithLoggedInUser(string $username): KernelBrowser
     {
         $client = static::createClient();
         $userRepository = $client->getContainer()->get(UserRepository::class);

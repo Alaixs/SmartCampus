@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest;
 
 use App\Domain\AcquisitionUnitState;
 use App\Entity\AcquisitionUnit;
-use App\Repository\AcquisitionUnitRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RemoveSaTest extends WebTestCase

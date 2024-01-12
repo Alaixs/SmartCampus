@@ -7,7 +7,6 @@ use App\Entity\Room;
 use App\Model\SearchData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use PhpParser\Node\Expr\Array_;
 
 /**
  * @extends ServiceEntityRepository<Room>
@@ -56,7 +55,7 @@ class RoomRepository extends ServiceEntityRepository
         if (!empty($searchData->q)) {
             $queryBuilder
                 ->andWhere('r.name LIKE :q')
-                ->setParameter('q', "%{$searchData->q}%");
+                ->setParameter('q', "%$searchData->q%");
         }
 
         if (!empty($searchData->floors)) {
@@ -76,9 +75,7 @@ class RoomRepository extends ServiceEntityRepository
             }
         }
 
-        $result = $queryBuilder->getQuery()->getResult();
-
-        return $result;
+        return $queryBuilder->getQuery()->getResult();
     }
     public function findRoomsByFloor(int $floor): Query
     {
