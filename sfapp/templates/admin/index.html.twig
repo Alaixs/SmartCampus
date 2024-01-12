@@ -8,33 +8,43 @@
 </head>
 <body>
     {% include 'partial/header.html.twig'%}
-
     <section class='planExperimentation'>
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
                 <p class="planExperimentation-p-title">Plan d'expérimentation</p>
-                {% if app.user.username == 'yacine' %}
+                {% if app.user.username  == 'yacine' %}
                 <div class="add-or-del-div">
-                    <a href="{{ path('addAU') }}" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
-                    {% if acquisitionUnitList %}
-                        <a href="{{ path('removeAU') }}" class="planExperimentation-div-button-add add-or-del-div ">Supprimer un S.A</a>
+                    <a href="{{ path('addSA') }}" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
+                    {% if listSA %}
+                        <a href="{{ path('removeSA') }}" class="planExperimentation-div-button-add add-or-del-div ">Supprimer un S.A</a>
                     {% endif %}
                 </div>
                 {% endif %}
 
             </div>
             {% if roomList is empty %}
-            <div class="noRoom">
 
-                    <p class="noRoomText"> Aucune salle n'a été ajoutée pour le moment. Commencez par en ajouter une. </p>
+                {% if not formSubmitted %}
+                <div class="noRoom">
+                    <p class="noRoomText">Aucune salle n'a été ajoutée pour le moment. Commencez par en ajouter une.</p>
+                </div>
 
-            </div>
+                {% elseif formSubmitted and filtersApplied %}
+                <div class="noRoom">
+                    <p class="noRoomText">Aucune salle ne correspond aux filtres sélectionnés.</p>
+                </div>
+
+                {% elseif formSubmitted and not filtersApplied %}
+                    <div class="noRoom">
+                        <p class="noRoomText">Aucune salle n'a été ajoutée pour le moment. Commencez par en ajouter une.</p>
+                    </div>
+                {% endif %}
 
             {% else %}
 
             <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
-                <div class="planExperimentation-div-div"><p>SALLES</p></div>
-                <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
+                <div class="planExperimentation-div-div"><div class="infosRoomAndAU">SALLES</div></div>
+                <div class="planExperimentation-div-div"><div class="infosRoomAndAU">SYSTEMES D'ACQUISITION</div></div>
             </div>
 
             <div class="planExperimentation-div-allRoom">
@@ -43,7 +53,7 @@
                     <div class='planExperimentation-div-array'>
                         <div class="planExperimentation-div-div planExperimentation-div-roomName">
                             <div class="planExperimentation-div-roomName-div">
-                                <p>{{ room.name }}</p>
+                                <div class="infosRoomAndAU">{{ room.name }}</div>
                             </div>
 
                         </div>
@@ -51,15 +61,15 @@
                         <!-- Gestion de l'état des SA" -->
                         {% if room.acquisitionUnit is empty %}
                             <div class="planExperimentation-div-div">
-                                <p>-</p>
+                                <div class="infosRoomAndAU">-</div>
                             </div>
                         {% else %}
                             <div class="planExperimentation-div-div">
-                                <p>{{ room.acquisitionUnit }}</p>
+                                <div class="infosRoomAndAU">{{ room.acquisitionUnit }}</div>
                                 <div class="lilPastille">
-                                    {% if room.acquisitionUnit.state == "En attente d'installation" and app.user.username == "yacine" %}
+                                    {% if room.acquisitionUnit.state == "En attente d'installation" and app.user.username  == "yacine" %}
                                         <img src="{{ asset('assets/img/StateImages/hourglass.png') }}" title="Le système d'acquisition n'a pas encore été installé." class="grayCircle"/>
-                                    {% elseif room.acquisitionUnit.state == "En attente d'installation" and app.user.username == "technicien" %}
+                                    {% elseif room.acquisitionUnit.state == "En attente d'installation" and app.user.username  == "technicien" %}
                                         <img src="{{ asset('assets/img/StateImages/waitingForInstallation.png') }}" title="Le système d'acquisition doit être installé." class="grayCircle"/>
                                     {% elseif room.acquisitionUnit.state == "Opérationnel"%}
                                         <img src="{{ asset('assets/img/StateImages/ok.png') }}" title="Le système d'acquisition fonctionne correctement." class="greenCircle"/>
@@ -86,17 +96,18 @@
 
             </div>
 
-            {% if app.user.username == 'yacine' %}
-                <div class='planExperimentation-div-array'>
-                    <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
-                </div>
-            {% endif %}
+                {% if app.user.username  == 'yacine' %}
+                    <div class='planExperimentation-div-array'>
+                        <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="filters">
+            {% include "components/search_data.html.twig" with {form: form} only %}
         </div>
     </section>
 
     {% include 'partial/footer.html.twig' %}
-
-
-
     </body>
 </html>

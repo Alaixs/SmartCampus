@@ -1,7 +1,6 @@
 * {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-    sc
 }
 
 body {
@@ -26,6 +25,13 @@ body {
     z-index: 2;
     max-height: 80vh;
     min-height: 23vh;
+}
+
+.infosRoomAndAU {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .planExperimentation-div
@@ -66,6 +72,13 @@ body {
     justify-content: space-between;
 }
 
+.test {
+    background-color: #F9F9F9;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+
+}
 .planExperimentation > div
 {
     display: flex;
@@ -110,6 +123,7 @@ body {
     background-color: #F9F9F9;
     margin-top: 0.3vw;
     width: 16vw;
+    height: 5vh;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -201,6 +215,13 @@ body {
     text-justify: distribute;
 }
 
+.noCorrespondingRooms {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-justify: distribute;
+}
+
 .planExperimentation-div-roomName
 {
     display: flex;
@@ -223,12 +244,83 @@ body {
     width: 1.2vw;
 }
 
-.greenCircle, .redCircle, .grayCircle {
+.filterForm {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.255);
+    margin-left: 5vh;
+    height: 100%;
+}
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0vh 1vh;
+}
+
+.filterFloors, .filterStates {
+    padding-left: 1vh;
+}
+
+.filterForm  > form {
+    margin: 1vw;
+}
+
+.filters {
+    height: 100%;
+    width: 20%;
+}
+
+input#search_form_q {
+    width: 13vw;
+}
+
+.findButton {
+    border: none;
+    width: 2vw;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.greenCircle, .redCircle, .grayCircle{
     max-width: 3vh;
     height: 3vh;
     cursor: help;
 }
 
+.endFormButtons {
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.endFormButtons > button, .endFormButtons > a {
+    width: 40%;
+    height: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-decoration: none;
+    color: black;
+}
+
+.endFormButtons > button {
+    background-color: #A2E0EE;
+}
+
+.endFormButtons > a {
+    background-color: #efefef;
+}
+
+.endFormButtons > button:hover {
+    background-color: #b9ebf6;
+}
+
+.endFormButtons > a:hover {
+    background-color: #F4F4F4;
+}
 @media screen and (max-width: 650px) {
     .planExperimentation-div-title {
         flex-direction: column;
@@ -236,6 +328,7 @@ body {
         padding: 1vh;
         background-color: white;
     }
+
     .planExperimentation-div-button-add {
         text-align: center;
     }
@@ -293,5 +386,4 @@ body {
     .planExperimentation-div-voir-plus {
         height: 3vh;
     }
-
 }

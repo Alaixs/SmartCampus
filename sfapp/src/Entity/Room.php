@@ -161,4 +161,9 @@ class Room
             'message' => 'Cette salle existe déjà'
         ]));
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
