@@ -6,46 +6,105 @@
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
 </head>
 
-<body>
+    <body>
 
-{% include 'partial/header.html.twig'%}
+        {% include 'partial/header.html.twig'%}
 
-<section>
-    <div class="dataVisualisationSection">
-        <div class="dataVisualisationTitle">
-            Données de la salle {{ room.name }}
-        </div>
-        <div class="dataVisualisation">
-            <div class="dataVisualisationTitles">
-                <div class="dataTypeTitle">
-                    Type de donnée
+        {% set currentDate = 'now'|date('d-m') %}
+        {% set currentDateSplit = currentDate|split('-') %}
+
+        {% set summerEndingDate = '31-08' %}
+        {% set summerEndingDateSplit = summerEndingDate|split('-') %}
+
+        {% set autumnEndingDate = '30-11' %}
+        {% set autumnEndingDateSplit = autumnEndingDate|split('-') %}
+
+        {% set winterEndingDate = '28-02' %}
+        {% set winterEndingDateSplit = winterEndingDate|split('-') %}
+
+        {% set springEndingDate = '31-05' %}
+        {% set springEndingDateSplit = springEndingDate|split('-') %}
+
+        <section>
+            <div class="dataVisualisationSection">
+                <div class="dataVisualisationTitle">
+                    Données de la salle {{ room.name }}
                 </div>
-                <div class="dataValueTitle">
-                    Données retournées
+                <div>
+                    <div class='sectionOfDataVisualisation'>
+                        <div class="dataArrayTitles dataType">
+                            <div>Type de donnée</div>
+                        </div>
+                        <div class="dataArrayTitles">
+                            <div>Données remontées</div>
+                        </div>
+                        <div class="dataArrayTitles">
+                            <div>Niveau de confort</div>
+                        </div>
+                    </div>
+                    <div class="dataLines">
+                        <div class="dataVisualisation">
+                            <div class="valueType">
+                                <div class="value">Température</div>
+                            </div>
+                            <div class="valueType">
+                                <div class="value">{{ temp[0] ~ '°C'}} </div>
+                            </div>
+                            <div class="valueType">
+                                {% if (currentDate > springEndingDate and currentDate <= summerEndingDate ) %}
+
+                                    {% if (temp[0] < 17 or temp[0] > 28) %}
+                                        <div class="redPellet">Trop chaud</div>
+                                    {% else %}
+                                        <div class="greenPellet">Confortable</div>
+                                    {% endif %}
+                                {% else %}
+                                    {% if (temp[0] < 17 or temp[0] > 21) %}
+                                        <div class="redPellet">Trop chaud</div>
+                                    {% else %}
+                                        <div class="greenPellet">Confortable</div>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="dataVisualisation">
+                            <div class="valueType">
+                                <div class="value">Humidité</div>
+                            </div>
+                            <div class="valueType">
+                                <div class="value">{{ humidity[0] ~ '%'}}</div>
+                            </div>
+                            <div class="valueType">
+                                {% if (humidity[0] > 70 and temp[0] > 20) %}
+                                    <div class="redPellet">Inconfortable</div>
+                                {% else %}
+                                    <div class="greenPellet">Confortable</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="dataVisualisation">
+                            <div class="valueType">
+                                <div class="value">Dioxyde de carbone</div>
+                            </div>
+                            <div class="valueType">
+                                <div class="value">{{ co2[0] ~ ' PPM'}}</div>
+                            </div>
+                            <div class="valueType">
+                                {% if (co2[0] > 1500) %}
+                                    <div class="redPellet">Dangereux</div>
+                                {% elseif (co2[0] > 1000 and co2[0] <= 1500) %}
+                                    <div class="orangePellet">Alarmant</div>
+                                {% else %}
+                                    <div class="greenPellet">Inoffensif</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="returnedData">
-                <div>
-                    <p>Température</p>
-                    <div class="temperature">
-                        {{ temp[0] }}
-                    </div>
-                </div>
-                <div>
-                    <p>Humidité</p>
-                    <div class="humidity">
-                        {{ humidity[0] }}
-                    </div>
-                </div>
-                <div>
-                    <p>Dioxyde de carbone</p>
-                    <div class="co2">
-                        {{ co2[0] }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-{% include 'partial/footer.html.twig'%}
+        {% include 'partial/footer.html.twig'%}
+
+    </body>
+</html>

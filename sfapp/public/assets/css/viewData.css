@@ -6,13 +6,19 @@ section {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-direction: column;
     width: 100vw;
     height: 60%;
     padding: 0;
     margin: 0;
 }
 
+.dataLines {
+    margin-top: 1.5vh;
+}
+
 .dataVisualisationSection {
+    background-color: white;
     width: 75%;
     height: 100%;
     display: flex;
@@ -20,33 +26,64 @@ section {
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
 }
 
+.dataVisualisationSection > div:nth-child(2) {
+    padding: 1vh;
+}
+
 .dataVisualisationTitle {
     height: 7vh;
-    background-color: #F4F4F4;
+    background-color: #F9F9F9;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2vh;
 }
 
-.dataVisualisation {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: column;
+.dataVisualisation > div {
+    height: 10vh;
 }
 
-.dataVisualisationTitles {
+.sectionOfDataVisualisation, .dataVisualisation {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
+    width: 100%;
+}
+
+.dataType, .valueType, .value {
+    display: flex;
     flex-direction: row;
-    width: 98%;
-    height: 6vh;
-    margin: 1vh;
-    background-color: #F4F4F4;
+    align-items: center;
 }
 
-.dataVisualisationTitles > div {
+.dataArrayTitles, .valueType, .value {
+    background-color: #F9F9F9;
+    margin-top: 0.3vw;
+    width: 50%;
+    height: 5vh;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
 
+.greenPellet, .orangePellet, .redPellet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 4vh;
+    width: 10vw;
+}
+
+.greenPellet {
+    background-color: #8eec8e;
+}
+
+.orangePellet {
+    background-color: #efbf6b;
+}
+
+.redPellet {
+    background-color: #e56767;
 }
