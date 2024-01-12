@@ -4,9 +4,6 @@
     <title>SmartCampus</title>
     <link rel="stylesheet" href="{{ asset('assets/css/viewData.css') }}">
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
-    <style>
-
-    </style>
 </head>
 
 <body>
@@ -14,230 +11,41 @@
 {% include 'partial/header.html.twig'%}
 
 <section>
-    {% if (currentValue[0] >= 0) %}
-        <ul class="pageIndicator">
-            {% if (valueSelected == 'temp') %}
-                <li class="indicator selectedIndicator"></li>
-                <a href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'humidity'}) }}">
-                    <li class="indicator"></li>
-                </a>
-                <a href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'co2'}) }}">
-                    <li class="indicator"></li>
-                </a>
-            {% elseif (valueSelected == 'humidity')%}
-                <a href="{{ path('view_data', {'room': room.id}) }}/temp">
-                    <li class="indicator"></li>
-                </a>
-                <li class="indicator selectedIndicator"></li>
-                <a href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'co2'}) }}">
-                    <li class="indicator"></li>
-                </a>
-            {% else %}
-                <a href="{{ path('view_data', {'room': room.id}) }}/temp">
-                    <li class="indicator"></li>
-                </a>
-                <a href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'humidity'}) }}">
-                    <li class="indicator"></li>
-                </a>
-                <li class="indicator selectedIndicator"></li>
-            {% endif %}
-        </ul>
+    <div class="dataVisualisationSection">
+        <div class="dataVisualisationTitle">
+            Données de la salle {{ room.name }}
+        </div>
         <div class="dataVisualisation">
-            {% if (valueSelected != 'temp') %}
-                {% set index = defaultValueType - 1 %}
-                <a class="leftArrow" href="{{ attribute(valueType, index) }}">
-                    <img class="scrollArrow" src="{{ asset('assets/img/arrow.png') }}">
-                </a>
-            {% else %}
-                <img class="scrollArrow unclickableScrollArrow" src="{{ asset('assets/img/arrow.png') }}">
-            {% endif %}
-            <div class="displayPanel">
-                {% if (valueSelected == 'temp') %}
-                    <div class="dataPanel tempPanel currentPanel">
-                        <p class="panelTitle">TEMPERATURE</p>
-                        <div class="currentValueData">
-                            <p>
-                                {% if ( currentValue[0] >= 0) %}
-                                    {{ currentValue[0] }}°C
-                                {% else %}
-                                    Erreur
-                                {% endif %}
-                            </p>
-                            <p class="stateDanger">
-                                {% if ( currentValue[0] > 0) %}
-                                    {% set currentDate = 'now'|date('d-m') %}
-                                    {% set currentDateSplit = currentDate|split('-') %}
-
-                                    {% set summerEndingDate = '31-08' %}
-                                    {% set summerEndingDateSplit = summerEndingDate|split('-') %}
-
-                                    {% set autumnEndingDate = '30-11' %}
-                                    {% set autumnEndingDateSplit = autumnEndingDate|split('-') %}
-
-                                    {% set winterEndingDate = '28-02' %}
-                                    {% set winterEndingDateSplit = winterEndingDate|split('-') %}
-
-                                    {% set springEndingDate = '31-05' %}
-                                    {% set springEndingDateSplit = springEndingDate|split('-') %}
-
-                                    {% if (currentDate > springEndingDate and currentDate <= summerEndingDate ) %}
-
-                                        {% if (currentValue[0] > 28 or currentValue[0] < 17) %}
-                                            TEMPERATURE ANORMALE
-                                            <style>
-                                                .stateDanger {
-                                                    background-color: #EEA2A2;
-                                                }
-                                            </style>
-                                        {% else %}
-                                            TEMPERATURE NORMALE
-                                            <style>
-                                                .stateDanger {
-                                                    background-color: #ACEEA2;
-                                                }
-                                            </style>
-                                        {% endif %}
-
-                                    {% else %}
-                                        {% if (currentValue[0] > 21 or currentValue[0] < 17) %}
-                                            TEMPERATURE ANORMALE
-                                            <style>
-                                                .stateDanger {
-                                                    background-color: #EEA2A2;
-                                                }
-                                            </style>
-                                        {% else %}
-                                            TEMPERATURE NORMALE
-                                            <style>
-                                                .stateDanger {
-                                                    background-color: #ACEEA2;
-                                                }
-                                            </style>
-                                        {% endif %}
-
-                                    {% endif %}
-                                {% endif %}
-                            </p>
-                        </div>
-                    </div>
-                    <a class="dataPanel humPanel clickableHumPanel" href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'humidity'}) }}">
-                        <p>HUMIDITE</p>
-                    </a>
-                    <a class="dataPanel co2Panel clickableCo2Panel" href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'co2'}) }}">
-                        <p>CO2</p>
-                    </a>
-                {% elseif (valueSelected == 'humidity') %}
-                    <a class="dataPanel tempPanel clickableTempPanel" href="{{ path('view_data', {'room': room.id}) }}/temp">
-                        <p>TEMPERATURE</p>
-                    </a>
-                    <div class="dataPanel humPanel currentPanel">
-                        <p class="panelTitle">HUMIDITE</p>
-                        <div class="currentValueData">
-                            <p>
-                                {% if ( currentValue[0] >= 0) %}
-                                    {{ currentValue[0] }} %
-                                {% else %}
-                                    Erreur
-                                {% endif %}
-                            </p>
-                            <p class="stateDanger">
-                                {% if (currentValue[0] > 70) %}
-                                    HUMIDITE ANORMALE
-                                    <style>
-                                        .stateDanger {
-                                            background-color: #EEA2A2;
-                                        }
-                                    </style>
-                                {% else %}
-                                    HUMIDITE NORMALE
-                                    <style>
-                                        .stateDanger {
-                                            background-color: #ACEEA2;
-                                        }
-                                    </style>
-                                {% endif %}
-                            </p>
-                        </div>
-                    </div>
-                    <a class="dataPanel co2Panel clickableCo2Panel" href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'co2'}) }}">
-                        <p>CO2</p>
-                    </a>
-                {% else %}
-                    <a class="dataPanel tempPanel clickableTempPanel" href="{{ path('view_data', {'room': room.id}) }}/temp">
-                        <p>TEMPERATURE</p>
-                    </a>
-                    <a class="dataPanel humPanel clickableHumPanel" href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'humidity'}) }}">
-                        <p>HUMIDITE</p>
-                    </a>
-                    <div class="dataPanel co2Panel currentPanel">
-                        <p class="panelTitle">CONCENTRATION DE CO2</p>
-                        <div class="currentValueData">
-                            <p>
-                                {% if ( currentValue[0] >= 0) %}
-                                    {{ currentValue[0] }} PPM
-                                {% else %}
-                                    Erreur
-                                {% endif %}
-                            </p>
-                            <p class="stateDanger">
-                                {% if (currentValue[0] > 1500) %}
-                                    CONCENTRATION DE CO2 DANGEREUX
-                                    <style>
-                                        .stateDanger {
-                                            background-color: #EEA2A2;
-                                        }
-                                    </style>
-                                {% elseif (currentValue[0] >= 1000 and currentValue[0] < 1500) %}
-                                    CONCENTRATION DE CO2 ANORMALE
-                                    <style>
-                                        .stateDanger {
-                                            background-color: #eecca2;
-                                        }
-                                    </style>
-                                {% else %}
-                                    CONCENTRATION DE CO2 NORMALE
-                                    <style>
-                                        .stateDanger {
-                                            background-color: #ACEEA2;
-                                        }
-                                    </style>
-                                {% endif %}
-                            </p>
-                        </div>
-                    </div>
-                {% endif %}
-                <style>
-                    .currentPanel {
-                        background-color: /* walter */ white;
-                        width: 70%;
-                    }
-                </style>
+            <div class="dataVisualisationTitles">
+                <div class="dataTypeTitle">
+                    Type de donnée
+                </div>
+                <div class="dataValueTitle">
+                    Données retournées
+                </div>
             </div>
-
-            {% if (valueSelected != 'co2') %}
-                {% set index = defaultValueType + 1 %}
-                <a class="rightArrow" href="{{ attribute(valueType, index) }}">
-                    <img class="scrollArrow" src="{{ asset('assets/img/arrow.png') }}">
-                </a>
-            {% else %}
-                <img class="scrollArrow unclickableScrollArrow rightUnclickableArrow" src="{{ asset('assets/img/arrow.png') }}">
-            {% endif %}
+            <div class="returnedData">
+                <div>
+                    <p>Température</p>
+                    <div class="temperature">
+                        {{ temp[0] }}
+                    </div>
+                </div>
+                <div>
+                    <p>Humidité</p>
+                    <div class="humidity">
+                        {{ humidity[0] }}
+                    </div>
+                </div>
+                <div>
+                    <p>Dioxyde de carbone</p>
+                    <div class="co2">
+                        {{ co2[0] }}
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <a class="returnToFloorPage" href="{{ path('app_client')}}">Revenir à la page précédente</a>
-            <style>
-                .returnToFloorPage {
-                    margin-top: 3vh;
-                }
-            </style>
-        </div>
-    {% else %}
-        <p>Aucune donnée n'a été récupérée pour le moment dans la salle {{ room.name }}</p>
-        <a class="returnToFloorPage" href="{{ path('app_client')}}">Revenir à la page précédente</a>
-    {% endif %}
+    </div>
 </section>
 
 {% include 'partial/footer.html.twig'%}
-
-</body>
-</html>

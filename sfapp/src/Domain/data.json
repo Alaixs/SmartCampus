@@ -174,28 +174,18 @@
   {
     "id" : 25,
     "nom" : "co2",
-    "valeur" : 640,
-    "dataCapture" : "13-12-2023 10:00:00",
-    "localisation" : "D207",
-    "description" : "",
-    "tag" : 1
-  },
-
-  {
-    "id" : 25,
-    "nom" : "co2",
-    "valeur" : 18,
+    "valeur" : 25,
     "dataCapture" : "11-12-2023 8:00:00",
-    "localisation" : "D207",
+    "localisation" : "D204",
     "description" : "",
     "tag" : 1
   },
   {
     "id" : 25,
-    "nom" : "co2",
-    "valeur" : 640,
+    "nom" : "hum",
+    "valeur" : 79,
     "dataCapture" : "10-12-2023 10:00:00",
-    "localisation" : "D206",
+    "localisation" : "D204",
     "description" : "",
     "tag" : 1
   },
@@ -204,7 +194,7 @@
     "nom" : "temp",
     "valeur" : 640,
     "dataCapture" : "13-12-2023 8:00:00",
-      "localisation" : "D207",
+      "localisation" : "D204",
     "description" : "",
     "tag" : 1
   },

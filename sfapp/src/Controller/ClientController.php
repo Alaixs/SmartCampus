@@ -37,35 +37,18 @@ class ClientController extends AbstractController
         ]);
     }
 
-    #[Route('/viewData/{room}/{valueSelected?temp}', name: 'view_data')]
-    public function viewData(string $valueSelected, Room $room, GetDataInteface $getDataJson): Response
+    #[Route('/viewData/{room}', name: 'view_data')]
+    public function viewData(Room $room, GetDataInteface $getDataJson): Response
     {
-        $valueType = ['temp', 'humidity', 'co2'];
-        if (!in_array($valueSelected, $valueType)) {
-            throw $this->createNotFoundException('Invalid value selected.');
-        }
-
-        switch ($valueSelected) {
-            case 'temp':
-                $currentValue = $getDataJson->getLastValueByType($room, 'temp');
-                $defaultValueType = 0;
-                break;
-            case 'humidity':
-                $currentValue = $getDataJson->getLastValueByType($room, 'hum');
-                $defaultValueType = 1;
-                break;
-            case 'co2':
-                $currentValue = $getDataJson->getLastValueByType($room, 'co2');
-                $defaultValueType = 2;
-                break;
-        }
+        $temp = $getDataJson->getLastValueByType($room, 'temp');
+        $humidity = $getDataJson->getLastValueByType($room, 'hum');
+        $co2 = $getDataJson->getLastValueByType($room, 'co2');
 
         return $this->render('client/viewData.html.twig', [
-            'valueSelected' => $valueSelected,
             'room' => $room,
-            'currentValue' => $currentValue,
-            'valueType' => $valueType,
-            'defaultValueType' => $defaultValueType
+            'temp' => $temp,
+            'humidity' => $humidity,
+            'co2' => $co2,
         ]);
     }
 }

@@ -81,7 +81,7 @@
                                         <div>
                                             <p class="humVisu">{{ humidity[0] ~ " %"}}</p>
                                             <style>
-                                                {% if (humidity[0] >= 100) %}
+                                                {% if (humidity[0] >= 70 and temp[0] >= 20) %}
                                                     .humVisu {
                                                         color: #dc6d6d;
                                                     }
@@ -128,7 +128,6 @@
                                         </div>
                                     {% endif %}
                                 </div>
-
                             </div>
 
                             {% if (temp[0] < 0 or humidity[0] < 0 or co2[0] < 0) %}
