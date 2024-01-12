@@ -38,7 +38,7 @@ class ClientController extends AbstractController
     }
 
     #[Route('/viewData/{room}/{valueSelected?temp}', name: 'view_data')]
-    public function viewData(string $valueSelected, Room $room, GetDataInteface $getDataJson): Response
+    public function viewData(string $valueSelected, Room $room, GetDataInteface $getData): Response
     {
         $valueType = ['temp', 'humidity', 'co2'];
         if (!in_array($valueSelected, $valueType)) {
@@ -47,15 +47,15 @@ class ClientController extends AbstractController
 
         switch ($valueSelected) {
             case 'temp':
-                $currentValue = $getDataJson->getLastValueByType($room, 'temp');
+                $currentValue = $getData->getLastValueByType($room, 'temp');
                 $defaultValueType = 0;
                 break;
             case 'humidity':
-                $currentValue = $getDataJson->getLastValueByType($room, 'hum');
+                $currentValue = $getData->getLastValueByType($room, 'hum');
                 $defaultValueType = 1;
                 break;
             case 'co2':
-                $currentValue = $getDataJson->getLastValueByType($room, 'co2');
+                $currentValue = $getData->getLastValueByType($room, 'co2');
                 $defaultValueType = 2;
                 break;
         }

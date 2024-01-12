@@ -37,4 +37,10 @@ class GetDataJson implements GetDataInteface
         return [-1, 0];
     }
 
+    public function getRoomsComfortIndicator(array $rooms): array
+    {
+        $confort = array();
+        return $t;
+    }
+
 }

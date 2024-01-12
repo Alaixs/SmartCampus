@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Domain\AcquisitionUnitState;
+use App\Domain\GetDataInteface;
 use App\Entity\AcquisitionUnit;
 use App\Repository\AcquisitionUnitRepository;
 use App\Repository\RoomRepository;
@@ -17,9 +18,14 @@ class AdminController extends AbstractController
 {
 
     #[Route('/admin', name: 'app_admin')]
-    public function admin(RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository, EntityManagerInterface $entityManager, ?AcquisitionUnit $acquisitionUnit = null): Response {
+    public function admin(RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository, EntityManagerInterface $entityManager, GetDataInteface $getData,?AcquisitionUnit $acquisitionUnit = null): Response {
         $roomList = $roomRepository->findAll();
         $acquisitionUnitList = $acquisitionUnitRepository->findAll();
+
+        $test = $getData->getRoomsComfortIndicator($roomList);
+
+
+
 
         return $this->render('admin/index.html.twig', [
             'roomList' => $roomList,
