@@ -97,7 +97,7 @@ body {
 }
 
 .planExperimentation-div-array > div {
-    width: 25vw;
+    width: 15vw;
 }
 
 .planExperimentation-div-allRoom {
@@ -211,6 +211,9 @@ body {
 .planExperimentation-div-roomName-div
 {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .div-img-modif
@@ -229,6 +232,33 @@ body {
     cursor: help;
 }
 
+.roomComfortIndicatof
+{
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.greenBackground
+{
+    background-color: #78f378;
+    color: #116c11;
+
+}
+
+.orangeBackground
+{
+    background-color: #ffa400;
+    color: #755937;
+
+}
+
+.redBackground
+{
+    background-color: #ff1b1b;
+    color: #7a0606;
+}
 @media screen and (max-width: 650px) {
     .planExperimentation-div-title {
         flex-direction: column;

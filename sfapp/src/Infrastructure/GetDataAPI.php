@@ -83,7 +83,7 @@ class GetDataAPI implements GetDataInteface
         $dateToDay = date('m:d');
         $dateMaxSummer =  date('m:d', 1725228004); // 1 Septembre
         $dateMinSummer = date('m:d', 1717192999); // 31 mai
-            if($dateToDay > $dateMinSummer and $dateToDay < $dateMaxSummer)
+        if($dateToDay > $dateMinSummer and $dateToDay < $dateMaxSummer)
         {
             $maxTemp = 28;
         }

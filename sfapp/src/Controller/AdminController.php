@@ -22,7 +22,7 @@ class AdminController extends AbstractController
         $roomList = $roomRepository->findAll();
         $acquisitionUnitList = $acquisitionUnitRepository->findAll();
 
-        $test = $getData->getRoomsComfortIndicator($roomList);
+        $roomsComfortIndicator = $getData->getRoomsComfortIndicator($roomList);
 
 
 
@@ -30,7 +30,8 @@ class AdminController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'roomList' => $roomList,
             'acquisitionUnitList' => $acquisitionUnitList,
-            'acquisitionUnit' => $acquisitionUnit
+            'acquisitionUnit' => $acquisitionUnit,
+            'roomsComfortIndicator' => $roomsComfortIndicator
         ]);
     }
 }

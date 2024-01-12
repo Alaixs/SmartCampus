@@ -13,7 +13,7 @@
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
                 <p class="planExperimentation-p-title">Plan d'expérimentation</p>
-                {% if app.user.username == 'yacine' %}
+                {% if app.user.roles[0] == 'ROLE_TECHNICIEN' %}
                 <div class="add-or-del-div">
                     <a href="{{ path('addAU') }}" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
                     {% if acquisitionUnitList %}
@@ -34,7 +34,14 @@
 
             <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
                 <div class="planExperimentation-div-div"><p>SALLES</p></div>
+                {% if app.user.roles[0] == 'ROLE_ADMIN' %}
+                <div class="planExperimentation-div-div"><p>NIVEAU DE CONFORT</p></div>
+                {% elseif app.user.roles[0] == 'ROLE_TECHNICIEN' %}
                 <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
+                {% endif %}
+                <div class="planExperimentation-div-div"><p>ETAT DE L'INSTALLATION</p></div>
+                <div class="planExperimentation-div-div"><p>ETAT DU FONCTIONNEMENT</p></div>
+
             </div>
 
             <div class="planExperimentation-div-allRoom">
@@ -44,10 +51,6 @@
                         <div class="planExperimentation-div-div planExperimentation-div-roomName">
                             <div class="planExperimentation-div-roomName-div">
                                 <p>{{ room.name }}</p>
-                                <div class="roomComfortIndicatof">
-
-
-                                </div>
                             </div>
 
                         </div>
