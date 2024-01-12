@@ -14,9 +14,9 @@
                 <p class="planExperimentation-p-title">Plan d'expérimentation</p>
                 {% if app.user.username  == 'yacine' %}
                 <div class="add-or-del-div">
-                    <a href="{{ path('addSA') }}" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
-                    {% if listSA %}
-                        <a href="{{ path('removeSA') }}" class="planExperimentation-div-button-add add-or-del-div ">Supprimer un S.A</a>
+                    <a href="{{ path('addAU') }}" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
+                    {% if roomList %}
+                        <a href="{{ path('removeAU') }}" class="planExperimentation-div-button-add add-or-del-div ">Supprimer un S.A</a>
                     {% endif %}
                 </div>
                 {% endif %}

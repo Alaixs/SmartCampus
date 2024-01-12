@@ -80,5 +80,13 @@ class RoomRepository extends ServiceEntityRepository
 
         return $result;
     }
+    public function findRoomsByFloor(int $floor): Query
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.floor = :floor')
+            ->setParameter('floor', $floor)
+            ->orderBy('r.name', 'ASC')
+            ->getQuery();
+    }
 
 }

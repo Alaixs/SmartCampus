@@ -37,7 +37,8 @@ class AddAcquisitionUnitTest extends WebTestCase
         ));
 
         $client->submit($form);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $client->followRedirect();
         $this->assertStringContainsString($newSa, $client->getResponse()->getContent(), 'ca marche?');
 
 
