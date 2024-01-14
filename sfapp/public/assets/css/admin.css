@@ -1,7 +1,6 @@
 * {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
-    sc
 }
 
 body {
@@ -96,9 +95,6 @@ body {
     align-items: center;
 }
 
-.planExperimentation-div-array > div {
-    width: 15vw;
-}
 
 .planExperimentation-div-allRoom {
     -ms-overflow-style: none;  /* IE and Edge */
@@ -111,6 +107,17 @@ body {
     margin-top: 0.3vw;
     width: 16vw;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.planExperimentation-div-largeDiv
+{
+    background-color: #F9F9F9;
+    margin-top: 0.3vw;
+    width: 32vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -244,6 +251,12 @@ body {
 {
     background-color: #78f378;
     color: #116c11;
+}
+
+.greyBackground
+{
+    background-color: #c9c9c9;
+    color: #7e6666;
 
 }
 

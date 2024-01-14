@@ -13,7 +13,7 @@
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
                 <p class="planExperimentation-p-title">Plan d'expérimentation</p>
-                {% if app.user.roles[0] == 'ROLE_TECHNICIEN' %}
+                {% if is_granted('ROLE_TECHNICIEN') %}
                 <div class="add-or-del-div">
                     <a href="{{ path('addAU') }}" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
                     {% if acquisitionUnitList %}
@@ -34,13 +34,13 @@
 
             <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
                 <div class="planExperimentation-div-div"><p>SALLES</p></div>
-                {% if app.user.roles[0] == 'ROLE_ADMIN' %}
+                {% if is_granted('ROLE_ADMIN') %}
                 <div class="planExperimentation-div-div"><p>NIVEAU DE CONFORT</p></div>
-                {% elseif app.user.roles[0] == 'ROLE_TECHNICIEN' %}
+                {% elseif is_granted('ROLE_TECHNICIEN') %}
                 <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
                 {% endif %}
                 <div class="planExperimentation-div-div"><p>ETAT DE L'INSTALLATION</p></div>
-                <div class="planExperimentation-div-div"><p>ETAT DU FONCTIONNEMENT</p></div>
+                <div class="planExperimentation-div-div"><p>ETAT DE FONCTIONNEMENT</p></div>
 
             </div>
 
@@ -54,32 +54,69 @@
                             </div>
 
                         </div>
+                        <!-- Niveau de confort (seulement référent) -->
 
-                        <!-- Gestion de l'état des SA" -->
-                        {% if room.acquisitionUnit is empty %}
-                            <div class="planExperimentation-div-div">
-                                <p>-</p>
-                            </div>
-                        {% else %}
-                            <div class="planExperimentation-div-div">
-                                <p>{{ room.acquisitionUnit }}</p>
-                                <div class="lilPastille">
-                                    {% if room.acquisitionUnit.state == "En attente d'installation" and app.user.username == "yacine" %}
-                                        <img src="{{ asset('assets/img/StateImages/hourglass.png') }}" title="Le système d'acquisition n'a pas encore été installé." class="grayCircle"/>
-                                    {% elseif room.acquisitionUnit.state == "En attente d'installation" and app.user.username == "technicien" %}
-                                        <img src="{{ asset('assets/img/StateImages/waitingForInstallation.png') }}" title="Le système d'acquisition doit être installé." class="grayCircle"/>
-                                    {% elseif room.acquisitionUnit.state == "Opérationnel"%}
-                                        <img src="{{ asset('assets/img/StateImages/ok.png') }}" title="Le système d'acquisition fonctionne correctement." class="greenCircle"/>
-                                    {% elseif room.acquisitionUnit.state == "Dysfonctionnement" %}
-                                        <img src="{{ asset('assets/img/StateImages/notOk.png') }}" title="Le système d'acquisition est en panne." class="redCircle"/>
-                                    {% elseif room.acquisitionUnit.state == "En panne" %}
-                                        <img src="{{ asset('assets/img/StateImages/questionMark.png') }}" title="Les données remontées par le système d'acquisition sont aberrantes." class="redCircle"/>
-                                    {% endif %}
+                        {% if is_granted('ROLE_ADMIN')  %}
+
+                            {% if roomsComfortIndicator[room.name]['temp'] == 'OK' and
+                                roomsComfortIndicator[room.name]['hum'] == 'OK' and
+                                roomsComfortIndicator[room.name]['co2'] == 'OK' %}
+                                <div class='planExperimentation-div-div greenBackground'>
+                                    <div class="planExperimentation-div-roomName-div">
+                                        <p>Très bon confort</p>
+                                    </div>
                                 </div>
-                            </div>
+                            {% elseif roomsComfortIndicator[room.name]['temp'] == 'Aucune données' and
+                                roomsComfortIndicator[room.name]['hum'] == 'Aucune données' and
+                                roomsComfortIndicator[room.name]['co2'] == 'Aucune données' %}
+                                <div class="planExperimentation-div-div greyBackground">
+                                    <p>Aucune données</p>
+                                </div>
+                            {% elseif roomsComfortIndicator[room.name]['temp'] != 'OK' and
+                                roomsComfortIndicator[room.name]['hum'] != 'OK' and
+                                roomsComfortIndicator[room.name]['co2'] != 'OK' %}
+                                <div class="planExperimentation-div-div redBackground">
+                                    <p>Rien ne vas</p>
+                                </div>
+                            {% else %}
+                                <div class="planExperimentation-div-div orangeBackground">
+                                    <p>Certaines données sont mauvaises</p>
+                                </div>
+                            {% endif %}
+
+                        {% else %}
+                            <!-- SA -->
+                            {% if room.acquisitionUnit is empty %}
+                                <div class="planExperimentation-div-div">
+                                    <p>-</p>
+                                </div>
+                            {% else %}
+                                <div class="planExperimentation-div-div">
+                                    <p>{{ room.acquisitionUnit }}</p>
+                                </div>
+                            {% endif %}
                         {% endif %}
 
-                        {% if app.user.username == 'yacine'%}
+                        {% if room.acquisitionUnit and room.acquisitionUnit.state != "En attente d'installation"  %}
+                            <!-- ETAT DE L'INSTALLATION DU SYSTEME D'ACQUISITION -->
+                            <div class="planExperimentation-div-div">
+                                <p>Installé</p>
+                            </div>
+                            <!-- ETAT DE FONCTIONNEMENT -->
+                            <div class="planExperimentation-div-div">
+                                <p>{{ room.acquisitionUnit.state }}</p>
+                            </div>
+                        {% elseif room.acquisitionUnit %}
+                            <div class="planExperimentation-div-largeDiv">
+                                <p>En attente d'installation</p>
+                            </div>
+                        {% else %}
+                            <div class="planExperimentation-div-largeDiv">
+                                <p>Aucun système d'acquisition installé</p>
+                            </div>
+                        {% endif %}
+                        <!-- Button voir plus et rendre opérationnel -->
+                        {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('roomDetail', {'room' : room.id}) }}" class="planExperimentation-div-voir-plus">Voir plus</a>
                         {% else %}
                             {% if room.acquisitionUnit is not empty and (room.acquisitionUnit.state != "Opérationnel" and room.acquisitionUnit.state != "Dysfonctionnement")%}
@@ -93,7 +130,7 @@
 
             </div>
 
-            {% if app.user.username == 'yacine' %}
+            {% if is_granted('ROLE_ADMIN') %}
                 <div class='planExperimentation-div-array'>
                     <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
                 </div>
