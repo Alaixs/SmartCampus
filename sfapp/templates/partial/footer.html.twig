@@ -11,15 +11,18 @@
 
 
     {% if app.user %}
-        {% if app.user.username == 'technicien' %}
+        {% set currentPath = path(app.request.attributes.get('_route'),
+            app.request.attributes.get('_route_params')) %}
+        {% if app.user.username == 'technicien' and currentPath != "/login"%}
             <div class="installation-manual">
-                <a href="https://letmegooglethat.com/?q=Comment+%C3%AAtre+%C3%A0+l%27heure+%3F">
+                <a href="assets/documentation/Document_installation_ESP32.pdf" target="_blank">
                     Télécharger le manuel d'installation du SA
                 </a>
             </div>
         {% endif %}
 
-    <div class="info-container">
+
+        <div class="info-container">
         Connecté en tant que {{ app.user.username }}
         <a href="{{ path('app_logout') }}">
             <img src="{{ asset('assets/img/logout.svg') }}" alt="logout">

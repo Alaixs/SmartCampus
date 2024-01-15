@@ -46,7 +46,6 @@ class AccessToInstallationManualTest extends WebTestCase
         $this->assertEquals(0, $link, 'Le lien <a> dans le footer ne devrait pas être présent à l\'écran sans connexion.');
     }
 
-
     private function login($client, $username, $password)
     {
         $crawler = $client->request('GET', '/login');
@@ -58,5 +57,4 @@ class AccessToInstallationManualTest extends WebTestCase
         $client->submit($form);
         $client->followRedirect();
     }
-
 }
