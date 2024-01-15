@@ -46,6 +46,13 @@
                                             background-color: #ff1b1b;
                                         }
                                     </style>
+                                {% elseif (temp[0] == -1) %}
+                                    Aucune valeur pour cette donnée
+                                    <style>
+                                        .tempComfort {
+                                            background-color: #F4F4F4;
+                                        }
+                                    </style>
                                 {% else %}
                                     Confortable
                                     <style>
@@ -61,6 +68,13 @@
                                     <style>
                                         .tempComfort {
                                             background-color: #ff1b1b;
+                                        }
+                                    </style>
+                                {% elseif (temp[0] == -1) %}
+                                    Aucune valeur pour cette donnée
+                                    <style>
+                                        .tempComfort {
+                                            background-color: #F4F4F4;
                                         }
                                     </style>
                                 {% else %}
@@ -89,6 +103,13 @@
                                         background-color: #ff1b1b;
                                     }
                                 </style>
+                            {% elseif (humidity[0] == -1) %}
+                                Aucune valeur pour cette donnée
+                                <style>
+                                    .humComfort {
+                                        background-color: #F4F4F4;
+                                    }
+                                </style>
                             {% else %}
                                 Confortable
                                 <style>
@@ -110,6 +131,13 @@
                                 <style>
                                     .co2Comfort {
                                         background-color: #78f378;
+                                    }
+                                </style>
+                            {% elseif (co2[0] == -1) %}
+                                Aucune valeur pour cette donnée
+                                <style>
+                                    .co2Comfort {
+                                        background-color: #F4F4F4;
                                     }
                                 </style>
                             {% elseif (co2[0] >= 1000 or co2[0] < 1500) %}
