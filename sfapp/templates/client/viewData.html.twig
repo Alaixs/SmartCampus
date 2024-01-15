@@ -26,78 +26,107 @@
         {% set springEndingDateSplit = springEndingDate|split('-') %}
 
         <section>
-            <div class="dataVisualisationSection">
+            <div class="dataVisualisation">
                 <div class="dataVisualisationTitle">
-                    Données de la salle {{ room.name }}
+                    Données récupérées
                 </div>
-                <div>
-                    <div class='sectionOfDataVisualisation'>
-                        <div class="dataArrayTitles dataType">
-                            <div>Type de donnée</div>
+                <div class="displayData">
+                    <div>
+                        <div class="dataType">Température</div>
+                        <div class="data">
+                            {{ temp[0] }} °C
                         </div>
-                        <div class="dataArrayTitles">
-                            <div>Données remontées</div>
-                        </div>
-                        <div class="dataArrayTitles">
-                            <div>Niveau de confort</div>
+                        <div class="dataComfort tempComfort">
+                            {% if (currentDate > springEndingDate and currentDate <= summerEndingDate ) %}
+
+                                {% if (temp[0] > 28 or temp[0] < 17) %}
+                                    Inconfortable
+                                    <style>
+                                        .tempComfort {
+                                            background-color: #EEA2A2;
+                                        }
+                                    </style>
+                                {% else %}
+                                    Confortable
+                                    <style>
+                                        .tempComfort {
+                                            background-color: #ACEEA2;
+                                        }
+                                    </style>
+                                {% endif %}
+
+                            {% else %}
+                                {% if (temp[0] > 21 or temp[0] < 17) %}
+                                    Inconfortable
+                                    <style>
+                                        .tempComfort {
+                                            background-color: #EEA2A2;
+                                        }
+                                    </style>
+                                {% else %}
+                                    Confortable
+                                    <style>
+                                        .tempComfort {
+                                            background-color: #ACEEA2;
+                                        }
+                                    </style>
+                                {% endif %}
+
+                            {% endif %}
+
                         </div>
                     </div>
-                    <div class="dataLines">
-                        <div class="dataVisualisation">
-                            <div class="valueType">
-                                <div class="value">Température</div>
-                            </div>
-                            <div class="valueType">
-                                <div class="value">{{ temp[0] ~ '°C'}} </div>
-                            </div>
-                            <div class="valueType">
-                                {% if (currentDate > springEndingDate and currentDate <= summerEndingDate ) %}
-
-                                    {% if (temp[0] < 17 or temp[0] > 28) %}
-                                        <div class="redPellet">Trop chaud</div>
-                                    {% else %}
-                                        <div class="greenPellet">Confortable</div>
-                                    {% endif %}
-                                {% else %}
-                                    {% if (temp[0] < 17 or temp[0] > 21) %}
-                                        <div class="redPellet">Trop chaud</div>
-                                    {% else %}
-                                        <div class="greenPellet">Confortable</div>
-                                    {% endif %}
-                                {% endif %}
-                            </div>
+                    <div>
+                        <div class="dataType">Humidité</div>
+                        <div class="data">
+                            {{ humidity[0] }} %
                         </div>
-                        <div class="dataVisualisation">
-                            <div class="valueType">
-                                <div class="value">Humidité</div>
-                            </div>
-                            <div class="valueType">
-                                <div class="value">{{ humidity[0] ~ '%'}}</div>
-                            </div>
-                            <div class="valueType">
-                                {% if (humidity[0] > 70 and temp[0] > 20) %}
-                                    <div class="redPellet">Inconfortable</div>
-                                {% else %}
-                                    <div class="greenPellet">Confortable</div>
-                                {% endif %}
-                            </div>
+                        <div class="dataComfort humComfort">
+                            {% if (humidity[0] > 70 and temp[0] < 20) %}
+                                Inconfortable
+                                <style>
+                                    .humComfort {
+                                        background-color: #EEA2A2;
+                                    }
+                                </style>
+                            {% else %}
+                                Confortable
+                                <style>
+                                    .humComfort {
+                                        background-color: #ACEEA2;
+                                    }
+                                </style>
+                            {% endif %}
                         </div>
-                        <div class="dataVisualisation">
-                            <div class="valueType">
-                                <div class="value">Dioxyde de carbone</div>
-                            </div>
-                            <div class="valueType">
-                                <div class="value">{{ co2[0] ~ ' PPM'}}</div>
-                            </div>
-                            <div class="valueType">
-                                {% if (co2[0] > 1500) %}
-                                    <div class="redPellet">Dangereux</div>
-                                {% elseif (co2[0] > 1000 and co2[0] <= 1500) %}
-                                    <div class="orangePellet">Alarmant</div>
-                                {% else %}
-                                    <div class="greenPellet">Inoffensif</div>
-                                {% endif %}
-                            </div>
+                    </div>
+                    <div>
+                        <div class="dataType">CO2</div>
+                        <div class="data">
+                            {{ co2[0] }} PPM
+                        </div>
+                        <div class="dataComfort co2Comfort">
+                            {% if (co2[0] >= 400 and co2[0] < 1000) %}
+                                Confortable
+                                <style>
+                                    .co2Comfort {
+                                        background-color: #ACEEA2;
+                                    }
+                                </style>
+                            {% elseif (co2[0] >= 1000 or co2[0] < 1500) %}
+                                Inquiétant
+                                <style>
+                                    .co2Comfort {
+                                        background-color: #eec5a2;
+                                    }
+                                </style>
+                            {% else %}
+                                Dangereux
+                                <style>
+                                    .co2Comfort {
+                                        background-color: #EEA2A2;
+                                    }
+                                </style>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
