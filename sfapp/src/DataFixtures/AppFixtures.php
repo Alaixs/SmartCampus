@@ -122,7 +122,6 @@ class AppFixtures extends Fixture
         /*
          *  Create building entities
          */
-
         $bat1 = new Building();
         $bat1->setName('Département informatique');
         $bat1->setNbFloor(3);
@@ -132,13 +131,13 @@ class AppFixtures extends Fixture
         /*
          * Creates user entities
          */
-        $yacine = new User();
-        $yacine->setUsername("yacine");
-        $hashedPassword = $this->passwordHasher->hashPassword($yacine, 'jesuisyacine');
+        $referent = new User();
+        $referent->setUsername("référent");
+        $hashedPassword = $this->passwordHasher->hashPassword($referent, 'jesuisreferent');
 
-        $yacine->setPassword($hashedPassword);
-        $yacine->setRoles(['ROLE_ADMIN']);
-        $manager->persist($yacine);
+        $referent->setPassword($hashedPassword);
+        $referent->setRoles(['ROLE_ADMIN']);
+        $manager->persist($referent);
         $manager->flush();
 
         $technicien = new User();
