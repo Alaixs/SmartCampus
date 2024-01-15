@@ -16,7 +16,7 @@ class EditRoomTest extends WebTestCase
     {
         $this->client = static::createClient();
         $userRepository = $this->client->getContainer()->get(UserRepository::class);
-        $testUser = $userRepository->findOneBy(['username' => 'yacine']);
+        $testUser = $userRepository->findOneBy(['username' => 'référent']);
         $this->client->loginUser($testUser);
     }
 
@@ -26,7 +26,7 @@ class EditRoomTest extends WebTestCase
         $newRoomName = 'D998';
 
         $userRepository = $this->client->getContainer()->get(UserRepository::class);
-        $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
+        $testUser = $userRepository->findOneBy(array('username' => 'référent'));
         $this->client->loginUser($testUser);
         $this->createRoom($roomName);
         $roomRepository = $this->client->getContainer()->get(RoomRepository::class);

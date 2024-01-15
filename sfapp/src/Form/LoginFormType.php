@@ -20,7 +20,7 @@ class LoginFormType extends AbstractType
                     'placeholder' => 'Nom d\'utilisateur',
                     'name' => '_username',
                     'id' => 'username',
-                    'value' => 'yacine',
+                    'value' => 'référent',
                 ],
             ])
             ->add('_password', PasswordType::class, [

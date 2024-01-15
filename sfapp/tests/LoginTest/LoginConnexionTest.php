@@ -15,8 +15,8 @@ class LoginConnexionTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Se connecter')->form([
-            '_username' => 'yacine',
-            '_password' => 'jesuisyacine'
+            '_username' => 'référent',
+            '_password' => 'jesuisreferent'
         ]);
 
         $client->submit($form);
@@ -25,7 +25,7 @@ class LoginConnexionTest extends WebTestCase
 
         $client->followRedirect();
 
-        $this->assertSelectorTextContains('.info-container', 'Connecté en tant que yacine');
+        $this->assertSelectorTextContains('.info-container', 'Connecté en tant que référent');
     }
 
     public function testLoginWithBadCredentials(): void
@@ -37,8 +37,8 @@ class LoginConnexionTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Se connecter')->form([
-            '_username' => 'yacine',
-            '_password' => 'jenesuispasyacine'
+            '_username' => 'référent',
+            '_password' => 'jenesuispasréférent'
         ]);
 
         $client->submit($form);
@@ -60,8 +60,8 @@ class LoginConnexionTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Se connecter')->form([
-            '_username' => 'yacine',
-            '_password' => 'jesuisyacine'
+            '_username' => 'référent',
+            '_password' => 'jesuisreferent'
         ]);
 
         $client->submit($form);
@@ -70,7 +70,7 @@ class LoginConnexionTest extends WebTestCase
 
         $client->followRedirect();
 
-        $this->assertSelectorTextContains('.info-container', 'Connecté en tant que yacine');
+        $this->assertSelectorTextContains('.info-container', 'Connecté en tant que référent');
 
         $client->request('GET', '/logout');
 

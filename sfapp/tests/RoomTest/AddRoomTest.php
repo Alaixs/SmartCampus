@@ -16,7 +16,7 @@ class AddRoomTest extends WebTestCase
     {
         $this->client = static::createClient();
         $userRepository = $this->client->getContainer()->get(UserRepository::class);
-        $testUser = $userRepository->findOneBy(['username' => 'yacine']);
+        $testUser = $userRepository->findOneBy(['username' => 'référent']);
         $this->client->loginUser($testUser);
     }
 
