@@ -57,7 +57,7 @@ class AccessToInstallationManualTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $link = $crawler->filter('footer .installation-manual a:contains("Télécharger le manuel d\'installation du SA")')->count();
+        $link = $crawler->filter('footer .installation-manual a:contains("Consulter le manuel d\'installation du SA")')->count();
         $this->assertEquals(0, $link, 'Le lien <a> dans le footer ne devrait pas être présent à l\'écran sans connexion.');
     }
 
