@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\AcquisitionUnit;
 use App\Form\AddAcquisitionUnitFormType;
 use App\Form\RemoveAcquisitionUnitFormType;
@@ -23,7 +23,7 @@ class AcquisitionUnitController extends AbstractController
     public function addAcquisitionUnit(Request $request, EntityManagerInterface $entityManager, AcquisitionUnitRepository $acquisitionUnitRepository, ValidatorInterface $validator): Response
     {
         $acquisitionUnit = new AcquisitionUnit();
-        $acquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+        $acquisitionUnit->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
 
         $form = $this->createForm(AddAcquisitionUnitFormType::class, $acquisitionUnit);
         $form->handleRequest($request);

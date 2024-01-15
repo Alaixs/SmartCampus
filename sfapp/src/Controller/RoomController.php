@@ -8,7 +8,7 @@ use App\Form\AddRoomFormType;
 use App\Form\AssignAcquisitionUnitFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AcquisitionUnitRepository;
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,7 +69,7 @@ class RoomController extends AbstractController
         {
             if($room->getAcquisitionUnit() != null)
             {
-                $room->getAcquisitionUnit()->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+                $room->getAcquisitionUnit()->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
                 $room->setAcquisitionUnit(null);
             }
             $entityManager->remove($room);
@@ -95,11 +95,11 @@ class RoomController extends AbstractController
             $oldAcquisitionUnit = $entityManager->getUnitOfWork()->getOriginalEntityData($room)['acquisitionUnit'];
 
             if ($oldAcquisitionUnit !== null) {
-                $oldAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+                $oldAcquisitionUnit->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
                 $entityManager->persist($oldAcquisitionUnit);
             }
 
-            $newAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
+            $newAcquisitionUnit->setState(AcquisitionUnitOperatingState::WAITING_FOR_INSTALLATION->value);
             $entityManager->persist($newAcquisitionUnit);
             $entityManager->persist($room);
             $entityManager->flush();
@@ -121,7 +121,7 @@ class RoomController extends AbstractController
         {
             $oldAcquisitionUnit = $room->getAcquisitionUnit();
             $room->setAcquisitionUnit(null);
-            $oldAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+            $oldAcquisitionUnit->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
 
             $entityManager->persist($oldAcquisitionUnit);
             $entityManager->persist($room);

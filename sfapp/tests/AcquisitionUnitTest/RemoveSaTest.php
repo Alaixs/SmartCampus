@@ -2,7 +2,7 @@
 
 namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest;
 
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\AcquisitionUnit;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -44,7 +44,7 @@ class RemoveSaTest extends WebTestCase
 
        $newSa = new AcquisitionUnit();
        $newSa->setName($saNumber);
-       $newSa->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+       $newSa->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
 
        $entityManager->persist($newSa);
        $entityManager->flush();

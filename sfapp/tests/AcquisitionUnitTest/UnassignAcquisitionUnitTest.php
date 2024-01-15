@@ -2,7 +2,7 @@
 
 namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest\AcquisitionUnitTest;
 
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\Room;
 use App\Repository\AcquisitionUnitRepository;
 use App\Entity\AcquisitionUnit;
@@ -53,7 +53,7 @@ class UnassignAcquisitionUnitTest extends WebTestCase
 
         $newSa = new AcquisitionUnit();
         $newSa->setName($saNumber);
-        $newSa->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
+        $newSa->setState(AcquisitionUnitOperatingState::WAITING_FOR_INSTALLATION->value);
 
         $newRoom = new Room();
         $newRoom->setName($roomName);

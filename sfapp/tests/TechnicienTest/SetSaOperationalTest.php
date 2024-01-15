@@ -2,7 +2,7 @@
 
 namespace App\Tests\TechnicienTest;
 
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Repository\RoomRepository;
@@ -65,7 +65,7 @@ class SetSaOperationalTest extends WebTestCase
 
         $newSa = new AcquisitionUnit();
         $newSa->setName($saNumber);
-        $newSa->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
+        $newSa->setState(AcquisitionUnitOperatingState::WAITING_FOR_INSTALLATION->value);
 
         $newRoom = new Room();
         $newRoom->setName($roomName);

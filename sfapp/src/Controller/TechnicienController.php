@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Domain\GetDataInteface;
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Form\SearchFormType;
@@ -86,7 +86,7 @@ class TechnicienController extends AbstractController
     #[Route('/defAcquisitionUnitOperationnel/{acquisitionUnit}', name: 'app_defAcquisitionUnitOperationnel')]
     public function defAcquisitionUnitOperationnel(AcquisitionUnit $acquisitionUnit, EntityManagerInterface $entityManager): Response {
         
-        $acquisitionUnit->setState(AcquisitionUnitState::OPERATIONNEL->value);
+        $acquisitionUnit->setState(AcquisitionUnitOperatingState::OPERATIONAL->value);
 
         $entityManager->flush();
     
