@@ -1,4 +1,6 @@
 body {
+    background-image: url("../img/flowerBg.jpg");
+    background-size: auto;
     height: 100vh;
     display: flex;
     flex-direction: column;
