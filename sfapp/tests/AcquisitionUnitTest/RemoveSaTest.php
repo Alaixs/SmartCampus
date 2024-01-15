@@ -38,6 +38,7 @@ class RemoveSaTest extends WebTestCase
        $client->submit($form);
        $client->request('GET', '/addAcquisitionUnit');
        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+       $client->reload();
        $this->assertStringNotContainsString($saNumber, $client->getResponse()->getContent(), 'ca marche?');
    }
    private function createSa($client, $saNumber) : void

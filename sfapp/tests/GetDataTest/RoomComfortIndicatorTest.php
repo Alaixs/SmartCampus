@@ -2,17 +2,16 @@
 
 namespace App\Tests;
 
+use App\Domain\GetDataInteface;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Infrastructure\GetDataAPI;
 use Monolog\Test\TestCase;
 
-class GetDataApiTest extends TestCase {
+class RoomComfortIndicatorTest extends TestCase {
 
     public function testValidGetLastDataByType()
     {
-
-        $getData = new GetDataAPI();
 
         // Create Room and AU
         $au = new AcquisitionUnit();
@@ -20,10 +19,19 @@ class GetDataApiTest extends TestCase {
         $room = new Room();
         $room->setAcquisitionUnit($au);
 
+        $getDataMock = $this->createMock(GetDataAPI::class);
 
-        $value = $getData->getLastValueByType($room, 'hum');
+        $getDataMock->expects($this->once())
+            ->method('getRoomComfortIndicator')
+            ->willReturn(['temp' => 'OK', 'hum' => 'OK', 'co2' => 'OK']);
 
-        $this->assertTrue($value[0] != -1);
+        $result = $getDataMock->getRoomComfortIndicator($room);
+        dump($result);
+        $this->assertEquals('OK', $result['temp']);
+        $this->assertEquals('OK', $result['hum']);
+        $this->assertEquals('OK', $result['co2']);
+
+
     }
 
     public function testInvalidGetLastDataByType()

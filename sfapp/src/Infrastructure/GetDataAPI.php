@@ -99,7 +99,6 @@ class GetDataAPI implements GetDataInteface
         $roomComfortIndicator = array();
 
         $roomData = $this->getLastValue($room);
-
         foreach($types as $type) {
             $value = $roomData[$type['name']][0];
             if ($value == -1) {

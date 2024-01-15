@@ -31,7 +31,7 @@ class SetSaOperationalTest extends WebTestCase
 
         $client->clickLink('Rendre le SA opérationnel');
         $client->followRedirect();
-        $this->assertStringContainsString("ok.png", $client->getResponse()->getContent());
+        $this->assertStringContainsString('Opérationnel', $client->getResponse()->getContent());
         $this->deleteRoom($client, $room);
         $this->deleteSA($client, $room->getAcquisitionUnit());
     }
