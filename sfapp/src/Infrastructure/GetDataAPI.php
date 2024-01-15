@@ -64,4 +64,47 @@ class GetDataAPI implements GetDataInteface
         return [-1, 0];
     }
 
+    public function getValuesByPeriod($room, $type, $period, $date1, $date2): array
+    {
+        try {
+            if ($room->getAcquisitionUnit() != null) {
+                $response = $this->client->request('GET', 'https://sae34.k8s.iut-larochelle.fr/api/captures/interval?nom=' . $type . '&date1=' . $date1 . '&date2=' . $date2, [
+                    'headers' => [
+                        'dbname' => $this->dbNames[$room->getAcquisitionUnit()->getName()],
+                        'username' => 'l1eq3',
+                        'userpass' => 'dagde4-puvtus-tyVvog',
+                    ],
+                    'query' => [
+                        'nom' => $type,
+                        'nomsa' => $room->getAcquisitionUnit()->getName(),
+                    ],
+                ]);
+    
+                $responseContent = $response->toArray();
+    
+                $formattedData = [];
+                foreach ($responseContent as $data) {
+                    $formattedData[] = [
+                        'date' => $data['dateCapture'],
+                        'value' => (float)$data['valeur'],
+                    ];
+                }
+    
+                return $formattedData;
+            }
+        } catch (\Exception $e) {
+            return [[
+                'date' => null,
+                'value' => -1,
+            ]];
+        }
+    
+        return [
+            [
+                'date' => null,
+                'value' => 0,
+            ]
+        ];
+    }
+    
 }

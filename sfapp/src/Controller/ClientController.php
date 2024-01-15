@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Domain\GetDataInteface;
 use App\Entity\Room;
+use App\Form\GraphFormType;
+use App\Model\GraphData;
 use App\Repository\BuildingRepository;
 use App\Repository\RoomRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,5 +53,45 @@ class ClientController extends AbstractController
             'humidity' => $humidity,
             'co2' => $co2,
         ]);
+    }
+
+    
+
+    #[Route('/viewGraph/{room}/{type}/{period}/{startDate}/{endDate}', name: 'view_graph')]
+    public function viewGraph(Room $room, $type, $period, $startDate, $endDate, Request $request, GetDataInteface $getDataJson): Response
+    {
+
+        $data = $getDataJson->getValuesByPeriod($room, $type, $period, $startDate, $endDate);
+
+        $period = $request->query->get('period');
+
+        $graphData = new GraphData();
+        $form = $this->createForm(GraphFormType::class, $graphData);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $type = $graphData->getType();
+            $startDate = $graphData->getStartDate()->format('Y-m-d');
+            $endDate = $graphData->getEndDate()->format('Y-m-d');
+            $period = $graphData->getPeriod();
+
+            return $this->redirectToRoute('view_graph', [
+                'room' => $room->getId(),
+                'type' => $type,
+                'period' => $period,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+            ]);
+        }
+    
+        return $this->render('client/viewGraph.html.twig', [
+            'room' => $room,
+            'data' => $data,
+            'sensor' => $type,
+            'period' => $period,
+            'form' => $form->createView(),
+        ]);
+
     }
 }

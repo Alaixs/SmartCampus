@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>SmartCampus - Graphique</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/viewGraph.css') }}">
+    <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+</head>
+
+<body>
+
+{% include 'partial/header.html.twig'%}
+
+<section>
+
+    <div>
+        <canvas id="myChart" width="1400" height="600"></canvas>
+    </div>
+
+
+</section>
+{# on ajoute le form ici #}
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ asset('js/graph.js') }}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('myChart').getContext('2d');
+        
+        const formattedData = {{ data|json_encode|raw }};
+        
+        const labels = formattedData.map(function (data) {
+            return new Date(data.date).toLocaleTimeString();
+        });
+        
+        const values = formattedData.map(function (data) {
+            return data.value;
+        });
+
+        const gradient = ctx.createLinearGradient(0, ctx.canvas.height, 0, 0);
+        gradient.addColorStop(0, 'rgba(75, 192, 192, 0.2)');
+        gradient.addColorStop(1, 'rgba(75, 192, 192, 0)');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Valeurs par {{ period }}',
+                    data: values,
+                    borderWidth: 3,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: gradient,
+                    fill: true, 
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    },
+                    x: {
+                        display: true,
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Valeurs dans {{ room.name }} du capteur de {{ sensor }}',
+                        font: {
+                            size: 16
+                        }
+                    },
+                    elements: {
+                        line: {
+                            tension: 0.4,
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+
+</body>
+{% include 'partial/footer.html.twig'%}
+</html>

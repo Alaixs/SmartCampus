@@ -37,4 +37,9 @@ class GetDataJson implements GetDataInteface
         return [-1, 0];
     }
 
+    public function getValuesByPeriod($room, $type, $period, $startDate, $endDate): array
+    {
+
+    }
+
 }
