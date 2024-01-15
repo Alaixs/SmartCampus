@@ -262,7 +262,7 @@ body {
 
 .orangeBackground
 {
-    background-color: #ffa400;
+    background-color: #f6ae2b;
     color: #755937;
 
 }
@@ -271,6 +271,11 @@ body {
 {
     background-color: #ff1b1b;
     color: #7a0606;
+}
+
+.cursorHelp:hover
+{
+    cursor: help
 }
 @media screen and (max-width: 650px) {
     .planExperimentation-div-title {

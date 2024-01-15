@@ -9,6 +9,31 @@
 <body>
     {% include 'partial/header.html.twig'%}
 
+    {% for flashMessage in app.flashes('message') %}
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+        <script>
+            function showToast() {
+                Toastify({
+                    text: "{{ flashMessage }}",
+                    duration: 4000,
+                    newWindow: false,
+                    close: true,
+                    gravity: "top",
+                    position: "center",
+                    stopOnFocus: true,
+                    style: {
+                        color: "#fff",
+                        borderRadius: "10px",
+                        fontFamily: "Arial, sans-serif",
+                        fontSize: "16px",
+                    },
+                    onClick: function(){}
+                }).showToast();
+            }
+            showToast();
+        </script>
+    {% endfor %}
     <section class='planExperimentation'>
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
@@ -58,32 +83,64 @@
 
                         {% if is_granted('ROLE_ADMIN')  %}
 
-                            {% if roomsComfortIndicator[room.name]['temp'] == 'OK' and
-                                roomsComfortIndicator[room.name]['hum'] == 'OK' and
-                                roomsComfortIndicator[room.name]['co2'] == 'OK' %}
-                                <div class='planExperimentation-div-div greenBackground'>
-                                    <div class="planExperimentation-div-roomName-div">
-                                        <p>Très bon confort</p>
-                                    </div>
+                            {% if room.acquisitionUnit %}
+                                <div class='planExperimentation-div-div greyBackground' id="comfortIndicatorRoom{{ room.id }}">
+                                        <p>Chargement des données...</p>
                                 </div>
-                            {% elseif roomsComfortIndicator[room.name]['temp'] == 'Aucune données' and
-                                roomsComfortIndicator[room.name]['hum'] == 'Aucune données' and
-                                roomsComfortIndicator[room.name]['co2'] == 'Aucune données' %}
-                                <div class="planExperimentation-div-div greyBackground">
-                                    <p>Aucune données</p>
-                                </div>
-                            {% elseif roomsComfortIndicator[room.name]['temp'] != 'OK' and
-                                roomsComfortIndicator[room.name]['hum'] != 'OK' and
-                                roomsComfortIndicator[room.name]['co2'] != 'OK' %}
-                                <div class="planExperimentation-div-div redBackground">
-                                    <p>Rien ne vas</p>
-                                </div>
-                            {% else %}
-                                <div class="planExperimentation-div-div orangeBackground">
-                                    <p>Certaines données sont mauvaises</p>
-                                </div>
-                            {% endif %}
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    fetch('/getRoomComfort/{{ room.id }}')
+                                        .then(function(response) {
+                                            if (!response.ok) {
+                                                throw new Error('Erreur lors de la récupération des données de confort');
+                                            }
+                                            return response.json();
+                                        })
+                                        .then(function(data) {
+                                            updateRoomsComfortIndicator(data, {{ room.id }});
+                                        })
+                                        .catch(function(error) {
+                                            console.error(error.message);
+                                        });
+                                });
 
+                                function updateRoomsComfortIndicator(data, roomId) {
+                                    let div = document.getElementById('comfortIndicatorRoom' + roomId);
+                                    let tempComfort = data['temp'];
+                                    let humComfort = data['hum'];
+                                    let co2Comfort = data['co2'];
+                                    if(tempComfort === 'OK' && humComfort === 'OK' && co2Comfort === 'OK')
+                                    {
+                                        div.classList.remove("greyBackground");
+                                        div.classList.add('greenBackground');
+                                        div.innerHTML = `<p class='cursorHelp'><span
+                                        title="Température : ` + tempComfort + `\n Humidité : `+ humComfort + `\n Co2 : ` + co2Comfort + `">Confortable</span></p>`;
+                                    }
+                                    else if(tempComfort === 'Très mauvais' && humComfort === 'Très mauvais' && co2Comfort === 'Très mauvais')
+                                    {
+                                        div.classList.remove("greyBackground");
+                                        div.classList.add('redBackground');
+                                        div.innerHTML = `<p class='cursorHelp'><span
+                                        title="Température : ` + tempComfort + `\n Humidité : `+ humComfort + `\n Co2 : ` + co2Comfort + `"><p>Inconfortable</span></p>`;
+                                    }
+                                    else if(tempComfort === 'Aucune données' && humComfort === 'Aucune données' && co2Comfort === 'Aucune données')
+                                    {
+                                        div.innerHTML = `<p>Aucune donnée</p>`;
+                                    }
+                                    else
+                                    {
+                                        console.log(data);
+                                        div.classList.remove("greyBackground");
+                                        div.classList.add('orangeBackground');
+                                        div.innerHTML = `<p class='cursorHelp'><span
+                                        title="Température : ` + tempComfort + `\n Humidité : `+ humComfort + `\n Co2 : ` + co2Comfort + `">Peu confortable</span></p>`;                                    }
+                                }
+                            </script>
+                        {% else %}
+                            <div class='planExperimentation-div-div greyBackground'>
+                                <p>Aucune donnée</p>
+                            </div>
+                        {% endif %}
                         {% else %}
                             <!-- SA -->
                             {% if room.acquisitionUnit is empty %}
@@ -107,12 +164,18 @@
                                 <p>{{ room.acquisitionUnit.state }}</p>
                             </div>
                         {% elseif room.acquisitionUnit %}
-                            <div class="planExperimentation-div-largeDiv">
+                            <div class="planExperimentation-div-div">
                                 <p>En attente d'installation</p>
                             </div>
+                            <div class="planExperimentation-div-div">
+                                <p> - </p>
+                            </div>
                         {% else %}
-                            <div class="planExperimentation-div-largeDiv">
-                                <p>Aucun système d'acquisition installé</p>
+                            <div class="planExperimentation-div-div">
+                                <p>Aucun système d'acquisition attribué</p>
+                            </div>
+                            <div class="planExperimentation-div-div">
+                                <p> - </p>
                             </div>
                         {% endif %}
                         <!-- Button voir plus et rendre opérationnel -->
