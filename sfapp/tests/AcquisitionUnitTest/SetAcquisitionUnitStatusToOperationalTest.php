@@ -25,7 +25,6 @@ class SetAcquisitionUnitStatusToOperationalTest extends WebTestCase
         $this->assertInstanceOf(AcquisitionUnit::class, $newSA);
 
         $client->request('GET', '/defAcquisitionUnitOperationnel/' . $newSA->getId());
-
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 }

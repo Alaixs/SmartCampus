@@ -52,6 +52,7 @@ class GetDataAPI implements GetDataInteface
                     ],
                 ]);
 
+
                 $responseContent = $response->toArray();
 
                 $value = isset($responseContent[0]['valeur']) ? (int)$responseContent[0]['valeur'] : -1;
@@ -59,9 +60,61 @@ class GetDataAPI implements GetDataInteface
                 return [$value, $date];
             }
         } catch (\Exception $e) {
-            return [-1, 0];
+            return [-1,0];
         }
-        return [-1, 0];
+        return [-1,0];
     }
 
+    public function getLastValue(Room $room) : array
+    {
+        $roomData = array();
+        $types = ['temp', 'co2', 'hum'];
+
+        foreach($types as $type)
+        {
+            $roomData[$type] = $this->getLastValueByType($room, $type);
+        }
+        return $roomData;
+
+    }
+
+    public function getRoomComfortIndicator(Room $room) : array
+    {
+        $dateToDay = date('m:d');
+        $dateMaxSummer =  date('m:d', 1725228004); // 1 Septembre
+        $dateMinSummer = date('m:d', 1717192999); // 31 mai
+        if($dateToDay > $dateMinSummer and $dateToDay < $dateMaxSummer)
+        {
+            $maxTemp = 28;
+        }
+        else
+        {
+            $maxTemp = 21;
+        }
+
+        $types = ['temp' => ['name' => 'temp', 'minMedium' => 17, 'maxMedium' => $maxTemp, 'min' => 17, 'max' => $maxTemp],
+            'hum' => ['name' => 'hum', 'minMedium' => 0, 'maxMedium' => 70, 'min' => 0, 'max' => 70],
+            'c02' => ['name' => 'co2', 'minMedium' => 0, 'maxMedium' => 1000, 'min' => 0, 'max' => 1500]];
+
+        $roomComfortIndicator = array();
+
+        $roomData = $this->getLastValue($room);
+        foreach($types as $type) {
+            $value = $roomData[$type['name']][0];
+            if ($value == -1) {
+                $comfort = "Aucune données";
+            } elseif ($value > 70 and $type == 'hum' and $roomData['temp'][0] > 20) {
+                $comfort = "Très mauvais";
+            } elseif (($value > $type['max'] or $value < $type['min']) and $type != 'hum') {
+                $comfort = "Très mauvais";
+            } elseif ($value > $type['maxMedium'] or $value < $type['minMedium']) {
+                $comfort = 'Mauvais';
+            } else {
+                $comfort = 'OK';
+            }
+            $roomComfortIndicator[$type['name']] = $comfort;
+        }
+
+        return $roomComfortIndicator;
+    }
 }

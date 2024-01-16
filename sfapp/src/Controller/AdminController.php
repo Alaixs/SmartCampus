@@ -3,26 +3,24 @@
 namespace App\Controller;
 
 
-use App\Form\SearchFormType;
-use App\Model\SearchData;
+use App\Domain\AcquisitionUnitState;
+use App\Domain\GetDataInteface;
+use App\Entity\AcquisitionUnit;
+use App\Entity\Room;
 use App\Repository\AcquisitionUnitRepository;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdminController extends AbstractController
 {
 
     #[Route('/admin', name: 'app_admin')]
-    public function admin(RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository, Request $request): Response
-    {
-        $searchData = new SearchData();
-        $form = $this->createForm(SearchFormType::class, $searchData);
-        $form->handleRequest($request);
-
+    public function admin(UserInterface $user, RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository,
+                           GetDataInteface $getData,): Response {
         $roomList = $roomRepository->findAll();
         $acquisitionUnitList = $acquisitionUnitRepository->findAll();
         $formSubmitted = false;
@@ -44,5 +42,13 @@ class AdminController extends AbstractController
             'roomList' => $roomList,
             'filtersApplied' => $filtersApplied,
         ]);
+    }
+
+    #[Route('/getRoomComfort/{room}', name: 'get_roomComfort')]
+    public function getRoomsComfortJson(GetDataInteface $getData, Room $room): JsonResponse
+    {
+        $roomsComfortIndicator = $getData->getRoomComfortIndicator($room);
+
+        return $this->json($roomsComfortIndicator);
     }
 }
