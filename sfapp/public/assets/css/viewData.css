@@ -84,10 +84,23 @@ section {
     align-items: center;
 }
 
+.dataError {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    color: #720000;
+}
+
 .dataComfort {
     width: 60%;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 2vh;
+}
+
+.noDataMsg {
     font-size: 2vh;
 }
