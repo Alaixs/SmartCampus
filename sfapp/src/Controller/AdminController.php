@@ -9,7 +9,6 @@ use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Repository\AcquisitionUnitRepository;
 use App\Repository\RoomRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,10 +23,24 @@ class AdminController extends AbstractController
                            GetDataInteface $getData,): Response {
         $roomList = $roomRepository->findAll();
         $acquisitionUnitList = $acquisitionUnitRepository->findAll();
+        $formSubmitted = false;
+        $filtersApplied = false;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formSubmitted = true;
+            $roomList = $roomRepository->findBySearch($searchData);
+
+            if (!empty($searchData->getQ()) || !empty($searchData->getFloors()) || !empty($searchData->getAcquisitionUnitState())) {
+                $filtersApplied = true;
+            }
+        }
 
         return $this->render('admin/index.html.twig', [
-            'roomList' => $roomList,
+            'form' => $form->createView(),
             'acquisitionUnitList' => $acquisitionUnitList,
+            'formSubmitted' => $formSubmitted,
+            'roomList' => $roomList,
+            'filtersApplied' => $filtersApplied,
         ]);
     }
 
@@ -39,4 +52,3 @@ class AdminController extends AbstractController
         return $this->json($roomsComfortIndicator);
     }
 }
-

@@ -35,7 +35,11 @@
                 <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
             </a>
             <p>Salle {{ room.name }}</p>
-            <p>Système d'acquisition</p>
+            {% if is_granted('ROLE_ADMIN') %}
+                <p>Données</p>
+            {% else %}
+                <p>Système d'acquisition</p>
+            {% endif %}
         </div>
         <div class="formInputs">
             <div class="sectionsOfWindow">
@@ -54,11 +58,13 @@
                     </div>
 
                     <div class="formFooter">
+
                         <div class="buttons">
-                            <a href="{{ path('editRoom', {'room' : room.id}) }}" type="submit" class="endButton">Modifier la salle</a>
+                                <a href="{{ path('editRoom', {'room' : room.id}) }}" type="submit" class="endButton">Modifier la salle</a>
                             <button type="button" class="endButton delete" data-bs-toggle="modal" data-bs-target="#removeRoomModal">
                                 Supprimer
                             </button>
+
 
                             <!-- Modal -->
                             <div class="modal fade" id="removeRoomModal" tabindex="-1" aria-labelledby="removeRoomModalLabel" aria-hidden="true">
@@ -101,6 +107,10 @@
                         </div>
 
                         <div class="adviceForUser">
+                        {% if room.acquisitionUnit == false %}
+                            <p>Aucun système d'acquisition n'a été installé dans cette salle</p>
+                        {% else  %}
+                        {% endif %}
                             {% if (temp[0] < 0 and humidity[0] < 0 and co2[0]) %}
 
                                 {% if (temp[1] != 0) %}
@@ -116,7 +126,6 @@
                                 {% endif %}
 
                             {% endif %}
-
                             {% else %}
 
                                 <div>
@@ -124,9 +133,9 @@
                                         {% if temp[1] != 0 %}
                                             <li>Dernière mesure : {{ temp[1] }} </li>
                                         {% elseif humidity[1] != 0 %}
-                                            <li>Dernière mesure : {{ temp[1] }} </li>
+                                            <li>Dernière mesure : {{ humidity[1] }} </li>
                                         {% elseif co2[1] != 0 %}
-                                            <li>Dernière mesure : {{ temp[1] }} </li>
+                                            <li>Dernière mesure : {{ co2[1] }} </li>
                                         {% else %}
                                             <li>Erreur</li>
                                         {% endif %}
@@ -148,43 +157,8 @@
                                         {% endif %}
                                     </ul>
                                 </div>
-
-                            {% endif %}
                         </div>
-
-                    </div>
-                    <div class="formFooter">
-                        <div class="buttons {{ room.acquisitionUnit ? '' : 'button'}}">
-                            {% if room.acquisitionUnit %}
-                                <a href="{{ path('assignAU', {'room' : room.id }) }}" class="endButton">Gérer l'affectation</a>
-                                <button type="button" class="endButton delete" data-bs-toggle="modal" data-bs-target="#unassignAcquisitionUnitModal">
-                                    Désaffecter
-                                </button>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="unassignAcquisitionUnitModal" tabindex="-1" aria-labelledby="unassignAcquisitionUnitModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-2" id="unassignAcquisitionUnitModalLabel">Êtes-vous sûr ?</h1>
-                                            </div>
-                                            <div class="modal-body">
-                                                Vous allez désaffecter le SA {{ room.acquisitionUnit }} de la salle {{ room.name }}
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="endButton cancelButtonModal" data-bs-dismiss="modal">Annuler</button>
-                                                <a style="text-decoration: none"  href="{{ path('unassignAU', {'room' : room.id})}}" class="endButton delete">Confirmer</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% elseif hasAcquisitionUnitAvailable %}
-                                <a href="{{ path('assignAU', {'room' : room.id}) }}" class="endButton">Affecter un SA</a>
-                            {% else %}
-                                <a href="{{ path('addAU') }}" class="endButton">Ajouter un SA</a>
-
-                            {% endif %}
-                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

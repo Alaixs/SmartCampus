@@ -3,30 +3,51 @@
 namespace App\Controller;
 
 use App\Domain\GetDataInteface;
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
-use App\Form\RemoveSAFormType;
+use App\Form\SearchFormType;
+use App\Model\SearchData;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class TechnicienController extends AbstractController
 {
     #[Route('/technicien', name: 'app_tech')]
-    public function technicien(RoomRepository $roomRepository): Response
+    public function technicien(RoomRepository $roomRepository, Request $request): Response
     {
+        $searchData = new SearchData();
+        $form = $this->createForm(SearchFormType::class, $searchData);
+        $form->handleRequest($request);
+
         $rooms = $roomRepository->findAll();
+        $formSubmitted = false;
+        $filtersApplied = false;
+        $user = 'technicien';
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formSubmitted = true;
+            $rooms = $roomRepository->findBySearch($searchData);
+
+            if (!empty($searchData->getQ()) || !empty($searchData->getFloors()) || !empty($searchData->getAcquisitionUnitState())) {
+                $filtersApplied = true;
+            }
+        }
+
         return $this->render('admin/index.html.twig', [
-            'listRooms' => $rooms,
+            'form' => $form->createView(),
+            'user' => $user,
+            'allRooms' => $rooms,
+            'formSubmitted' => $formSubmitted,
+            'filtersApplied' => $filtersApplied,
         ]);
     }
+
 
     #[Route('/manageAcquisitionUnit/{acquisitionUnit}', name: 'manageAcquisitionUnit')]
     public function manageAcquisitionUnit(Room $room, GetDataInteface $getDataJson, AcquisitionUnit $acquisitionUnit): Response
@@ -65,7 +86,7 @@ class TechnicienController extends AbstractController
     #[Route('/defAcquisitionUnitOperationnel/{acquisitionUnit}', name: 'app_defAcquisitionUnitOperationnel')]
     public function defAcquisitionUnitOperationnel(AcquisitionUnit $acquisitionUnit, EntityManagerInterface $entityManager): Response {
         
-        $acquisitionUnit->setState(AcquisitionUnitState::OPERATIONNEL->value);
+        $acquisitionUnit->setState(AcquisitionUnitOperatingState::OPERATIONAL->value);
 
         $entityManager->flush();
     

@@ -37,14 +37,27 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin, roles: [ROLE_ADMIN, ROLE_TECHNICIEN] }
-        - { path: ^/removeSA, roles: ROLE_ADMIN }
-        - { path: ^/addSA, roles: ROLE_ADMIN }
-        - { path: ^/removeSA, roles: ROLE_ADMIN }
+<<<<<<< HEAD
+        - { path: ^/removeAcquisitionUnit, roles: ROLE_TECHNICIEN }
+        - { path: ^/addAcquisitionUnit, roles: ROLE_TECHNICIEN }
+        - { path: ^/assignAcquisitionUnit, roles: ROLE_TECHNICIEN }
+        - { path: ^/unassignAcquisitionUnit, roles: ROLE_TECHNICIEN }
+        - { path: ^/manageAcquisitionUnit, roles: ROLE_TECHNICIEN }
+        - { path: ^/defAcquisitionUnitOperationnel, roles: ROLE_TECHNICIEN }
+        - { path: ^/testData, roles: ROLE_TECHNICIEN }
         - { path: ^/detailRoom, roles: ROLE_ADMIN }
         - { path: ^/editRoom, roles: ROLE_ADMIN }
-        - { path: ^/assignSA, roles: ROLE_ADMIN }
         - { path: ^/addRoom, roles: ROLE_ADMIN }
+        - { path: ^/removeRoom, roles: ROLE_ADMIN }
 
+=======
+        - { path: ^/removeSA, roles: ROLE_ADMIN }
+        - { path: ^/addSA, roles: ROLE_TECHNICIEN }
+        - { path: ^/roomDetail, roles: [ROLE_ADMIN, ROLE_TECHNICIEN] }
+        - { path: ^/editRoom, roles: ROLE_ADMIN }
+        - { path: ^/assignSA, roles: ROLE_TECHNICIEN }
+        - { path: ^/addRoom, roles: ROLE_ADMIN }
+>>>>>>> 6a2d15d0f515c5952889bae9540c1cdb771637e5
         # - { path: ^/profile, roles: ROLE_USER }
 
 # when@test:

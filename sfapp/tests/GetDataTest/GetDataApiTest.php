@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest;
 
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Infrastructure\GetDataAPI;
-use Monolog\Test\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class GetDataApiTest extends TestCase {
 

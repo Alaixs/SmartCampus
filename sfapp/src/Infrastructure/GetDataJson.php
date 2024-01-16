@@ -9,10 +9,10 @@ class GetDataJson implements GetDataInteface
 {
     public array $allValues;
 
-    public function filterArrayByOne($array, $key, $value)
+    public function filterArrayByOne($array, $key, $value) : array
     {
         return array_filter($array, function ($v) use ($key, $value) {
-            return isset($v[$key]) && strpos($v[$key], $value) !== false;
+            return isset($v[$key]) && str_contains($v[$key], $value);
         });
     }
 
@@ -23,7 +23,7 @@ class GetDataJson implements GetDataInteface
             $data = json_decode($json, true);
 
             $this->allValues = $this->filterArrayByOne($data, 'nom', $type);
-            $this->allValues = $this->filterArrayByOne($this->allValues, 'localisation', $roomName);
+            $this->allValues = $this->filterArrayByOne($this->allValues, 'localisation', $room->getName());
             usort($this->allValues, function ($a, $b) {
                 return strtotime($b['dataCapture']) - strtotime($a['dataCapture']);
             });

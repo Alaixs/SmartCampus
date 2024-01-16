@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest;
 
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -16,7 +16,7 @@ class AddRoomTest extends WebTestCase
     {
         $this->client = static::createClient();
         $userRepository = $this->client->getContainer()->get(UserRepository::class);
-        $testUser = $userRepository->findOneBy(['username' => 'yacine']);
+        $testUser = $userRepository->findOneBy(['username' => 'référent']);
         $this->client->loginUser($testUser);
     }
 
@@ -201,8 +201,7 @@ class AddRoomTest extends WebTestCase
     {
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
         $roomRepository = $entityManager->getRepository(Room::class);
-        $room = $roomRepository->findOneBy(['name' => $roomName]);
-        return $room;
+        return $roomRepository->findOneBy(['name' => $roomName]);
     }
 
     private function deleteRoom($roomName): void

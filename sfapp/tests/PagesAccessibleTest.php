@@ -4,6 +4,7 @@ namespace App\Tests;
 
 use App\Entity\Room;
 use App\Repository\RoomRepository;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Repository\UserRepository;
 
@@ -16,7 +17,7 @@ class PagesAccessibleTest extends WebTestCase
 
     private string $roomName = '404';
 
-    private function getClientWithLoggedInUser(string $username): \Symfony\Bundle\FrameworkBundle\KernelBrowser
+    private function getClientWithLoggedInUser(string $username): KernelBrowser
     {
         $client = static::createClient();
         $userRepository = $client->getContainer()->get(UserRepository::class);
@@ -41,7 +42,7 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testAdminPageIsAccessible()
     {
-        $client = $this->getClientWithLoggedInUser('yacine');
+        $client = $this->getClientWithLoggedInUser('référent');
 
         $client->request('GET', '/admin');
 
@@ -54,7 +55,7 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testAddRoomPageIsAccessible()
     {
-        $client = $this->getClientWithLoggedInUser('yacine');
+        $client = $this->getClientWithLoggedInUser('référent');
 
         $client->request('GET', '/addRoom');
 
@@ -80,7 +81,7 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testAddAcquisitionUnitPageIsAccessible()
     {
-        $client = $this->getClientWithLoggedInUser('yacine');
+        $client = $this->getClientWithLoggedInUser('référent');
 
         $client->request('GET', '/addAcquisitionUnit');
 
@@ -107,7 +108,7 @@ class PagesAccessibleTest extends WebTestCase
     public function testEditRoomPageIsAccessible()
     {
 
-        $client = $this->getClientWithLoggedInUser('yacine');
+        $client = $this->getClientWithLoggedInUser('référent');
 
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
@@ -140,7 +141,7 @@ class PagesAccessibleTest extends WebTestCase
     public function testAssignAcquisitionUnitIsAccessible()
     {
 
-        $client = $this->getClientWithLoggedInUser('yacine');
+        $client = $this->getClientWithLoggedInUser('référent');
         
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
@@ -159,7 +160,7 @@ class PagesAccessibleTest extends WebTestCase
     public function testUnAssignSAIsAccessible()
     {
 
-        $client = $this->getClientWithLoggedInUser('yacine');
+        $client = $this->getClientWithLoggedInUser('référent');
 
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
@@ -177,7 +178,7 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testRemoveRoomIsAccessible()
     {
-        $client = $this->getClientWithLoggedInUser('yacine');
+        $client = $this->getClientWithLoggedInUser('référent');
 
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
@@ -194,7 +195,7 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testLoginIsAccessible()
     {
-        $client = $this->getClientWithLoggedInUser('yacine');
+        $client = $this->getClientWithLoggedInUser('référent');
 
         $client->request('GET', '/login');
 

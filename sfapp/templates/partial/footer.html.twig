@@ -8,6 +8,8 @@
             La Rochelle Université
         </a>
     </div>
+    {% set currentPath = path(app.request.attributes.get('_route'),
+        app.request.attributes.get('_route_params')) %}
     {% if app.user %}
     <div class="info-container">
         Connecté en tant que {{ app.user.username }}
@@ -15,7 +17,7 @@
             <img src="{{ asset('assets/img/logout.svg') }}" alt="logout">
         </a>
     </div>
-    {% else %}
+    {% elseif not app.user and currentPath != "/login" %}
     <div class="info-container">
         <a href="{{ path('app_login') }}"> Accès administrateur </a>
     </div>

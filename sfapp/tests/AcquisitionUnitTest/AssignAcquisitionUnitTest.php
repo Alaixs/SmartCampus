@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest;
 
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\Room;
 use App\Repository\AcquisitionUnitRepository;
 use App\Entity\AcquisitionUnit;
@@ -23,7 +23,7 @@ class AssignAcquisitionUnitTest extends WebTestCase
 
         $client = static::createClient();
         $userRepository = $client->getContainer()->get(UserRepository::class);
-        $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
+        $testUser = $userRepository->findOneBy(array('username' => 'référent'));
         $client->loginUser($testUser);
 
         $this->createRoom($client, $roomName);
@@ -35,7 +35,7 @@ class AssignAcquisitionUnitTest extends WebTestCase
         $room = $roomRepository->findOneBy(array('name' => $roomName));
         $sa = $acquisitionUnitRepository->findOneBy(array('name' => $saNumber));
 
-        $crawler = $client->request('GET', '/roomDetail/' . $room->getId());
+        $client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $client->request('GET', '/roomDetail/' . $room->getId());
@@ -67,7 +67,7 @@ class AssignAcquisitionUnitTest extends WebTestCase
 
         $newSa = new AcquisitionUnit();
         $newSa->setName($saNumber);
-        $newSa->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+        $newSa->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
 
         $entityManager->persist($newSa);
         $entityManager->flush();

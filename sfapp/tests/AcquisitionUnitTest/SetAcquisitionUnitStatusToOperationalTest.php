@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest\AcquisitionUnitTest\AcquisitionUnitTest;
 
 use App\Entity\AcquisitionUnit;
-use App\Repository\AcquisitionUnitRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 
 class SetAcquisitionUnitStatusToOperationalTest extends WebTestCase
 {
@@ -18,7 +17,7 @@ class SetAcquisitionUnitStatusToOperationalTest extends WebTestCase
 
         $newSA = new AcquisitionUnit();
         $newSA->setName($AUName);
-        $newSA->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+        $newSA->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
 
         $entityManager->persist($newSA);
         $entityManager->flush();
