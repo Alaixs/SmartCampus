@@ -89,7 +89,7 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: red;
+    background-color: #ff4242;
     color: #720000;
 }
 
@@ -103,4 +103,20 @@ section {
 
 .noDataMsg {
     font-size: 2vh;
+}
+
+.graphButton {
+    height: 6vh;
+    width: 20%;
+    background-color: #b8f5ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    text-decoration: none;
+    margin-bottom: 2vh;
+}
+
+.graphButton:hover {
+    background-color: #b1f0ff;
 }
