@@ -103,8 +103,9 @@ class RoomController extends AbstractController
             $entityManager->persist($newAcquisitionUnit);
             $entityManager->persist($room);
             $entityManager->flush();
+            $this->addFlash('message', "Le système d'acquisition " . $newAcquisitionUnit->getName() . "a bien été affecter à la salle " . $room->getName());
 
-            return $this->redirectToRoute('roomDetail', ['room' => $room->getId()]);
+            return $this->redirectToRoute('manageAcquisitionUnit', ['acquisitionUnit' => $room->getAcquisitionUnit()->getId()]);
         }
 
         return $this->render('room/assignAcquisitionUnitForm.html.twig', [
@@ -125,7 +126,6 @@ class RoomController extends AbstractController
 
             $entityManager->persist($oldAcquisitionUnit);
             $entityManager->persist($room);
-
             $entityManager->flush();
         }
         return $this->redirectToRoute('roomDetail', ['room' => $room->getId()]);
