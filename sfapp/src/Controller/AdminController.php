@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 
-use App\Domain\AcquisitionUnitState;
 use App\Domain\GetDataInteface;
-use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Form\SearchFormType;
 use App\Model\SearchData;
@@ -16,14 +14,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdminController extends AbstractController
 {
 
     #[Route('/admin', name: 'app_admin')]
-    public function admin(UserInterface $user, RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository,
-                           GetDataInteface $getData, Request $request): Response {
+    public function admin(RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository,Request $request): Response {
         $roomList = $roomRepository->findAll();
         $acquisitionUnitList = $acquisitionUnitRepository->findAll();
         $formSubmitted = false;

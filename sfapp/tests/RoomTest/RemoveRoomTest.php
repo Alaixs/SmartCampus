@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\TechnicienTest\RoomTest;
+namespace App\Tests\RoomTest;
 
 use App\Entity\Room;
 use App\Repository\RoomRepository;

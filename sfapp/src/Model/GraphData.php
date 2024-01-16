@@ -2,14 +2,16 @@
 
 namespace App\Model;
 
+use DateTime;
+
 class GraphData
 {
 
     public string $type;
 
-    public \DateTime $startDate;
+    public DateTime $startDate;
 
-    public \DateTime $endDate;
+    public DateTime $endDate;
 
     public string $period;
 
@@ -18,12 +20,12 @@ class GraphData
         return $this->type;
     }
 
-    public function getStartDate(): \DateTime
+    public function getStartDate(): DateTime
     {
         return $this->startDate;
     }
 
-    public function getEndDate(): \DateTime
+    public function getEndDate(): DateTime
     {
         return $this->endDate;
     }
@@ -38,20 +40,9 @@ class GraphData
         $this->type = $type;
     }
 
-    public function setStartDate(\DateTime $startDate): void
-    {
-        $this->startDate = $startDate;
-    }
-
-    public function setEndDate(\DateTime $endDate): void
-    {
-        $this->endDate = $endDate;
-    }
-
     public function setPeriod(string $period): void
     {
         $this->period = $period;
     }
-
 
 }

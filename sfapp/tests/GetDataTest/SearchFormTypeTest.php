@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\GetDataTest;
 
 use App\Form\SearchFormType;
 use App\Model\SearchData;
-use Symfony\Component\Form\Test\TypeTestCase;
+use Monolog\Test\TestCase;
 
 
-class SearchFormTypeTest extends TypeTestCase
+class SearchFormTypeTest extends TestCase
 {
     /**
      * La méthode testFiltersHasCorrectData() vérifie qu'une fois que

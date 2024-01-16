@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest\AcquisitionUnitTest;
+namespace App\Tests\AcquisitionUnitTest;
 
 use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\Room;
-use App\Repository\AcquisitionUnitRepository;
 use App\Entity\AcquisitionUnit;
-use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Repository\UserRepository;
 
@@ -40,7 +38,7 @@ class UnassignAcquisitionUnitTest extends WebTestCase
         $client->request('GET','/removeAcquisitionUnit/' . $au->getId());
     }
 
-    private function addRoomAndSa($client, $roomName, $saNumber)
+    private function addRoomAndSa($client, $roomName, $saNumber) : Room
     {
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 

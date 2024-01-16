@@ -121,7 +121,7 @@ class AcquisitionUnitController extends AbstractController
     }
 
     #[Route('defAcquisitionUnitSupport/{acquisitionUnit}', name: 'defAcquisitionUnitSupport')]
-    public function defAcquisitionUnitSupport(AcquisitionUnit $acquisitionUnit, EntityManagerInterface $entityManager)
+    public function defAcquisitionUnitSupport(AcquisitionUnit $acquisitionUnit, EntityManagerInterface $entityManager) : Response
     {
         $acquisitionUnit->setState('Pris en charge');
         $entityManager->persist($acquisitionUnit);

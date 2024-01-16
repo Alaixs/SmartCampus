@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\GetDataTest;
 
-use App\Domain\GetDataInteface;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Infrastructure\GetDataAPI;

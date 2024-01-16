@@ -3,10 +3,8 @@
 namespace App\Tests\TechnicienTest;
 
 use App\Domain\AcquisitionUnitInstallationState;
-use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
-use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Repository\UserRepository;
 

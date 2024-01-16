@@ -15,7 +15,7 @@
             app.request.attributes.get('_route_params')) %}
         {% if app.user.username == 'technicien' and currentPath != "/login"%}
             <div class="installation-manual">
-                <a href="assets/documentation/Document_installation_ESP32.pdf" target="_blank">
+                <a href="{{ asset('assets/documentation/Document_installation_ESP32.pdf') }}" target="_blank">
                     Consulter le manuel d'installation du SA
                 </a>
             </div>

@@ -64,9 +64,6 @@ class RoomController extends AbstractController
     #[Route('/removeRoom/{room}', name: 'removeRoom')]
     public function removeRoom(Room $room, EntityManagerInterface $entityManager): Response
     {
-
-        if($room)
-        {
             if($room->getAcquisitionUnit() != null)
             {
                 $room->getAcquisitionUnit()->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
@@ -74,9 +71,7 @@ class RoomController extends AbstractController
             }
             $entityManager->remove($room);
             $entityManager->flush();
-        }
         return $this->redirectToRoute('app_admin');
-
     }
 
 

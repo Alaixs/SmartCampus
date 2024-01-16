@@ -5,6 +5,8 @@ namespace App\Infrastructure;
 use App\Domain\GetDataInteface;
 use App\Entity\Room;
 use Symfony\Component\HttpClient\HttpClient;
+use DateTime;
+use Exception;
 
 class GetDataAPI implements GetDataInteface
 {
@@ -118,14 +120,14 @@ class GetDataAPI implements GetDataInteface
         return $roomComfortIndicator;
     }
     
-    public function getValuesByPeriod($room, $type, $period, $date1, $date2): array
+    public function getValuesByPeriod($room, $type, $period, $startDate, $endDate): array
     {
         try {
             if ($room->getAcquisitionUnit() != null) {
-                $date1 = $date1->format('Y-m-d');
-                $date2 = $date2->format('Y-m-d');
+                $startDate = $startDate->format('Y-m-d');
+                $endDate = $endDate->format('Y-m-d');
     
-                $response = $this->client->request('GET', 'https://sae34.k8s.iut-larochelle.fr/api/captures/interval?nom=' . $type . '&date1=' . $date1 . '&date2=' . $date2, [
+                $response = $this->client->request('GET', 'https://sae34.k8s.iut-larochelle.fr/api/captures/interval?nom=' . $type . '&date1=' . $startDate . '&date2=' . $endDate, [
                     'headers' => [
                         'dbname' => $this->dbNames[$room->getAcquisitionUnit()->getName()],
                         'username' => 'l1eq3',
@@ -142,7 +144,7 @@ class GetDataAPI implements GetDataInteface
                 $aggregatedData = [];
     
                 foreach ($responseContent as $data) {
-                    $captureDate = new \DateTime($data['dateCapture']);
+                    $captureDate = new DateTime($data['dateCapture']);
                     $formattedDate = $captureDate->format('Y-m-d H:00:00');
     
                     if ($period === 'day') {
@@ -170,7 +172,7 @@ class GetDataAPI implements GetDataInteface
     
                 return $averagedData;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return [
                 [
                     'date' => null,

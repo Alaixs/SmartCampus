@@ -8,6 +8,7 @@ use App\Form\GraphFormType;
 use App\Model\GraphData;
 use App\Repository\BuildingRepository;
 use App\Repository\RoomRepository;
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,8 +63,8 @@ class ClientController extends AbstractController
     {
         $type = "hum";
         $period = "hour";
-        $startDate = new \DateTime();
-        $endDate = new \DateTime();
+        $startDate = new DateTime();
+        $endDate = new DateTime();
         $endDate->modify('+1 day');
 
         $graphData = new GraphData();

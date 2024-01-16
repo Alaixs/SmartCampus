@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest;
+namespace App\Tests\AcquisitionUnitTest;
 
 use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\Room;
