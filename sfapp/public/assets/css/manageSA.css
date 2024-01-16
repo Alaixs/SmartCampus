@@ -15,6 +15,49 @@ section {
 
 }
 
+.buttons {
+    display: flex;
+    height: 4vh;
+    justify-content: space-evenly;
+}
+
+
+
+
+.endButton {
+    font-size: 1.3vh;
+    width: 14vw;
+    border: 0;
+    border-radius: 0;
+    background-color: #cdcdcd;
+    height: 3vh;
+}
+
+.endButton:hover {
+    cursor: pointer;
+}
+
+
+.deleteButton {
+    background-color: #eea2a2;
+}
+
+.deleteButton:hover {
+    background-color: #ee8f8f;
+}
+
+.buttons > a, .buttons3 > a {
+    text-decoration: none;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    text-align: center;
+}
+
+
+
 .dataTest {
     width: 60%;
 }
@@ -154,4 +197,26 @@ section {
     display: flex;
     justify-content: center ;
     align-items: center;
+}
+
+.signAU
+{
+    display: flex;
+    height: 100%;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.signAUInformations
+{
+    height: 80%;
+    text-align: center;
+}
+
+.submit.endButton {
+    background-color: #8fdcee;
+}
+
+.submit.endButton:hover {
+    background-color: #A2E0EE;
 }

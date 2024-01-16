@@ -49,13 +49,13 @@ class TechnicienController extends AbstractController
     }
 
 
-    #[Route('/manageAcquisitionUnit/{acquisitionUnit}', name: 'manageAcquisitionUnit')]
-    public function manageAcquisitionUnit(Room $room, GetDataInteface $getDataJson, AcquisitionUnit $acquisitionUnit): Response
+    #[Route('/defAcquisitionUnitOperational/{acquisitionUnit}', name: 'defAcquisitionUnitOperational')]
+    public function defAcquisitionUnitOperationnel(Room $room, GetDataInteface $getData, AcquisitionUnit $acquisitionUnit): Response
     {
 
-        $temp = $getDataJson->getLastValueByType($room, 'temp');
-        $humidity = $getDataJson->getLastValueByType($room, 'hum');
-        $co2 = $getDataJson->getLastValueByType($room, 'co2');
+        $temp = $getData->getLastValueByType($room, 'temp');
+        $humidity = $getData->getLastValueByType($room, 'hum');
+        $co2 = $getData->getLastValueByType($room, 'co2');
 
 
         return $this->render('technicien/manageSA.html.twig', [
@@ -66,30 +66,14 @@ class TechnicienController extends AbstractController
             'acquisitionUnit' => $acquisitionUnit
         ]);
     }
-    
-    #[Route('/testData/{SA}', name: 'test_data')]
-    public function testData(Room $room, GetDataInteface $getDataJson): Response
-    {
-        $temp = $getDataJson->getLastValueByType($room->getName(), 'temp');
-        $humidity = $getDataJson->getLastValueByType($room->getName(), 'humidity');
-        $co2 = $getDataJson->getLastValueByType($room->getName(), 'co2');
 
-
-        return $this->render('technicien/manageSA.html.twig', [
-            'room' => $room,
-            'temp' => $temp,
-            'humidity' => $humidity,
-            'co2' => $co2
-        ]);
-    }
-
-    #[Route('/defAcquisitionUnitOperationnel/{acquisitionUnit}', name: 'app_defAcquisitionUnitOperationnel')]
-    public function defAcquisitionUnitOperationnel(AcquisitionUnit $acquisitionUnit, EntityManagerInterface $entityManager): Response {
+    #[Route('/setAcquisitionUnitOperational/{acquisitionUnit}', name: 'setAcquisitionUnitOperational')]
+    public function setAcquisitionUnitOperational(AcquisitionUnit $acquisitionUnit, EntityManagerInterface $entityManager, Room $room): Response {
         
         $acquisitionUnit->setState(AcquisitionUnitOperatingState::OPERATIONAL->value);
 
         $entityManager->flush();
-    
-        return $this->redirectToRoute('app_admin');
+
+        return $this->redirectToRoute('manageAcquisitionUnit', ['acquisitionUnit' => $room->getAcquisitionUnit()->getId()]);
     }
 }

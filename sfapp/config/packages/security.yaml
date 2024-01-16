@@ -38,13 +38,11 @@ security:
     access_control:
         - { path: ^/admin, roles: [ROLE_ADMIN, ROLE_TECHNICIEN] }
         - { path: ^/removeSA, roles: ROLE_ADMIN }
-        - { path: ^/addSA, roles: ROLE_ADMIN }
-        - { path: ^/removeSA, roles: ROLE_ADMIN }
-        - { path: ^/detailRoom, roles: ROLE_ADMIN }
+        - { path: ^/addSA, roles: ROLE_TECHNICIEN }
+        - { path: ^/roomDetail, roles: [ROLE_ADMIN, ROLE_TECHNICIEN] }
         - { path: ^/editRoom, roles: ROLE_ADMIN }
-        - { path: ^/assignSA, roles: ROLE_ADMIN }
+        - { path: ^/assignSA, roles: ROLE_TECHNICIEN }
         - { path: ^/addRoom, roles: ROLE_ADMIN }
-
         # - { path: ^/profile, roles: ROLE_USER }
 
 # when@test:
