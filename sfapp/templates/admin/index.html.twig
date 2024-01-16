@@ -172,8 +172,8 @@
                             <a href="{{ path('manageAcquisitionUnit', {'acquisitionUnit' :room.acquisitionUnit.id}) }}"
                                class="planExperimentation-div-voir-plus">Définir le SA comme opérationnel</a>
                         {% endif %}
-                        </div>
                     {% endif %}
+                    </div>
                 {% endfor %}
             </div>
         {% endif %}
@@ -183,6 +183,8 @@
             </div>
         {% endif %}
     </div>
+    {% include 'components/search_data.html.twig' %}
+
 </section>
 {% include 'partial/footer.html.twig' %}
 </body>
