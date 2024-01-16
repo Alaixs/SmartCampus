@@ -57,39 +57,41 @@ class ClientController extends AbstractController
 
     
 
-    #[Route('/viewGraph/{room}/{type}/{period}/{startDate}/{endDate}', name: 'view_graph')]
-    public function viewGraph(Room $room, $type, $period, $startDate, $endDate, Request $request, GetDataInteface $getDataJson): Response
+    #[Route('/viewGraph/{room}', name: 'view_graph')]
+    public function viewGraph(Room $room, Request $request, GetDataInteface $getDataJson): Response
     {
-
-        $data = $getDataJson->getValuesByPeriod($room, $type, $period, $startDate, $endDate);
-
-        $period = $request->query->get('period');
+        $type = "hum";
+        $period = "hour";
+        $startDate = new \DateTime();
+        $endDate = new \DateTime();
+        $endDate->modify('+1 day');
 
         $graphData = new GraphData();
+        $graphData->setPeriod($period);
+        $graphData->setType($type);
+
+
         $form = $this->createForm(GraphFormType::class, $graphData);
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
 
             $type = $graphData->getType();
-            $startDate = $graphData->getStartDate()->format('Y-m-d');
-            $endDate = $graphData->getEndDate()->format('Y-m-d');
+            $startDate = $graphData->getStartDate();
+            $endDate = $graphData->getEndDate();
             $period = $graphData->getPeriod();
-
-            return $this->redirectToRoute('view_graph', [
-                'room' => $room->getId(),
-                'type' => $type,
-                'period' => $period,
-                'startDate' => $startDate,
-                'endDate' => $endDate,
-            ]);
         }
-    
+
+
+        $data = $getDataJson->getValuesByPeriod($room, $type, $period, $startDate, $endDate);
+
         return $this->render('client/viewGraph.html.twig', [
             'room' => $room,
             'data' => $data,
             'sensor' => $type,
             'period' => $period,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
             'form' => $form->createView(),
         ]);
 

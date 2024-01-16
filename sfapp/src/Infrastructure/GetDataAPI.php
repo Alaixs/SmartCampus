@@ -68,6 +68,9 @@ class GetDataAPI implements GetDataInteface
     {
         try {
             if ($room->getAcquisitionUnit() != null) {
+                $date1 = $date1->format('Y-m-d');
+                $date2 = $date2->format('Y-m-d');
+    
                 $response = $this->client->request('GET', 'https://sae34.k8s.iut-larochelle.fr/api/captures/interval?nom=' . $type . '&date1=' . $date1 . '&date2=' . $date2, [
                     'headers' => [
                         'dbname' => $this->dbNames[$room->getAcquisitionUnit()->getName()],
@@ -82,29 +85,53 @@ class GetDataAPI implements GetDataInteface
     
                 $responseContent = $response->toArray();
     
-                $formattedData = [];
+                $aggregatedData = [];
+    
                 foreach ($responseContent as $data) {
-                    $formattedData[] = [
-                        'date' => $data['dateCapture'],
-                        'value' => (float)$data['valeur'],
+                    $captureDate = new \DateTime($data['dateCapture']);
+                    $formattedDate = $captureDate->format('Y-m-d H:00:00');
+    
+                    if ($period === 'day') {
+                        $formattedDate = $captureDate->format('Y-m-d');
+                        $aggregatedData[$formattedDate][] = (float)$data['valeur'];
+                    } elseif ($period === 'week') {
+                        $weekNumber = $captureDate->format('W');
+                        $aggregatedData[$weekNumber][] = (float)$data['valeur'];
+                    } elseif ($period === 'month') {
+                        $monthYearKey = $captureDate->format('Y-m');
+                        $aggregatedData[$monthYearKey][] = (float)$data['valeur'];
+                    } elseif ($period === 'hour') {
+                        $aggregatedData[$formattedDate][] = (float)$data['valeur'];
+                    }
+                }
+    
+                $averagedData = [];
+                foreach ($aggregatedData as $key => $values) {
+                    $averageValue = count($values) > 0 ? array_sum($values) / count($values) : 0;
+                    $averagedData[] = [
+                        'date' => $key,
+                        'value' => $averageValue,
                     ];
                 }
     
-                return $formattedData;
+                return $averagedData;
             }
         } catch (\Exception $e) {
-            return [[
-                'date' => null,
-                'value' => -1,
-            ]];
+            return [
+                [
+                    'date' => null,
+                    'value' => -1,
+                    'error' => $e->getMessage()
+                ],
+            ];
         }
     
         return [
             [
                 'date' => null,
                 'value' => 0,
-            ]
+            ],
         ];
     }
-    
 }
+    

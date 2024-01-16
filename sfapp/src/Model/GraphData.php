@@ -33,4 +33,25 @@ class GraphData
         return $this->period;
     }
 
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    public function setStartDate(\DateTime $startDate): void
+    {
+        $this->startDate = $startDate;
+    }
+
+    public function setEndDate(\DateTime $endDate): void
+    {
+        $this->endDate = $endDate;
+    }
+
+    public function setPeriod(string $period): void
+    {
+        $this->period = $period;
+    }
+
+
 }

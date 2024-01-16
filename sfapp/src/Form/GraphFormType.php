@@ -50,6 +50,7 @@ class GraphFormType extends  AbstractType
             ->add('period', ChoiceType::class, [
                 'label' => 'Période',
                 'choices' => [
+                    'Heure' => 'hour',
                     'Jour' => 'day',
                     'Semaine' => 'week',
                     'Mois' => 'month',
@@ -57,7 +58,7 @@ class GraphFormType extends  AbstractType
                 ],
                 'expanded' => true,
                 'multiple' => false,
-                'data' => 'day',
+                'data' => 'hour',
             ]);
 
         $builder->add('submit', SubmitType::class, [

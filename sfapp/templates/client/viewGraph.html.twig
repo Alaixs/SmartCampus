@@ -25,7 +25,6 @@
 </section>
 
 <div class="formulaireTri">
-    {# on ajoute le form ici #}
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
@@ -34,70 +33,22 @@
 
 
 
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{{ asset('js/graph.js') }}"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const ctx = document.getElementById('myChart').getContext('2d');
-        
-        const formattedData = {{ data|json_encode|raw }};
-        
-        const labels = formattedData.map(function (data) {
-            return new Date(data.date).toLocaleTimeString();
-        });
-        
-        const values = formattedData.map(function (data) {
-            return data.value;
-        });
 
-        const gradient = ctx.createLinearGradient(0, ctx.canvas.height, 0, 0);
-        gradient.addColorStop(0, 'rgba(75, 192, 192, 0.2)');
-        gradient.addColorStop(1, 'rgba(75, 192, 192, 0)');
+    const formattedData = {{ data|json_encode|raw }};
 
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Valeurs par {{ period }}',
-                    data: values,
-                    borderWidth: 3,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: gradient,
-                    fill: true, 
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: false
-                    },
-                    x: {
-                        display: true,
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Valeurs dans {{ room.name }} du capteur de {{ sensor }}',
-                        font: {
-                            size: 16
-                        }
-                    },
-                    elements: {
-                        line: {
-                            tension: 0.4,
-                        }
-                    }
-                }
-            }
-        });
-    });
+    const period = '{{ period }}';
+
+    const sensor = '{{ sensor }}';
+
+    const roomName = '{{ room.name }}';
+    
 </script>
+
+    <script src="{{ asset('assets/js/graph.js') }}"></script>
+
 
 
 </body>
