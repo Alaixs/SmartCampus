@@ -12,7 +12,7 @@
         <div class="planExperimentation-div">
             <div class='planExperimentation-div-title'>
                 <p class="planExperimentation-p-title">Plan d'expérimentation</p>
-                {% if app.user.username  == 'référent' %}
+                {% if is_granted('ROLE_TECHNICIEN') %}
                 <div class="add-or-del-div">
                     <a href="{{ path('addAU') }}" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
                     {% if roomList %}
@@ -81,14 +81,13 @@
                                 </div>
                             </div>
                         {% endif %}
-
-                        {% if app.user.username == 'référent'%}
-                            <a href="{{ path('roomDetail', {'room' : room.id}) }}" class="planExperimentation-div-voir-plus">Voir plus</a>
-                        {% else %}
-                            {% if room.acquisitionUnit is not empty and (room.acquisitionUnit.state != "Opérationnel" and room.acquisitionUnit.state != "Dysfonctionnement")%}
-                                <a href="{{ path('manageAcquisitionUnit', {'acquisitionUnit' :room.acquisitionUnit.id}) }}" class="planExperimentation-div-voir-plus">Définir le SA comme opérationnel</a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('roomDetail', {'room' : room.id}) }}" class="planExperimentation-div-voir-plus">Voir plus</a>
+                            {% elseif room.acquisitionUnit %}
+                                <a href="{{ path('manageAcquisitionUnit', {'acquisitionUnit' :room.acquisitionUnit.id}) }}" class="planExperimentation-div-voir-plus">Gérer le SA</a>
+                            {% else %}
+                                <a href="{{ path('assignAU', {'room' : room.id }) }}" class="planExperimentation-div-voir-plus">Affecter un SA</a>
                             {% endif %}
-                        {% endif %}
                     </div>
 
                 {% endfor %}

@@ -18,6 +18,37 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TechnicienController extends AbstractController
 {
+    #[Route('/technicien', name: 'app_tech')]
+    public function technicien(RoomRepository $roomRepository, Request $request): Response
+    {
+        $searchData = new SearchData();
+        $form = $this->createForm(SearchFormType::class, $searchData);
+        $form->handleRequest($request);
+
+        $rooms = $roomRepository->findAll();
+        $formSubmitted = false;
+        $filtersApplied = false;
+        $user = 'technicien';
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formSubmitted = true;
+            $rooms = $roomRepository->findBySearch($searchData);
+
+            if (!empty($searchData->getQ()) || !empty($searchData->getFloors()) || !empty($searchData->getAcquisitionUnitState())) {
+                $filtersApplied = true;
+            }
+        }
+
+        return $this->render('admin/index.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user,
+            'allRooms' => $rooms,
+            'formSubmitted' => $formSubmitted,
+            'filtersApplied' => $filtersApplied,
+        ]);
+    }
+
+
     #[Route('/manageAcquisitionUnit/{acquisitionUnit}', name: 'manageAcquisitionUnit')]
     public function manageAcquisitionUnit(Room $room, GetDataInteface $getDataJson, AcquisitionUnit $acquisitionUnit): Response
     {
