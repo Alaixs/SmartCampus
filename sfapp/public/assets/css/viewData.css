@@ -17,20 +17,44 @@ section {
     width: 75%;
     height: 100%;
     display: flex;
-    flex-direction: row;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
-    position: relative;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     background-color: white;
-
 }
 
-.dataVisualisationTitle {
+.planExperimentation-div-title
+{
+    background-color: #F9F9F9;
+    height: 8vh;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1vw;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+}
+
+.backArrow {
     position: absolute;
-    top: 1.5vh;
-    left: 1.5vh;
-    font-size: 3vh;
+    top: 1vh;
+    left: 1vh;
+}
+
+.planExperimentation-div-title > p {
+    margin: 0;
+    padding: 0 0 0 2vw;
+    font-size: 2vh;
+}
+
+.panelOfData {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .displayData {
