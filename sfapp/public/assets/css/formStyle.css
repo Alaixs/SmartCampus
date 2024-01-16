@@ -51,6 +51,13 @@ section {
     width: 100%;
 }
 
+.formInputs > * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .buttons {
     display: flex;
     height: 4vh;
@@ -97,6 +104,7 @@ input:not(input[type=checkbox]), select {
 }
 
 .formFooter {
+    width: 20vw;
     display: flex;
     justify-content: space-around;
     align-items: center;
