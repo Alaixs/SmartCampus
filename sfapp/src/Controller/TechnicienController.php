@@ -74,6 +74,6 @@ class TechnicienController extends AbstractController
 
         $entityManager->flush();
     
-        return $this->redirectToRoute('app_admin');
+        return $this->redirectToRoute('manageAcquisitionUnit', ['acquisitionUnit' => $acquisitionUnit]  );
     }
 }

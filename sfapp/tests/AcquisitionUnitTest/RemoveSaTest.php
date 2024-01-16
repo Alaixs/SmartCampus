@@ -4,6 +4,7 @@ namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataT
 
 use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\AcquisitionUnit;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RemoveSaTest extends WebTestCase
@@ -16,7 +17,9 @@ class RemoveSaTest extends WebTestCase
    {
        $auNumber = 'SA99700';
        $client = static::createClient();
-
+       $userRepository = $client->getContainer()->get(UserRepository::class);
+       $testUser = $userRepository->findOneBy(array('username' => 'technicien'));
+       $client->loginUser($testUser);
        $au = $this->createAu($client,$auNumber);
 
        $crawler = $client->request('GET','/removeAcquisitionUnit');

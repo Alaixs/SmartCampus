@@ -26,7 +26,6 @@ class RoomComfortIndicatorTest extends TestCase {
             ->willReturn(['temp' => 'OK', 'hum' => 'OK', 'co2' => 'OK']);
 
         $result = $getDataMock->getRoomComfortIndicator($room);
-        dump($result);
         $this->assertEquals('OK', $result['temp']);
         $this->assertEquals('OK', $result['hum']);
         $this->assertEquals('OK', $result['co2']);

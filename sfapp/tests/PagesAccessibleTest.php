@@ -81,7 +81,7 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testAddAcquisitionUnitPageIsAccessible()
     {
-        $client = $this->getClientWithLoggedInUser('référent');
+        $client = $this->getClientWithLoggedInUser('technicien');
 
         $client->request('GET', '/addAcquisitionUnit');
 
@@ -141,7 +141,7 @@ class PagesAccessibleTest extends WebTestCase
     public function testAssignAcquisitionUnitIsAccessible()
     {
 
-        $client = $this->getClientWithLoggedInUser('référent');
+        $client = $this->getClientWithLoggedInUser('technicien');
         
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
@@ -160,7 +160,7 @@ class PagesAccessibleTest extends WebTestCase
     public function testUnAssignSAIsAccessible()
     {
 
-        $client = $this->getClientWithLoggedInUser('référent');
+        $client = $this->getClientWithLoggedInUser('technicien');
 
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
