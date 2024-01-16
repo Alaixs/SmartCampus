@@ -49,7 +49,7 @@ class TechnicienController extends AbstractController
     }
 
 
-    #[Route('/manageAcquisitionUnit/{acquisitionUnit}', name: 'manageAcquisitionUnit')]
+    #[Route('/defAcquisitionUnitOperational/{acquisitionUnit}', name: 'defAcquisitionUnitOperational')]
     public function manageAcquisitionUnit(Room $room, GetDataInteface $getDataJson, AcquisitionUnit $acquisitionUnit): Response
     {
 
@@ -66,24 +66,8 @@ class TechnicienController extends AbstractController
             'acquisitionUnit' => $acquisitionUnit
         ]);
     }
-    
-    #[Route('/testData/{SA}', name: 'test_data')]
-    public function testData(Room $room, GetDataInteface $getDataJson): Response
-    {
-        $temp = $getDataJson->getLastValueByType($room->getName(), 'temp');
-        $humidity = $getDataJson->getLastValueByType($room->getName(), 'humidity');
-        $co2 = $getDataJson->getLastValueByType($room->getName(), 'co2');
 
-
-        return $this->render('technicien/manageSA.html.twig', [
-            'room' => $room,
-            'temp' => $temp,
-            'humidity' => $humidity,
-            'co2' => $co2
-        ]);
-    }
-
-    #[Route('/defAcquisitionUnitOperationnel/{acquisitionUnit}', name: 'app_defAcquisitionUnitOperationnel')]
+    #[Route('/setAcquisitionUnitOperational/{acquisitionUnit}', name: 'setAcquisitionUnitOperational')]
     public function defAcquisitionUnitOperationnel(AcquisitionUnit $acquisitionUnit, EntityManagerInterface $entityManager): Response {
         
         $acquisitionUnit->setState(AcquisitionUnitOperatingState::OPERATIONAL->value);
