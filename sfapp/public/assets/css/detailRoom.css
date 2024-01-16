@@ -35,23 +35,24 @@ section {
 
 .title {
     position: relative;
-    background-color: #F9F9F9;
     width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    font-size: 1.5vh;
     margin-bottom: 5vh;
     height: 8vh;
     font-size: 2.5vh;
+}
+
+.title:not(.infoTitle) {
+    background-color: #F9F9F9;
 }
 
 .title > p {
     height: 100%;
     display: flex;
     align-items: center;
-    margin: 0 ;
-    margin-left: 3vw;
+    margin: 0;
 }
 
 
@@ -82,7 +83,47 @@ section {
     overflow: auto;
     padding: 0 0 0 10px;
     margin: 0;
-    border: solid black 1px;
+}
+
+.lastData, .tempValue {
+    height: 5vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lastDataDate, .lastDataValue, .typeValue, .value {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lastDataDate, .typeValue {
+    background-color: #e2e2e2;
+    width: 40%;
+}
+
+.lastDataValue, .value {
+    background-color: #F9F9F9;
+    width: 60%;
+}
+
+.graphButton {
+    margin-top: 2vh;
+    height: 4vh;
+    width: 35%;
+    background-color: #b8f5ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    text-decoration: none;
+}
+
+.graphButton:hover {
+    background-color: #b1f0ff;
 }
 
 .formFooter {
@@ -150,7 +191,7 @@ section {
 
 .sectionsOfWindow, .rightSection {
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     width: 60vw;
 }
 
@@ -248,3 +289,52 @@ section {
     justify-content: center;
     align-items: center;
 }
+
+.roomInfo {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    max-height: 80vh;
+}
+
+.listInfoRoom {
+    width: 100%;
+}
+
+.listInfoRoom > ol {
+    list-style: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0;
+}
+
+.listInfoRoom > ol > li {
+    width: 80%;
+    background-color: #F9F9F9;
+    margin-bottom: 1vh;
+    height: 5vh;
+    display: flex;
+    justify-content: center ;
+    align-items: center;
+}
+
+.infoTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.infoTitle > p {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+

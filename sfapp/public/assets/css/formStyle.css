@@ -77,14 +77,14 @@ input:not(:nth-child(1)), select {
     display: flex;
     padding: 0;
     width: 100%;
-    margin-bottom: 2vh;
+    margin-bottom: 1vh;
     border: none;
     box-shadow: inset 0px 0px 1px 0px #000000;
     background-color: white;
 }
 
 input:nth-child(1) {
-    margin-bottom: 2vh;
+    margin-bottom: 1vh;
 }
 
 input {
@@ -98,10 +98,10 @@ input:not(input[type=checkbox]), select {
 
 .formFooter {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    flex-direction: column;
-    margin: 2vh 0 2vh 0;
+    flex-direction: row-reverse;
+    margin: 2vh 0 1vh 0;
 }
 
 

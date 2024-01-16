@@ -44,7 +44,7 @@ security:
         - { path: ^/manageAcquisitionUnit, roles: ROLE_TECHNICIEN }
         - { path: ^/defAcquisitionUnitOperationnel, roles: ROLE_TECHNICIEN }
         - { path: ^/testData, roles: ROLE_TECHNICIEN }
-        - { path: ^/detailRoom, roles: ROLE_ADMIN }
+        - { path: ^/roomDetail, roles: ROLE_ADMIN }
         - { path: ^/editRoom, roles: ROLE_ADMIN }
         - { path: ^/addRoom, roles: ROLE_ADMIN }
         - { path: ^/removeRoom, roles: ROLE_ADMIN }

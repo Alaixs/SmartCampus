@@ -322,20 +322,6 @@ input#search_form_q {
     border-bottom-right-radius: 8px;
 }
 
-.greenCircle, .redCircle, .grayCircle{
-    max-width: 3vh;
-    height: 3vh;
-    cursor: help;
-}
-
-.roomComfortIndicatof
-{
-    font-size: 0.7rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .greenBackground
 {
     background-color: #78f378;
@@ -362,7 +348,7 @@ input#search_form_q {
     color: #7a0606;
 }
 
-.cursorHelp:hover
+.cursorHelp
 {
     cursor: help
 }
