@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest;
 
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Repository\RoomRepository;
@@ -16,7 +16,7 @@ class SetSaOperationalTest extends WebTestCase
 
         $client = static::createClient();
         $userRepository = $client->getContainer()->get(UserRepository::class);
-        $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
+        $testUser = $userRepository->findOneBy(array('username' => 'référent'));
         $client->loginUser($testUser);
 
         $roomName = 'D999';
@@ -31,7 +31,7 @@ class SetSaOperationalTest extends WebTestCase
 
         $client->clickLink('Rendre le SA opérationnel');
         $client->followRedirect();
-        $this->assertStringContainsString("ok.png", $client->getResponse()->getContent());
+        $this->assertStringContainsString('Opérationnel', $client->getResponse()->getContent());
         $this->deleteRoom($client, $room);
         $this->deleteSA($client, $room->getAcquisitionUnit());
     }
@@ -65,7 +65,7 @@ class SetSaOperationalTest extends WebTestCase
 
         $newSa = new AcquisitionUnit();
         $newSa->setName($saNumber);
-        $newSa->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
+        $newSa->setState(AcquisitionUnitOperatingState::WAITING_FOR_INSTALLATION->value);
 
         $newRoom = new Room();
         $newRoom->setName($roomName);

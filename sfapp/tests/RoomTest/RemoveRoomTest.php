@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest;
 
 use App\Entity\Room;
 use App\Repository\RoomRepository;
@@ -19,7 +19,7 @@ class RemoveRoomTest extends WebTestCase
 
         $client = static::createClient();
         $userRepository = $client->getContainer()->get(UserRepository::class);
-        $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
+        $testUser = $userRepository->findOneBy(array('username' => 'référent'));
         $client->loginUser($testUser);
 
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
@@ -47,7 +47,7 @@ class RemoveRoomTest extends WebTestCase
         $link = $crawler->selectLink('Confirmer')->first()->link();
         $client->click($link);
 
-        $crawler = $client->followRedirect();
+        $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertStringNotContainsString($roomName, $client->getResponse()->getContent(), 'ca marche?');
 

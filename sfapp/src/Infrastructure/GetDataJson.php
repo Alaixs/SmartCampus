@@ -3,15 +3,16 @@
 namespace App\Infrastructure;
 
 use App\Domain\GetDataInteface;
+use App\Entity\Room;
 
 class GetDataJson implements GetDataInteface
 {
     public array $allValues;
 
-    public function filterArrayByOne($array, $key, $value)
+    public function filterArrayByOne($array, $key, $value) : array
     {
         return array_filter($array, function ($v) use ($key, $value) {
-            return isset($v[$key]) && strpos($v[$key], $value) !== false;
+            return isset($v[$key]) && str_contains($v[$key], $value);
         });
     }
 
@@ -22,12 +23,12 @@ class GetDataJson implements GetDataInteface
             $data = json_decode($json, true);
 
             $this->allValues = $this->filterArrayByOne($data, 'nom', $type);
-            $this->allValues = $this->filterArrayByOne($this->allValues, 'localisation', $roomName);
+            $this->allValues = $this->filterArrayByOne($this->allValues, 'localisation', $room->getName());
             usort($this->allValues, function ($a, $b) {
                 return strtotime($b['dataCapture']) - strtotime($a['dataCapture']);
             });
             if (!empty($this->allValues)) {
-                $lastValue = $this->allValues[0]['valeur'];
+                $lastValue = $this->allValues[0][0];
                 $lastValueDate = $this->allValues[0]['dataCapture'];
                 return [$lastValue, $lastValueDate];
             }
@@ -36,5 +37,17 @@ class GetDataJson implements GetDataInteface
 
         return [-1, 0];
     }
+
+    public function getLastValue(Room $room) : array
+    {
+        $t = array();
+        return $t;
+    }
+    public function getRoomComfortIndicator(Room $room): array
+    {
+        $confort = array();
+        return $confort;
+    }
+
 
 }

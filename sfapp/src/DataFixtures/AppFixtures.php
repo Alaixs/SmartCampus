@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Building;
 use App\Entity\Room;
@@ -28,31 +28,31 @@ class AppFixtures extends Fixture
          * Creates acquisition unit entities
          */
         $esp009 = new AcquisitionUnit();
-        $esp009->setState(AcquisitionUnitState::OPERATIONNEL->value);
+        $esp009->setState(AcquisitionUnitOperatingState::OPERATIONAL->value);
         $esp009->setName("ESP-009");
         $manager->persist($esp009);
         $manager->flush();
 
         $esp008 = new AcquisitionUnit();
-        $esp008->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+        $esp008->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
         $esp008->setName("ESP-008");
         $manager->persist($esp008);
         $manager->flush();
 
         $esp010 = new AcquisitionUnit();
-        $esp010->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
+        $esp010->setState(AcquisitionUnitOperatingState::WAITING_FOR_INSTALLATION->value);
         $esp010->setName("ESP-010");
         $manager->persist($esp010);
         $manager->flush();
 
         $esp011 = new AcquisitionUnit();
-        $esp011->setState(AcquisitionUnitState::DYSFONCTIONNEMENT->value);
+        $esp011->setState(AcquisitionUnitOperatingState::FAILURE->value);
         $esp011->setName("ESP-011");
         $manager->persist($esp011);
         $manager->flush();
 
         $esp007 = new AcquisitionUnit();
-        $esp007->setState(AcquisitionUnitState::EN_PANNE->value);
+        $esp007->setState(AcquisitionUnitOperatingState::OUT_OF_SERVICE->value);
         $esp007->setName("ESP-007");
         $manager->persist($esp007);
         $manager->flush();
@@ -122,7 +122,6 @@ class AppFixtures extends Fixture
         /*
          *  Create building entities
          */
-
         $bat1 = new Building();
         $bat1->setName('Département informatique');
         $bat1->setNbFloor(3);
@@ -132,13 +131,13 @@ class AppFixtures extends Fixture
         /*
          * Creates user entities
          */
-        $yacine = new User();
-        $yacine->setUsername("yacine");
-        $hashedPassword = $this->passwordHasher->hashPassword($yacine, 'jesuisyacine');
+        $referent = new User();
+        $referent->setUsername("référent");
+        $hashedPassword = $this->passwordHasher->hashPassword($referent, 'jesuisreferent');
 
-        $yacine->setPassword($hashedPassword);
-        $yacine->setRoles(['ROLE_ADMIN']);
-        $manager->persist($yacine);
+        $referent->setPassword($hashedPassword);
+        $referent->setRoles(['ROLE_ADMIN']);
+        $manager->persist($referent);
         $manager->flush();
 
         $technicien = new User();

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest;
 
 use App\Repository\AcquisitionUnitRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -24,7 +24,7 @@ class AddAcquisitionUnitTest extends WebTestCase
 
         $client = static::createClient();
         $userRepository = $client->getContainer()->get(UserRepository::class);
-        $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
+        $testUser = $userRepository->findOneBy(array('username' => 'référent'));
         $client->loginUser($testUser);
 
         $crawler = $client->request('GET', '/addAcquisitionUnit');
@@ -37,7 +37,8 @@ class AddAcquisitionUnitTest extends WebTestCase
         ));
 
         $client->submit($form);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $client->followRedirect();
         $this->assertStringContainsString($newSa, $client->getResponse()->getContent(), 'ca marche?');
 
 

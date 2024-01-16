@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
+use App\Domain\GetDataInteface;
 use App\Entity\AcquisitionUnit;
 use App\Form\AddAcquisitionUnitFormType;
 use App\Form\RemoveAcquisitionUnitFormType;
@@ -14,41 +15,49 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 
 class AcquisitionUnitController extends AbstractController
 {
     #[Route('/addAcquisitionUnit', name: 'addAU')]
-    public function addAcquisitionUnit(Request $request, EntityManagerInterface $entityManager, AcquisitionUnitRepository $acquisitionUnitRepository): Response
+    public function addAcquisitionUnit(Request $request, EntityManagerInterface $entityManager, AcquisitionUnitRepository $acquisitionUnitRepository, ValidatorInterface $validator): Response
     {
         $acquisitionUnit = new AcquisitionUnit();
-        $acquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+        $acquisitionUnit->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
 
         $form = $this->createForm(AddAcquisitionUnitFormType::class, $acquisitionUnit);
         $form->handleRequest($request);
 
         $acquisitionUnitList = $acquisitionUnitRepository->findAll();
 
-        $showToast = false;
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($acquisitionUnit);
-            $entityManager->flush();
+            // Vérifier la contrainte UniqueEntity manuellement
+            $validationErrors = $validator->validate($acquisitionUnit);
 
-            $showToast = true;
+            if (count($validationErrors) > 0) {
+                // Il y a des erreurs de validation (doublon de nom)
+                foreach ($validationErrors as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
+            } else {
+                // Pas d'erreurs de validation, persistez l'entité
+                $entityManager->persist($acquisitionUnit);
+                $entityManager->flush();
 
-            $acquisitionUnitList = $acquisitionUnitRepository->findAll();
-
+                $this->addFlash('message', 'Le SA ' . $acquisitionUnit->getName() . ' a bien été ajouté.');
+                return $this->redirectToRoute('addAU');
+            }
         }
 
         return $this->render('acquisition_unit/addAcquisitionUnitForm.html.twig', [
             'addAcquisitionUnitForm' => $form,
             'acquisitionUnitList' => $acquisitionUnitList,
-            'showToast' => $showToast,
         ]);
     }
 
     #[Route('/removeAcquisitionUnit/{acquisitionUnit?}', name: 'removeAU')]
-    public function removeAcquisitionUnit(Request $request, EntityManagerInterface $entityManager, RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository, ?AcquisitionUnit $acquisitionUnit): Response
+    public function removeAcquisitionUnit(Request $request, EntityManagerInterface $entityManager, RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository): Response
     {
         $acquisitionUnit = new AcquisitionUnit();
 
@@ -92,6 +101,32 @@ class AcquisitionUnitController extends AbstractController
         return $this->render('acquisition_unit/removeAcquisitionUnitForm.html.twig', [
             'removeAcquisitionUnitForm' => $form,
         ]);
+    }
+
+    #[Route('/manageAcquisitionUnit/{acquisitionUnit}', name: 'manageAcquisitionUnit')]
+    public function manageAcquisitionUnit(AcquisitionUnit $acquisitionUnit, RoomRepository $roomRepository, GetDataInteface $getData) : Response
+    {
+        $room = $roomRepository->findOneBy(array('acquisitionUnit' => $acquisitionUnit->getId()));
+
+        $temp = $getData->getLastValueByType($room, 'temp');
+        $humidity = $getData->getLastValueByType($room, 'hum');
+        $co2 = $getData->getLastValueByType($room, 'co2');
+
+        return $this->render('acquisition_unit/manageAcquisitionUnit.html.twig', [
+            'room' => $room,
+            'temp' => $temp,
+            'humidity' => $humidity,
+            'co2' => $co2
+        ]);
+    }
+
+    #[Route('defAcquisitionUnitSupport/{acquisitionUnit}', name: 'defAcquisitionUnitSupport')]
+    public function defAcquisitionUnitSupport(AcquisitionUnit $acquisitionUnit, EntityManagerInterface $entityManager)
+    {
+        $acquisitionUnit->setState('Pris en charge');
+        $entityManager->persist($acquisitionUnit);
+        $entityManager->flush();
+        return $this->redirectToRoute('manageAcquisitionUnit', ['acquisitionUnit' => $acquisitionUnit->getId()]);
     }
 
 }

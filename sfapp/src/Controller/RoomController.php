@@ -7,12 +7,10 @@ use App\Entity\Room;
 use App\Form\AddRoomFormType;
 use App\Form\AssignAcquisitionUnitFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\RoomRepository;
 use App\Repository\AcquisitionUnitRepository;
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,21 +25,18 @@ class RoomController extends AbstractController
         $form = $this->createForm(AddRoomFormType::class, $room);
         $form->handleRequest($request);
 
-        $showToast = false;
-
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager->persist($room);
             $entityManager->flush();
 
-            $showToast = true;
+            $this->addFlash('message', 'La salle ' . $room->getName() . ' a bien été ajoutée.');
 
-            $entityManager->persist($room);
+            return $this->redirectToRoute('addRoom');
+
         }
         return $this->render('room/addRoomForm.html.twig', [
             'addRoomForm' => $form,
-            'showToast' => $showToast,
         ]);
     }
 
@@ -74,7 +69,7 @@ class RoomController extends AbstractController
         {
             if($room->getAcquisitionUnit() != null)
             {
-                $room->getAcquisitionUnit()->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+                $room->getAcquisitionUnit()->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
                 $room->setAcquisitionUnit(null);
             }
             $entityManager->remove($room);
@@ -100,16 +95,17 @@ class RoomController extends AbstractController
             $oldAcquisitionUnit = $entityManager->getUnitOfWork()->getOriginalEntityData($room)['acquisitionUnit'];
 
             if ($oldAcquisitionUnit !== null) {
-                $oldAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+                $oldAcquisitionUnit->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
                 $entityManager->persist($oldAcquisitionUnit);
             }
 
-            $newAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
+            $newAcquisitionUnit->setState(AcquisitionUnitOperatingState::WAITING_FOR_INSTALLATION->value);
             $entityManager->persist($newAcquisitionUnit);
             $entityManager->persist($room);
             $entityManager->flush();
+            $this->addFlash('message', "Le système d'acquisition " . $newAcquisitionUnit->getName() . "a bien été affecter à la salle " . $room->getName());
 
-            return $this->redirectToRoute('roomDetail', ['room' => $room->getId()]);
+            return $this->redirectToRoute('manageAcquisitionUnit', ['acquisitionUnit' => $room->getAcquisitionUnit()->getId()]);
         }
 
         return $this->render('room/assignAcquisitionUnitForm.html.twig', [
@@ -126,18 +122,17 @@ class RoomController extends AbstractController
         {
             $oldAcquisitionUnit = $room->getAcquisitionUnit();
             $room->setAcquisitionUnit(null);
-            $oldAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+            $oldAcquisitionUnit->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
 
             $entityManager->persist($oldAcquisitionUnit);
             $entityManager->persist($room);
-
             $entityManager->flush();
         }
         return $this->redirectToRoute('roomDetail', ['room' => $room->getId()]);
     }
 
     #[Route('/roomDetail/{room}', name: 'roomDetail')]
-    public function roomDetail(Room $room, RoomRepository $RoomRepository, AcquisitionUnitRepository $acquisitionUnitRepository, GetDataInteface $getDataJson): Response
+    public function roomDetail(Room $room, AcquisitionUnitRepository $acquisitionUnitRepository, GetDataInteface $getDataJson): Response
     {
         $hasAcquisitionUnitInDatabase = $acquisitionUnitRepository->count(array()) > 0;
         $hasAcquisitionUnitAvailable = $acquisitionUnitRepository->count(array('state' => "En attente d'affectation")) > 0;

@@ -12,7 +12,7 @@
             <section>
                 <div class="dataTest">
                     <div class="title">
-                        <a href="{{ path('app_admin') }}">
+                        <a href="{{ path('manageAcquisitionUnit', {'acquisitionUnit' : room.acquisitionUnit.id}) }}">
                             <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
                         </a>
                         <p>Panneau de gestion du {{ room.acquisitionUnit }}</p>
@@ -81,7 +81,7 @@
                                         <div>
                                             <p class="humVisu">{{ humidity[0] ~ " %"}}</p>
                                             <style>
-                                                {% if (humidity[0] >= 100) %}
+                                                {% if (humidity[0] >= 70 and temp[0] >= 20) %}
                                                     .humVisu {
                                                         color: #dc6d6d;
                                                     }
@@ -128,13 +128,11 @@
                                         </div>
                                     {% endif %}
                                 </div>
-
                             </div>
 
                             {% if (temp[0] < 0 or humidity[0] < 0 or co2[0] < 0) %}
                                 <div class="errorMsg">
                                     <p>Un ou plusieurs problèmes sont survenus.
-                                        </br>
                                         Le capteur ne peut pas être défini comme opérationnel. Réglez le(s) problème(s) et retestez la remontée des données.
                                     </p>
                                 </div>
@@ -151,11 +149,11 @@
                             {% endif %}
 
                             <div class="testAndValidateButtons">
-                                <a href="{{ path('manageAcquisitionUnit', {'acquisitionUnit' : room.acquisitionUnit.id}) }}" class="testDataButton">
+                                <a href="{{ path('defAcquisitionUnitOperational', {'acquisitionUnit' : room.acquisitionUnit.id}) }}" class="testDataButton">
                                     Tester la remontée des données
                                 </a>
                                 <div class="setSAToOp">
-                                    <a href="{{ path('app_defAcquisitionUnitOperationnel', {'acquisitionUnit' : room.acquisitionUnit.id}) }}" class="setSAToOpButton">
+                                    <a href="{{ path('setAcquisitionUnitOperational', {'acquisitionUnit' : room.acquisitionUnit.id}) }}" class="setSAToOpButton">
                                         Rendre le SA opérationnel
                                     </a>
                                 </div>
@@ -217,7 +215,6 @@
                     </div>
                 </div>
             </section>
-        </section>
 
         {% include 'partial/footer.html.twig'%}
 

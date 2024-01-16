@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest\AcquisitionUnitTest;
 
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\Room;
 use App\Repository\AcquisitionUnitRepository;
 use App\Entity\AcquisitionUnit;
@@ -19,7 +19,7 @@ class UnassignAcquisitionUnitTest extends WebTestCase
 
         $client = static::createClient();
         $userRepository = $client->getContainer()->get(UserRepository::class);
-        $testUser = $userRepository->findOneBy(array('username' => 'yacine'));
+        $testUser = $userRepository->findOneBy(array('username' => 'référent'));
         $client->loginUser($testUser);        
 
         $this->addRoomAndSa($client, $roomName, $saNumber);
@@ -34,13 +34,13 @@ class UnassignAcquisitionUnitTest extends WebTestCase
         $link = $crawler->selectLink('Confirmer')->eq(1)->link();
         $client->click($link);
 
-        $crawler = $client->followRedirect();
+        $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertStringNotContainsString($saNumber, $client->getResponse()->getContent(), 'ca marche?');
 
         $room = $roomRepository->findOneBy(array('name' => $roomName));
         $sa = $acquisitionUnitRepository->findOneBy(array('name' => $saNumber));
-        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
+        $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $client->request('GET','/removeRoom/' . $room->getId());
 
@@ -53,7 +53,7 @@ class UnassignAcquisitionUnitTest extends WebTestCase
 
         $newSa = new AcquisitionUnit();
         $newSa->setName($saNumber);
-        $newSa->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
+        $newSa->setState(AcquisitionUnitOperatingState::WAITING_FOR_INSTALLATION->value);
 
         $newRoom = new Room();
         $newRoom->setName($roomName);

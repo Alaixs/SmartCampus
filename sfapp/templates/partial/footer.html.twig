@@ -8,8 +8,8 @@
             La Rochelle Université
         </a>
     </div>
-
-
+    {% set currentPath = path(app.request.attributes.get('_route'),
+        app.request.attributes.get('_route_params')) %}
     {% if app.user %}
         {% set currentPath = path(app.request.attributes.get('_route'),
             app.request.attributes.get('_route_params')) %}

@@ -63,7 +63,6 @@ section {
     overflow: auto;
     padding-right: 19vw;
     padding-left: 19vw;
-    margin-bottom: 3vh;
 }
 
 .selector {
@@ -102,7 +101,7 @@ input:not(input[type=checkbox]), select {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 2vh;
+    margin: 2vh 0 2vh 0;
 }
 
 
@@ -349,7 +348,23 @@ input[type="number"] {
     padding: 0;
 }
 
-.flash-message
-{
-    color: #58e342;
+.flash-message,
+.flash-error,
+.invalid-feedback {
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 0.75rem 1.25rem;
+}
+
+.flash-message {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.flash-error,
+.invalid-feedback {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }

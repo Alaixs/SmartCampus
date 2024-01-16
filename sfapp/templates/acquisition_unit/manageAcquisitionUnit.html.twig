@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>SmartCampus</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/manageSA.css') }}">
+    <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</head>
+<body>
+{% include 'partial/header.html.twig'%}
+
+
+<div class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true" autohide="false">
+    <div class="d-flex">
+        <div class="toast-body">
+            Hello, world! This is a toast message.
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>
+
+<section>
+    <div class="dataTest">
+        <div class="title">
+            <a href="{{ path('app_admin') }}">
+                <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
+            </a>
+            <p>Panneau de gestion du {{ room.acquisitionUnit }}</p>
+        </div>
+        <div class="signAU">
+            <div class="signAUInformations">
+                <p>Etat du système d'acquisition : {{ room.acquisitionUnit.state }}</p>
+            </div>
+
+            <div class="buttons">
+                <a class="endButton deleteButton" href="{{ path('unassignAU', {'room' : room.id}) }}">Désaffecter le SA</a>
+                <a class="endButton" href="{{ path('assignAU', {'room' : room.id}) }}">Gérer l'affectation du SA</a>
+                {% if room.acquisitionUnit.state == "En attente d'installation" %}
+                    <a class="endButton submit" href="{{ path("defAcquisitionUnitSupport", {'acquisitionUnit' : room.acquisitionUnit.id}) }}">Prendre en charge le SA</a>
+                {% elseif room.acquisitionUnit.state == 'Pris en charge' %}
+                    <a class="endButton submit"  href="{{ path('defAcquisitionUnitOperational', {'acquisitionUnit' : room.acquisitionUnit.id}) }}">Renre opérationnel le SA</a>
+                {% elseif room.acquisitionUnit.state == 'En panne' or room.acquisitionUnit.state == 'Dysfonctionnement' %}
+                    <a class="endButton submit"  href="{{ path('defAcquisitionUnitOperational', {'acquisitionUnit' : room.acquisitionUnit.id}) }}">Réparer le SA</a>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="roomInfo">
+        <div class="form">
+            <div class="title">
+                <p>Informations de la salle {{ room.name }}</p>
+            </div>
+            <div class="listInfoRoom">
+                <ol>
+                    <li>
+                        Étage : {{
+                        room.floor == 0 ? 'Rez-de-chaussée'
+                        : room.floor == 1 ? '1er'
+                        : room.floor ~ 'ème'
+                        }}
+                    </li>
+                    <li>Capacité : {{ room.capacity }} personnes</li>
+                    {% if (room.hasComputers) %}
+                        <li>Ordinateur : oui</li>
+                    {% else %}
+                        <li>Ordinateur : non</li>
+                    {% endif %}
+                    <li>Surface : {{ room.area }} mètres carrés</li>
+                    <li>Exposition : {{ room.exposure }}</li>
+                    <li>Nombre de fenêtres : {{ room.nbWindows }}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% include 'partial/footer.html.twig'%}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>

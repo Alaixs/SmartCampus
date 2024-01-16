@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\TechnicienTest\RoomTest\RoomTest\RoomTest\LoginTest\GetDataTest\AcquisitionUnitTest\AcquisitionUnitTest\AcquisitionUnitTest;
 
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\AcquisitionUnit;
-use App\Repository\AcquisitionUnitRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RemoveSaTest extends WebTestCase
@@ -15,10 +14,10 @@ class RemoveSaTest extends WebTestCase
     */
    public function testSubmitValidData()
    {
-       $saNumber = 'SA99700';
+       $auNumber = 'SA99700';
        $client = static::createClient();
 
-       $this->createSa($client,$saNumber);
+       $au = $this->createAu($client,$auNumber);
 
        $crawler = $client->request('GET','/removeAcquisitionUnit');
        $this->assertEquals(200, $client->getResponse()->getStatusCode());
@@ -26,29 +25,30 @@ class RemoveSaTest extends WebTestCase
 
        $form = $crawler->selectButton('Supprimer')->form();
 
-
-       $saRepository = $client->getContainer()->get(AcquisitionUnitRepository::class);
-       $sa = $saRepository->findOneBy(array('name' => $saNumber));
-
        // I complete the form
        $form->setValues(array(
-           'remove_acquisition_unit_form[name]' => $sa->getId(),
+           'remove_acquisition_unit_form[name]' => $au->getId(),
        ));
 
        $client->submit($form);
+       $client->followRedirect();
+       $this->assertStringContainsString($auNumber . ' a bien été supprimé.'
+           , $client->getResponse()->getContent(), 'Le flash message apparait ?');
        $client->request('GET', '/addAcquisitionUnit');
        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-       $this->assertStringNotContainsString($saNumber, $client->getResponse()->getContent(), 'ca marche?');
+       $this->assertStringNotContainsString($auNumber, $client->getResponse()->getContent(), 'Le au n est plus visible par le client ?');
    }
-   private function createSa($client, $saNumber) : void
+   private function createAu($client, $saNumber) : AcquisitionUnit
    {
        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
        $newSa = new AcquisitionUnit();
        $newSa->setName($saNumber);
-       $newSa->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+       $newSa->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
 
        $entityManager->persist($newSa);
        $entityManager->flush();
+
+       return $newSa;
    }
 }

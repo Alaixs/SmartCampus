@@ -1,54 +1,132 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <title>SmartCampus</title>
     <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
-<body>
-    {% include 'partial/header.html.twig'%}
 
-    <section class='planExperimentation'>
-        <div class="planExperimentation-div">
-            <div class='planExperimentation-div-title'>
-                <p class="planExperimentation-p-title">Plan d'expérimentation</p>
-                {% if app.user.username == 'yacine' %}
+<body>
+{% include 'partial/header.html.twig'%}
+<section class='planExperimentation'>
+    <div class="planExperimentation-div">
+        <div class='planExperimentation-div-title'>
+            <p class="planExperimentation-p-title">Plan d'expérimentation</p>
+            {% if is_granted('ROLE_TECHNICIEN') %}
                 <div class="add-or-del-div">
-                    <a href="{{ path('addAU') }}" class="planExperimentation-div-button-add">Ajouter un système d'acquisition</a>
-                    {% if acquisitionUnitList %}
-                        <a href="{{ path('removeAU') }}" class="planExperimentation-div-button-add add-or-del-div ">Supprimer un S.A</a>
+                    <a href="{{ path('addAU') }}" class="planExperimentation-div-button-add">Ajouter un système
+                        d'acquisition</a>
+                    {% if roomList %}
+                        <a href="{{ path('removeAU') }}"
+                           class="planExperimentation-div-button-add add-or-del-div ">Supprimer un S.A</a>
                     {% endif %}
                 </div>
-                {% endif %}
-
-            </div>
-            {% if roomList is empty %}
-            <div class="noRoom">
-
-                    <p class="noRoomText"> Aucune salle n'a été ajoutée pour le moment. Commencez par en ajouter une. </p>
-
-            </div>
-
-            {% else %}
-
+            {% endif %}
+        </div>
+        {% if roomList is empty %}
+            {% if not formSubmitted %}
+                <div class="noRoom">
+                    <p class="noRoomText">Aucune salle n'a été ajoutée pour le moment. Commencez par en ajouter une.</p>
+                </div>
+            {% elseif formSubmitted and filtersApplied %}
+                <div class="noRoom">
+                    <p class="noRoomText">Aucune salle ne correspond aux filtres sélectionnés.</p>
+                </div>
+            {% elseif formSubmitted and not filtersApplied %}
+                <div class="noRoom">
+                    <p class="noRoomText">Aucune salle n'a été ajoutée pour le moment. Commencez par en ajouter une.</p>
+                </div>
+            {% endif %}
+        {% else %}
             <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
-                <div class="planExperimentation-div-div"><p>SALLES</p></div>
-                <div class="planExperimentation-div-div"><p>SYSTEMES D'ACQUISITION</p></div>
+                <div class="planExperimentation-div-div">
+                    <p>SALLES</p>
+                </div>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="planExperimentation-div-div">
+                        <p>NIVEAU DE CONFORT</p>
+                    </div>
+                {% elseif is_granted('ROLE_TECHNICIEN') %}
+                    <div class="planExperimentation-div-div">
+                        <p>SYSTEMES D'ACQUISITION</p>
+                    </div>
+                {% endif %}
+                <div class="planExperimentation-div-div">
+                    <p>ETAT DE L'INSTALLATION</p>
+                </div>
+                <div class="planExperimentation-div-div">
+                    <p>ETAT DE FONCTIONNEMENT</p>
+                </div>
             </div>
-
             <div class="planExperimentation-div-allRoom">
                 {% for room in roomList %}
-
                     <div class='planExperimentation-div-array'>
-                        <div class="planExperimentation-div-div planExperimentation-div-roomName">
-                            <div class="planExperimentation-div-roomName-div">
-                                <p>{{ room.name }}</p>
-                            </div>
-
+                    <div class="planExperimentation-div-div planExperimentation-div-roomName">
+                        <div class="planExperimentation-div-roomName-div">
+                            <div class="infosRoomAndAU">{{ room.name }}</div>
                         </div>
+                    </div>
+                    <!-- Niveau de confort (seulement référent) -->
+                    {% if is_granted('ROLE_ADMIN') %}
 
-                        <!-- Gestion de l'état des SA" -->
+                        {% if room.acquisitionUnit %}
+                            <div class='planExperimentation-div-div greyBackground' id="comfortIndicatorRoom{{ room.id }}">
+                                <p>Chargement des données...</p>
+                            </div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    fetch('/getRoomComfort/{{ room.id }}')
+                                        .then(function (response) {
+                                            if (!response.ok) {
+                                                throw new Error('Erreur lors de la récupération des données de confort');
+                                            }
+                                            return response.json();
+                                        })
+                                        .then(function (data) {
+                                            updateRoomsComfortIndicator(data, {{ room.id }});
+                                        })
+                                        .catch(function (error) {
+                                            console.error(error.message);
+                                        });
+                                });
+                                function updateRoomsComfortIndicator(data, roomId) {
+                                    let div = document.getElementById('comfortIndicatorRoom' + roomId);
+                                    let tempComfort = data['temp'];
+                                    let humComfort = data['hum'];
+                                    let co2Comfort = data['co2'];
+                                    if (tempComfort === 'OK' && humComfort === 'OK' && co2Comfort === 'OK') {
+                                        div.classList.remove("greyBackground");
+                                        div.classList.add('greenBackground');
+                                        div.innerHTML = `<p class='cursorHelp'><span
+                                                title="Température : ` + tempComfort + `\n Humidité : ` + humComfort + `\n Co2 : ` + co2Comfort + `">Confortable</span></p>`;
+                                    }
+                                    else if (tempComfort === 'Très mauvais' && humComfort === 'Très mauvais' && co2Comfort === 'Très mauvais') {
+                                        div.classList.remove("greyBackground");
+                                        div.classList.add('redBackground');
+                                        div.innerHTML = `<p class='cursorHelp'><span
+                                                title="Température : ` + tempComfort + `\n Humidité : ` + humComfort + `\n Co2 : ` + co2Comfort + `"><p>Inconfortable</span></p>`;
+                                    }
+                                    else if (tempComfort === 'Aucune données' && humComfort === 'Aucune données' && co2Comfort === 'Aucune données') {
+                                        div.innerHTML = `<p>Aucune donnée</p>`;
+                                    }
+                                    else {
+                                        console.log(data);
+                                        div.classList.remove("greyBackground");
+                                        div.classList.add('orangeBackground');
+                                        div.innerHTML = `<p class='cursorHelp'><span
+                                                title="Température : ` + tempComfort + `\n Humidité : ` + humComfort + `\n Co2 : ` + co2Comfort + `">Peu confortable</span></p>`;
+                                    }
+                                }
+                            </script>
+                        {% else %}
+                            <div class='planExperimentation-div-div greyBackground'>
+                                <p>Aucune donnée</p>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <!-- SA -->
                         {% if room.acquisitionUnit is empty %}
                             <div class="planExperimentation-div-div">
                                 <p>-</p>
@@ -56,47 +134,59 @@
                         {% else %}
                             <div class="planExperimentation-div-div">
                                 <p>{{ room.acquisitionUnit }}</p>
-                                <div class="lilPastille">
-                                    {% if room.acquisitionUnit.state == "En attente d'installation" and app.user.username == "yacine" %}
-                                        <img src="{{ asset('assets/img/StateImages/hourglass.png') }}" title="Le système d'acquisition n'a pas encore été installé." class="grayCircle"/>
-                                    {% elseif room.acquisitionUnit.state == "En attente d'installation" and app.user.username == "technicien" %}
-                                        <img src="{{ asset('assets/img/StateImages/waitingForInstallation.png') }}" title="Le système d'acquisition doit être installé." class="grayCircle"/>
-                                    {% elseif room.acquisitionUnit.state == "Opérationnel"%}
-                                        <img src="{{ asset('assets/img/StateImages/ok.png') }}" title="Le système d'acquisition fonctionne correctement." class="greenCircle"/>
-                                    {% elseif room.acquisitionUnit.state == "Dysfonctionnement" %}
-                                        <img src="{{ asset('assets/img/StateImages/notOk.png') }}" title="Le système d'acquisition est en panne." class="redCircle"/>
-                                    {% elseif room.acquisitionUnit.state == "En panne" %}
-                                        <img src="{{ asset('assets/img/StateImages/questionMark.png') }}" title="Les données remontées par le système d'acquisition sont aberrantes." class="redCircle"/>
-                                    {% endif %}
-                                </div>
                             </div>
                         {% endif %}
+                    {% endif %}
 
-                        {% if app.user.username == 'yacine'%}
-                            <a href="{{ path('roomDetail', {'room' : room.id}) }}" class="planExperimentation-div-voir-plus">Voir plus</a>
-                        {% else %}
-                            {% if room.acquisitionUnit is not empty and (room.acquisitionUnit.state != "Opérationnel" and room.acquisitionUnit.state != "Dysfonctionnement")%}
-                                <a href="{{ path('manageAcquisitionUnit', {'acquisitionUnit' :room.acquisitionUnit.id}) }}" class="planExperimentation-div-voir-plus">Rendre le SA opérationnel</a>
-                            {% endif %}
+                    {% if room.acquisitionUnit and room.acquisitionUnit.state != "En attente d'installation" %}
+                        <!-- ETAT DE L'INSTALLATION DU SYSTEME D'ACQUISITION -->
+                        <div class="planExperimentation-div-div">
+                            <p>Installé</p>
+                        </div>
+                        <!-- ETAT DE FONCTIONNEMENT -->
+                        <div class="planExperimentation-div-div">
+                            <p>{{ room.acquisitionUnit.state }}</p>
+                        </div>
+                    {% elseif room.acquisitionUnit %}
+                        <div class="planExperimentation-div-div">
+                            <p>En attente d'installation</p>
+                        </div>
+                        <div class="planExperimentation-div-div">
+                            <p> - </p>
+                        </div>
+                    {% else %}
+                        <div class="planExperimentation-div-div">
+                            <p>Aucun système d'acquisition attribué</p>
+                        </div>
+                        <div class="planExperimentation-div-div">
+                            <p> - </p>
+                        </div>
+                    {% endif %}
+                    <!-- Button voir plus et rendre opérationnel -->
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('roomDetail', {'room' : room.id}) }}"
+                           class="planExperimentation-div-voir-plus">Voir plus</a>
+                    {% else %}
+                        {% if room.acquisitionUnit is not empty and (room.acquisitionUnit.state != "Opérationnel" and
+                            room.acquisitionUnit.state != "Dysfonctionnement")%}
+                            <a href="{{ path('manageAcquisitionUnit', {'acquisitionUnit' :room.acquisitionUnit.id}) }}"
+                               class="planExperimentation-div-voir-plus">Définir le SA comme opérationnel</a>
                         {% endif %}
+                    {% endif %}
                     </div>
-
                 {% endfor %}
-                {% endif %}
-
             </div>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class='planExperimentation-div-array'>
+                <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
+            </div>
+        {% endif %}
+    </div>
+    {% include 'components/search_data.html.twig' %}
 
-            {% if app.user.username == 'yacine' %}
-                <div class='planExperimentation-div-array'>
-                    <a href="{{ path('addRoom') }}" class="planExperimentation-div-button-add addRoom">Ajouter une salle</a>
-                </div>
-            {% endif %}
-        </div>
-    </section>
+</section>
+{% include 'partial/footer.html.twig' %}
+</body>
 
-    {% include 'partial/footer.html.twig' %}
-
-
-
-    </body>
 </html>

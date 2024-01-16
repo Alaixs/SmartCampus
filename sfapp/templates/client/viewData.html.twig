@@ -4,240 +4,164 @@
     <title>SmartCampus</title>
     <link rel="stylesheet" href="{{ asset('assets/css/viewData.css') }}">
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
-    <style>
-
-    </style>
 </head>
 
-<body>
+    <body>
 
-{% include 'partial/header.html.twig'%}
+        {% include 'partial/header.html.twig'%}
 
-<section>
-    {% if (currentValue[0] >= 0) %}
-        <ul class="pageIndicator">
-            {% if (valueSelected == 'temp') %}
-                <li class="indicator selectedIndicator"></li>
-                <a href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'humidity'}) }}">
-                    <li class="indicator"></li>
-                </a>
-                <a href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'co2'}) }}">
-                    <li class="indicator"></li>
-                </a>
-            {% elseif (valueSelected == 'humidity')%}
-                <a href="{{ path('view_data', {'room': room.id}) }}/temp">
-                    <li class="indicator"></li>
-                </a>
-                <li class="indicator selectedIndicator"></li>
-                <a href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'co2'}) }}">
-                    <li class="indicator"></li>
-                </a>
-            {% else %}
-                <a href="{{ path('view_data', {'room': room.id}) }}/temp">
-                    <li class="indicator"></li>
-                </a>
-                <a href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'humidity'}) }}">
-                    <li class="indicator"></li>
-                </a>
-                <li class="indicator selectedIndicator"></li>
-            {% endif %}
-        </ul>
-        <div class="dataVisualisation">
-            {% if (valueSelected != 'temp') %}
-                {% set index = defaultValueType - 1 %}
-                <a class="leftArrow" href="{{ attribute(valueType, index) }}">
-                    <img class="scrollArrow" src="{{ asset('assets/img/arrow.png') }}">
-                </a>
-            {% else %}
-                <img class="scrollArrow unclickableScrollArrow" src="{{ asset('assets/img/arrow.png') }}">
-            {% endif %}
-            <div class="displayPanel">
-                {% if (valueSelected == 'temp') %}
-                    <div class="dataPanel tempPanel currentPanel">
-                        <p class="panelTitle">TEMPERATURE</p>
-                        <div class="currentValueData">
-                            <p>
-                                {% if ( currentValue[0] >= 0) %}
-                                    {{ currentValue[0] }}°C
+        {% set currentDate = 'now'|date('d-m') %}
+        {% set currentDateSplit = currentDate|split('-') %}
+
+        {% set summerEndingDate = '31-08' %}
+        {% set summerEndingDateSplit = summerEndingDate|split('-') %}
+
+        {% set autumnEndingDate = '30-11' %}
+        {% set autumnEndingDateSplit = autumnEndingDate|split('-') %}
+
+        {% set winterEndingDate = '28-02' %}
+        {% set winterEndingDateSplit = winterEndingDate|split('-') %}
+
+        {% set springEndingDate = '31-05' %}
+        {% set springEndingDateSplit = springEndingDate|split('-') %}
+
+        <section>
+            <div class="dataVisualisation">
+                <div class="dataVisualisationTitle">
+                    Données récupérées
+                </div>
+                <div class="displayData">
+                    <div>
+                        <div class="dataType">Température</div>
+                        <div class="data">
+                            {{ temp[0] }} °C
+                        </div>
+                        <div class="dataComfort tempComfort">
+                            {% if (currentDate > springEndingDate and currentDate <= summerEndingDate ) %}
+
+                                {% if (temp[0] > 28 or temp[0] < 17) %}
+                                    Inconfortable
+                                    <style>
+                                        .tempComfort {
+                                            background-color: #ff1b1b;
+                                        }
+                                    </style>
+                                {% elseif (temp[0] == -1) %}
+                                    Aucune valeur pour cette donnée
+                                    <style>
+                                        .tempComfort {
+                                            background-color: #F4F4F4;
+                                        }
+                                    </style>
                                 {% else %}
-                                    Erreur
+                                    Confortable
+                                    <style>
+                                        .tempComfort {
+                                            background-color: #78f378;
+                                        }
+                                    </style>
                                 {% endif %}
-                            </p>
-                            <p class="stateDanger">
-                                {% if ( currentValue[0] > 0) %}
-                                    {% set currentDate = 'now'|date('d-m') %}
-                                    {% set currentDateSplit = currentDate|split('-') %}
 
-                                    {% set summerEndingDate = '31-08' %}
-                                    {% set summerEndingDateSplit = summerEndingDate|split('-') %}
-
-                                    {% set autumnEndingDate = '30-11' %}
-                                    {% set autumnEndingDateSplit = autumnEndingDate|split('-') %}
-
-                                    {% set winterEndingDate = '28-02' %}
-                                    {% set winterEndingDateSplit = winterEndingDate|split('-') %}
-
-                                    {% set springEndingDate = '31-05' %}
-                                    {% set springEndingDateSplit = springEndingDate|split('-') %}
-
-                                    {% if (currentDate > springEndingDate and currentDate <= summerEndingDate ) %}
-
-                                        {% if (currentValue[0] > 28 or currentValue[0] < 17) %}
-                                            TEMPERATURE ANORMALE
-                                            <style>
-                                                .stateDanger {
-                                                    background-color: #EEA2A2;
-                                                }
-                                            </style>
-                                        {% else %}
-                                            TEMPERATURE NORMALE
-                                            <style>
-                                                .stateDanger {
-                                                    background-color: #ACEEA2;
-                                                }
-                                            </style>
-                                        {% endif %}
-
-                                    {% else %}
-                                        {% if (currentValue[0] > 21 or currentValue[0] < 17) %}
-                                            TEMPERATURE ANORMALE
-                                            <style>
-                                                .stateDanger {
-                                                    background-color: #EEA2A2;
-                                                }
-                                            </style>
-                                        {% else %}
-                                            TEMPERATURE NORMALE
-                                            <style>
-                                                .stateDanger {
-                                                    background-color: #ACEEA2;
-                                                }
-                                            </style>
-                                        {% endif %}
-
-                                    {% endif %}
+                            {% else %}
+                                {% if (temp[0] > 21 or temp[0] < 17) %}
+                                    Inconfortable
+                                    <style>
+                                        .tempComfort {
+                                            background-color: #ff1b1b;
+                                        }
+                                    </style>
+                                {% elseif (temp[0] == -1) %}
+                                    Aucune valeur pour cette donnée
+                                    <style>
+                                        .tempComfort {
+                                            background-color: #F4F4F4;
+                                        }
+                                    </style>
+                                {% else %}
+                                    Confortable
+                                    <style>
+                                        .tempComfort {
+                                            background-color: #78f378;
+                                        }
+                                    </style>
                                 {% endif %}
-                            </p>
+
+                            {% endif %}
+
                         </div>
                     </div>
-                    <a class="dataPanel humPanel clickableHumPanel" href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'humidity'}) }}">
-                        <p>HUMIDITE</p>
-                    </a>
-                    <a class="dataPanel co2Panel clickableCo2Panel" href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'co2'}) }}">
-                        <p>CO2</p>
-                    </a>
-                {% elseif (valueSelected == 'humidity') %}
-                    <a class="dataPanel tempPanel clickableTempPanel" href="{{ path('view_data', {'room': room.id}) }}/temp">
-                        <p>TEMPERATURE</p>
-                    </a>
-                    <div class="dataPanel humPanel currentPanel">
-                        <p class="panelTitle">HUMIDITE</p>
-                        <div class="currentValueData">
-                            <p>
-                                {% if ( currentValue[0] >= 0) %}
-                                    {{ currentValue[0] }} %
-                                {% else %}
-                                    Erreur
-                                {% endif %}
-                            </p>
-                            <p class="stateDanger">
-                                {% if (currentValue[0] > 70) %}
-                                    HUMIDITE ANORMALE
-                                    <style>
-                                        .stateDanger {
-                                            background-color: #EEA2A2;
-                                        }
-                                    </style>
-                                {% else %}
-                                    HUMIDITE NORMALE
-                                    <style>
-                                        .stateDanger {
-                                            background-color: #ACEEA2;
-                                        }
-                                    </style>
-                                {% endif %}
-                            </p>
+                    <div>
+                        <div class="dataType">Humidité</div>
+                        <div class="data">
+                            {{ humidity[0] }} %
+                        </div>
+                        <div class="dataComfort humComfort">
+                            {% if (humidity[0] > 70 and temp[0] < 20) %}
+                                Inconfortable
+                                <style>
+                                    .humComfort {
+                                        background-color: #ff1b1b;
+                                    }
+                                </style>
+                            {% elseif (humidity[0] == -1) %}
+                                Aucune valeur pour cette donnée
+                                <style>
+                                    .humComfort {
+                                        background-color: #F4F4F4;
+                                    }
+                                </style>
+                            {% else %}
+                                Confortable
+                                <style>
+                                    .humComfort {
+                                        background-color: #78f378;
+                                    }
+                                </style>
+                            {% endif %}
                         </div>
                     </div>
-                    <a class="dataPanel co2Panel clickableCo2Panel" href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'co2'}) }}">
-                        <p>CO2</p>
-                    </a>
-                {% else %}
-                    <a class="dataPanel tempPanel clickableTempPanel" href="{{ path('view_data', {'room': room.id}) }}/temp">
-                        <p>TEMPERATURE</p>
-                    </a>
-                    <a class="dataPanel humPanel clickableHumPanel" href="{{ path('view_data', {'room': room.id, 'valueSelected' : 'humidity'}) }}">
-                        <p>HUMIDITE</p>
-                    </a>
-                    <div class="dataPanel co2Panel currentPanel">
-                        <p class="panelTitle">CONCENTRATION DE CO2</p>
-                        <div class="currentValueData">
-                            <p>
-                                {% if ( currentValue[0] >= 0) %}
-                                    {{ currentValue[0] }} PPM
-                                {% else %}
-                                    Erreur
-                                {% endif %}
-                            </p>
-                            <p class="stateDanger">
-                                {% if (currentValue[0] > 1500) %}
-                                    CONCENTRATION DE CO2 DANGEREUX
-                                    <style>
-                                        .stateDanger {
-                                            background-color: #EEA2A2;
-                                        }
-                                    </style>
-                                {% elseif (currentValue[0] >= 1000 and currentValue[0] < 1500) %}
-                                    CONCENTRATION DE CO2 ANORMALE
-                                    <style>
-                                        .stateDanger {
-                                            background-color: #eecca2;
-                                        }
-                                    </style>
-                                {% else %}
-                                    CONCENTRATION DE CO2 NORMALE
-                                    <style>
-                                        .stateDanger {
-                                            background-color: #ACEEA2;
-                                        }
-                                    </style>
-                                {% endif %}
-                            </p>
+                    <div>
+                        <div class="dataType">CO2</div>
+                        <div class="data">
+                            {{ co2[0] }} PPM
+                        </div>
+                        <div class="dataComfort co2Comfort">
+                            {% if (co2[0] >= 400 and co2[0] < 1000) %}
+                                Confortable
+                                <style>
+                                    .co2Comfort {
+                                        background-color: #78f378;
+                                    }
+                                </style>
+                            {% elseif (co2[0] == -1) %}
+                                Aucune valeur pour cette donnée
+                                <style>
+                                    .co2Comfort {
+                                        background-color: #F4F4F4;
+                                    }
+                                </style>
+                            {% elseif (co2[0] >= 1000 or co2[0] < 1500) %}
+                                Inquiétant
+                                <style>
+                                    .co2Comfort {
+                                        background-color: #f6ae2b;
+                                    }
+                                </style>
+                            {% else %}
+                                Dangereux
+                                <style>
+                                    .co2Comfort {
+                                        background-color: #ff1b1b;
+                                    }
+                                </style>
+                            {% endif %}
                         </div>
                     </div>
-                {% endif %}
-                <style>
-                    .currentPanel {
-                        background-color: /* walter */ white;
-                        width: 70%;
-                    }
-                </style>
+                </div>
             </div>
+        </section>
 
-            {% if (valueSelected != 'co2') %}
-                {% set index = defaultValueType + 1 %}
-                <a class="rightArrow" href="{{ attribute(valueType, index) }}">
-                    <img class="scrollArrow" src="{{ asset('assets/img/arrow.png') }}">
-                </a>
-            {% else %}
-                <img class="scrollArrow unclickableScrollArrow rightUnclickableArrow" src="{{ asset('assets/img/arrow.png') }}">
-            {% endif %}
-        </div>
-        <div>
-            <a class="returnToFloorPage" href="{{ path('app_client')}}">Revenir à la page précédente</a>
-            <style>
-                .returnToFloorPage {
-                    margin-top: 3vh;
-                }
-            </style>
-        </div>
-    {% else %}
-        <p>Aucune donnée n'a été récupérée pour le moment dans la salle {{ room.name }}</p>
-        <a class="returnToFloorPage" href="{{ path('app_client')}}">Revenir à la page précédente</a>
-    {% endif %}
-</section>
+        {% include 'partial/footer.html.twig'%}
 
-{% include 'partial/footer.html.twig'%}
-
-</body>
+    </body>
 </html>
