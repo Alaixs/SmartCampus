@@ -19,10 +19,8 @@ section {
     display: flex;
     height: 4vh;
     justify-content: space-evenly;
+    margin-bottom: 2vh;
 }
-
-
-
 
 .endButton {
     font-size: 1.3vh;
@@ -35,6 +33,8 @@ section {
 
 .endButton:hover {
     cursor: pointer;
+    color: black;
+
 }
 
 
@@ -187,6 +187,11 @@ section {
 .listInfoRoom > ol {
     list-style: none;
     width: 100%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .listInfoRoom > ol > li {
@@ -204,11 +209,15 @@ section {
     display: flex;
     height: 100%;
     justify-content: space-evenly;
-    flex-direction: column;
+    flex-direction: column-reverse;
 }
 
 .signAUInformations
 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
     height: 80%;
     text-align: center;
 }
@@ -219,4 +228,42 @@ section {
 
 .submit.endButton:hover {
     background-color: #A2E0EE;
+}
+
+.data > li {
+    list-style: none;
+    margin: 16px 0;
+}
+
+.data {
+    width: 20vw;
+    max-height: 55vh;
+    overflow: auto;
+    padding: 0 0 0 10px;
+    margin: 0;
+}
+
+.lastData, .tempValue {
+    height: 5vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lastDataDate, .lastDataValue, .typeValue, .value {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lastDataDate, .typeValue {
+    background-color: #e2e2e2;
+    width: 40%;
+}
+
+.lastDataValue, .value {
+    background-color: #F9F9F9;
+    width: 60%;
 }
