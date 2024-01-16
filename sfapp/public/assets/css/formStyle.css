@@ -62,6 +62,7 @@ section {
     display: flex;
     height: 4vh;
     justify-content: space-between;
+    margin-bottom: 1vh;
 }
 
 .restOfForm {
