@@ -170,9 +170,11 @@
                                 </div>
                         </div>
                         {% endif %}
+                        {% if room.acquisitionUnit and room.acquisitionUnit.state == 'Opérationnel' %}
                         <a class="graphButton" href="{{ path('view_graph', {'room' : room.id}) }}">
                             Voir l'historique des données
                         </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
