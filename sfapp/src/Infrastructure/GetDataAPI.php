@@ -54,8 +54,7 @@ class GetDataAPI implements GetDataInteface
 
 
                 $responseContent = $response->toArray();
-
-                $value = isset($responseContent[0]['valeur']) ? (int)$responseContent[0]['valeur'] : -1;
+                $value = is_numeric($responseContent[0]['valeur']) ? (int)$responseContent[0]['valeur'] : -1;
                 $date = $responseContent[0]['dateCapture'];
                 return [$value, $date];
             }
