@@ -27,134 +27,141 @@
 
         <section>
             <div class="dataVisualisation">
-                <div class="dataVisualisationTitle">
-                    Données récupérées
+                <div class='planExperimentation-div-title'>
+                    <a class="backArrow" href="{{ path('app_client') }}">
+                        <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
+                    </a>
+                    <p>
+                        Données récupérées
+                    </p>
                 </div>
-                <div class="displayData">
-                    <div>
-                        <div class="dataType">Température</div>
-                        <div class="data">
-                            {{ temp[0] }} °C
-                        </div>
-                        <div class="dataComfort tempComfort">
-                            {% if (currentDate > springEndingDate and currentDate <= summerEndingDate ) %}
+                <div class="panelOfData">
+                    <div class="displayData">
+                        <div>
+                            <div class="dataType">Température</div>
+                            <div class="data">
+                                {{ temp[0] }} °C
+                            </div>
+                            <div class="dataComfort tempComfort">
+                                {% if (currentDate > springEndingDate and currentDate <= summerEndingDate ) %}
 
-                                {% if (temp[0] > 28 or temp[0] < 17) %}
+                                    {% if (temp[0] > 28 or temp[0] < 17) %}
+                                        Inconfortable
+                                        <style>
+                                            .tempComfort {
+                                                background-color: #ff1b1b;
+                                            }
+                                        </style>
+                                    {% elseif (temp[0] == -1) %}
+                                        Aucune valeur pour cette donnée
+                                        <style>
+                                            .tempComfort {
+                                                background-color: #F4F4F4;
+                                            }
+                                        </style>
+                                    {% else %}
+                                        Confortable
+                                        <style>
+                                            .tempComfort {
+                                                background-color: #78f378;
+                                            }
+                                        </style>
+                                    {% endif %}
+
+                                {% else %}
+                                    {% if (temp[0] > 21 or temp[0] < 17) %}
+                                        Inconfortable
+                                        <style>
+                                            .tempComfort {
+                                                background-color: #ff1b1b;
+                                            }
+                                        </style>
+                                    {% elseif (temp[0] == -1) %}
+                                        Aucune valeur pour cette donnée
+                                        <style>
+                                            .tempComfort {
+                                                background-color: #F4F4F4;
+                                            }
+                                        </style>
+                                    {% else %}
+                                        Confortable
+                                        <style>
+                                            .tempComfort {
+                                                background-color: #78f378;
+                                            }
+                                        </style>
+                                    {% endif %}
+
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <div>
+                            <div class="dataType">Humidité</div>
+                            <div class="data">
+                                {{ humidity[0] }} %
+                            </div>
+                            <div class="dataComfort humComfort">
+                                {% if (humidity[0] > 70 and temp[0] < 20) %}
                                     Inconfortable
                                     <style>
-                                        .tempComfort {
+                                        .humComfort {
                                             background-color: #ff1b1b;
                                         }
                                     </style>
-                                {% elseif (temp[0] == -1) %}
+                                {% elseif (humidity[0] == -1) %}
                                     Aucune valeur pour cette donnée
                                     <style>
-                                        .tempComfort {
+                                        .humComfort {
                                             background-color: #F4F4F4;
                                         }
                                     </style>
                                 {% else %}
                                     Confortable
                                     <style>
-                                        .tempComfort {
+                                        .humComfort {
                                             background-color: #78f378;
                                         }
                                     </style>
                                 {% endif %}
-
-                            {% else %}
-                                {% if (temp[0] > 21 or temp[0] < 17) %}
-                                    Inconfortable
+                            </div>
+                        </div>
+                        <div>
+                            <div class="dataType">CO2</div>
+                            <div class="data">
+                                {{ co2[0] }} PPM
+                            </div>
+                            <div class="dataComfort co2Comfort">
+                                {% if (co2[0] >= 400 and co2[0] < 1000) %}
+                                    Confortable
                                     <style>
-                                        .tempComfort {
-                                            background-color: #ff1b1b;
+                                        .co2Comfort {
+                                            background-color: #78f378;
                                         }
                                     </style>
-                                {% elseif (temp[0] == -1) %}
+                                {% elseif (co2[0] == -1) %}
                                     Aucune valeur pour cette donnée
                                     <style>
-                                        .tempComfort {
+                                        .co2Comfort {
                                             background-color: #F4F4F4;
                                         }
                                     </style>
-                                {% else %}
-                                    Confortable
+                                {% elseif (co2[0] >= 1000 or co2[0] < 1500) %}
+                                    Inquiétant
                                     <style>
-                                        .tempComfort {
-                                            background-color: #78f378;
+                                        .co2Comfort {
+                                            background-color: #f6ae2b;
+                                        }
+                                    </style>
+                                {% else %}
+                                    Dangereux
+                                    <style>
+                                        .co2Comfort {
+                                            background-color: #ff1b1b;
                                         }
                                     </style>
                                 {% endif %}
-
-                            {% endif %}
-
-                        </div>
-                    </div>
-                    <div>
-                        <div class="dataType">Humidité</div>
-                        <div class="data">
-                            {{ humidity[0] }} %
-                        </div>
-                        <div class="dataComfort humComfort">
-                            {% if (humidity[0] > 70 and temp[0] < 20) %}
-                                Inconfortable
-                                <style>
-                                    .humComfort {
-                                        background-color: #ff1b1b;
-                                    }
-                                </style>
-                            {% elseif (humidity[0] == -1) %}
-                                Aucune valeur pour cette donnée
-                                <style>
-                                    .humComfort {
-                                        background-color: #F4F4F4;
-                                    }
-                                </style>
-                            {% else %}
-                                Confortable
-                                <style>
-                                    .humComfort {
-                                        background-color: #78f378;
-                                    }
-                                </style>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div>
-                        <div class="dataType">CO2</div>
-                        <div class="data">
-                            {{ co2[0] }} PPM
-                        </div>
-                        <div class="dataComfort co2Comfort">
-                            {% if (co2[0] >= 400 and co2[0] < 1000) %}
-                                Confortable
-                                <style>
-                                    .co2Comfort {
-                                        background-color: #78f378;
-                                    }
-                                </style>
-                            {% elseif (co2[0] == -1) %}
-                                Aucune valeur pour cette donnée
-                                <style>
-                                    .co2Comfort {
-                                        background-color: #F4F4F4;
-                                    }
-                                </style>
-                            {% elseif (co2[0] >= 1000 or co2[0] < 1500) %}
-                                Inquiétant
-                                <style>
-                                    .co2Comfort {
-                                        background-color: #f6ae2b;
-                                    }
-                                </style>
-                            {% else %}
-                                Dangereux
-                                <style>
-                                    .co2Comfort {
-                                        background-color: #ff1b1b;
-                                    }
-                                </style>
-                            {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
