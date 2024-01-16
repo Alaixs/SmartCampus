@@ -50,4 +50,9 @@ class GetDataJson implements GetDataInteface
     }
 
 
+    public function getValuesByPeriod($room, $type, $period, $startDate, $endDate): array
+    {
+
+    }
+
 }

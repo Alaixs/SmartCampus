@@ -4,6 +4,7 @@
     <title>SmartCampus</title>
     <link rel="stylesheet" href="{{ asset('assets/css/viewData.css') }}">
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
+
 </head>
 
     <body>
@@ -166,7 +167,12 @@
                     </div>
                 </div>
             </div>
-        </section>
+            
+        </div>
+        
+    </div>
+</section>
+<a href="{{ path('view_graph', {'room': room.id}) }}">Voir le graphique de la température</a>
 
         {% include 'partial/footer.html.twig'%}
 

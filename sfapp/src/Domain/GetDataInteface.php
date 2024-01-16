@@ -10,5 +10,6 @@ interface GetDataInteface
     public function getRoomComfortIndicator(Room $room) : array;
 
     public function getLastValue(Room $room) : array;
+    public function getValuesByPeriod(Room $room, $type, $period, $startDate, $endDate): array;
 
 }
