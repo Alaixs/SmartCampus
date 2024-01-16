@@ -96,29 +96,28 @@
                                     let tempComfort = data['temp'];
                                     let humComfort = data['hum'];
                                     let co2Comfort = data['co2'];
-                                    if (tempComfort === 'OK' && humComfort === 'OK' && co2Comfort === 'OK') {
-                                        div.classList.remove("greyBackground");
-                                        div.classList.add('greenBackground');
-                                        div.innerHTML = `<div class='cursorHelp'><span
-                                                title="Température : ` + tempComfort + `\n Humidité : ` + humComfort + `\n Co2 : ` + co2Comfort + `">Confortable</span></div>`;
-                                    }
-                                    else if (tempComfort === 'Très mauvais' && humComfort === 'Très mauvais' && co2Comfort === 'Très mauvais') {
-                                        div.classList.remove("greyBackground");
-                                        div.classList.add('redBackground');
-                                        div.innerHTML = `<div class='cursorHelp'><span
-                                                title="Température : ` + tempComfort + `\n Humidité : ` + humComfort + `\n Co2 : ` + co2Comfort + `"><p>Inconfortable</span></div>`;
-                                    }
-                                    else if (tempComfort === 'Aucune données' && humComfort === 'Aucune données' && co2Comfort === 'Aucune données') {
-                                        div.innerHTML = `<div>Aucune donnée</div>`;
-                                    }
-                                    else {
-                                        console.log(data);
-                                        div.classList.remove("greyBackground");
-                                        div.classList.add('orangeBackground');
-                                        div.innerHTML = `<div class='cursorHelp'><span
-                                                title="Température : ` + tempComfort + `\n Humidité : ` + humComfort + `\n Co2 : ` + co2Comfort + `">Peu confortable</span></div>`;
-                                    }
+                                    
+                                if (tempComfort === 'OK' && humComfort === 'OK' && co2Comfort === 'OK') {
+                                    div.classList.remove("greyBackground");
+                                    div.classList.add('greenBackground', 'cursorHelp');
+                                    div.title = `Température : ${tempComfort}\n Humidité : ${humComfort}\n CO2 : ${co2Comfort}`;
+                                    div.innerHTML = 'Confortable';
+                                } else if (tempComfort === 'Très mauvais' && humComfort === 'Très mauvais' && co2Comfort === 'Très mauvais') {
+                                    div.classList.remove("greyBackground");
+                                    div.classList.add('redBackground', 'cursorHelp');
+                                    div.title = `Température : ${tempComfort}\n Humidité : ${humComfort}\n CO2 : ${co2Comfort}`;
+                                    div.innerHTML = 'Inconfortable';
+                                } else if (tempComfort === 'Aucune données' && humComfort === 'Aucune données' && co2Comfort === 'Aucune données') {
+                                    div.innerHTML = 'Aucune donnée';
+                                } else {
+                                    console.log(data);
+                                    div.classList.remove("greyBackground");
+                                    div.classList.add('orangeBackground', 'cursorHelp');
+                                    div.title = `Température : ${tempComfort}\n Humidité : ${humComfort}\n CO2 : ${co2Comfort}`;
+                                    div.innerHTML = 'Peu confortable';
                                 }
+
+                            }
                             </script>
                         {% else %}
                             <div class='planExperimentation-div-div greyBackground'>
