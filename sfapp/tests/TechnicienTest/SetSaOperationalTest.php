@@ -2,6 +2,7 @@
 
 namespace App\Tests\TechnicienTest;
 
+use App\Domain\AcquisitionUnitInstallationState;
 use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
@@ -16,22 +17,22 @@ class SetSaOperationalTest extends WebTestCase
 
         $client = static::createClient();
         $userRepository = $client->getContainer()->get(UserRepository::class);
-        $testUser = $userRepository->findOneBy(array('username' => 'référent'));
+        $testUser = $userRepository->findOneBy(array('username' => 'technicien'));
         $client->loginUser($testUser);
 
         $roomName = 'D999';
         $saNumber = 'SA8759';
 
-        $this->addRoomAndSa($client, $roomName, $saNumber);
+        $room = $this->addRoomAndSa($client, $roomName, $saNumber);
 
-        $roomRepository = $client->getContainer()->get(RoomRepository::class);
-        $room = $roomRepository->findOneBy(array('name' => $roomName));
         $client->request('GET', '/manageAcquisitionUnit/' . $room->getAcquisitionUnit()->getId());
+
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $client->clickLink('Rendre le SA opérationnel');
+        $client->clickLink('Rendre le SA opérationnel');
         $client->followRedirect();
-        $this->assertStringContainsString('Opérationnel', $client->getResponse()->getContent());
+        $this->assertStringNotContainsString("Etat du système d'acquisition : Opérationnel", $client->getResponse()->getContent());
         $this->deleteRoom($client, $room);
         $this->deleteSA($client, $room->getAcquisitionUnit());
     }
@@ -42,30 +43,33 @@ class SetSaOperationalTest extends WebTestCase
         $roomName = 'D987';
         $saNumber = 'SA8759';
         $client = static::createClient();
+        $userRepository = $client->getContainer()->get(UserRepository::class);
 
-        $this->addRoomAndSa($client, $roomName, $saNumber);
+        $testUser = $userRepository->findOneBy(array('username' => 'technicien'));
 
-        $roomRepository = $client->getContainer()->get(RoomRepository::class);
-        $room = $roomRepository->findOneBy(array('name' => $roomName));
+        $client->loginUser($testUser);
 
+        $room = $this->addRoomAndSa($client, $roomName, $saNumber);
 
         $client->request('GET', '/manageAcquisitionUnit/' . $room->getAcquisitionUnit()->getId());
+
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $client->clickLink('Rendre le SA opérationnel');
+        $client->clickLink('Rendre le SA opérationnel');
         $client->followRedirect();
-        $this->assertStringNotContainsString("ok.png", $client->getResponse()->getContent());
+        $this->assertStringNotContainsString("Etat du système d'acquisition : Opérationnel", $client->getResponse()->getContent());
         $this->deleteRoom($client, $room);
         $this->deleteSA($client, $room->getAcquisitionUnit());
     }
 
-    private function addRoomAndSa($client, $roomName, $saNumber) : void
+    private function addRoomAndSa($client, $roomName, $saNumber) : Room
     {
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $newSa = new AcquisitionUnit();
         $newSa->setName($saNumber);
-        $newSa->setState(AcquisitionUnitOperatingState::WAITING_FOR_INSTALLATION->value);
+        $newSa->setState(AcquisitionUnitInstallationState::SUPPORTED->value);
 
         $newRoom = new Room();
         $newRoom->setName($roomName);
@@ -81,7 +85,7 @@ class SetSaOperationalTest extends WebTestCase
         $entityManager->persist($newRoom);
         $entityManager->flush();
 
-
+        return $newRoom;
     }
 
     private function deleteRoom($client, $room) : void

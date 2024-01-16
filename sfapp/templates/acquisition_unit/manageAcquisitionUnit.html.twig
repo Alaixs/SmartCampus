@@ -32,7 +32,7 @@
                 {% if room.acquisitionUnit.state == "En attente d'installation" %}
                     <a class="endButton submit" href="{{ path("defAcquisitionUnitSupport", {'acquisitionUnit' : room.acquisitionUnit.id}) }}">Prendre en charge le SA</a>
                 {% elseif room.acquisitionUnit.state == 'Pris en charge' %}
-                    <a class="endButton submit"  href="{{ path('defAcquisitionUnitOperational', {'acquisitionUnit' : room.acquisitionUnit.id}) }}">Renre opérationnel le SA</a>
+                    <a class="endButton submit"  href="{{ path('defAcquisitionUnitOperational', {'acquisitionUnit' : room.acquisitionUnit.id}) }}">Rendre le SA opérationnel</a>
                 {% elseif room.acquisitionUnit.state == 'En panne' or room.acquisitionUnit.state == 'Dysfonctionnement' %}
                     <a class="endButton submit"  href="{{ path('defAcquisitionUnitOperational', {'acquisitionUnit' : room.acquisitionUnit.id}) }}">Réparer le SA</a>
                 {% endif %}

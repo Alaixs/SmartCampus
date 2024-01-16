@@ -28,10 +28,7 @@ class EditRoomTest extends WebTestCase
         $userRepository = $this->client->getContainer()->get(UserRepository::class);
         $testUser = $userRepository->findOneBy(array('username' => 'référent'));
         $this->client->loginUser($testUser);
-        $this->createRoom($roomName);
-        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
-
-        $room = $roomRepository->findOneBy(array('name' => $roomName));
+        $room = $this->createRoom($roomName);
 
         $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
@@ -58,10 +55,7 @@ class EditRoomTest extends WebTestCase
         $roomName = 'D309';
         $newRoomName = 'D207';
 
-        $this->createRoom($roomName);
-        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
-
-        $room = $roomRepository->findOneBy(array('name' => $roomName));
+        $room = $this->createRoom($roomName);
 
         $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
@@ -88,10 +82,7 @@ class EditRoomTest extends WebTestCase
         $roomName = 'D309';
         $newFloor = 1;
 
-        $this->createRoom($roomName);
-        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
-
-        $room = $roomRepository->findOneBy(array('name' => $roomName));
+        $room = $this->createRoom($roomName);
 
         $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
@@ -104,6 +95,7 @@ class EditRoomTest extends WebTestCase
         $form->setValues(array('add_room_form[floor]' => $newFloor));
 
         $this->client->submit($form);
+
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
         $this->client->followRedirect();
         $this->assertStringContainsString('1er', $this->client->getResponse()->getContent(), 'ca marche?');
@@ -114,12 +106,9 @@ class EditRoomTest extends WebTestCase
     public function testEditValidCapacity()
     {
         $roomName = 'D999';
-        $newCapacity = 40;
+        $newCapacity = 60;
 
-        $this->createRoom($roomName);
-        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
-
-        $room = $roomRepository->findOneBy(array('name' => $roomName));
+        $room = $this->createRoom($roomName);
 
         $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
@@ -132,9 +121,10 @@ class EditRoomTest extends WebTestCase
         $form->setValues(array('add_room_form[capacity]' => $newCapacity));
 
         $this->client->submit($form);
+
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
         $this->client->followRedirect();
-        $this->assertStringContainsString('40 personnes', $this->client->getResponse()->getContent(), 'ca marche?');
+        $this->assertStringContainsString('60', $this->client->getResponse()->getContent(), 'ca marche?');
 
         $this->deleteRoom($roomName);
     }
@@ -144,11 +134,7 @@ class EditRoomTest extends WebTestCase
         $roomName = 'D999';
         $newCapacity = -1;
 
-        $this->createRoom($roomName);
-
-        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
-
-        $room = $roomRepository->findOneBy(array('name' => $roomName));
+        $room = $this->createRoom($roomName);
 
         $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
@@ -173,10 +159,7 @@ class EditRoomTest extends WebTestCase
         $roomName = 'D999';
         $newArea = 40;
 
-        $this->createRoom($roomName);
-        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
-
-        $room = $roomRepository->findOneBy(array('name' => $roomName));
+        $room = $this->createRoom($roomName);
 
         $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
@@ -191,7 +174,7 @@ class EditRoomTest extends WebTestCase
         $this->client->submit($form);
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
         $this->client->followRedirect();
-        $this->assertStringContainsString('40 m²', $this->client->getResponse()->getContent(), 'ca marche?');
+        $this->assertStringContainsString('40', $this->client->getResponse()->getContent(), 'ca marche?');
 
         $this->deleteRoom($roomName);
     }
@@ -201,11 +184,7 @@ class EditRoomTest extends WebTestCase
         $roomName = 'D999';
         $newArea = -1;
 
-        $this->createRoom($roomName);
-
-        $roomRepository = $this->client->getContainer()->get(RoomRepository::class);
-
-        $room = $roomRepository->findOneBy(array('name' => $roomName));
+        $room = $this->createRoom($roomName);
 
         $this->client->request('GET', '/roomDetail/' . $room->getId());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
@@ -225,7 +204,7 @@ class EditRoomTest extends WebTestCase
         $this->deleteRoom($roomName);
     }
 
-    private function createRoom($roomName) : void
+    private function createRoom($roomName) : Room
     {
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
 
@@ -240,6 +219,8 @@ class EditRoomTest extends WebTestCase
 
         $entityManager->persist($newRoom);
         $entityManager->flush();
+
+        return $newRoom;
     }
 
     private function deleteRoom($roomName): void

@@ -24,7 +24,7 @@ class AddAcquisitionUnitTest extends WebTestCase
 
         $client = static::createClient();
         $userRepository = $client->getContainer()->get(UserRepository::class);
-        $testUser = $userRepository->findOneBy(array('username' => 'référent'));
+        $testUser = $userRepository->findOneBy(array('username' => 'technicien'));
         $client->loginUser($testUser);
 
         $crawler = $client->request('GET', '/addAcquisitionUnit');
