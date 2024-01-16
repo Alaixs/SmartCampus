@@ -267,3 +267,20 @@ section {
     background-color: #F9F9F9;
     width: 60%;
 }
+
+.delete.endButton {
+    background-color: #ee8f8f;
+    color: black;
+}
+
+.delete.endButton:hover {
+    background-color: #eea2a2;
+}
+
+.modal-footer > .delete, .cancelButtonModal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3vh;
+    width: 5vw;
+}
