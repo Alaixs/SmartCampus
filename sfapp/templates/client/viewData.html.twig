@@ -36,7 +36,7 @@
                         Données récupérées pour la salle {{ room.name }}
                     </p>
                 </div>
-                {% if temp[0] != -1 and humidity[0] != -1 and co2[0] != -1 %}
+                {% if temp[0] > -1 or humidity[0] > -1 or co2[0] > -1 %}
                     <div class="panelOfData">
                         <div class="displayData">
                             <div>
@@ -185,17 +185,14 @@
                             </div>
                         </div>
                     </div>
+                <a class="graphButton" href="{{ path('view_graph', {'room': room.id}) }}">Voir le graphique de la température</a>
                 {% else %}
                 <div class="panelOfData">
                     <div class="noDataMsg">Aucune donnée dans cette salle n'a été récupérée pour le moment</div>
-
                 </div>
                 {% endif %}
             </div>
-
 </section>
-<a href="{{ path('view_graph', {'room': room.id}) }}">Voir le graphique de la température</a>
-
         {% include 'partial/footer.html.twig'%}
 
     </body>

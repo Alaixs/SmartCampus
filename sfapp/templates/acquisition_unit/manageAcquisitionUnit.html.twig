@@ -19,11 +19,60 @@
             <a href="{{ path('app_admin') }}">
                 <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
             </a>
-            <p>Panneau de gestion du {{ room.acquisitionUnit }}</p>
+            Panneau de gestion du {{ room.acquisitionUnit }}
         </div>
         <div class="signAU">
             <div class="signAUInformations">
-                <p>Etat du système d'acquisition : {{ room.acquisitionUnit.state }}</p>
+                    <p>Etat du système d'acquisition : {{ room.acquisitionUnit.state }}</p>
+                    <div>
+                        <ul class="data">
+                            <li class="lastData">
+                                <div class="lastDataDate">
+                                    Dernière mesure
+                                </div>
+                                {% if temp[1] != 0 %}
+                                    <div class="lastDataValue">
+                                        {{ temp[1] }}
+                                    </div>
+                                {% elseif humidity[1] != 0 %}
+                                    <div class="lastDataValue">
+                                        {{ humidity[1] }}
+                                    </div>
+                                {% elseif co2[1] != 0 %}
+                                    <div class="lastDataValue">
+                                        {{ co2[1] }}
+                                    </div>
+                                {% else %}
+                                    <div class="lastDataError">Erreur</div>
+                                {% endif %}
+                            </li>
+                            <li class="tempValue">
+                                {% if (temp[0] > 0) %}
+                                    <div class="typeValue">Température</div>
+                                    <div class="value">{{ temp[0] }}°C</div>
+                                {% else %}
+                                    <div class="value">Une erreur est survenue.</div>
+                                {% endif %}
+                            </li>
+                            <li class="tempValue">
+                                {% if (temp[0] > 0) %}
+                                    <div class="typeValue">Humidité</div>
+                                    <div class="value">{{ humidity[0] }}%</div>
+                                {% else %}
+                                    <div class="value">Une erreur est survenue.</div>
+                                {% endif %}
+                            </li>
+                            <li class="tempValue">
+                                {% if (temp[0] > 0) %}
+                                    <div class="typeValue">CO2</div>
+                                    <div class="value">{{ co2[0] }} PPM</div>
+                                {% else %}
+                                    <div class="value">Une erreur est survenue.</div>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
             <div class="buttons">

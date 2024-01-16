@@ -20,7 +20,7 @@ class AddAcquisitionUnitTest extends WebTestCase
      */
     public function testSubmitValidData()
     {
-        $newSa = 'SA9999';
+        $newSa = '123';
 
         $client = static::createClient();
         $userRepository = $client->getContainer()->get(UserRepository::class);

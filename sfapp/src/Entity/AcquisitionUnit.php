@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: AcquisitionUnitRepository::class)]
 class AcquisitionUnit
 {
@@ -21,7 +22,7 @@ class AcquisitionUnit
     #[ORM\Column(length: 7)]
     #[Assert\NotBlank(message: 'Le nom du SA ne peut pas être vide')]
     #[Assert\Length(
-        max: 3,
+        max: 7,
         maxMessage: 'Le nom du SA ne peut pas contenir plus de 3 caractères'
     )]
     private ?string $name = null;

@@ -123,8 +123,8 @@ body {
 .add-or-del-div {
     display: flex;
     flex-direction: row;
-    width: 60%;
     text-align: center;
+    align-items: center;
 }
 
 .add-or-del-div > :nth-child(2) {
@@ -216,7 +216,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1vw;
 }
 
 .addRoom {
@@ -369,7 +368,6 @@ input#search_form_q {
         margin-top: 0.5vh;
         justify-content: center;
         align-items: center;
-        width: 100%;
     }
 
     .add-or-del-div > a {
