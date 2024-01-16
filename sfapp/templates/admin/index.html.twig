@@ -42,22 +42,22 @@
         {% else %}
             <div class='planExperimentation-div-array planExperimentation-div-array-columnName'>
                 <div class="planExperimentation-div-div">
-                    <p>SALLES</p>
+                    SALLES
                 </div>
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class="planExperimentation-div-div">
-                        <p>NIVEAU DE CONFORT</p>
+                        NIVEAU DE CONFORT
                     </div>
                 {% elseif is_granted('ROLE_TECHNICIEN') %}
                     <div class="planExperimentation-div-div">
-                        <p>SYSTEMES D'ACQUISITION</p>
+                        SYSTEMES D'ACQUISITION
                     </div>
                 {% endif %}
                 <div class="planExperimentation-div-div">
-                    <p>ETAT DE L'INSTALLATION</p>
+                    ETAT DE L'INSTALLATION
                 </div>
                 <div class="planExperimentation-div-div">
-                    <p>ETAT DE FONCTIONNEMENT</p>
+                    ETAT DE FONCTIONNEMENT
                 </div>
             </div>
             <div class="planExperimentation-div-allRoom">
@@ -73,7 +73,7 @@
 
                         {% if room.acquisitionUnit %}
                             <div class='planExperimentation-div-div greyBackground' id="comfortIndicatorRoom{{ room.id }}">
-                                <p>Chargement des données...</p>
+                                Chargement des données...
                             </div>
                             <script>
                                 document.addEventListener('DOMContentLoaded', function () {
@@ -99,30 +99,30 @@
                                     if (tempComfort === 'OK' && humComfort === 'OK' && co2Comfort === 'OK') {
                                         div.classList.remove("greyBackground");
                                         div.classList.add('greenBackground');
-                                        div.innerHTML = `<p class='cursorHelp'><span
-                                                title="Température : ` + tempComfort + `\n Humidité : ` + humComfort + `\n Co2 : ` + co2Comfort + `">Confortable</span></p>`;
+                                        div.innerHTML = `<div class='cursorHelp'><span
+                                                title="Température : ` + tempComfort + `\n Humidité : ` + humComfort + `\n Co2 : ` + co2Comfort + `">Confortable</span></div>`;
                                     }
                                     else if (tempComfort === 'Très mauvais' && humComfort === 'Très mauvais' && co2Comfort === 'Très mauvais') {
                                         div.classList.remove("greyBackground");
                                         div.classList.add('redBackground');
-                                        div.innerHTML = `<p class='cursorHelp'><span
-                                                title="Température : ` + tempComfort + `\n Humidité : ` + humComfort + `\n Co2 : ` + co2Comfort + `"><p>Inconfortable</span></p>`;
+                                        div.innerHTML = `<div class='cursorHelp'><span
+                                                title="Température : ` + tempComfort + `\n Humidité : ` + humComfort + `\n Co2 : ` + co2Comfort + `"><p>Inconfortable</span></div>`;
                                     }
                                     else if (tempComfort === 'Aucune données' && humComfort === 'Aucune données' && co2Comfort === 'Aucune données') {
-                                        div.innerHTML = `<p>Aucune donnée</p>`;
+                                        div.innerHTML = `<div>Aucune donnée</div>`;
                                     }
                                     else {
                                         console.log(data);
                                         div.classList.remove("greyBackground");
                                         div.classList.add('orangeBackground');
-                                        div.innerHTML = `<p class='cursorHelp'><span
-                                                title="Température : ` + tempComfort + `\n Humidité : ` + humComfort + `\n Co2 : ` + co2Comfort + `">Peu confortable</span></p>`;
+                                        div.innerHTML = `<div class='cursorHelp'><span
+                                                title="Température : ` + tempComfort + `\n Humidité : ` + humComfort + `\n Co2 : ` + co2Comfort + `">Peu confortable</span></div>`;
                                     }
                                 }
                             </script>
                         {% else %}
                             <div class='planExperimentation-div-div greyBackground'>
-                                <p>Aucune donnée</p>
+                                Aucune donnée
                             </div>
                         {% endif %}
                     {% else %}
@@ -141,25 +141,25 @@
                     {% if room.acquisitionUnit and room.acquisitionUnit.state != "En attente d'installation" %}
                         <!-- ETAT DE L'INSTALLATION DU SYSTEME D'ACQUISITION -->
                         <div class="planExperimentation-div-div">
-                            <p>Installé</p>
+                            Installé
                         </div>
                         <!-- ETAT DE FONCTIONNEMENT -->
                         <div class="planExperimentation-div-div">
-                            <p>{{ room.acquisitionUnit.state }}</p>
+                            {{ room.acquisitionUnit.state }}
                         </div>
                     {% elseif room.acquisitionUnit %}
                         <div class="planExperimentation-div-div">
-                            <p>En attente d'installation</p>
+                            En attente d'installation
                         </div>
                         <div class="planExperimentation-div-div">
-                            <p> - </p>
+                             -
                         </div>
                     {% else %}
                         <div class="planExperimentation-div-div">
-                            <p>Aucun système d'acquisition attribué</p>
+                            Aucun système d'acquisition attribué
                         </div>
                         <div class="planExperimentation-div-div">
-                            <p> - </p>
+                             -
                         </div>
                     {% endif %}
                     <!-- Button voir plus et rendre opérationnel -->
