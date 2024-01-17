@@ -164,26 +164,28 @@
                                 </div>
 
                                 <style>
-                                    {% if (temp[dataCounter].valeur < 0 or humidity[dataCounter].valeur < 0 or co2[dataCounter].valeur < 0 or temp[dataCounter].valeur > 50 or humidity[dataCounter].valeur >= 100 or co2[dataCounter].valeur > 1800) %}
-                                        .setSAToOpButton {
-                                            background-color: #d5d5d5;
-                                            color: gray;
-                                            pointer-events: none;
-                                        }
+                                    {% for i in 0..4 %}
+                                        {% if (temp[i].valeur < 0 or humidity[i].valeur < 0 or co2[i].valeur < 0 or temp[i].valeur > 50 or humidity[i].valeur >= 100 or co2[i].valeur > 1800) %}
+                                            .setSAToOpButton {
+                                                background-color: #d5d5d5;
+                                                color: gray;
+                                                pointer-events: none;
+                                            }
 
-                                        .setSAToOp {
-                                            cursor: not-allowed;
-                                        }
+                                            .setSAToOp {
+                                                cursor: not-allowed;
+                                            }
 
-                                    {% else %}
-                                        .setSAToOpButton {
-                                            background-color: #A2E0EE;
-                                            color: black;
-                                        }
-                                        .setSAToOpButton:hover {
-                                            background-color: #b9ebf6;
-                                        }
-                                    {% endif %}
+                                        {% else %}
+                                            .setSAToOpButton {
+                                                background-color: #A2E0EE;
+                                                color: black;
+                                            }
+                                            .setSAToOpButton:hover {
+                                                background-color: #b9ebf6;
+                                            }
+                                        {% endif %}
+                                    {% endfor %}
                                 </style>
 
                             </div>
