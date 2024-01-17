@@ -16,8 +16,20 @@
 <section>
 
     <div>
-        <canvas id="myChart" width="1400" height="600"></canvas>
+        {% if is_granted('ROLE_ADMIN') %}
+        <a class="backArrow" href="{{ path('roomDetail', {'room' : room.id}) }}">
+            <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
+        </a>
+        {% else %}
+        <a class="backArrow" href="{{ path('view_data', {'room' : room.id}) }}">
+            <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
+        </a>
+        {% endif %}
+        <div>
+            <canvas id="myChart" width="1400" height="600"></canvas>
+        </div>
     </div>
+
 
 
 </section>
