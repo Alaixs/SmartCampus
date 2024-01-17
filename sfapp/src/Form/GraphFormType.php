@@ -61,6 +61,9 @@ class GraphFormType extends  AbstractType
 
         $builder->add('submit', SubmitType::class, [
             'label' => 'Appliquer',
+            'attr' => [
+                'class' => 'btn-submit'
+            ]
         ]);
     }
 
