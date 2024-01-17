@@ -10,10 +10,16 @@
     <link rel="stylesheet" href="{{ asset('assets/css/manageSA.css') }}">
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body>
 {% include 'partial/header.html.twig'%}
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="/assets/js/toast.js"></script>
+{% for flashMessage in app.flashes('assignSaved') %}
+    <script>showToast("{{ flashMessage }}")</script>
+{% endfor %}
 
 <section>
     <div class="dataTest">
