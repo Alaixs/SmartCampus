@@ -277,10 +277,13 @@ section {
     background-color: #eea2a2;
 }
 
-.modal-footer > .delete, .cancelButtonModal {
+.modal-footer > .deleteButton, .cancelButtonModal {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 3vh;
     width: 5vw;
+    text-decoration: none;
+    color: black;
 }
+
