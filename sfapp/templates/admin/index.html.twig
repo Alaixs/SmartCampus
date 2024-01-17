@@ -113,20 +113,44 @@
                             Installé
                         </div>
                         <!-- ETAT DE FONCTIONNEMENT -->
-                        <div class="planExperimentation-div-div installationState"
-                             title="En attente d'affectation : le technicien doit affecter un système d'acquisition à la salle
 
-En attente d'affectation : le technicien doit installer le système d'acquisition affecté dans la salle
+                        {% if room.acquisitionUnit.state == "Opérationnel" %}
 
-Dysfonctionnement : les données sont aberrantes
+                            <div class="planExperimentation-div-div installationState" title="Opérationnel : tout va bien :)">
+                                {{ room.acquisitionUnit.state }}
+                            </div>
+                            
+                        {% elseif room.acquisitionUnit.state == "En panne" %}
 
-En panne : les données ne remontent pas
+                            <div class="planExperimentation-div-div installationState" title="En panne : les données ne remontent pas">
+                                {{ room.acquisitionUnit.state }}
+                            </div>
 
-Opérationnel : tout va bien :)
+                        {% elseif room.acquisitionUnit.state == "Dysfonctionnement" %}
 
-Pris en charge : le système d'acquisition est en cours de réparation">
-                            {{ room.acquisitionUnit.state }}
-                        </div>
+                            <div class="planExperimentation-div-div installationState" title="Dysfonctionnement : les données sont aberrantes">
+                                {{ room.acquisitionUnit.state }}
+                            </div>
+
+                        {% elseif room.acquisitionUnit.state == "En attente d'affectation" %}
+                        
+                            <div class="planExperimentation-div-div installationState" title="En attente d'installation : le technicien doit installer le système d'acquisition affecté dans la salle">
+                                {{ room.acquisitionUnit.state }}
+                            </div>
+
+                        {% elseif room.acquisitionUnit.state == "En attente d'affectation" %}
+
+                            <div class="planExperimentation-div-div installationState" title="En attente d'affectation : le technicien doit affecter un système d'acquisition à la salle">
+                                {{ room.acquisitionUnit.state }}
+                            </div>                        
+
+                        {% elseif room.acquisitionUnit.state == "Pris en charge" %}
+
+                            <div class="planExperimentation-div-div installationState" title="Pris en charge : le système d'acquisition est en cours de réparation">
+                                {{ room.acquisitionUnit.state }}
+                            </div>  
+                        {% endif %}
+
                     {% elseif room.acquisitionUnit %}
                         <div class="planExperimentation-div-div">
                             En attente d'installation
