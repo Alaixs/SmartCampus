@@ -11,4 +11,5 @@ interface GetDataInterface
     public function getLastValue(AcquisitionUnit $acquisitionUnit) : array;
     public function getValuesByPeriod(Room $room, $type, $period, $startDate, $endDate): array;
 
+    public function getLastValuesWithLimit(AcquisitionUnit $acquisitionUnit, string $type, int $limit): array;
 }

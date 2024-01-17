@@ -14,4 +14,7 @@ interface DataManagerInterface
     public function getRoomsComfort(array $acquisitionUnits) : array;
 
     public function set(AcquisitionUnit $acquisitionUnit, CacheItemInterface $cacheItem) : array;
+
+    public function getLastValuesWithLimit(AcquisitionUnit $acquisitionUnit, int $limit): array;
+
 }

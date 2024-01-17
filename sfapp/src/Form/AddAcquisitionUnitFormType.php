@@ -19,15 +19,13 @@ class AddAcquisitionUnitFormType extends AbstractType
                 'label' => 'Numéro du SA',
                 'attr' => [
                     'placeholder' => 'Exemple : 123',
-                    'maxlength' => 7,
-                    'value' => 'ESP-'
+                    'maxlength' => 3,
                 ],
             ]);
-
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             $data = $event->getData();
-            if (!empty($data['name']) && !str_starts_with($data['name'], 'ESP-')) {
-                $data['name'] = 'ESP-' . $data['name'];
+            if (!empty($data['name'])) {
+                $data['name'] = 'ESP-' . str_pad($data['name'], 3, '0', STR_PAD_LEFT);
                 $event->setData($data);
             }
         });

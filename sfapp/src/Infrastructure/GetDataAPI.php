@@ -3,15 +3,15 @@
 namespace App\Infrastructure;
 
 use App\Domain\GetDataInterface;
-use App\Entity\Room;
 use App\Entity\AcquisitionUnit;
 use Symfony\Component\HttpClient\HttpClient;
 use DateTime;
 use Exception;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class GetDataAPI implements GetDataInterface
 {
-    private $client;
+    private HttpClientInterface $client;
     private array $dbNames;
     public function __construct()
     {
@@ -37,21 +37,21 @@ class GetDataAPI implements GetDataInterface
             'ESP-018' => 'sae34bdm2eq3'];
     }
 
-    public function getLastValueByType(AcquisitionUnit $acquistionUnit, $type): array
+    public function getLastValueByType(?AcquisitionUnit $acquisitionUnit, $type): array
     {
         try {
-            if($acquistionUnit != null)
+            if($acquisitionUnit != null)
                 {
 
                 $response = $this->client->request('GET', 'https://sae34.k8s.iut-larochelle.fr/api/captures/last', [
                     'headers' => [
-                        'dbname' => $this->dbNames[$acquistionUnit->getName()],
+                        'dbname' => $this->dbNames[$acquisitionUnit->getName()],
                         'username' => 'l1eq3',
                         'userpass' => 'dagde4-puvtus-tyVvog',
                     ],
                     'query' => [
                         'nom' => $type,
-                        'nomsa' => $acquistionUnit->getName()
+                        'nomsa' => $acquisitionUnit->getName()
                     ],
                 ]);
 
@@ -67,14 +67,14 @@ class GetDataAPI implements GetDataInterface
         return [-1,0];
     }
 
-    public function getLastValue(AcquisitionUnit $acquistionUnit) : array
+    public function getLastValue(AcquisitionUnit $acquisitionUnit) : array
     {
         $roomData = array();
         $types = ['temp', 'co2', 'hum'];
 
         foreach($types as $type)
         {
-            $roomData[$type] = $this->getLastValueByType($acquistionUnit, $type);
+            $roomData[$type] = $this->getLastValueByType($acquisitionUnit, $type);
         }
         return $roomData;
 
@@ -150,27 +150,26 @@ class GetDataAPI implements GetDataInterface
         ];
     }
 
-    public function getLastFiveValues($room, $type): array
+    public function getLastValuesWithLimit(?AcquisitionUnit $acquisitionUnit, string $type, int $limit): array
     {
         try {
-            if($room->getAcquisitionUnit() != null)
+            if($acquisitionUnit != null)
             {
 
                 $response = $this->client->request('GET', 'https://sae34.k8s.iut-larochelle.fr/api/captures/last', [
                     'headers' => [
-                        'dbname' => $this->dbNames[$room->getAcquisitionUnit()->getName()],
+                        'dbname' => $this->dbNames[$acquisitionUnit->getName()],
                         'username' => 'l1eq3',
                         'userpass' => 'dagde4-puvtus-tyVvog',
                     ],
                     'query' => [
                         'nom' => $type,
-                        'nomsa' => $room->getAcquisitionUnit()->getName(),
+                        'nomsa' => $acquisitionUnit->getName(),
                         'limit' => '5'
                     ],
                 ]);
 
-                $responseContent = $response->toArray();
-                return $responseContent;
+                return $response->toArray();
             }
         } catch (\Exception $e) {
             return [-1,0];

@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use App\Domain\DataManagerInterface;
-use App\Domain\GetDataInterface;
 use App\Entity\Room;
 use App\Form\AddRoomFormType;
 use App\Form\AssignAcquisitionUnitFormType;
-use App\Infrastructure\DataManager;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AcquisitionUnitRepository;
 use App\Domain\AcquisitionUnitOperatingState;

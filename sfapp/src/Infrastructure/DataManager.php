@@ -6,7 +6,6 @@ use App\Domain\AcquisitionUnitOperatingState;
 use App\Domain\DataManagerInterface;
 use App\Domain\GetDataInterface;
 use App\Entity\AcquisitionUnit;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Cache\CacheItemInterface;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -120,6 +119,18 @@ class DataManager implements DataManagerInterface
         $this->cache->save($cacheItem);
 
         return $data;
-
     }
+
+    public function getLastValuesWithLimit(?AcquisitionUnit $acquisitionUnit, int $limit): array
+    {
+        $data = array();
+        $types = array('temp', 'hum', 'co2');
+
+        foreach($types as $type)
+        {
+            $data[$type] = $this->getData->getLastValuesWithLimit($acquisitionUnit, $type, $limit);
+        }
+        return $data;
+    }
+
 }

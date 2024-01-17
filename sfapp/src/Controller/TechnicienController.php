@@ -4,11 +4,9 @@ namespace App\Controller;
 
 use App\Domain\AcquisitionUnitOperatingState;
 use App\Domain\DataManagerInterface;
-use App\Domain\GetDataInterface;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Form\SearchFormType;
-use App\Infrastructure\DataManager;
 use App\Model\SearchData;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -52,11 +50,12 @@ class TechnicienController extends AbstractController
 
 
     #[Route('/defAcquisitionUnitOperational/{acquisitionUnit}/{dataCounter<\d+>?0}', name: 'defAcquisitionUnitOperational')]
-    public function manageAcquisitionUnit(int $dataCounter, Room $room, DataManagerInterface $dataManager, AcquisitionUnit $acquisitionUnit): Response
+    public function defAcquisitionUnitOperational(int $dataCounter, Room $room, DataManagerInterface $dataManager, AcquisitionUnit $acquisitionUnit): Response
     {
         $defaultDataCounterValue = 0;
 
-        $data = $dataManager->get($acquisitionUnit);
+        $data = $dataManager->getLastValuesWithLimit($acquisitionUnit, 5);
+
         return $this->render('technicien/manageSA.html.twig', [
             'room' => $room,
             'temp' => $data['temp'],
@@ -70,7 +69,7 @@ class TechnicienController extends AbstractController
 
 
     #[Route('/setAcquisitionUnitOperational/{acquisitionUnit}', name: 'setAcquisitionUnitOperational')]
-    public function defAcquisitionUnitOperationnel(AcquisitionUnit $acquisitionUnit, EntityManagerInterface $entityManager): Response {
+    public function setAcquisitionUnitOperational(AcquisitionUnit $acquisitionUnit, EntityManagerInterface $entityManager): Response {
         
         $acquisitionUnit->setState(AcquisitionUnitOperatingState::OPERATIONAL->value);
 

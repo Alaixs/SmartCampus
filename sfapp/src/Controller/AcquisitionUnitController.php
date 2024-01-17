@@ -108,7 +108,7 @@ class AcquisitionUnitController extends AbstractController
     {
         $room = $roomRepository->findOneBy(array('acquisitionUnit' => $acquisitionUnit->getId()));
 
-        $data = $dataManager->get($acquisitionUnit);
+        $data = $dataManager->get($acquisitionUnit, true);
 
         return $this->render('acquisition_unit/manageAcquisitionUnit.html.twig', [
             'room' => $room,
