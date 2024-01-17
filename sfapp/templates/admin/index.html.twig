@@ -143,7 +143,18 @@
                             Installé
                         </div>
                         <!-- ETAT DE FONCTIONNEMENT -->
-                        <div class="planExperimentation-div-div">
+                        <div class="planExperimentation-div-div installationState"
+                             title="En attente d'affectation : le technicien doit affecter un système d'acquisition à la salle
+
+En attente d'affectation : le technicien doit installer le système d'acquisition affecté dans la salle
+
+Dysfonctionnement : les données sont aberrantes
+
+En panne : les données ne remontent pas
+
+Opérationnel : tout va bien :)
+
+Pris en charge : le système d'acquisition est en cours de réparation">
                             {{ room.acquisitionUnit.state }}
                         </div>
                     {% elseif room.acquisitionUnit %}
@@ -161,7 +172,7 @@
                              -
                         </div>
                     {% endif %}
-                    <!-- Button voir plus et rendre opérationnel -->
+                    <!-- Boutton voir plus et rendre opérationnel -->
                     {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('roomDetail', {'room' : room.id}) }}"
                            class="planExperimentation-div-voir-plus">Voir plus</a>

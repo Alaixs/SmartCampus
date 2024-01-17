@@ -54,6 +54,7 @@ class SearchFormType extends  AbstractType
             'Dysfonctionnement' => 'Dysfonctionnement',
             'En panne' => 'En panne',
             'Opérationnel' => 'Opérationnel',
+            'Pris en charge' => 'Pris en charge',
         ];
     }
 
