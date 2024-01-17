@@ -188,5 +188,33 @@ class GetDataAPI implements GetDataInteface
             ],
         ];
     }
+
+    public function getLastFiveValues($room, $type): array
+    {
+        try {
+            if($room->getAcquisitionUnit() != null)
+            {
+
+                $response = $this->client->request('GET', 'https://sae34.k8s.iut-larochelle.fr/api/captures/last', [
+                    'headers' => [
+                        'dbname' => $this->dbNames[$room->getAcquisitionUnit()->getName()],
+                        'username' => 'l1eq3',
+                        'userpass' => 'dagde4-puvtus-tyVvog',
+                    ],
+                    'query' => [
+                        'nom' => $type,
+                        'nomsa' => $room->getAcquisitionUnit()->getName(),
+                        'limit' => '5'
+                    ],
+                ]);
+
+                $responseContent = $response->toArray();
+                return $responseContent;
+            }
+        } catch (\Exception $e) {
+            return [-1,0];
+        }
+        return [-1,0];
+    }
 }
     

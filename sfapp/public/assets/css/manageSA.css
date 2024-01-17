@@ -78,6 +78,24 @@ section {
     height: 8vh;
 }
 
+.scrollArrow {
+    width: 5vh;
+    height: 5vh;
+}
+
+.rightArrow {
+    transform: rotate(180deg);
+    position: absolute;
+    top: auto;
+    right: 2vh;
+}
+
+.leftArrow {
+    position: absolute;
+    top: auto;
+    left: 2vh;
+}
+
 .title img{
     position: absolute;
     top: 0;
@@ -98,6 +116,7 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .dataArray {

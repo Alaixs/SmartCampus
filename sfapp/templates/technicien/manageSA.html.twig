@@ -9,15 +9,21 @@
     <body>
         {% include 'partial/header.html.twig'%}
 
-            <section>
+        <section>
                 <div class="dataTest">
                     <div class="title">
                         <a href="{{ path('manageAcquisitionUnit', {'acquisitionUnit' : room.acquisitionUnit.id}) }}">
                             <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
                         </a>
-                        <p>Panneau de gestion du {{ room.acquisitionUnit }}</p>
+                        <p>Panneau de gestion du {{ room.acquisitionUnit }} - Remontée n°{{ dataCounter + 1 }}</p>
                     </div>
                     <div class="dataInformations">
+                        {% if (dataCounter != 0) %}
+                            {% set newIndex = dataCounter - 1 %}
+                            <a class="leftArrow" href="{{ path('defAcquisitionUnitOperational', {'acquisitionUnit': acquisitionUnit.id, 'dataCounter': newIndex}) }}">
+                                <img class="scrollArrow" src="{{ asset('assets/img/arrow.png') }}">
+                            </a>
+                        {% endif %}
                         <div class="dataArray">
                             <div class="arrayTitles">
                                 <div class="receiver">
@@ -36,7 +42,7 @@
                                     <div>
                                         <p>Température</p>
                                     </div>
-                                    {% if (temp[0] < 0) %}
+                                    {% if (temp[dataCounter].valeur < 0) %}
                                         <div>
                                             <p>Données non reçues</p>
                                         </div>
@@ -48,9 +54,9 @@
                                             <p>Données reçues</p>
                                         </div>
                                         <div>
-                                            <p class="tempVisu">{{ temp[0] ~ " °C"}}</p>
+                                            <p class="tempVisu">{{ temp[dataCounter].valeur ~ " °C"}}</p>
                                             <style>
-                                                {% if (temp[0] > 50) %}
+                                                {% if (temp[dataCounter].valeur > 50) %}
                                                     .tempVisu {
                                                         color: #dc6d6d;
                                                     }
@@ -67,7 +73,7 @@
                                     <div>
                                         <p>Humidité </p>
                                     </div>
-                                    {% if (humidity[0] < 0) %}
+                                    {% if (humidity[dataCounter].valeur < 0) %}
                                         <div>
                                             <p>Données non reçues</p>
                                         </div>
@@ -79,9 +85,9 @@
                                             <p>Données reçues</p>
                                         </div>
                                         <div>
-                                            <p class="humVisu">{{ humidity[0] ~ " %"}}</p>
+                                            <p class="humVisu">{{ humidity[dataCounter].valeur ~ " %"}}</p>
                                             <style>
-                                                {% if (humidity[0] >= 70 and temp[0] >= 20) %}
+                                                {% if (humidity[dataCounter].valeur >= 70 and temp[dataCounter].valeur >= 20) %}
                                                     .humVisu {
                                                         color: #dc6d6d;
                                                     }
@@ -93,13 +99,12 @@
                                             </style>
                                         </div>
                                     {% endif %}
-
                                 </div>
                                 <div class="co2Line line">
                                     <div>
                                         <p>Dioxyde de Carbone (CO2)</p>
                                     </div>
-                                    {% if (co2[0] < 0) %}
+                                    {% if (co2[dataCounter].valeur < 0) %}
                                         <div>
                                             <p>Données non reçues</p>
                                         </div>
@@ -111,10 +116,10 @@
                                             <p>Données reçues</p>
                                         </div>
                                         <div>
-                                            <p class="co2Visu">{{ co2[0] ~ " ppm"}}</p>
+                                            <p class="co2Visu">{{ co2[dataCounter].valeur ~ " ppm"}}</p>
 
                                             <style>
-                                                {% if (co2[0] > 1800)%}
+                                                {% if (co2[dataCounter].valeur > 1800)%}
                                                     .co2Visu {
                                                         color: #dc6d6d;
                                                     }
@@ -130,7 +135,7 @@
                                 </div>
                             </div>
 
-                            {% if (temp[0] < 0 or humidity[0] < 0 or co2[0] < 0) %}
+                            {% if (temp[dataCounter].valeur < 0 or humidity[dataCounter].valeur < 0 or co2[dataCounter].valeur < 0) %}
                                 <div class="errorMsg">
                                     <p>Un ou plusieurs problèmes sont survenus.
                                         Le capteur ne peut pas être défini comme opérationnel. Réglez le(s) problème(s) et retestez la remontée des données.
@@ -138,7 +143,7 @@
                                 </div>
                             {% endif %}
 
-                            {% if (temp[0] > 50 or humidity[0] >= 100 or co2[0] > 1800) %}
+                            {% if (temp[dataCounter].valeur > 50 or humidity[dataCounter].valeur >= 100 or co2[dataCounter].valeur > 1800) %}
 
                                 <div class="errorMsg">
                                     <p>
@@ -159,7 +164,7 @@
                                 </div>
 
                                 <style>
-                                    {% if (temp[0] < 0 or humidity[0] < 0 or co2[0] < 0 or temp[0] > 50 or humidity[0] >= 100 or co2[0] > 1800) %}
+                                    {% if (temp[dataCounter].valeur < 0 or humidity[dataCounter].valeur < 0 or co2[dataCounter].valeur < 0 or temp[dataCounter].valeur > 50 or humidity[dataCounter].valeur >= 100 or co2[dataCounter].valeur > 1800) %}
                                         .setSAToOpButton {
                                             background-color: #d5d5d5;
                                             color: gray;
@@ -184,6 +189,12 @@
                             </div>
 
                         </div>
+                        {% if (dataCounter != 4) %}
+                            {% set newIndex = dataCounter + 1 %}
+                            <a class="rightArrow" href="{{ path('defAcquisitionUnitOperational', {'acquisitionUnit': acquisitionUnit.id, 'dataCounter': newIndex}) }}">
+                                <img class="scrollArrow" src="{{ asset('assets/img/arrow.png') }}">
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
 

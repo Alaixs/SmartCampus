@@ -49,23 +49,26 @@ class TechnicienController extends AbstractController
     }
 
 
-    #[Route('/defAcquisitionUnitOperational/{acquisitionUnit}', name: 'defAcquisitionUnitOperational')]
-    public function manageAcquisitionUnit(Room $room, GetDataInteface $getDataJson, AcquisitionUnit $acquisitionUnit): Response
+    #[Route('/defAcquisitionUnitOperational/{acquisitionUnit}/{dataCounter<\d+>?0}', name: 'defAcquisitionUnitOperational')]
+    public function manageAcquisitionUnit(int $dataCounter, Room $room, GetDataInteface $getDataJson, AcquisitionUnit $acquisitionUnit): Response
     {
+        $defaultDataCounterValue = 0;
 
-        $temp = $getDataJson->getLastValueByType($room, 'temp');
-        $humidity = $getDataJson->getLastValueByType($room, 'hum');
-        $co2 = $getDataJson->getLastValueByType($room, 'co2');
-
+        $temp = $getDataJson->getLastFiveValues($room, 'temp');
+        $humidity = $getDataJson->getLastFiveValues($room, 'hum');
+        $co2 = $getDataJson->getLastFiveValues($room, 'co2');
 
         return $this->render('technicien/manageSA.html.twig', [
             'room' => $room,
             'temp' => $temp,
             'humidity' => $humidity,
             'co2' => $co2,
-            'acquisitionUnit' => $acquisitionUnit
+            'acquisitionUnit' => $acquisitionUnit,
+            'dataCounter' => $dataCounter,
+            'defaultDataCounterValue' => $defaultDataCounterValue
         ]);
     }
+
 
     #[Route('/setAcquisitionUnitOperational/{acquisitionUnit}', name: 'setAcquisitionUnitOperational')]
     public function defAcquisitionUnitOperationnel(AcquisitionUnit $acquisitionUnit, EntityManagerInterface $entityManager): Response {

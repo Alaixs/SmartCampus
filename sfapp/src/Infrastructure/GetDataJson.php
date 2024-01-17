@@ -55,4 +55,9 @@ class GetDataJson implements GetDataInteface
 
     }
 
+    public function getLastFiveValues($room, $type): array
+    {
+
+    }
+
 }
