@@ -20,9 +20,22 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\Domain\GetDataInterface:
-        class: App\Infrastructure\GetDataAPI
-    App\Domain\GetDataInteface: '@App\Infrastructure\GetDataAPI'
+
+    App\Domain\GetDataInterface: '@App\Infrastructure\GetDataAPI'
+
+    cache.app:
+        class: Symfony\Component\Cache\Adapter\FilesystemAdapter
+        arguments:
+            - 'app_cache'
+        tags:
+            - { name: cache.pool }
+
+    App\Domain\DataManagerInterface: '@App\Infrastructure\DataManager'
+
+    App\Infrastructure\DataManager:
+        arguments:
+            $getData: '@App\Domain\GetDataInterface'
+            $cache: '@Symfony\Contracts\Cache\CacheInterface'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

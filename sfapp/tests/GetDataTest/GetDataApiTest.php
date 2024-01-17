@@ -21,7 +21,7 @@ class GetDataApiTest extends TestCase {
         $room->setAcquisitionUnit($au);
 
 
-        $value = $getData->getLastValueByType($room, 'hum');
+        $value = $getData->getLastValueByType($room->getAcquisitionUnit(), 'hum');
 
         $this->assertTrue($value[0] != -1);
     }
@@ -37,7 +37,7 @@ class GetDataApiTest extends TestCase {
         $room->setAcquisitionUnit($au);
 
 
-        $value = $getData->getLastValueByType($room, 'hum');
+        $value = $getData->getLastValueByType($room->getAcquisitionUnit(), 'hum');
 
         $this->assertTrue($value[0] == -1 && $value[1] == 0, 'WOw');
     }

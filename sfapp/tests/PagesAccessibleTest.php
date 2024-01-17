@@ -214,7 +214,7 @@ class PagesAccessibleTest extends WebTestCase
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
         $newRoom = new Room();
-        $newRoom->setName('404');
+        $newRoom->setName('D981');
         $newRoom->setArea(10);
         $newRoom->setFloor(2);
         $newRoom->setExposure('Nord');
@@ -225,11 +225,7 @@ class PagesAccessibleTest extends WebTestCase
         $entityManager->persist($newRoom);
         $entityManager->flush();
 
-        $roomRepository = $client->getContainer()->get(RoomRepository::class);
-
-        $room = $roomRepository->findOneBy(array('name' => $this->roomName));
-
-        $client->request('GET', '/viewData/'. $room->getId());
+        $client->request('GET', '/viewData/'. $newRoom->getId());
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }

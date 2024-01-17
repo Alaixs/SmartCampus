@@ -27,8 +27,9 @@ class SetSaOperationalTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
+        dump($client->getResponse()->getContent());
         $client->clickLink('Rendre le SA opérationnel');
-        $client->clickLink('Rendre le SA opérationnel');
+        $client->clickLink('Rendre le SA actif');
         $client->followRedirect();
         $this->assertStringNotContainsString("Etat du système d'acquisition : Opérationnel", $client->getResponse()->getContent());
         $this->deleteRoom($client, $room);
@@ -49,14 +50,14 @@ class SetSaOperationalTest extends WebTestCase
 
         $room = $this->addRoomAndSa($client, $roomName, $saNumber);
 
-        $client->request('GET', '/manageAcquisitionUnit/' . $room->getAcquisitionUnit()->getId());
+        $crawler = $client->request('GET', '/defAcquisitionUnitOperational/' . $room->getAcquisitionUnit()->getId());
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $client->clickLink('Rendre le SA opérationnel');
-        $client->clickLink('Rendre le SA opérationnel');
+
+        $client->clickLink('Rendre le SA actif');
         $client->followRedirect();
-        $this->assertStringNotContainsString("Etat du système d'acquisition : Opérationnel", $client->getResponse()->getContent());
+        $this->assertStringNotContainsString("Etat du système d'acquisition : Dysfonctionnement", $client->getResponse()->getContent());
         $this->deleteRoom($client, $room);
         $this->deleteSA($client, $room->getAcquisitionUnit());
     }

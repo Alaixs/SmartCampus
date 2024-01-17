@@ -2,13 +2,14 @@
 
 namespace App\Infrastructure;
 
-use App\Domain\GetDataInteface;
+use App\Domain\GetDataInterface;
 use App\Entity\Room;
+use App\Entity\AcquisitionUnit;
 use Symfony\Component\HttpClient\HttpClient;
 use DateTime;
 use Exception;
 
-class GetDataAPI implements GetDataInteface
+class GetDataAPI implements GetDataInterface
 {
     private $client;
     private array $dbNames;
@@ -36,21 +37,21 @@ class GetDataAPI implements GetDataInteface
             'ESP-018' => 'sae34bdm2eq3'];
     }
 
-    public function getLastValueByType(Room $room, $type): array
+    public function getLastValueByType(AcquisitionUnit $acquistionUnit, $type): array
     {
         try {
-            if($room->getAcquisitionUnit() != null)
+            if($acquistionUnit != null)
                 {
 
                 $response = $this->client->request('GET', 'https://sae34.k8s.iut-larochelle.fr/api/captures/last', [
                     'headers' => [
-                        'dbname' => $this->dbNames[$room->getAcquisitionUnit()->getName()],
+                        'dbname' => $this->dbNames[$acquistionUnit->getName()],
                         'username' => 'l1eq3',
                         'userpass' => 'dagde4-puvtus-tyVvog',
                     ],
                     'query' => [
                         'nom' => $type,
-                        'nomsa' => $room->getAcquisitionUnit()->getName()
+                        'nomsa' => $acquistionUnit->getName()
                     ],
                 ]);
 
@@ -66,59 +67,19 @@ class GetDataAPI implements GetDataInteface
         return [-1,0];
     }
 
-    public function getLastValue(Room $room) : array
+    public function getLastValue(AcquisitionUnit $acquistionUnit) : array
     {
         $roomData = array();
         $types = ['temp', 'co2', 'hum'];
 
         foreach($types as $type)
         {
-            $roomData[$type] = $this->getLastValueByType($room, $type);
+            $roomData[$type] = $this->getLastValueByType($acquistionUnit, $type);
         }
         return $roomData;
 
     }
 
-    public function getRoomComfortIndicator(Room $room) : array
-    {
-        $dateToDay = date('m:d');
-        $dateMaxSummer =  date('m:d', 1725228004); // 1 Septembre
-        $dateMinSummer = date('m:d', 1717192999); // 31 mai
-        if($dateToDay > $dateMinSummer and $dateToDay < $dateMaxSummer)
-        {
-            $maxTemp = 28;
-        }
-        else
-        {
-            $maxTemp = 21;
-        }
-
-        $types = ['temp' => ['name' => 'temp', 'minMedium' => 17, 'maxMedium' => $maxTemp, 'min' => 17, 'max' => $maxTemp],
-            'hum' => ['name' => 'hum', 'minMedium' => 0, 'maxMedium' => 70, 'min' => 0, 'max' => 70],
-            'c02' => ['name' => 'co2', 'minMedium' => 0, 'maxMedium' => 1000, 'min' => 0, 'max' => 1500]];
-
-        $roomComfortIndicator = array();
-
-        $roomData = $this->getLastValue($room);
-        foreach($types as $type) {
-            $value = $roomData[$type['name']][0];
-            if ($value == -1) {
-                $comfort = "Aucune données";
-            } elseif ($value > 70 and $type == 'hum' and $roomData['temp'][0] > 20) {
-                $comfort = "Très mauvais";
-            } elseif (($value > $type['max'] or $value < $type['min']) and $type != 'hum') {
-                $comfort = "Très mauvais";
-            } elseif ($value > $type['maxMedium'] or $value < $type['minMedium']) {
-                $comfort = 'Mauvais';
-            } else {
-                $comfort = 'OK';
-            }
-            $roomComfortIndicator[$type['name']] = $comfort;
-        }
-
-        return $roomComfortIndicator;
-    }
-    
     public function getValuesByPeriod($room, $type, $period, $startDate, $endDate): array
     {
         try {

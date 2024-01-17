@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Domain\GetDataInteface;
+use App\Domain\DataManagerInterface;
+use App\Domain\GetDataInterface;
 use App\Entity\Room;
 use App\Form\GraphFormType;
 use App\Model\GraphData;
@@ -42,24 +43,23 @@ class ClientController extends AbstractController
     }
 
     #[Route('/viewData/{room}', name: 'view_data')]
-    public function viewData(Room $room, GetDataInteface $getDataJson): Response
+    public function viewData(Room $room, DataManagerInterface $cache): Response
     {
-        $temp = $getDataJson->getLastValueByType($room, 'temp');
-        $humidity = $getDataJson->getLastValueByType($room, 'hum');
-        $co2 = $getDataJson->getLastValueByType($room, 'co2');
+
+        $data = $cache->get($room->getAcquisitionUnit());
 
         return $this->render('client/viewData.html.twig', [
             'room' => $room,
-            'temp' => $temp,
-            'humidity' => $humidity,
-            'co2' => $co2,
+            'temp' => $data['temp'],
+            'humidity' => $data['hum'],
+            'co2' => $data['co2'],
         ]);
     }
 
     
 
     #[Route('/viewGraph/{room}', name: 'view_graph')]
-    public function viewGraph(Room $room, Request $request, GetDataInteface $getDataJson): Response
+    public function viewGraph(Room $room, Request $request, GetDataInterface $getDataJson): Response
     {
         $type = "hum";
         $period = "hour";

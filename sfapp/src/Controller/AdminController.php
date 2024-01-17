@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 
-use App\Domain\GetDataInteface;
+use App\Domain\DataManagerInterface;
+use App\Domain\GetDataInterface;
 use App\Entity\Room;
 use App\Form\SearchFormType;
 use App\Model\SearchData;
@@ -19,7 +20,7 @@ class AdminController extends AbstractController
 {
 
     #[Route('/admin', name: 'app_admin')]
-    public function admin(RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository,Request $request): Response {
+    public function admin(RoomRepository $roomRepository, AcquisitionUnitRepository $acquisitionUnitRepository,Request $request, DataManagerInterface $dataManager): Response {
         $roomList = $roomRepository->findAll();
         $acquisitionUnitList = $acquisitionUnitRepository->findAll();
         $formSubmitted = false;
@@ -27,6 +28,8 @@ class AdminController extends AbstractController
         $searchData = new SearchData();
         $form = $this->createForm(SearchFormType::class, $searchData);
         $form->handleRequest($request);
+
+        $roomsComfort = $dataManager->getRoomsComfort($acquisitionUnitList);
         if ($form->isSubmitted() && $form->isValid()) {
             $formSubmitted = true;
             $roomList = $roomRepository->findBySearch($searchData);
@@ -42,14 +45,8 @@ class AdminController extends AbstractController
             'formSubmitted' => $formSubmitted,
             'roomList' => $roomList,
             'filtersApplied' => $filtersApplied,
+            'roomsComfort' => $roomsComfort
         ]);
     }
 
-    #[Route('/getRoomComfort/{room}', name: 'get_roomComfort')]
-    public function getRoomsComfortJson(GetDataInteface $getData, Room $room): JsonResponse
-    {
-        $roomsComfortIndicator = $getData->getRoomComfortIndicator($room);
-
-        return $this->json($roomsComfortIndicator);
-    }
 }

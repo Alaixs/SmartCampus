@@ -72,54 +72,24 @@
                     {% if is_granted('ROLE_ADMIN') %}
 
                         {% if room.acquisitionUnit %}
-                            <div class='planExperimentation-div-div greyBackground' id="comfortIndicatorRoom{{ room.id }}">
-                                Chargement des données...
-                            </div>
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function () {
-                                    fetch('/getRoomComfort/{{ room.id }}')
-                                        .then(function (response) {
-                                            if (!response.ok) {
-                                                throw new Error('Erreur lors de la récupération des données de confort');
-                                            }
-                                            return response.json();
-                                        })
-                                        .then(function (data) {
-                                            updateRoomsComfortIndicator(data, {{ room.id }});
-                                        })
-                                        .catch(function (error) {
-                                            console.error(error.message);
-                                        });
-                                });
-                                function updateRoomsComfortIndicator(data, roomId) {
-                                    let div = document.getElementById('comfortIndicatorRoom' + roomId);
-                                    let tempComfort = data['temp'];
-                                    let humComfort = data['hum'];
-                                    let co2Comfort = data['co2'];
-                                    
-                                if (tempComfort === 'OK' && humComfort === 'OK' && co2Comfort === 'OK') {
-                                    div.classList.remove("greyBackground");
-                                    div.classList.add('greenBackground', 'cursorHelp');
-                                    div.title = `Température : ${tempComfort}\n Humidité : ${humComfort}\n CO2 : ${co2Comfort}`;
-                                    div.innerHTML = 'Confortable';
-                                } else if (tempComfort === 'Très mauvais' && humComfort === 'Très mauvais' && co2Comfort === 'Très mauvais') {
-                                    div.classList.remove("greyBackground");
-                                    div.classList.add('redBackground', 'cursorHelp');
-                                    div.title = `Température : ${tempComfort}\n Humidité : ${humComfort}\n CO2 : ${co2Comfort}`;
-                                    div.innerHTML = 'Inconfortable';
-                                } else if (tempComfort === 'Aucune données' && humComfort === 'Aucune données' && co2Comfort === 'Aucune données') {
-                                    div.innerHTML = 'Aucune donnée';
-                                } else {
-                                    console.log(data);
-                                    div.classList.remove("greyBackground");
-                                    div.classList.add('orangeBackground', 'cursorHelp');
-                                    div.title = `Température : ${tempComfort}\n Humidité : ${humComfort}\n CO2 : ${co2Comfort}`;
-                                    div.innerHTML = 'Peu confortable';
-                                }
-
-                            }
-                            </script>
-                        {% else %}
+                            {% set tempComfort = roomsComfort[room.acquisitionUnit.name]['temp'] %}
+                            {% set humComfort = roomsComfort[room.acquisitionUnit.name]['hum'] %}
+                            {% set co2Comfort = roomsComfort[room.acquisitionUnit.name]['co2'] %}
+                            {% if tempComfort == 'OK' and humComfort == 'OK' and co2Comfort == 'OK' %}
+                                <div class="planExperimentation-div-div greenBackground cursorHelp" title="Temperature = {{ tempComfort }}&#013;Humidity = {{ humComfort }}&#013;Co2 = {{ co2Comfort }}">
+                                    Confortable
+                                </div>
+                            {% elseif tempComfort != 'OK' and humComfort != 'OK' and co2Comfort != 'OK' %}
+                                <div class="planExperimentation-div-div redBackground cursorHelp" title="Temperature = {{ tempComfort }}&#013;Humidity = {{ humComfort }}&#013;Co2 = {{ co2Comfort }}">>
+                                    Inconfortable
+                                </div>
+                            {% elseif tempComfort == 'Aucune données' and humComfort == 'Aucune données' and co2Comfort == 'Aucune données' %}
+                                <div class="planExperimentation-div-div grayBackground">Aucune donnée</div>
+                            {% else %}
+                                <div class="planExperimentation-div-div orangeBackground cursorHelp" title="Temperature = {{ tempComfort }}&#013;Humidity = {{ humComfort }}&#013;Co2 = {{ co2Comfort }}">
+                                    Peu confortable
+                                </div>
+                            {% endif %}                        {% else %}
                             <div class='planExperimentation-div-div greyBackground'>
                                 Aucune donnée
                             </div>

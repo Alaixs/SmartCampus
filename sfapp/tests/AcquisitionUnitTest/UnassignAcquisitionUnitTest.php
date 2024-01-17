@@ -27,7 +27,7 @@ class UnassignAcquisitionUnitTest extends WebTestCase
         $crawler = $client->request('GET', '/manageAcquisitionUnit/' . $au->getId());
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $link = $crawler->selectLink('Désaffecter le SA')->link();
+        $link = $crawler->selectLink('Confirmer')->link();
         $client->click($link);
 
         $client->followRedirect();

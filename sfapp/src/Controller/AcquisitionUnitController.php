@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Domain\AcquisitionUnitOperatingState;
-use App\Domain\GetDataInteface;
+use App\Domain\DataManagerInterface;
 use App\Entity\AcquisitionUnit;
 use App\Form\AddAcquisitionUnitFormType;
 use App\Form\RemoveAcquisitionUnitFormType;
@@ -104,19 +104,17 @@ class AcquisitionUnitController extends AbstractController
     }
 
     #[Route('/manageAcquisitionUnit/{acquisitionUnit}', name: 'manageAcquisitionUnit')]
-    public function manageAcquisitionUnit(AcquisitionUnit $acquisitionUnit, RoomRepository $roomRepository, GetDataInteface $getData) : Response
+    public function manageAcquisitionUnit(AcquisitionUnit $acquisitionUnit, RoomRepository $roomRepository, DataManagerInterface $dataManager) : Response
     {
         $room = $roomRepository->findOneBy(array('acquisitionUnit' => $acquisitionUnit->getId()));
 
-        $temp = $getData->getLastValueByType($room, 'temp');
-        $humidity = $getData->getLastValueByType($room, 'hum');
-        $co2 = $getData->getLastValueByType($room, 'co2');
+        $data = $dataManager->get($acquisitionUnit);
 
         return $this->render('acquisition_unit/manageAcquisitionUnit.html.twig', [
             'room' => $room,
-            'temp' => $temp,
-            'humidity' => $humidity,
-            'co2' => $co2
+            'temp' => $data['temp'],
+            'humidity' => $data['hum'],
+            'co2' => $data['co2']
         ]);
     }
 

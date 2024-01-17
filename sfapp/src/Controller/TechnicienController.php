@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
-use App\Domain\GetDataInteface;
 use App\Domain\AcquisitionUnitOperatingState;
+use App\Domain\DataManagerInterface;
+use App\Domain\GetDataInterface;
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;
 use App\Form\SearchFormType;
+use App\Infrastructure\DataManager;
 use App\Model\SearchData;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -50,19 +52,16 @@ class TechnicienController extends AbstractController
 
 
     #[Route('/defAcquisitionUnitOperational/{acquisitionUnit}/{dataCounter<\d+>?0}', name: 'defAcquisitionUnitOperational')]
-    public function manageAcquisitionUnit(int $dataCounter, Room $room, GetDataInteface $getDataJson, AcquisitionUnit $acquisitionUnit): Response
+    public function manageAcquisitionUnit(int $dataCounter, Room $room, DataManagerInterface $dataManager, AcquisitionUnit $acquisitionUnit): Response
     {
         $defaultDataCounterValue = 0;
 
-        $temp = $getDataJson->getLastFiveValues($room, 'temp');
-        $humidity = $getDataJson->getLastFiveValues($room, 'hum');
-        $co2 = $getDataJson->getLastFiveValues($room, 'co2');
-
+        $data = $dataManager->get($acquisitionUnit);
         return $this->render('technicien/manageSA.html.twig', [
             'room' => $room,
-            'temp' => $temp,
-            'humidity' => $humidity,
-            'co2' => $co2,
+            'temp' => $data['temp'],
+            'humidity' => $data['hum'],
+            'co2' => $data['co2'],
             'acquisitionUnit' => $acquisitionUnit,
             'dataCounter' => $dataCounter,
             'defaultDataCounterValue' => $defaultDataCounterValue

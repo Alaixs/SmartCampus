@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
-use App\Domain\GetDataInteface;
+use App\Domain\DataManagerInterface;
+use App\Domain\GetDataInterface;
 use App\Entity\Room;
 use App\Form\AddRoomFormType;
 use App\Form\AssignAcquisitionUnitFormType;
+use App\Infrastructure\DataManager;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AcquisitionUnitRepository;
 use App\Domain\AcquisitionUnitOperatingState;
@@ -128,22 +130,20 @@ class RoomController extends AbstractController
     }
 
     #[Route('/roomDetail/{room}', name: 'roomDetail')]
-    public function roomDetail(Room $room, AcquisitionUnitRepository $acquisitionUnitRepository, GetDataInteface $getDataJson): Response
+    public function roomDetail(Room $room, AcquisitionUnitRepository $acquisitionUnitRepository, DataManagerInterface $dataManager): Response
     {
         $hasAcquisitionUnitInDatabase = $acquisitionUnitRepository->count(array()) > 0;
         $hasAcquisitionUnitAvailable = $acquisitionUnitRepository->count(array('state' => "En attente d'affectation")) > 0;
 
-        $temp = $getDataJson->getLastValueByType($room, 'temp');
-        $humidity = $getDataJson->getLastValueByType($room, 'hum');
-        $co2 = $getDataJson->getLastValueByType($room, 'co2');
+        $data = $dataManager->get($room->getAcquisitionUnit());
 
         return $this->render('room/roomDetail.html.twig', [
             'room' => $room,
             'hasAcquisitionUnitAvailable' => $hasAcquisitionUnitAvailable,
             'hasAcquisitionUnitInDatabase' => $hasAcquisitionUnitInDatabase,
-            'temp' => $temp,
-            'humidity' => $humidity,
-            'co2' => $co2
+            'temp' => $data['temp'],
+            'humidity' => $data['hum'],
+            'co2' => $data['co2']
         ]);
     }
 }

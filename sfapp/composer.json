@@ -12,6 +12,7 @@
         "doctrine/orm": "^2.16",
         "knplabs/knp-paginator-bundle": "^6.3",
         "symfony/asset": "6.3.*",
+        "symfony/cache": "6.3.*",
         "symfony/console": "6.3.*",
         "symfony/dotenv": "6.3.*",
         "symfony/flex": "^2",
