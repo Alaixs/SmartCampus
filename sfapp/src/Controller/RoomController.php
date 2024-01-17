@@ -50,7 +50,7 @@ class RoomController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager->persist($room);
                 $entityManager->flush();
-                $this->addFlash('changesSaved', 'Your changes are successfully saved'); // We don't properly use this message, it's used to call the toast in roomDetail twig
+                $this->addFlash('changesSaved', 'La salle ' . $room->getName() . ' a été modifiée avec succès.');
                 return $this->redirectToRoute('roomDetail', ['room' => $room->getId()]);
 
         }
@@ -99,7 +99,7 @@ class RoomController extends AbstractController
             $entityManager->persist($newAcquisitionUnit);
             $entityManager->persist($room);
             $entityManager->flush();
-            $this->addFlash('message', "Le système d'acquisition " . $newAcquisitionUnit->getName() . "a bien été affecter à la salle " . $room->getName());
+            $this->addFlash('assignSaved', $newAcquisitionUnit->getName() . ' a bien été affecté à la salle ' . $room->getName());
 
             return $this->redirectToRoute('manageAcquisitionUnit', ['acquisitionUnit' => $room->getAcquisitionUnit()->getId()]);
         }

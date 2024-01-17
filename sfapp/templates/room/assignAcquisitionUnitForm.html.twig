@@ -34,19 +34,9 @@
                 </div>
                 <div class="divSubmitButton">
                     <p>* Obligatoire</p>
-                    {% if room.acquisitionUnit is not empty %}
-
-                        <div class="buttons">
-                            <button type="submit" class="endButton">Affecter</button>
-                        </div>
-
-                    {% else %}
-
-                        <div class="buttons">
-                            <button type="submit" class="endButton">Affecter</button>
-                        </div>
-
-                    {% endif %}
+                    <div class="buttons">
+                        <button type="submit" class="endButton">Affecter</button>
+                    </div>
                 </div>
             </div>
             {{ form_end(assignAcquisitionUnitForm) }}

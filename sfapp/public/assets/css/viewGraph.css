@@ -24,3 +24,12 @@ section {
     align-items: center;
     width: 50%;
 }
+
+.btn-submit {
+    background-color: #8fdcee!important;
+    color: black;
+}
+
+.btn-submit:hover {
+    background-color: #b1f0ff!important;
+}
