@@ -9,23 +9,16 @@
     <title>SmartCampus</title>
     <link rel="stylesheet" href="{{ asset('assets/css/detailRoom.css') }}">
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        function reloadPage() {
-            setTimeout(function() {
-                location.reload(); // Reload the current page
-            }, 60000); // 1 minutes in milliseconds (300,000 ms)
-        }
-
-        // Start the reload timer when the page loads
-        reloadPage();
-
-
-    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body>
 {% include 'partial/header.html.twig'%}
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="/assets/js/toast.js"></script>
+{% for flashMessage in app.flashes('changesSaved') %}
+    <script>showToast("Salle modifiée avec succès !")</script>
+{% endfor %}
 
 <section>
     <div class="form">

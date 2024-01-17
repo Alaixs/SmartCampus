@@ -50,6 +50,7 @@ class RoomController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager->persist($room);
                 $entityManager->flush();
+                $this->addFlash('changesSaved', 'Your changes are successfully saved'); // We don't properly use this message, it's used to call the toast in roomDetail twig
                 return $this->redirectToRoute('roomDetail', ['room' => $room->getId()]);
 
         }
