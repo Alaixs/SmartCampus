@@ -71,7 +71,7 @@
                     <!-- Niveau de confort (seulement référent) -->
                     {% if is_granted('ROLE_ADMIN') %}
 
-                        {% if room.acquisitionUnit %}
+                        {% if room.acquisitionUnit and room.acquisitionUnit.state == 'Opérationnel' %}
                             {% set tempComfort = roomsComfort[room.acquisitionUnit.name]['temp'] %}
                             {% set humComfort = roomsComfort[room.acquisitionUnit.name]['hum'] %}
                             {% set co2Comfort = roomsComfort[room.acquisitionUnit.name]['co2'] %}
