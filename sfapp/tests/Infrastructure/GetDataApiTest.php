@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\GetDataTest;
+namespace App\Tests\Infrastructure;
 
 use App\Entity\AcquisitionUnit;
 use App\Entity\Room;

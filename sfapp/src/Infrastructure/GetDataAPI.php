@@ -55,7 +55,6 @@ class GetDataAPI implements GetDataInterface
                     ],
                 ]);
 
-
                 $responseContent = $response->toArray();
                 $value = is_numeric($responseContent[0]['valeur']) ? (int)$responseContent[0]['valeur'] : -1;
                 $date = $responseContent[0]['dateCapture'];
@@ -168,11 +167,24 @@ class GetDataAPI implements GetDataInterface
                         'limit' => '5'
                     ],
                 ]);
-
                 return $response->toArray();
             }
         } catch (\Exception $e) {
-            return [-1,0];
+            $errorData = array();
+            for ($i=0; $i<$limit; $i++) {
+                $errorData[$i] = array(
+                    'id' => 0,
+                    'nom' => 'temp',
+                    'valeur' => -1,
+                    'dateCapture' => 0,
+                    'localisation' => 0,
+                    'description' => 'Romain apprend à remplir des catch',
+                    'nomsa' => $acquisitionUnit->getName()
+                );
+
+            }
+            return $errorData;
+
         }
         return [-1,0];
     }

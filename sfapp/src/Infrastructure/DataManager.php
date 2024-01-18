@@ -103,12 +103,13 @@ class DataManager implements DataManagerInterface
         // Checks if no data is bad and if data is not too dated (more than 15 minutes)
         if ((($temp[0] == -1 || $humidity[0] == -1 || $co2[0] == -1 || $currentTimestamp - strtotime($temp[1]) > 600 || $currentTimestamp - strtotime($humidity[1]) > 600 || $currentTimestamp - strtotime($co2[1]) > 600))
             && $acquisitionUnit->getState() == AcquisitionUnitOperatingState::OPERATIONAL->value) {
+
             $acquisitionUnit->setState(AcquisitionUnitOperatingState::OUT_OF_SERVICE->value);
             $this->entityManager->persist($acquisitionUnit);
             $this->entityManager->flush();
         }
         // Checks data for outliers
-        else if($temp[0] > 50 and $humidity[0] > 100 and $co2[0] > 6000)
+        else if($temp[0] > 50 || $humidity[0] > 100 || $co2[0] > 6000)
         {
             $acquisitionUnit->setState(AcquisitionUnitOperatingState::FAILURE->value);
             $this->entityManager->persist($acquisitionUnit);
