@@ -11,6 +11,95 @@
   },
 
 
+  {
+    "id" : 22,
+    "nom" : "temp",
+    "valeur" : 20,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D101",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "humidity",
+    "valeur" : 57,
+    "dataCapture" : "14-12-2023 10:00:00",
+    "localisation" : "D101",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "co2",
+    "valeur" : 640,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D101",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 22,
+    "nom" : "temp",
+    "valeur" : -1,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D102",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "humidity",
+    "valeur" : 100,
+    "dataCapture" : "14-12-2023 10:00:00",
+    "localisation" : "D102",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "co2",
+    "valeur" : 640,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D102",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 22,
+    "nom" : "temp",
+    "valeur" : 200,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D103",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "humidity",
+    "valeur" : 57,
+    "dataCapture" : "14-12-2023 10:00:00",
+    "localisation" : "D103",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "co2",
+    "valeur" : 640,
+    "dataCapture" : "13-12-2023 10:00:00",
+    "localisation" : "D103",
+    "description" : "",
+    "tag" : 1
+  },
 
   {
     "id" : 22,
@@ -55,7 +144,7 @@
   {
     "id" : 22,
     "nom" : "temp",
-    "valeur" : 19,
+    "valeur" : 20,
     "dataCapture" : "13-12-2023 10:00:00",
     "localisation" : "D400",
     "description" : "",
@@ -85,28 +174,18 @@
   {
     "id" : 25,
     "nom" : "co2",
-    "valeur" : 640,
-    "dataCapture" : "13-12-2023 10:00:00",
-    "localisation" : "D207",
-    "description" : "",
-    "tag" : 1
-  },
-
-  {
-    "id" : 25,
-    "nom" : "co2",
-    "valeur" : 18,
+    "valeur" : 25,
     "dataCapture" : "11-12-2023 8:00:00",
-    "localisation" : "D207",
+    "localisation" : "D204",
     "description" : "",
     "tag" : 1
   },
   {
     "id" : 25,
-    "nom" : "co2",
-    "valeur" : 640,
+    "nom" : "hum",
+    "valeur" : 79,
     "dataCapture" : "10-12-2023 10:00:00",
-    "localisation" : "D206",
+    "localisation" : "D204",
     "description" : "",
     "tag" : 1
   },
@@ -115,9 +194,37 @@
     "nom" : "temp",
     "valeur" : 640,
     "dataCapture" : "13-12-2023 8:00:00",
-      "localisation" : "D207",
+      "localisation" : "D204",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "co2",
+    "valeur" : 640,
+    "dataCapture" : "10-12-2023 10:00:00",
+    "localisation" : "D999",
+    "description" : "",
+    "tag" : 1
+  },
+  {
+    "id" : 15,
+    "nom" : "temp",
+    "valeur" : 640,
+    "dataCapture" : "13-12-2023 8:00:00",
+    "localisation" : "D999",
+    "description" : "",
+    "tag" : 1
+  },
+
+  {
+    "id" : 25,
+    "nom" : "humidity",
+    "valeur" : 57,
+    "dataCapture" : "14-12-2023 10:00:00",
+    "localisation" : "D999",
     "description" : "",
     "tag" : 1
   }
-
 ]

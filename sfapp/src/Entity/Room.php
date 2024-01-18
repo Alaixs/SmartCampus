@@ -154,11 +154,16 @@ class Room
         return $this;
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadata $metadata) : void
     {
         $metadata->addConstraint(new UniqueEntity([
             'fields' => ['name'],
             'message' => 'Cette salle existe déjà'
         ]));
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

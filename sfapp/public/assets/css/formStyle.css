@@ -51,19 +51,25 @@ section {
     width: 100%;
 }
 
+.formInputs > * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .buttons {
     display: flex;
     height: 4vh;
     justify-content: space-between;
+    margin-bottom: 1vh;
 }
 
 .restOfForm {
     width: 20vw;
-    max-height: 55vh;
     overflow: auto;
     padding-right: 19vw;
     padding-left: 19vw;
-    margin-bottom: 3vh;
 }
 
 .selector {
@@ -78,14 +84,14 @@ input:not(:nth-child(1)), select {
     display: flex;
     padding: 0;
     width: 100%;
-    margin-bottom: 2vh;
+    margin-bottom: 1vh;
     border: none;
     box-shadow: inset 0px 0px 1px 0px #000000;
     background-color: white;
 }
 
 input:nth-child(1) {
-    margin-bottom: 2vh;
+    margin-bottom: 1vh;
 }
 
 input {
@@ -98,11 +104,12 @@ input:not(input[type=checkbox]), select {
 }
 
 .formFooter {
+    width: 20vw;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    flex-direction: column;
-    margin-bottom: 2vh;
+    flex-direction: row-reverse;
+    margin: 2vh 0 1vh 0;
 }
 
 
@@ -349,7 +356,23 @@ input[type="number"] {
     padding: 0;
 }
 
-.flash-message
-{
-    color: #58e342;
+.flash-message,
+.flash-error,
+.invalid-feedback {
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 0.75rem 1.25rem;
+}
+
+.flash-message {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.flash-error,
+.invalid-feedback {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }

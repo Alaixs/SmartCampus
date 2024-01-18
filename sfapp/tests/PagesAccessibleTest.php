@@ -4,7 +4,9 @@ namespace App\Tests;
 
 use App\Entity\Room;
 use App\Repository\RoomRepository;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 
 class PagesAccessibleTest extends WebTestCase
 {
@@ -14,6 +16,16 @@ class PagesAccessibleTest extends WebTestCase
      */
 
     private string $roomName = '404';
+
+    private function getClientWithLoggedInUser(string $username): KernelBrowser
+    {
+        $client = static::createClient();
+        $userRepository = $client->getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(['username' => $username]);
+        $client->loginUser($testUser);
+
+        return $client;
+    }
 
     public function testIndexPageIsAccessible()
     {
@@ -30,7 +42,7 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testAdminPageIsAccessible()
     {
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('référent');
 
         $client->request('GET', '/admin');
 
@@ -43,7 +55,7 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testAddRoomPageIsAccessible()
     {
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('référent');
 
         $client->request('GET', '/addRoom');
 
@@ -56,10 +68,9 @@ class PagesAccessibleTest extends WebTestCase
      */
     public function testTechnicienPageIsAccessible()
     {
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('technicien');
 
-
-        $client->request('GET', '/technicien');
+        $client->request('GET', '/admin');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
@@ -68,11 +79,11 @@ class PagesAccessibleTest extends WebTestCase
      * La méthode testAddSAPageIsAccessible() verifie si le code de retour de la page addSA est bien 200
      * @return void
      */
-    public function testAddSAPageIsAccessible()
+    public function testAddAcquisitionUnitPageIsAccessible()
     {
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('technicien');
 
-        $client->request('GET', '/addSA');
+        $client->request('GET', '/addAcquisitionUnit');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
@@ -97,8 +108,7 @@ class PagesAccessibleTest extends WebTestCase
     public function testEditRoomPageIsAccessible()
     {
 
-
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('référent');
 
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
@@ -128,39 +138,47 @@ class PagesAccessibleTest extends WebTestCase
      * La méthode testAssignSA() verifie si le code de retour de la page assignSA est bien 200
      * @return void
      */
-    public function testAssignSA()
+    public function testAssignAcquisitionUnitIsAccessible()
     {
 
-        $client = static::createClient();
-
+        $client = $this->getClientWithLoggedInUser('technicien');
+        
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
         $room = $roomRepository->findOneBy(array('name' => $this->roomName));
 
-        $client->request('GET', '/assignSA/' . $room->getId());
+        $client->request('GET', '/assignAcquisitionUnit/' . $room->getId());
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
     }
 
-    public function testUnAssignSA()
+    /**
+     * La méthode testUnAssignSAIsAccessible() verifie si le code de retour de la page testUnAssignSAIsAccessible est bien 302
+     * @return void
+     */
+    public function testUnAssignSAIsAccessible()
     {
 
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('technicien');
 
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
         $room = $roomRepository->findOneBy(array('name' => $this->roomName));
 
-        $client->request('GET', '/unAssignSA/'. $room->getId());
+        $client->request('GET', '/unassignAcquisitionUnit/'. $room->getId());
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
 
     }
 
-    public function testRemoveRoom()
+    /**
+     * La méthode testRemoveRoomIsAccessible() verifie si le code de retour de la page testRemoveRoomIsAccessible est bien 302
+     * @return void
+     */
+    public function testRemoveRoomIsAccessible()
     {
-        $client = static::createClient();
+        $client = $this->getClientWithLoggedInUser('référent');
 
         $roomRepository = $client->getContainer()->get(RoomRepository::class);
 
@@ -171,4 +189,44 @@ class PagesAccessibleTest extends WebTestCase
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
+    /**
+     * La méthode testLoginIsAccessible() verifie si le code de retour de la page testLoginIsAccessible est bien 200
+     * @return void
+     */
+    public function testLoginIsAccessible()
+    {
+        $client = $this->getClientWithLoggedInUser('référent');
+
+        $client->request('GET', '/login');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * La méthode testViewDataPageIsAccessible() verifie si le code de retour de la page testViewDataPageIsAccessible est bien 200
+     * @return void
+     */
+    public function testViewDataPageIsAccessible()
+    {
+
+        $client = static::createClient();
+
+        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $newRoom = new Room();
+        $newRoom->setName('D981');
+        $newRoom->setArea(10);
+        $newRoom->setFloor(2);
+        $newRoom->setExposure('Nord');
+        $newRoom->setCapacity(20);
+        $newRoom->setHasComputers(0);
+        $newRoom->setNbWindows(4);
+
+        $entityManager->persist($newRoom);
+        $entityManager->flush();
+
+        $client->request('GET', '/viewData/'. $newRoom->getId());
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 }

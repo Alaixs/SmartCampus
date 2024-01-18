@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\AcquisitionUnitTest;
 
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\Room;
 use App\Repository\AcquisitionUnitRepository;
 use App\Entity\AcquisitionUnit;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 
 class AssignAcquisitionUnitTest extends WebTestCase
 {
@@ -17,58 +18,52 @@ class AssignAcquisitionUnitTest extends WebTestCase
      */
     public function testSubmitValidData()
     {
-        $acquisitionUnitName = 'ESP-017';
-        $roomName = 'D309';
+        $auNumber = 'SA9999';
+        $roomName = 'D999';
+
         $client = static::createClient();
+        $userRepository = $client->getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(array('username' => 'technicien'));
+        $client->loginUser($testUser);
 
-        $this->createRoom($client, $roomName);
-        $this->createAcquisitionUnit($client, $acquisitionUnitName);
+        $room = $this->createRoom($client, $roomName);
+        $au = $this->createSa($client, $auNumber);
 
-        $roomRepository = $client->getContainer()->get(RoomRepository::class);
-        $acquisitionUnitRepository = $client->getContainer()->get(AcquisitionUnitRepository::class);
+        $crawler = $client->request('GET', '/assignAcquisitionUnit/' . $room->getId());
 
-        $room = $roomRepository->findOneBy(array('name' => $roomName));
-        $acquisitionUnit = $acquisitionUnitRepository->findOneBy(array('number' => $acquisitionUnitName));
-
-        $crawler = $client->request('GET', '/roomDetail/' . $room->getId());
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-        $client->request('GET', '/roomDetail/' . $room->getId());
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-        $crawler = $client->clickLink('Affecter un SA');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
 
         $form = $crawler->selectButton('Affecter')->form();
-
-        // I complete the form
-        $form->setValues(array('assign_sa_form[SA]' => $acquisitionUnit->getId()));
+        //     I complete the form
+        $form->setValues(array('assign_acquisition_unit_form[acquisitionUnit]' => $au->getId()));
 
         $client->submit($form);
         $client->followRedirect();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertStringContainsString($acquisitionUnitName, $client->getResponse()->getContent(), 'ca marche?');
+        $this->assertStringContainsString($auNumber, $client->getResponse()->getContent(), 'ca marche?');
 
         $this->deleteRoom($client, $roomName);
-        $this->deleteAcquisitionUnit($client, $acquisitionUnitName);
+        $this->deleteSa($client, $auNumber);
     }
 
 
 
-    private function createAcquisitionUnit($client, $acquisitionUnitName) : void
+    private function createSa($client, $auNumber) : AcquisitionUnit
     {
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $newAcquisitionUnit = new AcquisitionUnit();
-        $newAcquisitionUnit->setName($acquisitionUnitName);
-        $newAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+        $newSa = new AcquisitionUnit();
+        $newSa->setName($auNumber);
+        $newSa->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
 
-        $entityManager->persist($newAcquisitionUnit);
+        $entityManager->persist($newSa);
         $entityManager->flush();
+
+        return $newSa;
     }
 
-    private function createRoom($client, $roomName) : void
+    private function createRoom($client, $roomName) : Room
     {
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
 
@@ -83,6 +78,8 @@ class AssignAcquisitionUnitTest extends WebTestCase
 
         $entityManager->persist($newRoom);
         $entityManager->flush();
+
+        return $newRoom;
     }
 
     private function deleteRoom($client, $roomName) : void
@@ -95,13 +92,13 @@ class AssignAcquisitionUnitTest extends WebTestCase
             $entityManager->flush();
         }
     }
-    private function deleteAcquisitionUnit($client, $acquisitionUnitName) : void
+    private function deleteSa($client, $auNumber) : void
     {
         $acquisitionUnitRepository = $client->getContainer()->get(AcquisitionUnitRepository::class);
-        $acquisitionUnit = $acquisitionUnitRepository->findOneBy(array('number' => $acquisitionUnitName));
-        if ($acquisitionUnit) {
+        $sa = $acquisitionUnitRepository->findOneBy(array('name' => $auNumber));
+        if ($sa) {
             $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
-            $entityManager->remove($acquisitionUnit);
+            $entityManager->remove($sa);
             $entityManager->flush();
         }
     }

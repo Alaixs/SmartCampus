@@ -6,7 +6,8 @@ use App\Repository\AcquisitionUnitRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use App\Domain\AcquisitionUnitState;
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: AcquisitionUnitRepository::class)]
 class AcquisitionUnit
 {
@@ -18,7 +19,12 @@ class AcquisitionUnit
     #[ORM\Column(length: 255)]
     private ?string $state = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 7)]
+    #[Assert\NotBlank(message: 'Le nom du SA ne peut pas être vide')]
+    #[Assert\Length(
+        max: 7,
+        maxMessage: 'Le nom du SA ne peut pas contenir plus de 3 caractères'
+    )]
     private ?string $name = null;
 
     public function getId(): ?int
@@ -50,7 +56,7 @@ class AcquisitionUnit
         return $this;
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addConstraint(new UniqueEntity([
             'fields' => ['name'],

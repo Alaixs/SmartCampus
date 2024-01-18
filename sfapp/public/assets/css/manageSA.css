@@ -1,0 +1,308 @@
+
+
+section {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 70%;
+}
+
+.dataTest, .roomInfo {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+    max-height: 80vh;
+
+}
+
+.buttons {
+    display: flex;
+    height: 4vh;
+    justify-content: space-evenly;
+    margin-bottom: 2vh;
+}
+
+.endButton {
+    font-size: 1.3vh;
+    width: 14vw;
+    border: 0;
+    border-radius: 0;
+    background-color: #cdcdcd;
+    height: 3vh;
+}
+
+.endButton:hover {
+    cursor: pointer;
+    color: black;
+
+}
+
+
+.deleteButton {
+    background-color: #eea2a2;
+}
+
+.deleteButton:hover {
+    background-color: #ee8f8f;
+}
+
+.buttons > a, .buttons3 > a {
+    text-decoration: none;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    text-align: center;
+}
+
+
+
+.dataTest {
+    width: 60%;
+}
+
+.roomInfo {
+    width: 20%;
+}
+
+.title {
+    background-color: #F9F9F9;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    font-size: 2.5vh;
+    margin-bottom: 5vh;
+    height: 8vh;
+}
+
+.scrollArrow {
+    width: 5vh;
+    height: 5vh;
+}
+
+.rightArrow {
+    transform: rotate(180deg);
+    position: absolute;
+    top: auto;
+    right: 2vh;
+}
+
+.leftArrow {
+    position: absolute;
+    top: auto;
+    left: 2vh;
+}
+
+.title img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px 0 0 10px;
+}
+
+.title > a
+{
+    position: absolute;
+    top : 0;
+    left : 0;
+}
+
+.dataInformations {
+    width: 100%;
+    height: 55%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.dataArray {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.arrayTitles {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 7vh;
+    width: 100%;
+    margin-bottom: 3vh;
+}
+
+.arrayTitles > div {
+    background-color: #F9F9F9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 33%;
+    height: 7vh;
+}
+
+.arrayLines {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.line {
+    margin-bottom: 1vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #F9F9F9;
+    height: 7vh;
+}
+
+.line > div {
+    display: flex;
+    justify-content: center;
+    width: 33%;
+}
+
+.errorMsg {
+    text-align: center;
+}
+
+.errorMsg > p {
+    color: #dc6d6d;
+}
+
+.testAndValidateButtons {
+    width: 100%;
+    height: 5vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 4vh;
+}
+
+.testDataButton {
+    background-color: #A2E0EE;
+    color: black;
+}
+
+.testDataButton, .setSAToOpButton {
+    height: 5vh;
+    width: 10vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+}
+
+.testDataButton:hover {
+    background-color: #b9ebf6;
+}
+
+.listInfoRoom > ol {
+    list-style: none;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.listInfoRoom > ol > li {
+    width: 80%;
+    background-color: #F9F9F9;
+    margin-bottom: 1vh;
+    height: 5vh;
+    display: flex;
+    justify-content: center ;
+    align-items: center;
+}
+
+.signAU
+{
+    display: flex;
+    height: 100%;
+    justify-content: space-evenly;
+    flex-direction: column-reverse;
+}
+
+.signAUInformations
+{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    height: 80%;
+    text-align: center;
+}
+
+.submit.endButton {
+    background-color: #8fdcee;
+}
+
+.submit.endButton:hover {
+    background-color: #A2E0EE;
+}
+
+.data > li {
+    list-style: none;
+    margin: 16px 0;
+}
+
+.data {
+    width: 20vw;
+    max-height: 55vh;
+    overflow: auto;
+    padding: 0 0 0 10px;
+    margin: 0;
+}
+
+.lastData, .tempValue {
+    height: 5vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lastDataDate, .lastDataValue, .typeValue, .value {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lastDataDate, .typeValue {
+    background-color: #e2e2e2;
+    width: 40%;
+}
+
+.lastDataValue, .value {
+    background-color: #F9F9F9;
+    width: 60%;
+}
+
+.delete.endButton {
+    background-color: #ee8f8f;
+    color: black;
+}
+
+.delete.endButton:hover {
+    background-color: #eea2a2;
+}
+
+.modal-footer > .deleteButton, .cancelButtonModal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3vh;
+    width: 5vw;
+    text-decoration: none;
+    color: black;
+}
+

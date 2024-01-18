@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
 use App\Entity\Room;
+use App\Model\SearchData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -45,4 +47,43 @@ class RoomRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findBySearch(SearchData $searchData): array
+    {
+        $queryBuilder = $this->createQueryBuilder('r');
+
+        if (!empty($searchData->q)) {
+            $queryBuilder
+                ->andWhere('r.name LIKE :q')
+                ->setParameter('q', "%$searchData->q%");
+        }
+
+        if (!empty($searchData->floors)) {
+            $queryBuilder
+                ->andWhere('r.floor IN (:floors)')
+                ->setParameter('floors', $searchData->floors);
+        }
+
+        if (!empty($searchData->acquisitionUnitState)) {
+            $queryBuilder
+                ->leftJoin('r.acquisitionUnit', 's')
+                ->andWhere('s.state IN (:acquisitionUnitState)')
+                ->setParameter('acquisitionUnitState', $searchData->acquisitionUnitState);
+
+            if (in_array('En attente d\'affectation', $searchData->acquisitionUnitState)) {
+                $queryBuilder->orwhere('r.acquisitionUnit IS NULL');
+            }
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+    public function findRoomsByFloor(int $floor): Query
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.floor = :floor')
+            ->setParameter('floor', $floor)
+            ->orderBy('r.name', 'ASC')
+            ->getQuery();
+    }
+
 }

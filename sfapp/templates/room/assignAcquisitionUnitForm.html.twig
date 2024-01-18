@@ -13,7 +13,7 @@
 <section>
     <div class="form">
         <div class="title">
-                <a href="{{ path('roomDetail', {'room': room.id }) }}">
+                <a href="{{ path('app_admin') }}">
                     <img src="{{ asset('assets/img/back_arrow.svg') }}" alt="Retour">
                 </a>
             {% if room.acquisitionUnit is not empty %}
@@ -34,19 +34,9 @@
                 </div>
                 <div class="divSubmitButton">
                     <p>* Obligatoire</p>
-                    {% if room.acquisitionUnit is not empty %}
-
-                        <div class="buttons">
-                            <button type="submit" class="endButton">Affecter</button>
-                        </div>
-
-                    {% else %}
-
-                        <div class="buttons">
-                            <button type="submit" class="endButton">Affecter</button>
-                        </div>
-
-                    {% endif %}
+                    <div class="buttons">
+                        <button type="submit" class="endButton">Affecter</button>
+                    </div>
                 </div>
             </div>
             {{ form_end(assignAcquisitionUnitForm) }}

@@ -2,45 +2,57 @@
 
 namespace App\DataFixtures;
 
-use App\Domain\AcquisitionUnitState;
+use App\Domain\AcquisitionUnitOperatingState;
 use App\Entity\AcquisitionUnit;
+use App\Entity\Building;
 use App\Entity\Room;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use App\Entity\User;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
+
 
 class AppFixtures extends Fixture
 {
-    public function load(ObjectManager $manager): void
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+    
+    public function load(ObjectManager $manager) : void
     {
         /*
          * Creates acquisition unit entities
          */
         $esp009 = new AcquisitionUnit();
-        $esp009->setState(AcquisitionUnitState::OPERATIONNEL->value);
+        $esp009->setState(AcquisitionUnitOperatingState::OPERATIONAL->value);
         $esp009->setName("ESP-009");
         $manager->persist($esp009);
         $manager->flush();
 
         $esp008 = new AcquisitionUnit();
-        $esp008->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
+        $esp008->setState(AcquisitionUnitOperatingState::WAITING_FOR_ASSIGNMENT->value);
         $esp008->setName("ESP-008");
         $manager->persist($esp008);
         $manager->flush();
 
         $esp010 = new AcquisitionUnit();
-        $esp010->setState(AcquisitionUnitState::ATTENTE_INSTALLATION->value);
+        $esp010->setState(AcquisitionUnitOperatingState::WAITING_FOR_INSTALLATION->value);
         $esp010->setName("ESP-010");
         $manager->persist($esp010);
         $manager->flush();
 
         $esp011 = new AcquisitionUnit();
-        $esp011->setState(AcquisitionUnitState::DYSFONCTIONNEMENT->value);
+        $esp011->setState(AcquisitionUnitOperatingState::FAILURE->value);
         $esp011->setName("ESP-011");
         $manager->persist($esp011);
         $manager->flush();
 
         $esp007 = new AcquisitionUnit();
-        $esp007->setState(AcquisitionUnitState::EN_PANNE->value);
+        $esp007->setState(AcquisitionUnitOperatingState::OUT_OF_SERVICE->value);
         $esp007->setName("ESP-007");
         $manager->persist($esp007);
         $manager->flush();
@@ -105,6 +117,36 @@ class AppFixtures extends Fixture
         $d105->setHasComputers(true);
         $d105->setNbWindows(64);
         $manager->persist($d105);
+        $manager->flush();
+
+        /*
+         *  Create building entities
+         */
+        $bat1 = new Building();
+        $bat1->setName('Département informatique');
+        $bat1->setNbFloor(3);
+        $manager->persist($bat1);
+        $manager->flush();
+
+        /*
+         * Creates user entities
+         */
+        $referent = new User();
+        $referent->setUsername("référent");
+        $hashedPassword = $this->passwordHasher->hashPassword($referent, 'jesuisreferent');
+
+        $referent->setPassword($hashedPassword);
+        $referent->setRoles(['ROLE_ADMIN']);
+        $manager->persist($referent);
+        $manager->flush();
+
+        $technicien = new User();
+        $technicien->setUsername("technicien");
+        $hashedPassword = $this->passwordHasher->hashPassword($technicien, 'jesuistechnicien');
+
+        $technicien->setPassword($hashedPassword);
+        $technicien->setRoles(['ROLE_TECHNICIEN']);
+        $manager->persist($technicien);
         $manager->flush();
     }
 }

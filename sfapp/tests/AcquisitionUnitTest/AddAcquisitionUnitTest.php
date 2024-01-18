@@ -1,62 +1,59 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\AcquisitionUnitTest;
 
-use App\Domain\AcquisitionUnitState;
-use App\Entity\AcquisitionUnit;
 use App\Repository\AcquisitionUnitRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Repository\UserRepository;
 
 class AddAcquisitionUnitTest extends WebTestCase
 {
+
+    public static function setUpBeforeClass(): void
+    {
+        exec('php bin/console doctrine:fixtures:load --env=test --quiet');
+    }
+    
     /**
      * La méthode testSubmitValidData() vérifie si le formulaire est valide avec des données correctes.
      * @return void
      */
     public function testSubmitValidData()
     {
-        $newAcquisitionUnit = 'ESP-017';
-        $client = static::createClient();
+        $newSa = '123';
 
-        $crawler = $client->request('GET', '/addSA');
+        $client = static::createClient();
+        $userRepository = $client->getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(array('username' => 'technicien'));
+        $client->loginUser($testUser);
+
+        $crawler = $client->request('GET', '/addAcquisitionUnit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Ajouter')->form();
 
-        // I complete the form
         $form->setValues(array(
-            'add_sa_form[number]' => $newAcquisitionUnit,
+            'add_acquisition_unit_form[name]' => $newSa,
         ));
 
         $client->submit($form);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertStringContainsString($newAcquisitionUnit, $client->getResponse()->getContent(), 'ca marche?');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $client->followRedirect();
+        $this->assertStringContainsString($newSa, $client->getResponse()->getContent(), 'ca marche?');
 
 
-        $this->deleteSa($client, $newAcquisitionUnit);
+        $this->deleteSa($client, $newSa);
     }
 
-    private function deleteSa($client, $acquisitionUnitName) : void
+    private function deleteSa($client, $saName) : void
     {
         $acquisitionUnitRepository = $client->getContainer()->get(AcquisitionUnitRepository::class);
-        $acquisitionUnit = $acquisitionUnitRepository->findOneBy(array('number' => $acquisitionUnitName));
-        if ($acquisitionUnit) {
+        $sa = $acquisitionUnitRepository->findOneBy(array('name' => $saName));
+        if ($sa) {
             $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
-            $entityManager->remove($acquisitionUnit);
+            $entityManager->remove($sa);
             $entityManager->flush();
         }
     }
-    private function createSa($client, $saNumber) : void
-    {
-        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
-
-        $newAcquisitionUnit = new AcquisitionUnit();
-        $newAcquisitionUnit->setName($saNumber);
-        $newAcquisitionUnit->setState(AcquisitionUnitState::ATTENTE_AFFECTATION->value);
-
-        $entityManager->persist($newAcquisitionUnit);
-        $entityManager->flush();
-    }
-
 
 }

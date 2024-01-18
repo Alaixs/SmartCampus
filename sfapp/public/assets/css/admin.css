@@ -1,6 +1,11 @@
-@media all and (orientation: landscape) { /* HERE YOUR CODE */ }
+* {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
 
 body {
+    margin: 0;
+    padding: 0;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -22,12 +27,55 @@ body {
     min-height: 23vh;
 }
 
+.infosRoomAndAU {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .planExperimentation-div
 {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.255);
     height: 100%;
+    min-width: 1200px;
     display: flex;
     flex-direction: column;
+}
+
+.endFormButtons {
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.installationState {
+    cursor: help;
+}
+
+.endFormButtons > button, .endFormButtons > a {
+    width: 40%;
+    height: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-decoration: none;
+    color: black;
+}
+.endFormButtons > button {
+    background-color: #A2E0EE;
+}
+.endFormButtons > a {
+    background-color: #efefef;
+}
+.endFormButtons > button:hover {
+    background-color: #b9ebf6;
+}
+.endFormButtons > a:hover {
+    background-color: #F4F4F4;
 }
 
 .planExperimentation-div-allRoom
@@ -60,6 +108,13 @@ body {
     justify-content: space-between;
 }
 
+.test {
+    background-color: #F9F9F9;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+
+}
 .planExperimentation > div
 {
     display: flex;
@@ -74,8 +129,8 @@ body {
 .add-or-del-div {
     display: flex;
     flex-direction: row;
-    width: 60%;
     text-align: center;
+    align-items: center;
 }
 
 .add-or-del-div > :nth-child(2) {
@@ -90,8 +145,10 @@ body {
     align-items: center;
 }
 
-.planExperimentation-div-array > div {
-    width: 25vw;
+
+.planExperimentation-div-allRoom {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 .planExperimentation-div-div
@@ -99,7 +156,19 @@ body {
     background-color: #F9F9F9;
     margin-top: 0.3vw;
     width: 16vw;
+    height: 5vh;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.planExperimentation-div-largeDiv
+{
+    background-color: #F9F9F9;
+    margin-top: 0.3vw;
+    width: 32vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -153,7 +222,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1vw;
 }
 
 .addRoom {
@@ -190,6 +258,13 @@ body {
     text-justify: distribute;
 }
 
+.noCorrespondingRooms {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-justify: distribute;
+}
+
 .planExperimentation-div-roomName
 {
     display: flex;
@@ -200,6 +275,9 @@ body {
 .planExperimentation-div-roomName-div
 {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .div-img-modif
@@ -212,12 +290,73 @@ body {
     width: 1.2vw;
 }
 
-.greenCircle, .redCircle, .grayCircle{
-    max-width: 3vh;
-    height: 3vh;
-    cursor: help;
+.filterForm {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.255);
+    margin-left: 5vh;
+    height: 100%;
 }
 
+.input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0vh 1vh;
+}
+
+.filterFloors, .filterStates {
+    padding-left: 1vh;
+}
+
+.filterForm  > form {
+    margin: 1vw;
+}
+
+.filters {
+    height: 100%;
+    width: 20%;
+}
+
+input#search_form_q {
+    width: 13vw;
+}
+
+.findButton {
+    border: none;
+    width: 2vw;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.greenBackground
+{
+    background-color: #78f378;
+    color: #116c11;
+}
+
+.greyBackground
+{
+    background-color: #c9c9c9;
+    color: #7e6666;
+
+}
+
+.orangeBackground
+{
+    background-color: #f6ae2b;
+    color: #755937;
+
+}
+
+.redBackground
+{
+    background-color: #ff1b1b;
+    color: #7a0606;
+}
+
+.cursorHelp
+{
+    cursor: help
+}
 @media screen and (max-width: 650px) {
     .planExperimentation-div-title {
         flex-direction: column;
@@ -225,6 +364,7 @@ body {
         padding: 1vh;
         background-color: white;
     }
+
     .planExperimentation-div-button-add {
         text-align: center;
     }
@@ -234,7 +374,6 @@ body {
         margin-top: 0.5vh;
         justify-content: center;
         align-items: center;
-        width: 100%;
     }
 
     .add-or-del-div > a {
@@ -282,5 +421,4 @@ body {
     .planExperimentation-div-voir-plus {
         height: 3vh;
     }
-
 }
